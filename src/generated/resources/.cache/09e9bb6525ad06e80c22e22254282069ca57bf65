@@ -1,3 +1,4 @@
-// 1.19.4	2023-07-07T22:44:26.4328159	Tags for minecraft:block mod id swe
-3a3f2762ffebd40f73668f4c50ca551ff5ae2287 data/minecraft/tags/blocks/mineable/pickaxe.json
-3a3f2762ffebd40f73668f4c50ca551ff5ae2287 data/minecraft/tags/blocks/needs_iron_tool.json
+// 1.19.4	2023-07-11T22:08:44.4332255	Tags for minecraft:block mod id swe
+be5005550f024e09cf62d0170db9c62ebbb009ac data/minecraft/tags/blocks/mineable/pickaxe.json
+be5005550f024e09cf62d0170db9c62ebbb009ac data/minecraft/tags/blocks/needs_iron_tool.json
+38706f88c2245713985655df6e0f8ee1ffb6379e data/swe/tags/blocks/o2_producing.json

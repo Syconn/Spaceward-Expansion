@@ -4,16 +4,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import syconn.swe.capabilities.ISpaceSuit;
-import syconn.swe.common.data.DimSettingsManager;
+import syconn.swe.common.data.types.DimSettingsManager;
 import syconn.swe.init.ModCapabilities;
-import syconn.swe.init.ModFluids;
-import syconn.swe.item.Canister;
-import syconn.swe.item.SpaceArmor;
-import syconn.swe.util.data.AirBubblesSavedData;
-import syconn.swe.util.data.SpaceSlot;
 
 import static net.minecraft.client.gui.GuiComponent.blit;
 

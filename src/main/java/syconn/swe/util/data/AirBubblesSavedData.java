@@ -4,15 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import syconn.swe.common.data.DimSettingsManager;
-import syconn.swe.init.ModDim;
+import syconn.swe.common.data.types.DimSettingsManager;
 import syconn.swe.util.NbtHelper;
 
 import java.util.HashMap;

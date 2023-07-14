@@ -20,6 +20,7 @@ public class ModBlockEntity {
     public static final RegistryObject<BlockEntityType<CanisterFillerBlockEntity>> FILLER = register("filler_be", CanisterFillerBlockEntity::new, () -> new Block[]{ModInit.CANISTER_FILLER.get()});
     public static final RegistryObject<BlockEntityType<DisperserBlockEntity>> DISPERSER = register("disperser_be", DisperserBlockEntity::new, () -> new Block[]{ModInit.OXYGEN_DISPERSER.get()});
     public static final RegistryObject<BlockEntityType<AirBlockEntity>> AIR = register("air_be", AirBlockEntity::new, () -> new Block[]{ModInit.OXYGEN.get()});
+    public static final RegistryObject<BlockEntityType<CollectorBlockEntity>> COLLECTOR = register("collector_be", CollectorBlockEntity::new, () -> new Block[]{ModInit.OXYGEN_COLLECTOR.get()});
 
     private static <T extends BlockEntity> RegistryObject<BlockEntityType<T>> register(String name, BlockEntityType.BlockEntitySupplier<T> supplier, Supplier<Block[]> validBlocksSupplier)
     {

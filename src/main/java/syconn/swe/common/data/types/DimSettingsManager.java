@@ -1,4 +1,4 @@
-package syconn.swe.common.data;
+package syconn.swe.common.data.types;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,7 +11,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import syconn.swe.Main;
-import syconn.swe.common.data.types.DimensionSettings;
+import syconn.swe.common.data.DimensionSettings;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +25,6 @@ public class DimSettingsManager extends SimpleJsonResourceReloadListener {
         super(GSON, "dim_settings");
     }
 
-    @Override
     protected void apply(Map<ResourceLocation, JsonElement> elementMap, ResourceManager p_10794_, ProfilerFiller p_10795_) {
         elementMap.forEach(((resourceLocation, jsonElement) -> {
             SETTINGS.put(resourceLocation, DimensionSettings.fromGson(jsonElement.getAsJsonObject()));

@@ -1,5 +1,6 @@
-// 1.19.4	2023-07-07T22:44:26.437235	Loot Tables
+// 1.19.4	2023-07-11T22:08:44.4367508	Loot Tables
 e3b4c7b7521acdfee351f6f3228c5ee1fd3501d1 data/swe/loot_tables/blocks/canister_filler.json
 62b6de800e0df162e0c1dbf59e7d17fa19abaee1 data/swe/loot_tables/blocks/fluid_pipe.json
 5a2979cc7db891e43797b241755585ad2c84fe64 data/swe/loot_tables/blocks/fluid_tank.json
+49d4642e91a1751c6bbc43972dfea995866f9992 data/swe/loot_tables/blocks/oxygen_collector.json
 62b86d2b4885798e46517b60b1fc3a2edd57aeec data/swe/loot_tables/blocks/oxygen_disperser.json

@@ -23,7 +23,8 @@ import net.minecraftforge.fml.loading.FileUtils;
 import syconn.swe.client.ClientHandler;
 import syconn.swe.client.datagen.*;
 import syconn.swe.common.CommonHandler;
-import syconn.swe.common.data.DimSettingsManager;
+import syconn.swe.common.data.types.DimSettingsManager;
+import syconn.swe.common.data.types.OxygenProductionManager;
 import syconn.swe.util.config.Config;
 import syconn.swe.init.*;
 import syconn.swe.network.Network;
@@ -93,5 +94,6 @@ public class Main {
     @SubscribeEvent
     public void loadData(AddReloadListenerEvent e){
         e.addListener(new DimSettingsManager());
+        e.addListener(new OxygenProductionManager());
     }
 }

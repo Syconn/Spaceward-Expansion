@@ -145,21 +145,6 @@ public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
             if (item.getItem() instanceof ItemFluidHandler) {
                 FluidHelper.fillHandlerUpdateStack(item, e.tank, e.fillSpeed);
             }
-            if (!e.tank.isEmpty() && state.getValue(FluidBaseBlock.ENABLED)) {
-                for (Direction d : Direction.values()) {
-                    if (level.getBlockEntity(pos.relative(d)) instanceof PipeBlockEntity pe) { // TODO Doesn't work with other fluids handlers
-                        FluidPointSystem.FluidPoint point = pe.getSystem().getPoint(d.getOpposite());
-                        if (point.handlesExport() && (point.priority() > pe.getSource().priority() || pe.getSource().isEmpty() || point.equals(pe.getSource()))) {
-                            pe.setSource(pe.getSystem().getPoint(d.getOpposite()));
-                            pe.clear();
-                        }
-                    } else {
-                        if (level.getBlockEntity(pos.relative(d)) != null && level.getBlockEntity(pos.relative(d)).getCapability(ForgeCapabilities.FLUID_HANDLER, d).isPresent()) {
-                            FluidUtil.tryFluidTransfer(level.getBlockEntity(pos.relative(d)).getCapability(ForgeCapabilities.FLUID_HANDLER, d).resolve().get(), e.tank, e.fillSpeed, true);
-                        }
-                    }
-                }
-            }
         }
     }
 }
