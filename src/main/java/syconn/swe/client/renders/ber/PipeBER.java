@@ -44,27 +44,31 @@ public class PipeBER implements BlockEntityRenderer<PipeBlockEntity> {
             ps.scale(1, 1.08f, 1);
             if (Minecraft.getInstance().level.getBlockEntity(be.getSource().pos(), ModBlockEntity.TANK.get()).isPresent()) {
                 TankBlockEntity te = Minecraft.getInstance().level.getBlockEntity(be.getSource().pos(), ModBlockEntity.TANK.get()).get();
-                int i = IClientFluidTypeExtensions.of(te.getFluidTank().getFluid().getFluid()).getTintColor();
-                float f = (float)(i >> 16 & 255) / 255.0F;
-                float f1 = (float)(i >> 8 & 255) / 255.0F;
-                float f2 = (float)(i & 255) / 255.0F;
-                vertexconsumer = bs.getBuffer(RenderType.entityCutoutNoCull(te.getGuiTexture()));
-                this.pm.renderFluid(be.getBlockState(), ps, vertexconsumer, LightTexture.FULL_BLOCK, OverlayTexture.NO_OVERLAY, f, f1, f2, 1.0F);
+                if (te.getGuiTexture() != null) {
+                    int i = IClientFluidTypeExtensions.of(te.getFluidTank().getFluid().getFluid()).getTintColor();
+                    float f = (float)(i >> 16 & 255) / 255.0F;
+                    float f1 = (float)(i >> 8 & 255) / 255.0F;
+                    float f2 = (float)(i & 255) / 255.0F;
+                    vertexconsumer = bs.getBuffer(RenderType.entityCutoutNoCull(te.getGuiTexture()));
+                    this.pm.renderFluid(be.getBlockState(), ps, vertexconsumer, LightTexture.FULL_BLOCK, OverlayTexture.NO_OVERLAY, f, f1, f2, 1.0F);
+                }
             }
             ps.popPose();
         }
 
-        if (mod.hasFluid() && Minecraft.getInstance().level.getBlockEntity(be.getSource().pos(), ModBlockEntity.TANK.get()).isPresent()){
+        if (mod.hasFluid() && Minecraft.getInstance().level.getBlockEntity(be.getSource().pos(), ModBlockEntity.TANK.get()).isPresent()) {
             TankBlockEntity te = Minecraft.getInstance().level.getBlockEntity(be.getSource().pos(), ModBlockEntity.TANK.get()).get();
-            int i = IClientFluidTypeExtensions.of(te.getFluidTank().getFluid().getFluid()).getTintColor();
-            float f = (float)(i >> 16 & 255) / 255.0F;
-            float f1 = (float)(i >> 8 & 255) / 255.0F;
-            float f2 = (float)(i & 255) / 255.0F;
-            ps.pushPose();
-            ps.translate(1, -0.5f, 0);
-            VertexConsumer vertexconsumer = bs.getBuffer(RenderType.entityCutoutNoCull(te.getGuiTexture()));
-            this.fm.renderFromModule(new PipeModule(be.getBlockState()), ps, vertexconsumer, LightTexture.FULL_BLOCK, OverlayTexture.NO_OVERLAY, f, f1, f2, 1.0F);
-            ps.popPose();
+            if (te.getGuiTexture() != null) {
+                int i = IClientFluidTypeExtensions.of(te.getFluidTank().getFluid().getFluid()).getTintColor();
+                float f = (float) (i >> 16 & 255) / 255.0F;
+                float f1 = (float) (i >> 8 & 255) / 255.0F;
+                float f2 = (float) (i & 255) / 255.0F;
+                ps.pushPose();
+                ps.translate(1, -0.5f, 0);
+                VertexConsumer vertexconsumer = bs.getBuffer(RenderType.entityCutoutNoCull(te.getGuiTexture()));
+                this.fm.renderFromModule(new PipeModule(be.getBlockState()), ps, vertexconsumer, LightTexture.FULL_BLOCK, OverlayTexture.NO_OVERLAY, f, f1, f2, 1.0F);
+                ps.popPose();
+            }
         }
 
         for (FluidPointSystem.FluidPoint point : be.getSystem().getImports()) {
