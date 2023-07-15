@@ -12,14 +12,18 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
 import syconn.swe.Main;
+import syconn.swe.client.screen.widget.InfoWidget;
 import syconn.swe.common.container.CollectorMenu;
 import syconn.swe.common.container.DisperserMenu;
 import syconn.swe.network.Network;
 import syconn.swe.network.messages.MessageToggleDisperser;
 
+import java.util.List;
+
 public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     private static final ResourceLocation BG = new ResourceLocation(Main.MODID, "textures/gui/disperser.png");
+    private InfoWidget info;
 
     public CollectorScreen(CollectorMenu p_97741_, Inventory p_97742_, Component p_97743_) {
         super(p_97741_, p_97742_, p_97743_);
@@ -27,6 +31,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     protected void init() {
         super.init();
+        addRenderableWidget(new InfoWidget(leftPos + 153, topPos + 3, this, menu.getBE()));
     }
 
     protected void renderLabels(PoseStack p_97808_, int p_97809_, int p_97810_) { }
@@ -34,7 +39,6 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     public void render(PoseStack p_97795_, int p_97796_, int p_97797_, float p_97798_) {
         super.render(p_97795_, p_97796_, p_97797_, p_97798_);
         this.renderTooltip(p_97795_, p_97796_, p_97797_);
-        drawCenteredString(p_97795_, font, menu.getBE().getRate() + " mb/s", leftPos + 70, topPos + 70, 4210752);
     }
 
     protected void renderBg(PoseStack pose, float p_97788_, int x, int y) {

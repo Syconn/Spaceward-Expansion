@@ -19,9 +19,10 @@ import syconn.swe.common.data.types.OxygenProductionManager;
 import syconn.swe.init.ModBlockEntity;
 import syconn.swe.init.ModFluids;
 import syconn.swe.init.ModTags;
+import syconn.swe.util.BlockInfo;
 import syconn.swe.util.GUIFluidHandlerBlockEntity;
 
-public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider {
+public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider, BlockInfo {
 
     private int ticks = 0;
     private int rate = 0;
@@ -75,5 +76,13 @@ public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements 
 
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
         return new CollectorMenu(p_39954_, p_39955_, this);
+    }
+
+    public int getFluidRate() {
+        return rate;
+    }
+
+    public int getPowerRate() {
+        return 0;
     }
 }
