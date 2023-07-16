@@ -19,6 +19,7 @@ import syconn.swe.common.container.DisperserMenu;
 import syconn.swe.init.ModBlockEntity;
 import syconn.swe.init.ModFluids;
 import syconn.swe.init.ModInit;
+import syconn.swe.util.BlockInfo;
 import syconn.swe.util.GUIFluidHandlerBlockEntity;
 import syconn.swe.util.NbtHelper;
 import syconn.swe.util.data.AirBubblesSavedData;
@@ -29,14 +30,13 @@ import java.util.UUID;
 
 import static syconn.swe.block.OxygenDisperser.addBlock;
 
-public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider {
-
-    // TODO May need to optimise for lag spikes
+public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider, BlockInfo {
 
     public List<BlockPos> list = new ArrayList<>();
     public int maxFill = 20;
     private int testRate = 0;
     private int lowerRate = 0;
+    private int o2Usage;
     private UUID uuid;
     private boolean active = false;
     private boolean enabled = true;
@@ -77,13 +77,14 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
                     if (e.lowerRate <= 0) {
                         e.lowerRate = 10;
                         e.tank.drain(e.list.size() / 20, IFluidHandler.FluidAction.EXECUTE);
+                        e.o2Usage = e.list.size() / 20;
                     } else {
                         e.lowerRate--;
                     }
                 }
-            }
+            } else e.o2Usage = 0;
             e.update();
-        }
+        } else e.o2Usage = 0;
     }
 
     public void failed(boolean t) {
@@ -107,7 +108,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
 
     public void toggleEnabled() {
         this.enabled = !this.enabled;
-        if (this.enabled) {
+        if (this.enabled && tank.getFluidInTank(0).getAmount() > 0) {
             testRate = 100;
             addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
             level.scheduleTick(worldPosition, ModInit.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
@@ -135,6 +136,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
         tag.putInt("fill", maxFill);
         tag.putBoolean("active", active);
         tag.putBoolean("enabled", enabled);
+        tag.putInt("usage", o2Usage);
         if (this.uuid != null) tag.putUUID("DisperserUUID", this.uuid);
     }
 
@@ -144,16 +146,17 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
         maxFill = tag.getInt("fill");
         active = tag.getBoolean("active");
         enabled = tag.getBoolean("enabled");
+        o2Usage = tag.getInt("usage");
         if(tag.hasUUID("DisperserUUID")) this.uuid = tag.getUUID("DisperserUUID");
     }
 
-    @Override
     public CompoundTag getUpdateTag() {
         CompoundTag tag = super.getUpdateTag();
         tag.put("list", NbtHelper.writePosses(list));
         tag.putInt("fill", maxFill);
         tag.putBoolean("active", active);
         tag.putBoolean("enabled", enabled);
+        tag.putInt("usage", o2Usage);
         if (this.uuid != null) tag.putUUID("DisperserUUID", this.uuid);
         return tag;
     }
@@ -164,5 +167,17 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
 
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
         return new DisperserMenu(p_39954_, p_39955_, this);
+    }
+
+    public int getFluidRate() {
+        return o2Usage;
+    }
+
+    public int getPowerRate() {
+        return 0;
+    }
+
+    public List<Component> getExtraInfo() {
+        return List.of(Component.literal(""), Component.literal("Acitivly"));
     }
 }

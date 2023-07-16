@@ -23,7 +23,6 @@ import java.util.List;
 public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     private static final ResourceLocation BG = new ResourceLocation(Main.MODID, "textures/gui/disperser.png");
-    private InfoWidget info;
 
     public CollectorScreen(CollectorMenu p_97741_, Inventory p_97742_, Component p_97743_) {
         super(p_97741_, p_97742_, p_97743_);

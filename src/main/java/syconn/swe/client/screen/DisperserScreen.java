@@ -12,9 +12,11 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
 import syconn.swe.Main;
+import syconn.swe.client.screen.widget.InfoWidget;
 import syconn.swe.common.container.DisperserMenu;
 import syconn.swe.network.Network;
 import syconn.swe.network.messages.MessageToggleDisperser;
+import syconn.swe.util.BlockInfo;
 
 public class DisperserScreen extends AbstractContainerScreen<DisperserMenu> {
 
@@ -24,10 +26,10 @@ public class DisperserScreen extends AbstractContainerScreen<DisperserMenu> {
         super(p_97741_, p_97742_, p_97743_);
     }
 
-    @Override
     protected void init() {
         super.init();
         addRenderableWidget(new ExtendedButton(leftPos + 91, topPos + 25, 60, 20, Component.literal(menu.getBE().isEnabled() ? "Enabled" : "Disabled"), this::onclick));
+        addRenderableWidget(new InfoWidget(leftPos + 153, topPos + 3, this, menu.getBE()));
     }
 
     private void onclick(Button button) {
@@ -35,18 +37,15 @@ public class DisperserScreen extends AbstractContainerScreen<DisperserMenu> {
         Network.getPlayChannel().sendToServer(new MessageToggleDisperser(menu.getBE().getBlockPos()));
     }
 
-    @Override
     protected void renderLabels(PoseStack p_97808_, int p_97809_, int p_97810_) {
 
     }
 
-    @Override
     public void render(PoseStack p_97795_, int p_97796_, int p_97797_, float p_97798_) {
         super.render(p_97795_, p_97796_, p_97797_, p_97798_);
         this.renderTooltip(p_97795_, p_97796_, p_97797_);
     }
 
-    @Override
     protected void renderBg(PoseStack pose, float p_97788_, int x, int y) {
         RenderSystem.setShaderTexture(0, BG);
         blit(pose, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);

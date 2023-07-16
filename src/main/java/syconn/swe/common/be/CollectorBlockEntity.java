@@ -22,6 +22,9 @@ import syconn.swe.init.ModTags;
 import syconn.swe.util.BlockInfo;
 import syconn.swe.util.GUIFluidHandlerBlockEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider, BlockInfo {
 
     private int ticks = 0;
@@ -84,5 +87,9 @@ public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements 
 
     public int getPowerRate() {
         return 0;
+    }
+
+    public List<Component> getExtraInfo() {
+        return new ArrayList<>();
     }
 }
