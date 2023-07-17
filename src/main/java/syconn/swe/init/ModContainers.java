@@ -8,9 +8,11 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import syconn.swe.Main;
+import syconn.swe.common.be.CollectorBlockEntity;
 import syconn.swe.common.be.DisperserBlockEntity;
 import syconn.swe.common.be.PipeBlockEntity;
 import syconn.swe.common.be.TankBlockEntity;
+import syconn.swe.common.container.CollectorMenu;
 import syconn.swe.common.container.DisperserMenu;
 import syconn.swe.common.container.PipeMenu;
 import syconn.swe.common.container.TankMenu;
@@ -20,17 +22,22 @@ public class ModContainers {
     public static final DeferredRegister<MenuType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Main.MODID);
 
     public static final RegistryObject<MenuType<TankMenu>> TANK_MENU = register("tank", (IContainerFactory<TankMenu>) (windowId, playerInventory, data) -> {
-        TankBlockEntity tank = (TankBlockEntity) playerInventory.player.level.getBlockEntity(data.readBlockPos());
-        return new TankMenu(windowId, playerInventory, tank);
+        TankBlockEntity menu = (TankBlockEntity) playerInventory.player.level.getBlockEntity(data.readBlockPos());
+        return new TankMenu(windowId, playerInventory, menu);
     });
     public static final RegistryObject<MenuType<PipeMenu>> PIPE_MENU = register("pipe_menu", (IContainerFactory<PipeMenu>) (windowId, playerInventory, data) -> {
-        PipeBlockEntity tank = (PipeBlockEntity) playerInventory.player.level.getBlockEntity(data.readBlockPos());
-        return new PipeMenu(windowId, playerInventory, tank);
+        PipeBlockEntity menu = (PipeBlockEntity) playerInventory.player.level.getBlockEntity(data.readBlockPos());
+        return new PipeMenu(windowId, playerInventory, menu);
     });
 
     public static final RegistryObject<MenuType<DisperserMenu>> DISPERSER_MENU = register("disperser_menu", (IContainerFactory<DisperserMenu>) (windowId, playerInventory, data) -> {
-        DisperserBlockEntity tank = (DisperserBlockEntity) playerInventory.player.level.getBlockEntity(data.readBlockPos());
-        return new DisperserMenu(windowId, playerInventory, tank);
+        DisperserBlockEntity menu = (DisperserBlockEntity) playerInventory.player.level.getBlockEntity(data.readBlockPos());
+        return new DisperserMenu(windowId, playerInventory, menu);
+    });
+
+    public static final RegistryObject<MenuType<CollectorMenu>> COLLECTOR_MENU = register("collector_menu", (IContainerFactory<CollectorMenu>) (windowId, playerInventory, data) -> {
+        CollectorBlockEntity menu = (CollectorBlockEntity) playerInventory.player.level.getBlockEntity(data.readBlockPos());
+        return new CollectorMenu(windowId, playerInventory, menu);
     });
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String id, MenuType.MenuSupplier<T> factory)

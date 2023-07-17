@@ -40,7 +40,7 @@ public class FluidPipe extends FluidTransportBlock {
         return RenderShape.MODEL;
     }
 
-    public VoxelShape getShape(BlockState state, BlockGetter p_151965_, BlockPos p_151966_, CollisionContext p_151967_) {
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext ctx) {
         return new PipeModule(state).getShape();
     }
 
@@ -52,7 +52,7 @@ public class FluidPipe extends FluidTransportBlock {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction p_60542_, BlockState p_60543_, LevelAccessor level, BlockPos pos, BlockPos p_60546_) {
+    public BlockState updateShape(BlockState state, Direction dir, BlockState p_60543_, LevelAccessor level, BlockPos pos, BlockPos p_60546_) {
         PipeModule.updateBE(level, level.getBlockEntity(pos, ModBlockEntity.PIPE.get()).get());
         return PipeModule.getStateForPlacement(state, pos, level);
     }

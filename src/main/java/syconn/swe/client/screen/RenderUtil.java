@@ -30,17 +30,5 @@ public class RenderUtil {
                 Screen.blit(poseStack, left + 76, top + 25, 7, 7, 18, 18, 256, 256);
             }
         }
-//        else if(screen instanceof CreativeModeInventoryScreen inventory)
-//        {
-//            if(inventory.getSelectedTab() == CreativeModeTab.TAB_INVENTORY.getId())
-//            {
-//                int left = inventory.getGuiLeft();
-//                int top = inventory.getGuiTop();
-//                RenderSystem.setShader(GameRenderer::getPositionTexShader);
-//                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-//                RenderSystem.setShaderTexture(0, AbstractContainerScreen.INVENTORY_LOCATION);
-//                Screen.blit(poseStack, left + 126, top + 19, 7, 7, 18, 18, 256, 256);
-//            }
-//        }
     }
 }

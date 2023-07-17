@@ -45,6 +45,7 @@ public class ModInit {
     public static final RegistryObject<UpgradeItem> NETHERITE_UPGRADE = ITEMS.register("netherite_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1).fireResistant(), 25));
     public static final RegistryObject<BucketItem> O2_BUCKET = ITEMS.register("o2_fluid_bucket", () -> new BucketItem(ModFluids.SOURCE_O2_FLUID, new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<OxygenCollector> OXYGEN_COLLECTOR = register("oxygen_collector", OxygenCollector::new);
     public static final RegistryObject<DispersibleAirBlock> OXYGEN = register("oxygen", DispersibleAirBlock::new);
     public static final RegistryObject<CanisterFiller> CANISTER_FILLER = register("canister_filler", CanisterFiller::new);
     public static final RegistryObject<OxygenDisperser> OXYGEN_DISPERSER = register("oxygen_disperser", OxygenDisperser::new);

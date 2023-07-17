@@ -14,7 +14,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import syconn.swe.Main;
-import syconn.swe.common.data.DimSettingsManager;
+import syconn.swe.common.data.types.DimSettingsManager;
 import syconn.swe.common.inventory.ExtendedPlayerInventory;
 import syconn.swe.init.ModCapabilities;
 import syconn.swe.init.ModDamageTypes;

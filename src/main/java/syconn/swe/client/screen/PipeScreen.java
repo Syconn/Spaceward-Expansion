@@ -44,7 +44,6 @@ public class PipeScreen extends AbstractContainerScreen<PipeMenu> {
         this.component = p_97743_;
     }
 
-    @Override
     protected void init() {
         super.init();
         int sz = system.getPoints().size();
@@ -59,7 +58,6 @@ public class PipeScreen extends AbstractContainerScreen<PipeMenu> {
         flipper = addRenderableWidget(new ExtendedButton(this.leftPos + 56, this.topPos + 33, 60, 20, Component.literal(fluidPoint.toString()), (b) -> Network.getPlayChannel().sendToServer(new MessageChange(menu.getBE().getBlockPos()))));
     }
 
-    @Override
     public void render(PoseStack p_97795_, int p_97796_, int p_97797_, float p_97798_) {
         fluidPoint = menu.getBE().selectedTab();
         flipper.setMessage(Component.literal(fluidPoint.toString()));
@@ -68,7 +66,6 @@ public class PipeScreen extends AbstractContainerScreen<PipeMenu> {
         renderTooltip(p_97795_, p_97796_, p_97797_);
     }
 
-    @Override
     protected void renderBg(PoseStack pose, float p_97788_, int p_97789_, int p_97790_) {
         RenderSystem.setShaderTexture(0, BACKGROUND);
         blit(pose, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
@@ -76,7 +73,6 @@ public class PipeScreen extends AbstractContainerScreen<PipeMenu> {
             blit(pose, this.leftPos + 151, this.topPos + 12, 176, 8, 18, 18);
             blit(pose, this.leftPos + 151, this.topPos + 34, 176, 8, 18, 18);
             blit(pose, this.leftPos + 151, this.topPos + 56, 176, 8, 18, 18);
-
             blit(pose, this.leftPos + 23, this.topPos + 31, 194, 8, 23, 24);
 
             drawCenteredString(pose, font, String.valueOf(fluidPoint.priority()), this.leftPos + 34, this.topPos + 39, DyeColor.WHITE.getTextColor());

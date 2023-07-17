@@ -15,6 +15,7 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class SidedFluidHandlerBE extends BlockEntity {
@@ -51,5 +52,13 @@ public class SidedFluidHandlerBE extends BlockEntity {
         if (capability == ForgeCapabilities.FLUID_HANDLER && (facing == null || (side == null || side.contains(facing))))
             return holder.cast();
         return super.getCapability(capability, facing);
+    }
+
+    protected static List<Direction> allSides() {
+        return Arrays.stream(Direction.values()).toList();
+    }
+
+    protected static List<Direction> topOrBottom() {
+        return List.of(Direction.UP, Direction.DOWN);
     }
 }

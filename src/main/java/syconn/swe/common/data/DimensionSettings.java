@@ -1,4 +1,4 @@
-package syconn.swe.common.data.types;
+package syconn.swe.common.data;
 
 import com.google.gson.JsonObject;
 

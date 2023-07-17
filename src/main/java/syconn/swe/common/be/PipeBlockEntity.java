@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -119,7 +120,17 @@ public class PipeBlockEntity extends FluidHandlerBlockEntity implements MenuProv
     }
 
     // TODO FIXES - Clicking Only Works on Double
+    //  - Make it work with Any Fluid Block Not just tanks
     public static void serverTick(Level l, BlockPos pos, BlockState state, PipeBlockEntity be) {
+        for (Direction d : Direction.values()) {
+            if (l.getBlockEntity(pos.relative(d)) != null && l.getBlockEntity(pos.relative(d)).getCapability(ForgeCapabilities.FLUID_HANDLER, d.getOpposite()).isPresent()) {
+                FluidPointSystem.FluidPoint point = be.getSystem().getPoint(d);
+                if (point.handlesExport() && (point.priority() > be.getSource().priority() || be.getSource().isEmpty() || point.equals(be.getSource()) || (l.getBlockEntity(be.source.pos()) != null && l.getBlockEntity(be.source.pos()).getCapability(ForgeCapabilities.FLUID_HANDLER).isPresent() && l.getBlockEntity(be.source.pos()).getCapability(ForgeCapabilities.FLUID_HANDLER).resolve().get().getFluidInTank(0).getAmount() <= 0))) {
+                    be.setSource(be.getSystem().getPoint(d));
+                    be.clear();
+                }
+            }
+        }
         if (!be.source.isEmpty() && l.getBlockState(be.source.pos().relative(be.source.d().getOpposite())).getValue(FluidBaseBlock.ENABLED)) {
             be.source = l.getBlockEntity(be.source.pos().relative(be.source.d().getOpposite()), ModBlockEntity.PIPE.get()).get().getSystem().getPoint(be.source.d());
         } else {

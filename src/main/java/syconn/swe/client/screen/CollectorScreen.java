@@ -13,33 +13,27 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
 import syconn.swe.Main;
 import syconn.swe.client.screen.widget.InfoWidget;
+import syconn.swe.common.container.CollectorMenu;
 import syconn.swe.common.container.DisperserMenu;
 import syconn.swe.network.Network;
 import syconn.swe.network.messages.MessageToggleDisperser;
-import syconn.swe.util.BlockInfo;
 
-public class DisperserScreen extends AbstractContainerScreen<DisperserMenu> {
+import java.util.List;
+
+public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
 
     private static final ResourceLocation BG = new ResourceLocation(Main.MODID, "textures/gui/disperser.png");
 
-    public DisperserScreen(DisperserMenu p_97741_, Inventory p_97742_, Component p_97743_) {
+    public CollectorScreen(CollectorMenu p_97741_, Inventory p_97742_, Component p_97743_) {
         super(p_97741_, p_97742_, p_97743_);
     }
 
     protected void init() {
         super.init();
-        addRenderableWidget(new ExtendedButton(leftPos + 91, topPos + 25, 60, 20, Component.literal(menu.getBE().isEnabled() ? "Enabled" : "Disabled"), this::onclick));
         addRenderableWidget(new InfoWidget(leftPos + 153, topPos + 3, this, menu.getBE()));
     }
 
-    private void onclick(Button button) {
-        button.setMessage(Component.literal(!menu.getBE().isEnabled() ? "Enabled" : "Disabled"));
-        Network.getPlayChannel().sendToServer(new MessageToggleDisperser(menu.getBE().getBlockPos()));
-    }
-
-    protected void renderLabels(PoseStack p_97808_, int p_97809_, int p_97810_) {
-
-    }
+    protected void renderLabels(PoseStack p_97808_, int p_97809_, int p_97810_) { }
 
     public void render(PoseStack p_97795_, int p_97796_, int p_97797_, float p_97798_) {
         super.render(p_97795_, p_97796_, p_97797_, p_97798_);
