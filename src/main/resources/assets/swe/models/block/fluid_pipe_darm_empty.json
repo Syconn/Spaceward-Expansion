@@ -1,0 +1,20 @@
+{
+	"credit": "Made in Blockbench by Syconn",
+	"textures": {
+		"0": "swe:block/fluid_pipe_darm",
+		"particle": "swe:block/fluid_pipe_darm"
+	},
+	"render_type": "minecraft:cutout",
+	"elements": [
+		{
+			"from": [5, 5, 0],
+			"to": [11, 11, 16],
+			"faces": {
+				"east": {"uv": [0, 0, 16, 6], "texture": "#0"},
+				"west": {"uv": [0, 0, 16, 6], "rotation": 180, "texture": "#0"},
+				"up": {"uv": [0, 0, 16, 6], "rotation": 270, "texture": "#0"},
+				"down": {"uv": [0, 0, 16, 6], "rotation": 90, "texture": "#0"}
+			}
+		}
+	]
+}
