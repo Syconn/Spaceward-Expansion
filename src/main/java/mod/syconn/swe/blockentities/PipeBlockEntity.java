@@ -40,7 +40,7 @@ public class PipeBlockEntity extends FluidHandlerBlockEntity implements MenuProv
     private static final int transferSpeed = 80;
 
     private final ItemStackHandler items = new ItemStackHandler(3) {
-        protected void onContentsChanged(int slot) {
+        private void onContentsChanged(int slot) {
             update();
         }
     };

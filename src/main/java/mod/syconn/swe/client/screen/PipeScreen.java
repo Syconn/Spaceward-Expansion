@@ -13,7 +13,6 @@ import mod.syconn.swe.Main;
 import mod.syconn.swe.client.screen.widget.ArrowButton;
 import mod.syconn.swe.client.screen.widget.TabButton;
 import mod.syconn.swe.world.container.PipeMenu;
-import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.MessageChange;
 import mod.syconn.swe.network.messages.MessageClickArrow;
 import mod.syconn.swe.network.messages.MessageClickTab;
@@ -26,8 +25,8 @@ public class PipeScreen extends AbstractContainerScreen<PipeMenu> {
 
     private TabButton[] tabs;
     private ExtendedButton flipper;
-    private Inventory inv;
-    private Component component;
+    private final Inventory inv;
+    private final Component component;
     private final FluidPointSystem system = menu.getBE().getSystem();
     private FluidPointSystem.FluidPoint fluidPoint;
 

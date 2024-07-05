@@ -11,7 +11,7 @@ import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 
 public class ResourceUtil {
 
-    private static Minecraft mc = Minecraft.getInstance();
+    private static final Minecraft mc = Minecraft.getInstance();
 
     public static int getColor(Fluid fluid){
         if (fluid == Fluids.WATER) return DyeColor.BLUE.getTextColor();

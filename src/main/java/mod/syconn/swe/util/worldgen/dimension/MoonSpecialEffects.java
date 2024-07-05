@@ -19,7 +19,7 @@ public class MoonSpecialEffects extends DimensionSpecialEffects {
     private static final ResourceLocation EARTH_LOCATION = new ResourceLocation(Main.MODID, "textures/environment/earth.png");
     private static final ResourceLocation SKY_LOCATION = new ResourceLocation(Main.MODID, "textures/environment/sky.png");
 
-    private Minecraft minecraft = Minecraft.getInstance();
+    private final Minecraft minecraft = Minecraft.getInstance();
 
     public MoonSpecialEffects() {
         super(Float.NaN, false, SkyType.END, true, false);
@@ -27,7 +27,7 @@ public class MoonSpecialEffects extends DimensionSpecialEffects {
 
     @Override
     public Vec3 getBrightnessDependentFogColor(Vec3 p_108878_, float p_108879_) {
-        return p_108878_.multiply((double)(p_108879_ * 0.94F + 0.06F), (double)(p_108879_ * 0.94F + 0.06F), (double)(p_108879_ * 0.91F + 0.09F));
+        return p_108878_.multiply(p_108879_ * 0.94F + 0.06F, p_108879_ * 0.94F + 0.06F, p_108879_ * 0.91F + 0.09F);
     }
 
     @Override

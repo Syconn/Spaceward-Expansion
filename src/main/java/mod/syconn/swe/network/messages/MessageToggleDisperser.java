@@ -1,35 +1,25 @@
 package mod.syconn.swe.network.messages;
 
+import io.netty.buffer.ByteBuf;
+import mod.syconn.swe.Main;
+import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import java.util.function.Supplier;
+public record MessageToggleDisperser(BlockPos pos) implements CustomPacketPayload {
 
-public class MessageToggleDisperser implements IMessage<MessageToggleDisperser> {
+    public static final CustomPacketPayload.Type<MessageToggleDisperser> TYPE = new CustomPacketPayload.Type<>(Main.loc("toggle_disperser"));
+    public static final StreamCodec<ByteBuf, MessageToggleDisperser> STREAM_CODEC = StreamCodec.composite(BlockPos.STREAM_CODEC, MessageToggleDisperser::pos, MessageToggleDisperser::new);
 
-    private BlockPos pos;
-
-    public MessageToggleDisperser() { }
-
-    public MessageToggleDisperser(BlockPos pos) {
-        this.pos = pos;
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    public void encode(MessageToggleDisperser message, FriendlyByteBuf buffer) {
-        buffer.writeBlockPos(message.pos);
-    }
-
-    public MessageToggleDisperser decode(FriendlyByteBuf buffer) {
-        return new MessageToggleDisperser(buffer.readBlockPos());
-    }
-
-    public void handle(MessageToggleDisperser message, Supplier<NetworkEvent.Context> supplier) {
-        supplier.get().enqueueWork(() -> {
-            if (supplier.get().getSender() != null) {
-                supplier.get().getSender().level.getBlockEntity(message.pos, ModBlockEntity.DISPERSER.get()).get().toggleEnabled();
-            }
+    public static void handle(MessageToggleDisperser message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            context.player().level().getBlockEntity(message.pos, Registration.DISPERSER.get()).get().toggleEnabled();
         });
-        supplier.get().setPacketHandled(true);
     }
 }

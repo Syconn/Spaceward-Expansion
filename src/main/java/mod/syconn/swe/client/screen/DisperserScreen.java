@@ -14,7 +14,6 @@ import net.minecraftforge.client.gui.widget.ExtendedButton;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.client.screen.widget.InfoWidget;
 import mod.syconn.swe.world.container.DisperserMenu;
-import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.MessageToggleDisperser;
 
 public class DisperserScreen extends AbstractContainerScreen<DisperserMenu> {

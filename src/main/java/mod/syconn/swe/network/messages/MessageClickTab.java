@@ -1,47 +1,31 @@
 package mod.syconn.swe.network.messages;
 
+import io.netty.buffer.ByteBuf;
+import mod.syconn.swe.Main;
+import mod.syconn.swe.blockentities.PipeBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkHooks;
-import mod.syconn.swe.blockentities.PipeBlockEntity;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import java.util.function.Supplier;
+public record MessageClickTab(BlockPos pos, Direction direction) implements CustomPacketPayload {
 
-public class MessageClickTab implements IMessage<MessageClickTab> {
+    public static final CustomPacketPayload.Type<MessageClickTab> TYPE = new CustomPacketPayload.Type<>(Main.loc("click_tab"));
+    public static final StreamCodec<ByteBuf, MessageClickTab> STREAM_CODEC = StreamCodec.composite(BlockPos.STREAM_CODEC, MessageClickTab::pos, Direction.STREAM_CODEC, MessageClickTab::direction, MessageClickTab::new);
 
-    private BlockPos pos;
-    private Direction d;
-
-    public MessageClickTab() {}
-
-    public MessageClickTab(BlockPos pos, Direction d) {
-        this.pos = pos;
-        this.d = d;
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public void encode(MessageClickTab message, FriendlyByteBuf buffer) {
-        buffer.writeBlockPos(message.pos);
-        buffer.writeInt(message.d.get3DDataValue());
-    }
-
-    @Override
-    public MessageClickTab decode(FriendlyByteBuf buffer) {
-        return new MessageClickTab(buffer.readBlockPos(), Direction.from3DDataValue(buffer.readInt()));
-    }
-
-    @Override
-    public void handle(MessageClickTab message, Supplier<NetworkEvent.Context> supplier) {
-        supplier.get().enqueueWork(() -> {
-            ServerPlayer player = supplier.get().getSender();
-            if (player.level.getBlockEntity(message.pos) instanceof PipeBlockEntity pe) {
+    public static void handle(MessageClickTab message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            ServerPlayer player = (ServerPlayer) context.player();
+            if (player.level().getBlockEntity(message.pos) instanceof PipeBlockEntity pe) {
                 pe.setTarget(message.d);
                 NetworkHooks.openScreen(player, pe, message.pos);
             }
         });
-        supplier.get().setPacketHandled(true);
     }
 }

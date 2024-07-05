@@ -27,7 +27,7 @@ public abstract class GUIFluidHandlerBlockEntity extends SidedFluidHandlerBE {
 
         this.tank = new FluidTank(size){
             @Override
-            protected void onContentsChanged() { update(); }
+            private void onContentsChanged() { update(); }
 
             @Override
             public int fill(FluidStack resource, FluidAction action) {

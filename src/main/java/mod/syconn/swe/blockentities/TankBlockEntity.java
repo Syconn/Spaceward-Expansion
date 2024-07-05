@@ -34,13 +34,13 @@ import mod.syconn.swe.util.ResourceUtil;
 
 public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider {
 
-    private int fillSpeed = 500;
+    private final int fillSpeed = 500;
     private RGBImage bfluid;
     private ResourceLocation bfluidLoc;
 
     private final ItemStackHandler items = new ItemStackHandler(getContainerSize()) {
         @Override
-        protected void onContentsChanged(int slot) { update(); }
+        private void onContentsChanged(int slot) { update(); }
     };
     private final LazyOptional<IItemHandler> holder = LazyOptional.of(() -> items);
 

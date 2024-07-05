@@ -20,8 +20,8 @@ public class InfoWidget extends AbstractWidget {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/gui/elements.png");
     private final Screen screen;
-    private List<Component> text = new ArrayList<>();
-    private BlockEntity be;
+    private final List<Component> text = new ArrayList<>();
+    private final BlockEntity be;
 
     public InfoWidget(int x, int y, Screen screen, BlockEntity be) {
         super(x, y, 20, 20, Component.literal("Information Button"));

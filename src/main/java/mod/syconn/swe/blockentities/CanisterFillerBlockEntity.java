@@ -20,7 +20,7 @@ import mod.syconn.swe.items.Canister;
 public class CanisterFillerBlockEntity extends BlockEntity {
 
     // TODO O2 tanks work when no space suit + render (Shouldnt)
-    private int fillSpeed = 10;
+    private final int fillSpeed = 10;
     private NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
 
     public CanisterFillerBlockEntity(BlockPos p_155229_, BlockState p_155230_) {

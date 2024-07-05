@@ -1,39 +1,27 @@
 package mod.syconn.swe.network.messages;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
+import io.netty.buffer.ByteBuf;
+import mod.syconn.swe.Main;
 import mod.syconn.swe.blockentities.PipeBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-import java.util.function.Supplier;
+public record MessageChange(BlockPos pos) implements CustomPacketPayload {
 
-public class MessageChange implements IMessage<MessageChange> {
+    public static final CustomPacketPayload.Type<MessageChange> TYPE = new CustomPacketPayload.Type<>(Main.loc("change"));
+    public static final StreamCodec<ByteBuf, MessageChange> STREAM_CODEC = StreamCodec.composite(BlockPos.STREAM_CODEC, MessageChange::pos, MessageChange::new);
 
-    private BlockPos pos;
-
-    public MessageChange() {}
-
-    public MessageChange(BlockPos pos) { this.pos = pos; }
-
-    @Override
-    public void encode(MessageChange message, FriendlyByteBuf buffer) {
-        buffer.writeBlockPos(message.pos);
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
-    @Override
-    public MessageChange decode(FriendlyByteBuf buffer) {
-        return new MessageChange(buffer.readBlockPos());
-    }
-
-    @Override
-    public void handle(MessageChange message, Supplier<NetworkEvent.Context> supplier) {
-        supplier.get().enqueueWork(() -> {
-            ServerPlayer player = supplier.get().getSender();
-            if (player.level.getBlockEntity(message.pos) instanceof PipeBlockEntity pe) {
-                pe.changeType();
-            }
+    public static void handle(MessageChange message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            ServerPlayer player = (ServerPlayer) context.player();
+            if (player.level().getBlockEntity(message.pos) instanceof PipeBlockEntity pe) pe.changeType();
         });
-        supplier.get().setPacketHandled(true);
     }
 }

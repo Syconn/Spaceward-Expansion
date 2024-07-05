@@ -41,7 +41,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
     public DisperserBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
         super(ModBlockEntity.DISPERSER.get(), p_155229_, p_155230_, 1000, List.of(Direction.DOWN));
         this.tank = new FluidTank(1000){
-            protected void onContentsChanged() { update(); }
+            private void onContentsChanged() { update(); }
 
             public int fill(FluidStack resource, FluidAction action) {
                 if (fluid.isEmpty()) updateTextures(resource);

@@ -20,8 +20,8 @@ import java.util.Map;
 public class OxygenProductionManager extends SimpleJsonResourceReloadListener {
 
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
-    private static Map<Block, Double> BLOCKS = new HashMap<>();
-    private static Map<TagKey<Block>, Double> TAGS = new HashMap<>();
+    private static final Map<Block, Double> BLOCKS = new HashMap<>();
+    private static final Map<TagKey<Block>, Double> TAGS = new HashMap<>();
 
     public OxygenProductionManager() {
         super(GSON, "oxygen_production");
