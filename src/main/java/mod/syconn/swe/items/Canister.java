@@ -11,8 +11,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
@@ -38,8 +36,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public boolean isBarVisible(ItemStack stack) {
-        if (getType(stack) == EMPTY)
-            return false;
+        if (getType(stack) == EMPTY) return false;
         return getDisplayValue(stack) != 6F;
     }
 

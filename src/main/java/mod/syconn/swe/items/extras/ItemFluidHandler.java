@@ -2,9 +2,10 @@ package mod.syconn.swe.items.extras;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 
-public interface ItemFluidHandler {
+@Deprecated(forRemoval = true)
+public interface ItemFluidHandler { // TODO REPLACE WITH CAPABILITY
 
     FluidStack getFluid(ItemStack stack);
     void setFluid(ItemStack item, FluidStack fluid);
