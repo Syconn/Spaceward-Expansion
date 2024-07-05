@@ -3,8 +3,8 @@ package mod.syconn.swe;
 import mod.syconn.swe.client.datagen.*;
 import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.world.CommonHandler;
-import mod.syconn.swe.world.data.types.DimSettingsManager;
-import mod.syconn.swe.world.data.types.OxygenProductionManager;
+import mod.syconn.swe.world.dimensions.DimSettingsManager;
+import mod.syconn.swe.world.dimensions.OxygenProductionManager;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -36,6 +36,7 @@ public class Main {
         Registration.FLUIDS.register(modEventBus);
         Registration.TABS.register(modEventBus);
         Registration.ATTACHMENT_TYPES.register(modEventBus);
+        Registration.COMPONENTS.register(modEventBus);
 
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.CLIENT_CONFIG);
     }

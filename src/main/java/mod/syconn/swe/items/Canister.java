@@ -1,5 +1,11 @@
 package mod.syconn.swe.items;
 
+import mod.syconn.swe.Registration;
+import mod.syconn.swe.items.extras.EquipmentItem;
+import mod.syconn.swe.items.extras.ItemFluidHandler;
+import mod.syconn.swe.util.data.AirBubblesSavedData;
+import mod.syconn.swe.util.data.SpaceSlot;
+import mod.syconn.swe.world.data.components.CanisterComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -11,25 +17,12 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import org.jetbrains.annotations.Nullable;
-import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.items.extras.ItemFluidHandler;
-import mod.syconn.swe.util.ResourceUtil;
-import mod.syconn.swe.util.data.AirBubblesSavedData;
-import mod.syconn.swe.util.data.SpaceSlot;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.List;
-import java.util.Objects;
-
-import static net.minecraft.world.level.material.Fluids.EMPTY;
 
 /** USED FOR LIQUIDS ONLY */
 public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
-
-    protected static final String FLUID = "fluid";
-    protected static final String MAX = "max";
-    protected static final String CURRENT = "current";
-    protected static final String COLOR = "color";
 
     public Canister(Rarity rarity) {
         super(new Properties().stacksTo(1).rarity(rarity));
@@ -48,7 +41,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
         return 13 * getValue(stack) / getMaxValue(stack);
     }
 
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, Level level, List<Component> list, TooltipFlag flag) {
         if (getType(stack) != EMPTY) {
             list.add(Component.empty());
             list.add(Component.literal(getValue(stack) + "mb / " + getMaxValue(stack) + "mb").withStyle(ChatFormatting.YELLOW));
@@ -90,29 +83,12 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
         return stack;
     }
 
-    public static Fluid getType(ItemStack stack){
-        if (stack.getOrCreateTag().contains(FLUID)){
-            ResourceLocation fluidName = new ResourceLocation(stack.getOrCreateTag().getString(FLUID));
-            return Objects.requireNonNullElse(ForgeRegistries.FLUIDS.getValue(fluidName), EMPTY);
-        }
-        return EMPTY;
+    public static FluidStack getType(ItemStack stack){
+        return stack.has(Registration.CANISTER_COMPONENT) ? stack.get(Registration.CANISTER_COMPONENT).fluid() : FluidStack.EMPTY;
     }
 
     public void setAmount(ItemStack stack, int v, Fluid fluid) {
-        if (v >= 0 && v <= getMaxValue(stack)) stack.getOrCreateTag().putInt(CURRENT, v);
-        if (v <= 0) stack.getOrCreateTag().putString(FLUID, ForgeRegistries.FLUIDS.getKey(EMPTY).toString());
-        else {
-            stack.getOrCreateTag().putString(FLUID, ForgeRegistries.FLUIDS.getKey(fluid).toString());
-            stack.getOrCreateTag().putInt(COLOR, ResourceUtil.getColor(fluid));
-        }
-    }
-
-    public static int getValue(ItemStack stack){
-        return stack.getOrCreateTag().getInt(CURRENT);
-    }
-
-    public static int getMaxValue(ItemStack stack){
-        return stack.getOrCreateTag().getInt(MAX);
+        stack.set(Registration.CANISTER_COMPONENT, CanisterComponent.set(new FluidStack(fluid, v)));
     }
 
     public static float getDisplayValue(ItemStack stack){
@@ -122,13 +98,11 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public FluidStack getFluid(ItemStack stack) {
-        return new FluidStack(getType(stack), getValue(stack));
+        return stack.getOrDefault(Registration.CANISTER_COMPONENT, CanisterComponent.DEFAULT).fluid();
     }
 
     public void setFluid(ItemStack item, FluidStack fluid) {
-        item.getOrCreateTag().putString(FLUID, ForgeRegistries.FLUIDS.getKey(fluid.getFluid()).toString());
-        item.getOrCreateTag().putInt(CURRENT, fluid.getAmount());
-        item.getOrCreateTag().putInt(COLOR, ResourceUtil.getColor(fluid.getFluid()));
+        item.get();
     }
 
     public static boolean increaseFluid(ItemStack item, FluidStack f) {

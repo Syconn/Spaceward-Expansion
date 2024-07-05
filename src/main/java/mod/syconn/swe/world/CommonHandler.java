@@ -14,7 +14,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import mod.syconn.swe.Main;
-import mod.syconn.swe.world.data.types.DimSettingsManager;
+import mod.syconn.swe.world.dimensions.DimSettingsManager;
 import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.init.ModCapabilities;
 import mod.syconn.swe.items.Parachute;

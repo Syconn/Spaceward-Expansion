@@ -27,7 +27,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import mod.syconn.swe.world.container.TankMenu;
-import mod.syconn.swe.world.data.PixelImage;
+import mod.syconn.swe.client.RGBImage;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
 import mod.syconn.swe.util.FluidHelper;
 import mod.syconn.swe.util.ResourceUtil;
@@ -35,7 +35,7 @@ import mod.syconn.swe.util.ResourceUtil;
 public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider {
 
     private int fillSpeed = 500;
-    private PixelImage bfluid;
+    private RGBImage bfluid;
     private ResourceLocation bfluidLoc;
 
     private final ItemStackHandler items = new ItemStackHandler(getContainerSize()) {
@@ -50,7 +50,7 @@ public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
 
     protected void updateTextures(FluidStack resource) {
         super.updateTextures(resource);
-        bfluid = new PixelImage(ResourceUtil.createFluidBlockTexture(resource.getFluid()));
+        bfluid = new RGBImage(ResourceUtil.createFluidBlockTexture(resource.getFluid()));
         bfluidLoc = Minecraft.getInstance().getTextureManager().register("bfluid", bfluid.getImageFromPixels());
         update();
     }
@@ -67,7 +67,7 @@ public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
     public void load(CompoundTag tag) {
         super.load(tag);
         if (tag.contains("Inventory")) items.deserializeNBT(tag.getCompound("Inventory"));
-        if (tag.contains("bfluid")) bfluid = PixelImage.read(tag.getCompound("bfluid"));
+        if (tag.contains("bfluid")) bfluid = RGBImage.read(tag.getCompound("bfluid"));
         if (bfluid != null) bfluidLoc = Minecraft.getInstance().getTextureManager().register("bfluid", bfluid.getImageFromPixels());
     }
 

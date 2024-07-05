@@ -1,4 +1,4 @@
-package mod.syconn.swe.world.data;
+package mod.syconn.swe.world.dimensions;
 
 import com.google.gson.JsonObject;
 

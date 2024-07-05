@@ -12,8 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import mod.syconn.swe.world.container.CollectorMenu;
-import mod.syconn.swe.world.data.types.DimSettingsManager;
-import mod.syconn.swe.world.data.types.OxygenProductionManager;
+import mod.syconn.swe.world.dimensions.DimSettingsManager;
+import mod.syconn.swe.world.dimensions.OxygenProductionManager;
 import mod.syconn.swe.util.BlockInfo;
 
 import java.util.ArrayList;

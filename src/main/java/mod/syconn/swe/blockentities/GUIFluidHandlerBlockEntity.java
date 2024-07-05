@@ -13,13 +13,13 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import mod.syconn.swe.world.data.PixelImage;
+import mod.syconn.swe.client.RGBImage;
 
 import java.util.List;
 
 public abstract class GUIFluidHandlerBlockEntity extends SidedFluidHandlerBE {
 
-    private PixelImage gfluid;
+    private RGBImage gfluid;
     private ResourceLocation gfluidLoc;
 
     public GUIFluidHandlerBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state, int size, List<Direction> side) {
@@ -38,7 +38,7 @@ public abstract class GUIFluidHandlerBlockEntity extends SidedFluidHandlerBE {
     }
 
     protected void updateTextures(FluidStack resource) {
-        gfluid = new PixelImage(ResourceUtil.createFluidGuiTexture(resource.getFluid()));
+        gfluid = new RGBImage(ResourceUtil.createFluidGuiTexture(resource.getFluid()));
         gfluidLoc = Minecraft.getInstance().getTextureManager().register("gfluid", gfluid.getImageFromPixels());
     }
 
@@ -54,7 +54,7 @@ public abstract class GUIFluidHandlerBlockEntity extends SidedFluidHandlerBE {
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        if (tag.contains("gfluid")) gfluid = PixelImage.read(tag.getCompound("gfluid"));
+        if (tag.contains("gfluid")) gfluid = RGBImage.read(tag.getCompound("gfluid"));
         if (gfluid != null) gfluidLoc = Minecraft.getInstance().getTextureManager().register("gfluid", gfluid.getImageFromPixels());
     }
 

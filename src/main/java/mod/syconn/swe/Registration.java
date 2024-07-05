@@ -6,14 +6,16 @@ import mod.syconn.swe.fluids.BaseFluidType;
 import mod.syconn.swe.fluids.O2Fluid;
 import mod.syconn.swe.items.*;
 import mod.syconn.swe.util.Dyeable;
-import mod.syconn.swe.attachments.SpaceSuit;
 import mod.syconn.swe.world.container.CollectorMenu;
 import mod.syconn.swe.world.container.DisperserMenu;
 import mod.syconn.swe.world.container.PipeMenu;
 import mod.syconn.swe.world.container.TankMenu;
 import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
 import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
+import mod.syconn.swe.world.data.attachments.SpaceSuit;
+import mod.syconn.swe.world.data.components.CanisterComponent;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -67,6 +69,7 @@ public class Registration {
     public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, Main.MODID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, Main.MODID);
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MODID);
+    public static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(MODID);
 
     public static Supplier<FluidType> O2_FLUID_TYPE = FLUID_TYPES.register("o2_fluid", () -> new BaseFluidType(O2_STILL_RL, O2_FLOWING_RL, O2_OVERLAY_RL, -1, new Vector3f(68f / 255f, 149f / 255f, 168f / 255f), FluidType.Properties.create().descriptionId("swe.fluid.o2").canSwim(true).canExtinguish(false).canDrown(false)
             .pathType(PathType.WATER).sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY).sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH).lightLevel(1).density(15).viscosity(5)
@@ -120,6 +123,8 @@ public class Registration {
 
     public static final Supplier<SimpleCraftingRecipeSerializer<DyedParachuteRecipe>> PARACHUTE_RECIPE = RECIPE_SERIALIZERS.register("parachute_recipe", () -> new SimpleCraftingRecipeSerializer<>(DyedParachuteRecipe::new));
     public static final Supplier<SimpleCraftingRecipeSerializer<RefillingCanisterRecipe>> REFILLING_CANISTER = RECIPE_SERIALIZERS.register("refilling_canister_recipe", () -> new SimpleCraftingRecipeSerializer<>(RefillingCanisterRecipe::new));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CanisterComponent>> CANISTER_COMPONENT = COMPONENTS.registerComponentType("canister", builder -> builder.persistent(CanisterComponent.BASIC_CODEC).networkSynchronized(CanisterComponent.BASIC_STREAM_CODEC));
 
     public static final ResourceLocation MOON = ResourceLocation.fromNamespaceAndPath(Main.MODID, "moon");
 

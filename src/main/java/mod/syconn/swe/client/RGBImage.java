@@ -1,22 +1,22 @@
-package mod.syconn.swe.world.data;
+package mod.syconn.swe.client;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.nbt.CompoundTag;
 
-public class PixelImage {
+public class RGBImage {
 
-    private int height;
-    private int width;
-    private int[][] pixels;
+    private final int height;
+    private final int width;
+    private final int[][] pixels;
 
-    public PixelImage(NativeImage image) {
+    public RGBImage(NativeImage image) {
         this.height = image.getHeight();
         this.width = image.getWidth();
         this.pixels = getPixelFromImage(image);
     }
 
-    public PixelImage(int height, int width, int[][] pixels) {
+    public RGBImage(int height, int width, int[][] pixels) {
         this.height = height;
         this.width = width;
         this.pixels = pixels;
@@ -42,14 +42,14 @@ public class PixelImage {
         return new DynamicTexture(output);
     }
 
-    public static PixelImage read(CompoundTag tag){
+    public static RGBImage read(CompoundTag tag){
         int[][] pixels = new int[tag.getInt("width")][tag.getInt("height")];
         for (int x = 0; x < tag.getInt("width"); x++) {
             for (int y = 0; y < tag.getInt("height"); y++) {
                 pixels[x][y] = tag.getInt(x + "_" + y);
             }
         }
-        return new PixelImage(tag.getInt("width"), tag.getInt("height"), pixels);
+        return new RGBImage(tag.getInt("width"), tag.getInt("height"), pixels);
     }
 
     public CompoundTag write(){

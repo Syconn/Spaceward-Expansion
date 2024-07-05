@@ -1,4 +1,4 @@
-package mod.syconn.swe.world.data.types;
+package mod.syconn.swe.world.dimensions;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,7 +11,6 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import mod.syconn.swe.Main;
-import mod.syconn.swe.world.data.DimensionSettings;
 
 import java.util.HashMap;
 import java.util.Map;

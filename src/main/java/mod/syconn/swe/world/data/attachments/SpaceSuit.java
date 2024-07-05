@@ -1,4 +1,4 @@
-package mod.syconn.swe.attachments;
+package mod.syconn.swe.world.data.attachments;
 
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.items.SpaceArmor;
