@@ -1,8 +1,8 @@
 package mod.syconn.swe.items;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.util.data.SpaceSlot;
+import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
 import net.minecraft.Util;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;

@@ -1,5 +1,6 @@
 package mod.syconn.swe.items;
 
+import mod.syconn.swe.Registration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -16,24 +17,22 @@ import java.util.List;
 public class Wrench extends Item {
 
     public Wrench() {
-        super(new Properties().stacksTo(1));
+        super(new Properties().stacksTo(1).component(Registration.MODE_COMPONENT, false));
     }
 
-    @Override
     public InteractionResultHolder<ItemStack> use(Level l, Player p, InteractionHand hand) {
         if (!l.isClientSide) {
             ItemStack stack = p.getItemInHand(hand);
-            if (p.isShiftKeyDown()){
-                stack.getOrCreateTag().putBoolean("exporter", !stack.getOrCreateTag().getBoolean("exporter"));
-                p.displayClientMessage(Component.literal(stack.getOrCreateTag().getBoolean("exporter") ? "Export Mode" : "Import Mode").withStyle(ChatFormatting.AQUA), true);
+            if (p.isShiftKeyDown()) {
+                stack.set(Registration.MODE_COMPONENT, Boolean.FALSE.equals(stack.get(Registration.MODE_COMPONENT)));
+                p.displayClientMessage(Component.literal(Boolean.TRUE.equals(stack.get(Registration.MODE_COMPONENT)) ? "Export Mode" : "Import Mode").withStyle(ChatFormatting.AQUA), true);
             }
         }
         return super.use(l, p, hand);
     }
 
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level p_41422_, List<Component> p_41423_, TooltipFlag p_41424_) {
-        p_41423_.add(Component.literal("Mode: " + (stack.getOrCreateTag().getBoolean("exporter") ? "Export" : "Import")));
-        super.appendHoverText(stack, p_41422_, p_41423_, p_41424_);
+    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+        pTooltipComponents.add(Component.literal("Mode: " + (Boolean.TRUE.equals(pStack.get(Registration.MODE_COMPONENT)) ? "Export" : "Import")));
+        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 }

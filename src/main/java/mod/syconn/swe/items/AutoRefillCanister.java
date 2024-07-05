@@ -21,9 +21,8 @@ public class AutoRefillCanister extends Canister {
     public void inventoryTick(ItemStack stack, Level level, Entity e, int p_41407_, boolean p_41408_) {
         if (e instanceof Player player) {
             if (!level.isClientSide && AirBubblesSavedData.get().breathable(level.dimension(), player.getOnPos().above(1)) && SpaceArmor.hasFullKit(player)) {
-                if (getType(stack) == Fluids.EMPTY || getType(stack) == Registration.O2_SOURCE.get() && getValue(stack) < getMaxValue(stack)) {
+                if (get(stack).fluid().equals(FluidStack.EMPTY) || get(stack).fluid().is(Registration.O2_SOURCE.get()) && get(stack).fluid().getAmount() < get(stack).max())
                     increaseFluid(stack, new FluidStack(Registration.O2_SOURCE.get(), 1));
-                }
             }
         }
     }
@@ -31,9 +30,8 @@ public class AutoRefillCanister extends Canister {
     public void onEquipmentTick(ItemStack stack, Level level, Player player) {
         super.onEquipmentTick(stack, level, player);
         if (!level.isClientSide && AirBubblesSavedData.get().breathable(level.dimension(), player.getOnPos().above(1)) && SpaceArmor.hasFullKit(player)) {
-            if (getType(stack) == Fluids.EMPTY || getType(stack) == Registration.O2_SOURCE.get() && getValue(stack) < getMaxValue(stack)) {
+            if (get(stack).fluid().equals(FluidStack.EMPTY) || get(stack).fluid().is(Registration.O2_SOURCE.get()) && get(stack).fluid().getAmount() < get(stack).max())
                 increaseFluid(stack, new FluidStack(Registration.O2_SOURCE.get(), 1));
-            }
         }
     }
 

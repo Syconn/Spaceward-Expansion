@@ -1,5 +1,6 @@
 package mod.syconn.swe;
 
+import com.mojang.serialization.Codec;
 import mod.syconn.swe.blockentities.*;
 import mod.syconn.swe.blocks.*;
 import mod.syconn.swe.fluids.BaseFluidType;
@@ -19,6 +20,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -125,6 +127,7 @@ public class Registration {
     public static final Supplier<SimpleCraftingRecipeSerializer<RefillingCanisterRecipe>> REFILLING_CANISTER = RECIPE_SERIALIZERS.register("refilling_canister_recipe", () -> new SimpleCraftingRecipeSerializer<>(RefillingCanisterRecipe::new));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<CanisterComponent>> CANISTER_COMPONENT = COMPONENTS.registerComponentType("canister", builder -> builder.persistent(CanisterComponent.BASIC_CODEC).networkSynchronized(CanisterComponent.BASIC_STREAM_CODEC));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> MODE_COMPONENT = COMPONENTS.registerComponentType("exporter", builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
     public static final ResourceLocation MOON = ResourceLocation.fromNamespaceAndPath(Main.MODID, "moon");
 

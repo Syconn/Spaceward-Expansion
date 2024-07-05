@@ -2,6 +2,7 @@ package mod.syconn.swe.world.data.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import mod.syconn.swe.util.ResourceUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -10,10 +11,6 @@ import net.neoforged.neoforge.fluids.FluidStack;
 public record CanisterComponent(FluidStack fluid, int max, int color) {
 
     public static final CanisterComponent DEFAULT = new CanisterComponent(FluidStack.EMPTY, 0, 0);
-
-    public CanisterComponent set(FluidStack fluid) {
-        return new CanisterComponent(fluid, Math.min(fluid.getAmount(), max), max);
-    }
 
     public static final Codec<CanisterComponent> BASIC_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
@@ -28,4 +25,12 @@ public record CanisterComponent(FluidStack fluid, int max, int color) {
             ByteBufCodecs.INT, CanisterComponent::color,
             CanisterComponent::new
     );
+
+    public CanisterComponent set(FluidStack fluid) {
+        return new CanisterComponent(fluid.copyWithAmount(Math.min(fluid.getAmount(), max)), ResourceUtil.getColor(fluid.getFluid()), max);
+    }
+
+    public CanisterComponent increase(FluidStack fluid) {
+        return new CanisterComponent(fluid.copyWithAmount(Math.min(fluid.getAmount() + this.fluid.getAmount(), max)), max, color);
+    }
 }

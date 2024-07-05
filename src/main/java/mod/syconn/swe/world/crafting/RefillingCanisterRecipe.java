@@ -48,7 +48,7 @@ public class RefillingCanisterRecipe extends CustomRecipe {
             }
             if (inventory.getItem(4).is(ModInit.CANISTER.get())) {
                 ItemStack result = new ItemStack(ModInit.AUTO_REFILL_CANISTER.get());
-                Canister.copy(result, inventory.getItem(4));
+                Canister.clone(result, inventory.getItem(4));
                 return result;
             }
         }
