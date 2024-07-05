@@ -3,7 +3,6 @@ package mod.syconn.swe.client.datagen;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
-import mod.syconn.swe.init.ModInit;
 
 import java.util.Collections;
 import java.util.List;

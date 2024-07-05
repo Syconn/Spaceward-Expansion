@@ -1,64 +1,47 @@
 package mod.syconn.swe;
 
-import mod.syconn.swe.client.ClientHandler;
 import mod.syconn.swe.client.datagen.*;
-import mod.syconn.swe.common.CommonHandler;
-import mod.syconn.swe.common.data.types.DimSettingsManager;
-import mod.syconn.swe.common.data.types.OxygenProductionManager;
-import mod.syconn.swe.init.*;
-import mod.syconn.swe.network.Network;
-import mod.syconn.swe.util.config.Config;
-import mod.syconn.swe.util.worldgen.dimension.MoonSpecialEffects;
-import net.minecraft.network.chat.Component;
+import mod.syconn.swe.network.Channel;
+import mod.syconn.swe.world.CommonHandler;
+import mod.syconn.swe.world.data.types.DimSettingsManager;
+import mod.syconn.swe.world.data.types.OxygenProductionManager;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 
 @Mod(Main.MODID)
 public class Main {
 
     public static final String MODID = "swe";
-    public Main() {
-        IEventBus modEventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            modEventBus.addListener(this::createTab);
-            modEventBus.addListener(ClientHandler::onRegisterLayers);
-            modEventBus.addListener(ClientHandler::addLayers);
-            modEventBus.addListener(ClientHandler::renderOverlay);
-            modEventBus.addListener(ClientHandler::addLayers);
-            modEventBus.addListener(ClientHandler::coloredBlocks);
-            modEventBus.addListener(ClientHandler::coloredItems);
-            modEventBus.addListener(ClientHandler::entityRender);
-        });
+    public Main(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::clientSetup);
-        modEventBus.addListener(this::dataGenerator);
-        modEventBus.addListener(this::dimensionEffects);
+        modEventBus.addListener(this::gatherData);
+        modEventBus.addListener(this::loadData);
+        modEventBus.addListener(Registration::addCreative);
+        modEventBus.addListener(Registration::registerCapabilities);
+        modEventBus.addListener(Channel::onRegisterPayloadHandler);
 
-        ModContainers.REGISTER.register(modEventBus);
-        ModBlockEntity.REGISTER.register(modEventBus);
-        ModInit.BLOCKS.register(modEventBus);
-        ModInit.ITEMS.register(modEventBus);
-        ModRecipeSerializer.REGISTER.register(modEventBus);
-        ModFluids.FLUID_TYPES.register(modEventBus);
-        ModFluids.FLUIDS.register(modEventBus);
+        Registration.ARMOR_MATERIALS.register(modEventBus);
+        Registration.BLOCKS.register(modEventBus);
+        Registration.ITEMS.register(modEventBus);
+        Registration.BLOCK_ENTITIES.register(modEventBus);
+        Registration.MENUS.register(modEventBus);
+        Registration.RECIPE_SERIALIZERS.register(modEventBus);
+        Registration.FLUID_TYPES.register(modEventBus);
+        Registration.FLUIDS.register(modEventBus);
+        Registration.TABS.register(modEventBus);
+        Registration.ATTACHMENT_TYPES.register(modEventBus);
 
-        FileUtils.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve(MODID), MODID);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG, "swe/sweclient.toml");
-
-        MinecraftForge.EVENT_BUS.register(this);
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.CLIENT_CONFIG);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        Network.init();
         MinecraftForge.EVENT_BUS.register(new CommonHandler());
-    }
-
-    public void clientSetup(final FMLClientSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(new ClientHandler());
     }
 
     public void dataGenerator(GatherDataEvent e){
@@ -71,16 +54,23 @@ public class Main {
         e.getGenerator().addProvider(e.includeServer(), new LootTableGen(e.getGenerator().getPackOutput()));
     }
 
-    public void dimensionEffects(RegisterDimensionSpecialEffectsEvent e){
-        e.register(new ResourceLocation(MODID, "moon"), new MoonSpecialEffects());
-    }
-    public void createTab(CreativeModeTabEvent.Register e){
-        e.registerCreativeModeTab(new ResourceLocation(MODID, "space"), builder -> builder.noScrollBar().title(Component.translatable("itemGroup.space")).icon(() -> new ItemStack(ModInit.SPACE_HELMET.get())).displayItems((a, p) -> ModInit.addItems(p)).build());
+    public void gatherData(GatherDataEvent event) {
+        var fileHelper = event.getExistingFileHelper();
+        var pack = event.getGenerator().getVanillaPack(true);
+        pack.addProvider(LangGen::new);
+        pack.addProvider(LootTableGen::new);
+        pack.addProvider(pOutput -> new ItemModelGen(pOutput, fileHelper));
+        pack.addProvider(pOutput -> new RecipeGen(pOutput, event.getLookupProvider()));
+        pack.addProvider(pOutput -> new BlockStateGen(pOutput, fileHelper));
+        pack.addProvider(pOutput -> new BlockTagsGen(pOutput, event.getLookupProvider(), fileHelper));
     }
 
-    @SubscribeEvent
     public void loadData(AddReloadListenerEvent e){
         e.addListener(new DimSettingsManager());
         e.addListener(new OxygenProductionManager());
+    }
+
+    public static ResourceLocation loc(String s) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, s);
     }
 }

@@ -8,10 +8,8 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
-import mod.syconn.swe.common.crafting.DyedParachuteRecipe;
-import mod.syconn.swe.common.crafting.RefillingCanisterRecipe;
-import mod.syconn.swe.init.ModInit;
-import mod.syconn.swe.init.ModTags;
+import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
+import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
 
 import java.util.function.Consumer;
 

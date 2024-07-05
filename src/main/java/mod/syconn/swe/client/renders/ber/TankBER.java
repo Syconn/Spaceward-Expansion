@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import mod.syconn.swe.client.model.FluidModel;
-import mod.syconn.swe.common.be.TankBlockEntity;
+import mod.syconn.swe.blockentities.TankBlockEntity;
 
 public class TankBER implements BlockEntityRenderer<TankBlockEntity> {
 

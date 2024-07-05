@@ -3,7 +3,6 @@ package mod.syconn.swe.network.messages;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
-import mod.syconn.swe.init.ModBlockEntity;
 
 import java.util.function.Supplier;
 

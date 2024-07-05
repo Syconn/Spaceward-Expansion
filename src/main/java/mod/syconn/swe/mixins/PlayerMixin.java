@@ -13,8 +13,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import mod.syconn.swe.common.container.ExtendedPlayerContainer;
-import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
+import mod.syconn.swe.world.container.ExtendedPlayerContainer;
+import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
 
 @Mixin(Player.class)
 public class PlayerMixin {

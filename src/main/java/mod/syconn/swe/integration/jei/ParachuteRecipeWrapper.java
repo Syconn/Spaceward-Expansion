@@ -12,8 +12,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
-import mod.syconn.swe.common.crafting.DyedParachuteRecipe;
-import mod.syconn.swe.init.ModInit;
+import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
 import mod.syconn.swe.util.Dyeable;
 
 import javax.annotation.Nullable;

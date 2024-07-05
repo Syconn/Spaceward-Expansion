@@ -8,7 +8,6 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import mod.syconn.swe.Main;
-import mod.syconn.swe.init.ModInit;
 
 public class ItemModelGen extends ItemModelProvider {
 

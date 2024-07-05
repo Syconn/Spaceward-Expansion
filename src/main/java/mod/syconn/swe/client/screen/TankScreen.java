@@ -10,7 +10,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import mod.syconn.swe.Main;
-import mod.syconn.swe.common.container.TankMenu;
+import mod.syconn.swe.world.container.TankMenu;
 
 public class TankScreen extends AbstractContainerScreen<TankMenu> {
 

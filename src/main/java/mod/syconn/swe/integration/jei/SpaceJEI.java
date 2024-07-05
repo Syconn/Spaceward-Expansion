@@ -5,8 +5,8 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import net.minecraft.resources.ResourceLocation;
 import mod.syconn.swe.Main;
-import mod.syconn.swe.common.crafting.DyedParachuteRecipe;
-import mod.syconn.swe.common.crafting.RefillingCanisterRecipe;
+import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
+import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
 
 @JeiPlugin
 public class SpaceJEI implements IModPlugin

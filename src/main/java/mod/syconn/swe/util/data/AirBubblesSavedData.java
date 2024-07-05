@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import mod.syconn.swe.common.data.types.DimSettingsManager;
+import mod.syconn.swe.world.data.types.DimSettingsManager;
 import mod.syconn.swe.util.NbtHelper;
 
 import java.util.HashMap;

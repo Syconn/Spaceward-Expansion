@@ -10,8 +10,8 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import mod.syconn.swe.block.FluidBaseBlock;
-import mod.syconn.swe.common.be.PipeBlockEntity;
+import mod.syconn.swe.blocks.FluidBaseBlock;
+import mod.syconn.swe.blockentities.PipeBlockEntity;
 
 import java.util.stream.Stream;
 

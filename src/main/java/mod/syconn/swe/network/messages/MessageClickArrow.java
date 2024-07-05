@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import mod.syconn.swe.common.be.PipeBlockEntity;
+import mod.syconn.swe.blockentities.PipeBlockEntity;
 
 import java.util.function.Supplier;
 

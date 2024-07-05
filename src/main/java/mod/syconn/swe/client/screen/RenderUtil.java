@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
-import mod.syconn.swe.item.SpaceArmor;
+import mod.syconn.swe.items.SpaceArmor;
 
 public class RenderUtil {
 

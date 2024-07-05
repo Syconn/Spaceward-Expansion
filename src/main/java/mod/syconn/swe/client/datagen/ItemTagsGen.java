@@ -9,7 +9,6 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import mod.syconn.swe.Main;
-import mod.syconn.swe.init.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 

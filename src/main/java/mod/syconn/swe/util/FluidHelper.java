@@ -8,7 +8,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import mod.syconn.swe.item.extras.ItemFluidHandler;
+import mod.syconn.swe.items.extras.ItemFluidHandler;
 
 /** SIMILAR TO FORGE VERSION BUT FOR {@link ItemFluidHandler} */
 public class FluidHelper {

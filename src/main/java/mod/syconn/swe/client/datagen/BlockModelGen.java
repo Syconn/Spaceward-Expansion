@@ -8,8 +8,7 @@ import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import mod.syconn.swe.Main;
-import mod.syconn.swe.block.CanisterFiller;
-import mod.syconn.swe.init.ModInit;
+import mod.syconn.swe.blocks.CanisterFiller;
 import mod.syconn.swe.util.data.PipeModule;
 
 public class BlockModelGen extends BlockStateProvider {

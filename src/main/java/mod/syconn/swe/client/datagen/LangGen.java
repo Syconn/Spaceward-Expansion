@@ -3,7 +3,6 @@ package mod.syconn.swe.client.datagen;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 import mod.syconn.swe.Main;
-import mod.syconn.swe.init.ModInit;
 
 public class LangGen extends LanguageProvider {
 

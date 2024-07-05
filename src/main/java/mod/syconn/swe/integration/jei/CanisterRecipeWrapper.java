@@ -9,8 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
-import mod.syconn.swe.common.crafting.RefillingCanisterRecipe;
-import mod.syconn.swe.init.ModInit;
+import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
 
 import javax.annotation.Nullable;
 import java.util.List;

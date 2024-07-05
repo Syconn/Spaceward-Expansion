@@ -5,8 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import mod.syconn.swe.capabilities.ISpaceSuit;
-import mod.syconn.swe.common.data.types.DimSettingsManager;
+import mod.syconn.swe.world.data.types.DimSettingsManager;
 import mod.syconn.swe.init.ModCapabilities;
 
 import static net.minecraft.client.gui.GuiComponent.blit;

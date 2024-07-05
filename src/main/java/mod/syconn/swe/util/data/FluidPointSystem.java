@@ -7,7 +7,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import mod.syconn.swe.common.be.PipeBlockEntity;
+import mod.syconn.swe.blockentities.PipeBlockEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
