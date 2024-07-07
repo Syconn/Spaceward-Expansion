@@ -21,7 +21,7 @@ public class NbtHelper {
     public static List<BlockPos> readPosses(CompoundTag nbt){
         List<BlockPos> posses = new ArrayList<>();
         for (int i = 0; i < nbt.getInt("size"); i++) {
-            posses.add(NbtUtils.readBlockPos(nbt.getCompound(String.valueOf(i))));
+            posses.add(NbtUtils.readBlockPos(nbt, String.valueOf(i)).get());
         }
         return posses;
     }

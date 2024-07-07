@@ -1,6 +1,9 @@
 package mod.syconn.swe.blockentities;
 
+import mod.syconn.swe.Registration;
+import mod.syconn.swe.blocks.FluidTank;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -12,10 +15,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import mod.syconn.swe.items.Canister;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class CanisterFillerBlockEntity extends BlockEntity {
 
@@ -24,18 +26,18 @@ public class CanisterFillerBlockEntity extends BlockEntity {
     private NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
 
     public CanisterFillerBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(ModBlockEntity.FILLER.get(), p_155229_, p_155230_);
+        super(Registration.FILLER.get(), p_155229_, p_155230_);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CanisterFillerBlockEntity e) {
         for (int i = 0; i < 4; i++) {
             if (!e.items.get(i).isEmpty()) {
                 ItemStack item = e.items.get(i);
-                if (Canister.getType(item) == Fluids.EMPTY || Canister.getType(item) == e.getFluidTank().getFluid().getFluid()) {
-                    if (Canister.getMaxValue(item) > Canister.getValue(item)) {
+                if (Canister.get(item).fluid() == FluidStack.EMPTY || Canister.get(item) == e.getFluidTank().getFluid().getFluid()) {
+                    if (Canister.get(item).max() > Canister.get(item).fluid().getAmount()) {
                         FluidStack fill = e.getFluidTank().drain(e.fillSpeed, IFluidHandler.FluidAction.SIMULATE);
-                        if (fill.getAmount() > Canister.getMaxValue(item) - Canister.getValue(item)) {
-                            fill.setAmount(Canister.getMaxValue(item) - Canister.getValue(item));
+                        if (fill.getAmount() > Canister.get(item).max() - Canister.get(item).fluid().getAmount()) {
+                            fill.setAmount(Canister.get(item).max() - Canister.get(item).fluid().getAmount());
                         }
                         e.getFluidTank().drain(fill, IFluidHandler.FluidAction.EXECUTE);
                         Canister.increaseFluid(item, fill);
@@ -76,23 +78,23 @@ public class CanisterFillerBlockEntity extends BlockEntity {
     }
 
     public FluidTank getFluidTank() {
-        return level.getBlockEntity(worldPosition.below(), ModBlockEntity.TANK.get()).get().getFluidTank();
+        return level.getBlockEntity(worldPosition.below(), Registration.TANK.get()).get().getFluidTank();
     }
 
-    protected void saveAdditional(CompoundTag p_187471_) {
-        super.saveAdditional(p_187471_);
-        ContainerHelper.saveAllItems(p_187471_, this.items);
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.saveAdditional(pTag, pRegistries);
+        ContainerHelper.saveAllItems(pTag, this.items, pRegistries);
     }
 
-    public void load(CompoundTag p_155245_) {
-        super.load(p_155245_);
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(pTag, pRegistries);
         this.items = NonNullList.withSize(4, ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(p_155245_, this.items);
+        ContainerHelper.loadAllItems(pTag, this.items, pRegistries);
     }
 
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        ContainerHelper.saveAllItems(tag, this.items);
+    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
+        CompoundTag tag = super.getUpdateTag(pRegistries);
+        ContainerHelper.saveAllItems(tag, this.items, pRegistries);
         return tag;
     }
 

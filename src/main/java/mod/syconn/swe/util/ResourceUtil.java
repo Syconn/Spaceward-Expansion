@@ -1,13 +1,14 @@
 package mod.syconn.swe.util;
 
 import com.mojang.blaze3d.platform.NativeImage;
+import mod.syconn.swe.Registration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 
 public class ResourceUtil {
 
@@ -15,7 +16,7 @@ public class ResourceUtil {
 
     public static int getColor(Fluid fluid){
         if (fluid == Fluids.WATER) return DyeColor.BLUE.getTextColor();
-        if (fluid == ModFluids.SOURCE_O2_FLUID.get()) return 0xFF3F76E4;
+        if (fluid == Registration.O2_SOURCE.get()) return 0xFF3F76E4;
         if (fluid != null && fluid != Fluids.EMPTY) {
             int i = IClientFluidTypeExtensions.of(fluid).getTintColor();
             if (i != -1) return i;
@@ -26,7 +27,7 @@ public class ResourceUtil {
     }
 
     public static int getColorCorrected(Fluid fluid){
-        return ColorUtil.getClosetColor(getColor(fluid)).getMaterialColor().col;
+        return ColorUtil.getClosetColor(getColor(fluid)).getMapColor().col;
     }
 
     public static NativeImage createFluidBlockTexture(Fluid fluid){

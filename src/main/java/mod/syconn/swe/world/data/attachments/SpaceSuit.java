@@ -50,11 +50,10 @@ public class SpaceSuit implements INBTSerializable<CompoundTag> { // TODO SYNC W
     }
 
     public void decreaseO2(Player p) {
-        int i = EnchantmentHelper.getRespiration(p);
         ItemStack stack = getStackInSlot(0);
-        if ((SpaceArmor.hasFullKit(p) && stack.getItem() instanceof Canister c && c.getCapacity(stack) > 0) || AirBubblesSavedData.get().breathable(p.level.dimension(), p.getOnPos().above(1))) {
+        if ((SpaceArmor.hasFullKit(p) && stack.getItem() instanceof Canister c && c.getCapacity(stack) > 0) || AirBubblesSavedData.get().breathable(p.level().dimension(), p.getOnPos().above(1))) {
             if (oxygen < maxO2()) oxygen++;
-        } else setO2(i > 0 && new Random().nextInt(i + 1) > 0 ? O2() : O2() - 1);
+        } else setO2(new Random().nextInt(2) > 0 ? O2() : O2() - 1);
     }
 
     public int maxO2() {
@@ -68,7 +67,7 @@ public class SpaceSuit implements INBTSerializable<CompoundTag> { // TODO SYNC W
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag t = new CompoundTag();
         t.putBoolean(PARACHUTE_NBT, parachute);
-        t.put(CHUTE_NBT, chute.serializeNBT());
+        t.put(CHUTE_NBT, chute.serializeNBT(provider));
         t.putInt(OXYGEN_NBT, oxygen);
 
         ListTag nbtTagList = new ListTag();
@@ -86,7 +85,7 @@ public class SpaceSuit implements INBTSerializable<CompoundTag> { // TODO SYNC W
 
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
         parachute = nbt.getBoolean(PARACHUTE_NBT);
-        chute = new Animator(nbt.getCompound(CHUTE_NBT));
+        chute = new Animator(provider, nbt.getCompound(CHUTE_NBT));
         oxygen = nbt.getInt(OXYGEN_NBT);
         setSize(nbt.contains("Size", Tag.TAG_INT) ? nbt.getInt("Size") : stacks.size());
         ListTag tagList = nbt.getList("Items", Tag.TAG_COMPOUND);

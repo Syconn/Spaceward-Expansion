@@ -1,4 +1,4 @@
-package mod.syconn.swe.client;
+package mod.syconn.swe.util;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.renderer.texture.DynamicTexture;
@@ -56,13 +56,11 @@ public class RGBImage {
         CompoundTag tag = new CompoundTag();
         tag.putInt("width", width);
         tag.putInt("height", height);
-
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 tag.putInt(x + "_" + y, pixels[x][y]);
             }
         }
-
         return tag;
     }
 }

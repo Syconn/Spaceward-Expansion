@@ -1,29 +1,36 @@
 package mod.syconn.swe.client.datagen;
 
+import mod.syconn.swe.Registration;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 public class BlockLootTables extends BlockLootSubProvider {
 
-    public BlockLootTables() {
-        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags());
+    private static final Set<Item> EXPLOSION_RESISTANT = Collections.emptySet();
+
+    public BlockLootTables(HolderLookup.Provider pRegistries) {
+        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), pRegistries);
     }
 
-    @Override
     protected void generate() {
-        dropSelf(ModInit.FLUID_TANK.get());
-        dropSelf(ModInit.FLUID_PIPE.get());
-        dropSelf(ModInit.OXYGEN_DISPERSER.get());
-        dropSelf(ModInit.CANISTER_FILLER.get());
-        dropSelf(ModInit.OXYGEN_COLLECTOR.get());
+        dropSelf(Registration.FLUID_TANK.get());
+        dropSelf(Registration.FLUID_PIPE.get());
+        dropSelf(Registration.OXYGEN_DISPERSER.get());
+        dropSelf(Registration.CANISTER_FILLER.get());
+        dropSelf(Registration.OXYGEN_COLLECTOR.get());
     }
 
-    @Override
     protected Iterable<Block> getKnownBlocks() {
-        return List.of(ModInit.FLUID_TANK.get(), ModInit.FLUID_PIPE.get(), ModInit.OXYGEN_DISPERSER.get(), ModInit.CANISTER_FILLER.get(), ModInit.OXYGEN_COLLECTOR.get());
+        return Registration.BLOCKS.getEntries().stream().map(Holder::value).toList();
     }
 }

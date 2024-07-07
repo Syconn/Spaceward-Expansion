@@ -5,45 +5,29 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
-import net.minecraft.resources.ResourceLocation;
+import mod.syconn.swe.Registration;
+import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import org.jetbrains.annotations.NotNull;
-import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class CanisterRecipeWrapper implements ICraftingCategoryExtension {
+public class CanisterRecipeWrapper implements ICraftingCategoryExtension<RefillingCanisterRecipe> {
 
-    private final ResourceLocation name;
-
-    public CanisterRecipeWrapper(RefillingCanisterRecipe recipe) {
-        this.name = recipe.getId();
-    }
-
-    @Nullable
-    @Override
-    public ResourceLocation getRegistryName() {
-        return name;
-    }
-
-    @Override
-    public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull ICraftingGridHelper helper, @NotNull IFocusGroup focusGroup) {
+    public void setRecipe(RecipeHolder<RefillingCanisterRecipe> recipeHolder, IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
         List<ItemStack> gold = ImmutableList.of(new ItemStack(Items.GOLD_INGOT));
-        List<ItemStack> upgrade = ImmutableList.of(new ItemStack(ModInit.GOLD_UPGRADE.get()));
-        List<List<ItemStack>> inputs = ImmutableList.of(upgrade, gold, upgrade, gold, List.of(new ItemStack(ModInit.CANISTER.get())), gold, upgrade, gold, upgrade);
-        helper.createAndSetInputs(builder, inputs, getWidth(), getHeight());
-        helper.createAndSetOutputs(builder, List.of(new ItemStack(ModInit.AUTO_REFILL_CANISTER.get())));
+        List<ItemStack> upgrade = ImmutableList.of(new ItemStack(Registration.GOLD_UPGRADE.get()));
+        List<List<ItemStack>> inputs = ImmutableList.of(upgrade, gold, upgrade, gold, List.of(new ItemStack(Registration.CANISTER.get())), gold, upgrade, gold, upgrade);
+        craftingGridHelper.createAndSetInputs(builder, inputs, getWidth(recipeHolder), getHeight(recipeHolder));
+        craftingGridHelper.createAndSetOutputs(builder, List.of(new ItemStack(Registration.AUTO_REFILL_CANISTER.get())));
     }
 
-    @Override
-    public int getHeight() {
+    public int getHeight(RecipeHolder<RefillingCanisterRecipe> recipeHolder) {
         return 3;
     }
 
-    @Override
-    public int getWidth() {
+    public int getWidth(RecipeHolder<RefillingCanisterRecipe> recipeHolder) {
         return 3;
     }
 }

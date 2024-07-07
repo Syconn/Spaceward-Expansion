@@ -4,13 +4,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 /** SIMILAR TO FORGE VERSION BUT FOR {@link ItemFluidHandler} */
+@Deprecated(forRemoval = true)
 public class FluidHelper {
 
     public static ItemStack fillTankReturnStack(ItemStack stack, FluidTank tank) {
@@ -45,18 +46,17 @@ public class FluidHelper {
     }
 
     public static boolean interactWithFluidHandler(ItemStack stack, Level l, BlockPos pos, Direction side) {
-        return l.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, side).map(tank -> {
-            if (stack.getItem() instanceof ItemFluidHandler handler) {
-                if (handler.getFluid(stack).isEmpty() && !tank.getFluidInTank(0).isEmpty()) {
-                    handler.setFluid(stack, tank.drain(handler.getSpace(stack), IFluidHandler.FluidAction.EXECUTE));
-                    return true;
-                } else if (!handler.getFluid(stack).isEmpty() && tank.isFluidValid(0, handler.getFluid(stack))) {
-                    int i = tank.fill(handler.getFluid(stack), IFluidHandler.FluidAction.EXECUTE);
-                    handler.setFluid(stack, new FluidStack(handler.getFluid(stack), handler.getFluid(stack).getAmount() - i));
-                    return true;
-                }
+        IFluidHandler tank = l.getCapability(Capabilities.FluidHandler.BLOCK, pos, side);
+        if (stack.getItem() instanceof ItemFluidHandler handler) {
+            if (handler.getFluid(stack).isEmpty() && !tank.getFluidInTank(0).isEmpty()) {
+                handler.setFluid(stack, tank.drain(handler.getSpace(stack), IFluidHandler.FluidAction.EXECUTE));
+                return true;
+            } else if (!handler.getFluid(stack).isEmpty() && tank.isFluidValid(0, handler.getFluid(stack))) {
+                int i = tank.fill(handler.getFluid(stack), IFluidHandler.FluidAction.EXECUTE);
+                handler.setFluid(stack, new FluidStack(handler.getFluid(stack).getFluid(), handler.getFluid(stack).getAmount() - i));
+                return true;
             }
-            return false;
-        }).orElse(false);
+        }
+        return false;
     }
 }

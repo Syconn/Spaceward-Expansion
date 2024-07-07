@@ -9,17 +9,14 @@ import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
 import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
 
 @JeiPlugin
-public class SpaceJEI implements IModPlugin
-{
-    @Override
-    public ResourceLocation getPluginUid()
-    {
-        return new ResourceLocation(Main.MODID, "crafting");
+public class SpaceJEI implements IModPlugin {
+
+    public ResourceLocation getPluginUid() {
+        return Main.loc("crafting");
     }
 
-    @Override
     public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
-        registration.getCraftingCategory().addCategoryExtension(DyedParachuteRecipe.class, ParachuteRecipeWrapper::new);
-        registration.getCraftingCategory().addCategoryExtension(RefillingCanisterRecipe.class, CanisterRecipeWrapper::new);
+        registration.getCraftingCategory().addExtension(DyedParachuteRecipe.class, new ParachuteRecipeWrapper());
+        registration.getCraftingCategory().addExtension(RefillingCanisterRecipe.class, new CanisterRecipeWrapper());
     }
 }

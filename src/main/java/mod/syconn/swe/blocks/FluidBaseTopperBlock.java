@@ -20,7 +20,6 @@ public abstract class FluidBaseTopperBlock extends BaseEntityBlock {
         return p_60526_.getBlockState(p_60527_.below()).getBlock() instanceof FluidStorageBlock;
     }
 
-
     public RenderShape getRenderShape(BlockState p_49232_) {
         return RenderShape.MODEL;
     }

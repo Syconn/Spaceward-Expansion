@@ -1,5 +1,7 @@
 package mod.syconn.swe.blocks;
 
+import com.mojang.serialization.MapCodec;
+import mod.syconn.swe.Registration;
 import mod.syconn.swe.blockentities.CanisterFillerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -10,8 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -22,14 +23,13 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
 
 public class CanisterFiller extends FluidBaseTopperBlock {
 
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
-    public CanisterFiller() {
-        super(Properties.of(Material.METAL, MaterialColor.METAL).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL));
+    public CanisterFiller(Properties properties) {
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
@@ -52,10 +52,8 @@ public class CanisterFiller extends FluidBaseTopperBlock {
         return InteractionResult.CONSUME;
     }
 
-    @Nullable
-    @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, ModBlockEntity.FILLER.get(), CanisterFillerBlockEntity::serverTick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.FILLER.get(), CanisterFillerBlockEntity::serverTick) : null;
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext p_49820_) {
@@ -66,12 +64,16 @@ public class CanisterFiller extends FluidBaseTopperBlock {
         p_49915_.add(FACING);
     }
 
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new CanisterFillerBlockEntity(p_153215_, p_153216_);
-    }
 
-    @Override
     public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
         return Block.box(1, 0, 1, 15, 14, 15);
+    }
+
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return Registration.CANISTER_FILLER_CODEC.value();
+    }
+
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return new CanisterFillerBlockEntity(p_153215_, p_153216_);
     }
 }

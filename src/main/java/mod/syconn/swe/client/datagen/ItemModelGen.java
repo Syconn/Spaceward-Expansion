@@ -1,13 +1,14 @@
 package mod.syconn.swe.client.datagen;
 
+import mod.syconn.swe.Registration;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
 import mod.syconn.swe.Main;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class ItemModelGen extends ItemModelProvider {
 
@@ -16,23 +17,23 @@ public class ItemModelGen extends ItemModelProvider {
     }
 
     protected void registerModels() {
-        singleTexture(ModInit.SPACE_HELMET.get());
-        singleTexture(ModInit.SPACE_CHESTPLATE.get());
-        singleTexture(ModInit.SPACE_LEGGINGS.get());
-        singleTexture(ModInit.SPACE_BOOTS.get());
-        singleTexture(ModInit.WRENCH.get());
-        singleTexture(ModInit.DIAMOND_UPGRADE.get());
-        singleTexture(ModInit.GOLD_UPGRADE.get());
-        singleTexture(ModInit.IRON_UPGRADE.get());
-        singleTexture(ModInit.EMERALD_UPGRADE.get());
-        singleTexture(ModInit.NETHERITE_UPGRADE.get());
+        singleTexture(Registration.SPACE_HELMET.get());
+        singleTexture(Registration.SPACE_CHESTPLATE.get());
+        singleTexture(Registration.SPACE_LEGGINGS.get());
+        singleTexture(Registration.SPACE_BOOTS.get());
+        singleTexture(Registration.WRENCH.get());
+        singleTexture(Registration.DIAMOND_UPGRADE.get());
+        singleTexture(Registration.GOLD_UPGRADE.get());
+        singleTexture(Registration.IRON_UPGRADE.get());
+        singleTexture(Registration.EMERALD_UPGRADE.get());
+        singleTexture(Registration.NETHERITE_UPGRADE.get());
 
-        createCanisterType(ModInit.CANISTER.get());
-        createCanisterType(ModInit.AUTO_REFILL_CANISTER.get());
+        createCanisterType(Registration.CANISTER.get());
+        createCanisterType(Registration.AUTO_REFILL_CANISTER.get());
     }
 
     private ResourceLocation generated(){
-        return new ResourceLocation("item/generated");
+        return ResourceLocation.withDefaultNamespace("item/generated");
     }
 
     private ModelFile generated(String loc) {
@@ -47,10 +48,10 @@ public class ItemModelGen extends ItemModelProvider {
         ItemModelBuilder model = getBuilder(canister.toString()).parent(generate()).texture("layer0", modLoc("item/" + canister));
         for (int i = 1; i <= 5; i++){
             getBuilder(canister.toString() + i).parent(generate()).texture("layer1", modLoc("item/fluid_stage_" + (i + 1))).texture("layer0", modLoc("item/" + canister));
-            model.override().predicate(new ResourceLocation(Main.MODID, "stage"), i).model(generated("item/" + canister + i)).end();
+            model.override().predicate(modLoc("stage"), i).model(generated("item/" + canister + i)).end();
         }
         getBuilder(canister + "full").parent(generate()).texture("layer1", modLoc("item/fluid_full")).texture("layer0", modLoc("item/" + canister));
-        model.override().predicate(new ResourceLocation(Main.MODID, "stage"), 6.0F).model(generated("item/" + canister + "full"));
+        model.override().predicate(modLoc("stage"), 6.0F).model(generated("item/" + canister + "full"));
     }
 
     public ItemModelBuilder singleTexture(Item item) {

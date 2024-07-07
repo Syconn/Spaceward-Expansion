@@ -1,7 +1,9 @@
 package mod.syconn.swe.blockentities;
 
+import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
@@ -10,14 +12,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import mod.syconn.swe.blocks.DispersibleAirBlock;
 import mod.syconn.swe.world.container.DisperserMenu;
 import mod.syconn.swe.util.BlockInfo;
 import mod.syconn.swe.util.NbtHelper;
 import mod.syconn.swe.util.data.AirBubblesSavedData;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +41,16 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
     private boolean enabled = true;
 
     public DisperserBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(ModBlockEntity.DISPERSER.get(), p_155229_, p_155230_, 1000, List.of(Direction.DOWN));
+        super(Registration.DISPERSER.get(), p_155229_, p_155230_, 1000);
         this.tank = new FluidTank(1000){
-            private void onContentsChanged() { update(); }
+            public void onContentsChanged() { update(); }
 
             public int fill(FluidStack resource, FluidAction action) {
                 if (fluid.isEmpty()) updateTextures(resource);
                 return super.fill(resource, action);
             }
 
-            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == ModFluids.SOURCE_O2_FLUID.get(); }
+            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2_SOURCE.get(); }
         };
     }
 
@@ -85,7 +87,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
     }
 
     public static void remove(Level level, BlockPos defPos) {
-        List<BlockPos> list = level.getBlockEntity(defPos, ModBlockEntity.DISPERSER.get()).get().list;
+        List<BlockPos> list = level.getBlockEntity(defPos, Registration.DISPERSER.get()).get().list;
         for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
     }
 
@@ -132,28 +134,28 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
         }
     }
 
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.put("list", NbtHelper.writePosses(list));
-        tag.putInt("fill", maxFill);
-        tag.putBoolean("active", active);
-        tag.putBoolean("enabled", enabled);
-        tag.putInt("usage", o2Usage);
-        if (this.uuid != null) tag.putUUID("DisperserUUID", this.uuid);
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.saveAdditional(pTag, pRegistries);
+        pTag.put("list", NbtHelper.writePosses(list));
+        pTag.putInt("fill", maxFill);
+        pTag.putBoolean("active", active);
+        pTag.putBoolean("enabled", enabled);
+        pTag.putInt("usage", o2Usage);
+        if (this.uuid != null) pTag.putUUID("DisperserUUID", this.uuid);
     }
 
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        list = NbtHelper.readPosses(tag.getCompound("list"));
-        maxFill = tag.getInt("fill");
-        active = tag.getBoolean("active");
-        enabled = tag.getBoolean("enabled");
-        o2Usage = tag.getInt("usage");
-        if(tag.hasUUID("DisperserUUID")) this.uuid = tag.getUUID("DisperserUUID");
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(pTag, pRegistries);
+        list = NbtHelper.readPosses(pTag.getCompound("list"));
+        maxFill = pTag.getInt("fill");
+        active = pTag.getBoolean("active");
+        enabled = pTag.getBoolean("enabled");
+        o2Usage = pTag.getInt("usage");
+        if(pTag.hasUUID("DisperserUUID")) this.uuid = pTag.getUUID("DisperserUUID");
     }
 
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
+    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
+        CompoundTag tag = super.getUpdateTag(pRegistries);
         tag.put("list", NbtHelper.writePosses(list));
         tag.putInt("fill", maxFill);
         tag.putBoolean("active", active);

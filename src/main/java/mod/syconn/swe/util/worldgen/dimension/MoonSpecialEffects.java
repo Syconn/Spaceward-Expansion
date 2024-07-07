@@ -15,9 +15,9 @@ import mod.syconn.swe.Main;
 
 public class MoonSpecialEffects extends DimensionSpecialEffects {
 
-    private static final ResourceLocation SUN_LOCATION = new ResourceLocation("textures/environment/sun.png");
-    private static final ResourceLocation EARTH_LOCATION = new ResourceLocation(Main.MODID, "textures/environment/earth.png");
-    private static final ResourceLocation SKY_LOCATION = new ResourceLocation(Main.MODID, "textures/environment/sky.png");
+    private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
+    private static final ResourceLocation EARTH_LOCATION = Main.loc("textures/environment/earth.png");
+    private static final ResourceLocation SKY_LOCATION = Main.loc("textures/environment/sky.png");
 
     private final Minecraft minecraft = Minecraft.getInstance();
 
@@ -25,57 +25,37 @@ public class MoonSpecialEffects extends DimensionSpecialEffects {
         super(Float.NaN, false, SkyType.END, true, false);
     }
 
-    @Override
-    public Vec3 getBrightnessDependentFogColor(Vec3 p_108878_, float p_108879_) {
-        return p_108878_.multiply(p_108879_ * 0.94F + 0.06F, p_108879_ * 0.94F + 0.06F, p_108879_ * 0.91F + 0.09F);
+    public Vec3 getBrightnessDependentFogColor(Vec3 pFogColor, float pBrightness) {
+        return pFogColor.multiply(pBrightness * 0.94F + 0.06F, pBrightness * 0.94F + 0.06F, pBrightness * 0.91F + 0.09F);
     }
 
-    @Override
-    public boolean isFoggyAt(int p_108874_, int p_108875_) {
+    public boolean isFoggyAt(int pX, int pY) {
         return false;
     }
 
-    @Override
-    public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f matrix4f1, boolean isFoggy, Runnable setupFog) {
+    public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
+        PoseStack poseStack = new PoseStack();
         RenderSystem.enableBlend();
         RenderSystem.depthMask(false);
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.setShaderTexture(0, SKY_LOCATION);
         Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder bufferbuilder = tesselator.getBuilder();
 
         for(int i = 0; i < 6; ++i) {
             poseStack.pushPose();
-
-            if (i == 1) {
-                poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-            }
-
-            if (i == 2) {
-                poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
-            }
-
-            if (i == 3) {
-                poseStack.mulPose(Axis.XP.rotationDegrees(180.0F));
-            }
-
-            if (i == 4) {
-                poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
-            }
-
-            if (i == 5) {
-                poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
-            }
-
+            if (i == 1) poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+            if (i == 2) poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
+            if (i == 3) poseStack.mulPose(Axis.XP.rotationDegrees(180.0F));
+            if (i == 4) poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+            if (i == 5) poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
             Matrix4f matrix4f = poseStack.last().pose();
-            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+            BufferBuilder bufferBuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
             int brightness = 50;
-            bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(brightness, brightness, brightness, 255).endVertex();
-            bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 16.0F).color(brightness, brightness, brightness, 255).endVertex();
-            bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(16.0F, 16.0F).color(brightness, brightness, brightness, 255).endVertex();
-            bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).uv(16.0F, 0.0F).color(brightness, brightness, brightness, 255).endVertex();
-            tesselator.end();
-            //bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+            bufferBuilder.addVertex(matrix4f, -100.0F, -100.0F, -100.0F).setUv(0.0F, 0.0F).setColor(brightness, brightness, brightness, 255);
+            bufferBuilder.addVertex(matrix4f, -100.0F, -100.0F, 100.0F).setUv(0.0F, 16.0F).setColor(brightness, brightness, brightness, 255);
+            bufferBuilder.addVertex(matrix4f, 100.0F, -100.0F, 100.0F).setUv(16.0F, 16.0F).setColor(brightness, brightness, brightness, 255);
+            bufferBuilder.addVertex(matrix4f, 100.0F, -100.0F, -100.0F).setUv(16.0F, 0.0F).setColor(brightness, brightness, brightness, 255);
+            BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
             poseStack.popPose();
         }
 
@@ -87,18 +67,16 @@ public class MoonSpecialEffects extends DimensionSpecialEffects {
         RenderSystem.setShaderColor(0.85F, 0.85F, 0.85F, 0.85F);
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, EARTH_LOCATION);
-        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        bufferbuilder.vertex(matrix4f, -f12, 100.0F, -f12).uv(0.0F, 0.0F).endVertex();
-        bufferbuilder.vertex(matrix4f, f12, 100.0F, -f12).uv(1.0F, 0.0F).endVertex();
-        bufferbuilder.vertex(matrix4f, f12, 100.0F, f12).uv(1.0F, 1.0F).endVertex();
-        bufferbuilder.vertex(matrix4f, -f12, 100.0F, f12).uv(0.0F, 1.0F).endVertex();
-        BufferUploader.drawWithShader(bufferbuilder.end());
-        f12 = 20.0F;
+        BufferBuilder bufferBuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+        bufferBuilder.addVertex(matrix4f, -f12, 100.0F, -f12).setUv(0.0F, 0.0F);
+        bufferBuilder.addVertex(matrix4f, f12, 100.0F, -f12).setUv(1.0F, 0.0F);
+        bufferBuilder.addVertex(matrix4f, f12, 100.0F, f12).setUv(1.0F, 1.0F);
+        bufferBuilder.addVertex(matrix4f, -f12, 100.0F, f12).setUv(0.0F, 1.0F);
+        BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.disableBlend();
         RenderSystem.defaultBlendFunc();
         poseStack.popPose();
-
         RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
         return true;
