@@ -1,4 +1,4 @@
-package mod.syconn.swe.client;
+package mod.syconn.swe.util;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.client.renderer.texture.DynamicTexture;

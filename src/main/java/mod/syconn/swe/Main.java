@@ -1,25 +1,35 @@
 package mod.syconn.swe;
 
+import mod.syconn.swe.client.ClientHandler;
 import mod.syconn.swe.client.datagen.*;
 import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.world.CommonHandler;
 import mod.syconn.swe.world.dimensions.DimSettingsManager;
 import mod.syconn.swe.world.dimensions.OxygenProductionManager;
+import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
+
+import java.util.Collections;
+import java.util.List;
 
 @Mod(Main.MODID)
 public class Main {
 
     public static final String MODID = "swe";
+
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(this::loadData);
         modEventBus.addListener(Registration::addCreative);
@@ -38,32 +48,29 @@ public class Main {
         Registration.ATTACHMENT_TYPES.register(modEventBus);
         Registration.COMPONENTS.register(modEventBus);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.CLIENT_CONFIG);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(new CommonHandler());
+        NeoForge.EVENT_BUS.register(new CommonHandler());
     }
 
-    public void dataGenerator(GatherDataEvent e){
-        e.getGenerator().addProvider(e.includeClient(), new ItemModelGen(e.getGenerator().getPackOutput(), e.getExistingFileHelper()));
-        e.getGenerator().addProvider(e.includeClient(), new BlockModelGen(e.getGenerator().getPackOutput(), e.getExistingFileHelper()));
-        e.getGenerator().addProvider(e.includeClient(), new LangGen(e.getGenerator().getPackOutput()));
-        e.getGenerator().addProvider(e.includeServer(), new RecipeGen(e.getGenerator().getPackOutput()));
-        e.getGenerator().addProvider(e.includeServer(), new ItemTagsGen(e.getGenerator().getPackOutput(), e.getLookupProvider(), e.getExistingFileHelper()));
-        e.getGenerator().addProvider(e.includeServer(), new BlockTagsGen(e.getGenerator().getPackOutput(), e.getLookupProvider(), e.getExistingFileHelper()));
-        e.getGenerator().addProvider(e.includeServer(), new LootTableGen(e.getGenerator().getPackOutput()));
+    private void clientSetup(final FMLClientSetupEvent event) {
+        NeoForge.EVENT_BUS.register(new ClientHandler());
     }
 
     public void gatherData(GatherDataEvent event) {
         var fileHelper = event.getExistingFileHelper();
         var pack = event.getGenerator().getVanillaPack(true);
+        BlockTagsGen blockTags = new BlockTagsGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), fileHelper);
         pack.addProvider(LangGen::new);
-        pack.addProvider(LootTableGen::new);
-        pack.addProvider(pOutput -> new ItemModelGen(pOutput, fileHelper));
         pack.addProvider(pOutput -> new RecipeGen(pOutput, event.getLookupProvider()));
-        pack.addProvider(pOutput -> new BlockStateGen(pOutput, fileHelper));
-        pack.addProvider(pOutput -> new BlockTagsGen(pOutput, event.getLookupProvider(), fileHelper));
+        pack.addProvider(pOutput -> new ItemModelGen(pOutput, fileHelper));
+        pack.addProvider(pOutput -> new BlockModelGen(pOutput, fileHelper));
+        pack.addProvider(pOutput -> blockTags);
+        pack.addProvider(pOutput -> new ItemTagsGen(pOutput, event.getLookupProvider(), blockTags.contentsGetter(), fileHelper));
+        pack.addProvider(pOutput -> new LootTableProvider(pOutput, Collections.emptySet(), List.of(new LootTableProvider.SubProviderEntry(BlockLootTables::new, LootContextParamSets.EMPTY)), event.getLookupProvider()));
     }
 
     public void loadData(AddReloadListenerEvent e){

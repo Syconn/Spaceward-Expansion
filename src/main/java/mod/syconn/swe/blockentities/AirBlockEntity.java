@@ -1,13 +1,15 @@
 package mod.syconn.swe.blockentities;
 
+import mod.syconn.swe.Registration;
+import mod.syconn.swe.blocks.OxygenDisperser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import mod.syconn.swe.blocks.OxygenDisperser;
 
 public class AirBlockEntity extends BlockEntity {
 
@@ -16,7 +18,7 @@ public class AirBlockEntity extends BlockEntity {
     private boolean has_run = false;
 
     public AirBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(ModBlockEntity.AIR.get(), p_155229_, p_155230_);
+        super(Registration.AIR.get(), p_155229_, p_155230_);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, AirBlockEntity e) {
@@ -25,7 +27,7 @@ public class AirBlockEntity extends BlockEntity {
                 if (e.distance + 1 <= OxygenDisperser.maxFill(level, e.pos)) {
                     OxygenDisperser.addBlock(level, e.worldPosition.relative(d), e.pos, e.distance + 1);
                 } else {
-                    level.getBlockEntity(e.pos, ModBlockEntity.DISPERSER.get()).get().failed(true);
+                    level.getBlockEntity(e.pos, Registration.DISPERSER.get()).get().failed(true);
                 }
             }
             e.has_run = true;
@@ -41,17 +43,17 @@ public class AirBlockEntity extends BlockEntity {
         pos = s;
     }
 
-    public void load(CompoundTag tag) {
-        super.load(tag);
-        if (tag.contains("distance")) distance = tag.getInt("distance");
-        if (tag.contains("pos")) pos = NbtUtils.readBlockPos(tag.getCompound("pos"));
-        if (tag.contains("run")) has_run = tag.getBoolean("run");
+    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(pTag, pRegistries);
+        pos = NbtUtils.readBlockPos(pTag, "pos").orElse(null);
+        if (pTag.contains("distance")) distance = pTag.getInt("distance");
+        if (pTag.contains("run")) has_run = pTag.getBoolean("run");
     }
 
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
-        tag.putInt("distance", distance);
-        tag.put("pos", NbtUtils.writeBlockPos(pos));
-        tag.putBoolean("run", has_run);
+    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.saveAdditional(pTag, pRegistries);
+        pTag.putInt("distance", distance);
+        pTag.put("pos", NbtUtils.writeBlockPos(pos));
+        pTag.putBoolean("run", has_run);
     }
 }

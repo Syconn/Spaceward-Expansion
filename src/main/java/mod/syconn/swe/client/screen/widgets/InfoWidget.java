@@ -1,31 +1,29 @@
-package mod.syconn.swe.client.screen.widget;
+package mod.syconn.swe.client.screen.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import mod.syconn.swe.Main;
+import mod.syconn.swe.util.BlockInfo;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import mod.syconn.swe.Main;
-import mod.syconn.swe.util.BlockInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InfoWidget extends AbstractWidget {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID, "textures/gui/elements.png");
-    private final Screen screen;
+    private static final ResourceLocation TEXTURE = Main.loc("textures/gui/elements.png");
     private final List<Component> text = new ArrayList<>();
     private final BlockEntity be;
 
-    public InfoWidget(int x, int y, Screen screen, BlockEntity be) {
+    public InfoWidget(int x, int y, BlockEntity be) {
         super(x, y, 20, 20, Component.literal("Information Button"));
-        this.screen = screen;
         this.be = be;
     }
 
@@ -38,16 +36,15 @@ public class InfoWidget extends AbstractWidget {
         }
     }
 
-    public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float p_268085_) {
+    protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         createText();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
         if (isHoveredOrFocused()) {
-            blit(poseStack, getX(), getY(), 20, 0, 20, 20);
-            screen.renderComponentTooltip(poseStack, text, mouseX, mouseY);
+            pGuiGraphics.blit(TEXTURE, getX(), getY(), 20, 0, 20, 20);
+            pGuiGraphics.renderComponentTooltip(Minecraft.getInstance().font, text, pMouseX, pMouseY);
         }
-        else blit(poseStack, getX(), getY(), 0, 0, 20, 20);
+        else pGuiGraphics.blit(TEXTURE, getX(), getY(), 0, 0, 20, 20);
     }
 
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) { this.defaultButtonNarrationText(p_259858_); }

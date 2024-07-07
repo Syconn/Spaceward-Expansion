@@ -1,7 +1,6 @@
 package mod.syconn.swe.items;
 
 import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.util.Dyeable;
 import mod.syconn.swe.util.data.SpaceSlot;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
@@ -17,7 +16,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 
 import java.util.Optional;
 
-public class Parachute extends Item implements Equipable, Dyeable, EquipmentItem {
+public class Parachute extends Item implements Equipable, EquipmentItem {
 
     public Parachute() {
         super(new Properties().stacksTo(1).rarity(Rarity.UNCOMMON));

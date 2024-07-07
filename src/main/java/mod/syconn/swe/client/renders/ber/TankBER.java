@@ -19,17 +19,16 @@ public class TankBER implements BlockEntityRenderer<TankBlockEntity> {
         model = new FluidModel(ctx.bakeLayer(FluidModel.LAYER_LOCATION));
     }
 
-    @Override
-    public void render(TankBlockEntity be, float p_112308_, PoseStack ps, MultiBufferSource bs, int packedLight, int p) {
-        if (!be.getFluidTank().isEmpty()) {
-            ps.pushPose();
-            float i = (float) (be.getFluidTank().getFluidAmount()) / be.getFluidTank().getCapacity();
-            ps.translate(1, 0, 0);
-            ps.scale(1, i, 1);
-            ps.translate(0, -0.5, 0);
-            VertexConsumer vertexconsumer = bs.getBuffer(RenderType.entityCutoutNoCull(be.getFluidTexture()));
-            model.renderFluid(be.getFluidTank().getFluid().getFluid(), ps, vertexconsumer, LightTexture.FULL_BLOCK, OverlayTexture.NO_OVERLAY);
-            ps.popPose();
+    public void render(TankBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
+        if (!pBlockEntity.getFluidTank().isEmpty()) {
+            pPoseStack.pushPose();
+            float i = (float) (pBlockEntity.getFluidTank().getFluidAmount()) / pBlockEntity.getFluidTank().getCapacity();
+            pPoseStack.translate(1, 0, 0);
+            pPoseStack.scale(1, i, 1);
+            pPoseStack.translate(0, -0.5, 0);
+            VertexConsumer vertexconsumer = pBufferSource.getBuffer(RenderType.entityCutoutNoCull(pBlockEntity.getFluidTexture()));
+            model.renderFluid(pBlockEntity.getFluidTank().getFluid().getFluid(), pPoseStack, vertexconsumer, LightTexture.FULL_BLOCK, OverlayTexture.NO_OVERLAY);
+            pPoseStack.popPose();
         }
     }
 }

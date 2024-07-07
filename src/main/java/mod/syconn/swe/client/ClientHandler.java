@@ -1,74 +1,65 @@
 package mod.syconn.swe.client;
 
-import mod.syconn.swe.client.gui.SpaceSuitOverlay;
+import mod.syconn.swe.Main;
+import mod.syconn.swe.Registration;
 import mod.syconn.swe.client.model.*;
 import mod.syconn.swe.client.renders.ber.CanisterBER;
 import mod.syconn.swe.client.renders.ber.PipeBER;
 import mod.syconn.swe.client.renders.ber.TankBER;
 import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
-import mod.syconn.swe.client.screen.*;
+import mod.syconn.swe.client.screen.CollectorScreen;
+import mod.syconn.swe.client.screen.DisperserScreen;
+import mod.syconn.swe.client.screen.PipeScreen;
+import mod.syconn.swe.client.screen.TankScreen;
+import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.util.ColorUtil;
-import mod.syconn.swe.util.Dyeable;
 import mod.syconn.swe.util.worldgen.dimension.MoonSpecialEffects;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
+import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ContainerScreenEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
-import static mod.syconn.swe.Main.MODID;
-
-@EventBusSubscriber(value = Dist.CLIENT, modid = MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ClientHandler {
 
-    public ClientHandler() {
-        registerProperties();
-        MenuScreens.register(ModContainers.TANK_MENU.get(), TankScreen::new);
-        MenuScreens.register(ModContainers.PIPE_MENU.get(), PipeScreen::new);
-        MenuScreens.register(ModContainers.DISPERSER_MENU.get(), DisperserScreen::new);
-        MenuScreens.register(ModContainers.COLLECTOR_MENU.get(), CollectorScreen::new);
-        ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_O2_FLUID.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_O2_FLUID.get(), RenderType.translucent());
-    }
-
-    public static void registerProperties(){
-        ItemProperties.register(ModInit.CANISTER.get(), new ResourceLocation(MODID, "stage"), new ItemPropertyFunction() {
-            public float call(ItemStack stack, @Nullable ClientLevel p_174677_, @Nullable LivingEntity p_174678_, int p_174679_) { return Canister.getDisplayValue(stack); }
-        });
-        ItemProperties.register(ModInit.AUTO_REFILL_CANISTER.get(), new ResourceLocation(MODID, "stage"), new ItemPropertyFunction() {
-            public float call(ItemStack stack, @Nullable ClientLevel p_174677_, @Nullable LivingEntity p_174678_, int p_174679_) { return Canister.getDisplayValue(stack); }
-        });
+    @SubscribeEvent
+    public static void init(FMLClientSetupEvent event) {
+        ItemProperties.register(Registration.CANISTER.get(), Main.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
+        ItemProperties.register(Registration.AUTO_REFILL_CANISTER.get(), Main.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
+        ItemBlockRenderTypes.setRenderLayer(Registration.O2_SOURCE.get(), RenderType.translucent()); // TODO REPLACE IN JSON
+        ItemBlockRenderTypes.setRenderLayer(Registration.O2_FLOWING.get(), RenderType.translucent()); // TODO REPLACE IN JSON
     }
 
     @SubscribeEvent
-    public static void coloredItems(RegisterColorHandlersEvent.Item e) {
-        e.register((s, layer) -> layer == 0 ? Dyeable.getColor(s) : -1, ModInit.PARACHUTE.get());
-        e.register((s, layer) -> layer == 1 ? ColorUtil.getClosetColor(s.getBarColor()).getMaterialColor().col : -1, ModInit.CANISTER.get(), ModInit.AUTO_REFILL_CANISTER.get());
+    public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(Registration.TANK_MENU.get(), TankScreen::new);
+        event.register(Registration.PIPE_MENU.get(), PipeScreen::new);
+        event.register(Registration.DISPERSER_MENU.get(), DisperserScreen::new);
+        event.register(Registration.COLLECTOR_MENU.get(), CollectorScreen::new);
     }
 
     @SubscribeEvent
-    public static void addLayers(EntityRenderersEvent.AddLayers e) {
-        addPlayerLayers(e.getSkin("default"), e.getEntityModels());
-        addPlayerLayers(e.getSkin("slim"), e.getEntityModels());
+    public static void coloredItems(RegisterColorHandlersEvent.Item event) {
+        event.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, Registration.PARACHUTE.get());
+        event.register((s, layer) -> layer == 1 ? ColorUtil.getClosetColor(s.getBarColor()).getMapColor().col : -1, Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
     }
 
-    private static void addPlayerLayers(LivingEntityRenderer<?, ?> renderer, EntityModelSet s) {
+    @SubscribeEvent
+    public static void addLayers(EntityRenderersEvent.AddLayers event) {
+        addPlayerLayers(event.getSkin(PlayerSkin.Model.WIDE), event.getEntityModels());
+        addPlayerLayers(event.getSkin(PlayerSkin.Model.SLIM), event.getEntityModels());
+    }
+
+    private static void addPlayerLayers(EntityRenderer<? extends Player> renderer, EntityModelSet s) {
         if(renderer instanceof PlayerRenderer playerRenderer) playerRenderer.addLayer(new SpaceSuitLayer<>(playerRenderer, s));
     }
 
@@ -83,24 +74,24 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public static void renderOverlay(RegisterGuiOverlaysEvent e){
-        e.registerAbove(VanillaGuiOverlay.AIR_LEVEL.id(), "o2", SpaceSuitOverlay.O2_OVERLAY);
+    public static void renderOverlay(RegisterGuiLayersEvent event){
+        event.registerAbove(VanillaGuiLayers.AIR_LEVEL, Main.loc("o2"), SpaceSuitOverlay.O2_OVERLAY);
     }
 
     @SubscribeEvent
     public static void onPlayerRenderScreen(ContainerScreenEvent.Render.Background event) {
-        RenderUtil.overridePlayerScreen(event.getPoseStack(), event.getContainerScreen());
+        ClientHooks.overridePlayerScreen(event.getGuiGraphics(), event.getContainerScreen());
     }
 
     @SubscribeEvent
-    public static void entityRender(EntityRenderersEvent.RegisterRenderers e){
-        e.registerBlockEntityRenderer(ModBlockEntity.PIPE.get(), PipeBER::new);
-        e.registerBlockEntityRenderer(ModBlockEntity.TANK.get(), TankBER::new);
-        e.registerBlockEntityRenderer(ModBlockEntity.FILLER.get(), CanisterBER::new);
+    public static void entityRender(EntityRenderersEvent.RegisterRenderers event){
+        event.registerBlockEntityRenderer(Registration.PIPE.get(), PipeBER::new);
+        event.registerBlockEntityRenderer(Registration.TANK.get(), TankBER::new);
+        event.registerBlockEntityRenderer(Registration.FILLER.get(), CanisterBER::new);
     }
 
     @SubscribeEvent
-    public static void dimensionEffects(RegisterDimensionSpecialEffectsEvent e){
-        e.register(new ResourceLocation(MODID, "moon"), new MoonSpecialEffects());
+    public static void dimensionEffects(RegisterDimensionSpecialEffectsEvent event){
+        event.register(Main.loc("moon"), new MoonSpecialEffects());
     }
 }
