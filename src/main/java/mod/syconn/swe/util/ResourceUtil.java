@@ -5,6 +5,7 @@ import mod.syconn.swe.Registration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
@@ -20,7 +21,7 @@ public class ResourceUtil {
         if (fluid != null && fluid != Fluids.EMPTY) {
             int i = IClientFluidTypeExtensions.of(fluid).getTintColor();
             if (i != -1) return i;
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(fluid).getStillTexture());
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(IClientFluidTypeExtensions.of(fluid).getStillTexture());
             return -sprite.getPixelRGBA(0, 0, 4);
         }
         return -1;
@@ -31,7 +32,7 @@ public class ResourceUtil {
     }
 
     public static NativeImage createFluidBlockTexture(Fluid fluid){
-        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(fluid).getStillTexture());
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(IClientFluidTypeExtensions.of(fluid).getStillTexture());
         NativeImage input = sprite.contents().getOriginalImage();
         NativeImage result = new NativeImage(64, 64, false);
         for (int t = 1; t < 3; t++) {

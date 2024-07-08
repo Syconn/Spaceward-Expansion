@@ -21,13 +21,16 @@ public class PlayerMixin {
     @Shadow
     @Final
     @Mutable
-    private Inventory inventory;
+    Inventory inventory;
 
     @Shadow
     @Final
     @Mutable
     public InventoryMenu inventoryMenu;
 
+    @SuppressWarnings("all")
+
+    @Deprecated(forRemoval = true)
     @Inject(method = "<init>", at = @At(value = "TAIL"))
     private void constructorTail(Level world, BlockPos pos, float spawnAngle, GameProfile profile, CallbackInfo ci) {
         Player player = (Player) (Object) this;

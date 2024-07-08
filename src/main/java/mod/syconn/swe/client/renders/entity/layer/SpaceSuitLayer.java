@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.material.Fluids;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.client.model.ChuteModel;
@@ -44,7 +45,7 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
         if (SpaceArmor.hasFullKit(pLivingEntity)) {
             ItemStack itemstack = SpaceArmor.hasParachute(pLivingEntity) ? Helper.inventory(pLivingEntity).getItemBySlot(SpaceSlot.PARACHUTE) : pLivingEntity.getItemBySlot(EquipmentSlot.CHEST);
             if (itemstack.getItem() instanceof Parachute) {
-                int i = Dyeable.getColor(itemstack);
+                int i = DyedItemColor.getOrDefault(itemstack, -1);
                 float f = (float) (i >> 16 & 255) / 255.0F;
                 float f1 = (float) (i >> 8 & 255) / 255.0F;
                 float f2 = (float) (i & 255) / 255.0F;
