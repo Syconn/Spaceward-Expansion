@@ -14,11 +14,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class SpaceSuit implements INBTSerializable<CompoundTag> { // TODO SYNC WITH CLIENT
+public class SpaceSuit implements IItemHandler, INBTSerializable<CompoundTag> { // TODO SYNC WITH CLIENT
 
     private static final String PARACHUTE_NBT = "parachute";
     private static final String CHUTE_NBT = "animchute";

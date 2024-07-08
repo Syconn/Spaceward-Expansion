@@ -20,6 +20,7 @@ import mod.syconn.swe.util.data.AirBubblesSavedData;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,8 +170,8 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
         return Component.literal("Oxygen Disperser");
     }
 
-    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-        return new DisperserMenu(p_39954_, p_39955_, this);
+    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+        return new DisperserMenu(pContainerId, pPlayerInventory, worldPosition);
     }
 
     public int getFluidRate() {

@@ -17,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,8 +74,8 @@ public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements 
         return Component.literal("Oxygen Collector");
     }
 
-    public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-        return new CollectorMenu(p_39954_, p_39955_, this);
+    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+        return new CollectorMenu(pContainerId, pPlayerInventory, worldPosition);
     }
 
     public int getFluidRate() {

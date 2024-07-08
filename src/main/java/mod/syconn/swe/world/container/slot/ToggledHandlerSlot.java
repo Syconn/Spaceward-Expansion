@@ -1,8 +1,8 @@
 package mod.syconn.swe.world.container.slot;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 import mod.syconn.swe.blockentities.PipeBlockEntity;
 import mod.syconn.swe.items.UpgradeItem;
@@ -16,12 +16,10 @@ public class ToggledHandlerSlot extends SlotItemHandler {
         this.be = be;
     }
 
-    @Override
     public boolean isActive() {
         return be.selectedTab() != null;
     }
 
-    @Override
     public boolean mayPlace(@NotNull ItemStack stack) {
         return isActive() && stack.getItem() instanceof UpgradeItem;
     }

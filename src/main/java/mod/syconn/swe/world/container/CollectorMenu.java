@@ -1,19 +1,21 @@
 package mod.syconn.swe.world.container;
 
+import mod.syconn.swe.Registration;
+import mod.syconn.swe.blockentities.CollectorBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import mod.syconn.swe.blockentities.CollectorBlockEntity;
 
 public class CollectorMenu extends AbstractContainerMenu {
 
     private final CollectorBlockEntity be;
 
-    public CollectorMenu(int id, Inventory inventory, CollectorBlockEntity be) {
-        super(ModContainers.COLLECTOR_MENU.get(), id);
-        this.be = be;
+    public CollectorMenu(int id, Inventory inventory, BlockPos pos) {
+        super(Registration.COLLECTOR_MENU.get(), id);
+        this.be = inventory.player.level().getBlockEntity(pos, Registration.COLLECTOR.get()).orElseThrow();
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
@@ -30,7 +32,6 @@ public class CollectorMenu extends AbstractContainerMenu {
         return be;
     }
 
-    @Override
     public ItemStack quickMoveStack(Player player, int quickMovedSlotIndex) {
         ItemStack quickMovedStack = ItemStack.EMPTY;
         Slot quickMovedSlot = this.slots.get(quickMovedSlotIndex);
@@ -73,7 +74,6 @@ public class CollectorMenu extends AbstractContainerMenu {
         return quickMovedStack;
     }
 
-    @Override
     public boolean stillValid(Player p_38874_) {
         return true;
     }

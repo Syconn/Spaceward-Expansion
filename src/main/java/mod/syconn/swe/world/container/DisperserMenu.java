@@ -1,19 +1,21 @@
 package mod.syconn.swe.world.container;
 
+import mod.syconn.swe.Registration;
+import mod.syconn.swe.blockentities.DisperserBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import mod.syconn.swe.blockentities.DisperserBlockEntity;
 
 public class DisperserMenu extends AbstractContainerMenu {
 
     private final DisperserBlockEntity be;
 
-    public DisperserMenu(int id, Inventory inventory, DisperserBlockEntity be) {
-        super(ModContainers.DISPERSER_MENU.get(), id);
-        this.be = be;
+    public DisperserMenu(int id, Inventory inventory, BlockPos pos) {
+        super(Registration.DISPERSER_MENU.get(), id);
+        this.be = inventory.player.level().getBlockEntity(pos, Registration.DISPERSER.get()).orElseThrow();
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
@@ -30,7 +32,6 @@ public class DisperserMenu extends AbstractContainerMenu {
         return be;
     }
 
-    @Override
     public ItemStack quickMoveStack(Player player, int quickMovedSlotIndex) {
         ItemStack quickMovedStack = ItemStack.EMPTY;
         Slot quickMovedSlot = this.slots.get(quickMovedSlotIndex);
@@ -73,7 +74,6 @@ public class DisperserMenu extends AbstractContainerMenu {
         return quickMovedStack;
     }
 
-    @Override
     public boolean stillValid(Player p_38874_) {
         return true;
     }
