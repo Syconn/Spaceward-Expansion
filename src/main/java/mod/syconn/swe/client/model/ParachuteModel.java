@@ -10,12 +10,13 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import mod.syconn.swe.Main;
+import net.minecraft.util.FastColor;
 
 import java.util.function.Function;
 
 public class ParachuteModel extends Model {
-	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Main.MODID, "backpack"), "main");
+
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Main.loc("backpack"), "main");
 	private final ModelPart top;
 	private final ModelPart bottom;
 
@@ -34,17 +35,13 @@ public class ParachuteModel extends Model {
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();
 		PartDefinition partdefinition = meshdefinition.getRoot();
-
 		PartDefinition top = partdefinition.addOrReplaceChild("top", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, -12.0F, -1.0F, 10.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
-
 		PartDefinition bottom = partdefinition.addOrReplaceChild("bottom", CubeListBuilder.create().texOffs(0, 6).addBox(-5.0F, -9.0F, -1.0F, 10.0F, 9.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
-
 		return LayerDefinition.create(meshdefinition, 32, 32);
 	}
 
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		top.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		bottom.render(poseStack, vertexConsumer, packedLight, packedOverlay, 1.0f, 1.0f, 1.0f, alpha);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int color) {
+		top.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
+		bottom.render(poseStack, vertexConsumer, packedLight, packedOverlay, FastColor.ARGB32.color(FastColor.ARGB32.alpha(color), -1));
 	}
 }

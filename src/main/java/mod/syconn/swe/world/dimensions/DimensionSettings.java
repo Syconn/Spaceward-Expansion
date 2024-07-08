@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 
 public record DimensionSettings(double gravity, boolean breathable) {
 
-    @Override
     public String toString() {
         return "Gravitational Force: " + gravity + " Breathable: " + breathable;
     }

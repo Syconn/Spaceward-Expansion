@@ -1,7 +1,4 @@
-package mod.syconn.swe.client.model;// Made with Blockbench 4.6.5
-// Exported for Minecraft version 1.17 or later with Mojang mappings
-// Paste this class into your mod and generate all required imports
-
+package mod.syconn.swe.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -17,7 +14,7 @@ import mod.syconn.swe.Main;
 import java.util.function.Function;
 
 public class ChuteModel extends Model {
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(Main.MODID, "chute"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Main.loc("chute"), "main");
 	private final ModelPart test;
 	private final ModelPart test2;
 	private final ModelPart brella;
@@ -74,11 +71,10 @@ public class ChuteModel extends Model {
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
 
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		test.render(poseStack, vertexConsumer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, alpha);
-		test2.render(poseStack, vertexConsumer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, alpha);
-		brella.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		brella2.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack pPoseStack, VertexConsumer pBuffer, int pPackedLight, int pPackedOverlay, int pColor) {
+		test.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, pColor);
+		test2.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, pColor);
+		brella.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, pColor);
+		brella2.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, pColor);
 	}
 }

@@ -1,28 +1,31 @@
 package mod.syconn.swe.world.inventory;
 
 import com.google.common.collect.ImmutableList;
+import mod.syconn.swe.Registration;
+import mod.syconn.swe.items.extras.EquipmentItem;
+import mod.syconn.swe.util.data.SpaceSlot;
+import mod.syconn.swe.world.data.attachments.SpaceSuit;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import mod.syconn.swe.init.ModCapabilities;
-import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.util.data.SpaceSlot;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class ExtendedPlayerInventory extends Inventory {
 
     private final NonNullList<ItemStack> space_utilities;
     private final List<NonNullList<ItemStack>> allInventories;
 
-    private final ISpaceSuit suit;
+    private final SpaceSuit suit;
 
     public ExtendedPlayerInventory(Player p) {
         super(p);
-        suit = p.getCapability(ModCapabilities.SPACE_SUIT).resolve().get();
+        suit = p.getData(Registration.SPACE_SUIT);
         space_utilities = suit.getInv();
         allInventories = ImmutableList.of(this.items, this.armor, this.offhand, this.space_utilities);
     }
@@ -38,14 +41,10 @@ public class ExtendedPlayerInventory extends Inventory {
         else return space_utilities.get(1);
     }
 
-    @Override
-    public ItemStack removeItem(int index, int count)
-    {
+    public ItemStack removeItem(int index, int count) {
         NonNullList<ItemStack> targetInventory = null;
-        for(NonNullList<ItemStack> inventory : this.allInventories)
-        {
-            if(index < inventory.size())
-            {
+        for(NonNullList<ItemStack> inventory : this.allInventories) {
+            if(index < inventory.size()) {
                 targetInventory = inventory;
                 break;
             }
@@ -54,15 +53,10 @@ public class ExtendedPlayerInventory extends Inventory {
         return targetInventory != null && !targetInventory.get(index).isEmpty() ? ContainerHelper.removeItem(targetInventory, index, count) : ItemStack.EMPTY;
     }
 
-    @Override
-    public void removeItem(ItemStack stack)
-    {
-        for(NonNullList<ItemStack> inventory : this.allInventories)
-        {
-            for(int i = 0; i < inventory.size(); ++i)
-            {
-                if(inventory.get(i) == stack)
-                {
+    public void removeItem(ItemStack stack) {
+        for(NonNullList<ItemStack> inventory : this.allInventories) {
+            for(int i = 0; i < inventory.size(); ++i) {
+                if(inventory.get(i) == stack) {
                     inventory.set(i, ItemStack.EMPTY);
                     break;
                 }
@@ -70,59 +64,40 @@ public class ExtendedPlayerInventory extends Inventory {
         }
     }
 
-    @Override
-    public ItemStack removeItemNoUpdate(int index)
-    {
+    public ItemStack removeItemNoUpdate(int index) {
         NonNullList<ItemStack> targetInventory = null;
-        for(NonNullList<ItemStack> inventory : this.allInventories)
-        {
-            if(index < inventory.size())
-            {
+        for(NonNullList<ItemStack> inventory : this.allInventories) {
+            if(index < inventory.size()) {
                 targetInventory = inventory;
                 break;
             }
             index -= inventory.size();
         }
 
-        if(targetInventory != null && !targetInventory.get(index).isEmpty())
-        {
+        if(targetInventory != null && !targetInventory.get(index).isEmpty()) {
             ItemStack stack = targetInventory.get(index);
             targetInventory.set(index, ItemStack.EMPTY);
             return stack;
         }
-        else
-        {
-            return ItemStack.EMPTY;
-        }
+        else return ItemStack.EMPTY;
     }
 
-    @Override
-    public void setItem(int index, ItemStack stack)
-    {
+    public void setItem(int index, ItemStack stack) {
         NonNullList<ItemStack> targetInventory = null;
-        for(NonNullList<ItemStack> inventory : this.allInventories)
-        {
-            if(index < inventory.size())
-            {
+        for(NonNullList<ItemStack> inventory : this.allInventories) {
+            if(index < inventory.size()) {
                 targetInventory = inventory;
                 break;
             }
             index -= inventory.size();
         }
-        if(targetInventory != null)
-        {
-            targetInventory.set(index, stack);
-        }
+        if(targetInventory != null) targetInventory.set(index, stack);
     }
 
-    @Override
-    public ItemStack getItem(int index)
-    {
+    public ItemStack getItem(int index) {
         List<ItemStack> list = null;
-        for(NonNullList<ItemStack> inventory : this.allInventories)
-        {
-            if(index < inventory.size())
-            {
+        for(NonNullList<ItemStack> inventory : this.allInventories) {
+            if(index < inventory.size()) {
                 list = inventory;
                 break;
             }
@@ -131,103 +106,69 @@ public class ExtendedPlayerInventory extends Inventory {
         return list == null ? ItemStack.EMPTY : list.get(index);
     }
 
-//    @Override
-//    public ListTag save(ListTag list)
-//    {
-//        list = super.save(list);
-//        for(int i = 0; i < this.space_utilities.size(); i++)
-//        {
-//            if(!this.space_utilities.get(i).isEmpty())
-//            {
-//                CompoundTag compound = new CompoundTag();
-//                compound.putByte("Slot", (byte) (i + 200));
-//                this.space_utilities.get(i).save(compound);
-//                list.add(compound);
-//            }
-//        }
-//        return list;
-//    }
-//
-//    @Override
-//    public void load(ListTag list)
-//    {
-//        super.load(list);
-//        for(int i = 0; i < list.size(); ++i)
-//        {
-//            CompoundTag compound = list.getCompound(i);
-//            int slot = compound.getByte("Slot") & 255;
-//            ItemStack stack = ItemStack.of(compound);
-//            if(!stack.isEmpty())
-//            {
-//                if(slot >= 200 && slot < this.space_utilities.size() + 200)
-//                {
-//                    this.space_utilities.set(slot - 200, stack);
-//                }
-//            }
-//        }
-//    }
+    public ListTag save(ListTag pListTag) {
+        for (int k = 0; k < this.offhand.size(); k++) {
+            if (!this.space_utilities.get(k).isEmpty()) {
+                CompoundTag compound = new CompoundTag();
+                compound.putByte("Slot", (byte)(k + 200));
+                pListTag.add(this.offhand.get(k).save(this.player.registryAccess(), compound));
+            }
+        }
+        return pListTag;
+    }
 
-    @Override
-    public int getContainerSize()
-    {
+    public void load(ListTag pListTag) {
+        space_utilities.clear();
+
+        for (int i = 0; i < pListTag.size(); i++) {
+            CompoundTag compoundtag = pListTag.getCompound(i);
+            int j = compoundtag.getByte("Slot") & 255;
+            ItemStack itemstack = ItemStack.parse(this.player.registryAccess(), compoundtag).orElse(ItemStack.EMPTY);
+            if (j >= 0 && j < this.items.size()) {
+                this.items.set(j, itemstack);
+            } else if (j >= 100 && j < this.armor.size() + 100) {
+                this.armor.set(j - 100, itemstack);
+            } else if (j >= 150 && j < this.offhand.size() + 150) {
+                this.offhand.set(j - 150, itemstack);
+            } else if (j >= 200 && j < this.space_utilities.size() + 200) {
+                this.space_utilities.set(j - 200, itemstack);
+            }
+        }
+    }
+
+    public int getContainerSize() {
         return super.getContainerSize() + this.space_utilities.size();
     }
 
-    @Override
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         for(ItemStack stack : this.space_utilities)
-        {
-            if(!stack.isEmpty())
-            {
-                return false;
-            }
-        }
+            if(!stack.isEmpty()) return false;
         return super.isEmpty();
     }
 
-    @Override
-    public boolean contains(ItemStack targetStack)
-    {
-        for(NonNullList<ItemStack> inventory : this.allInventories)
-        {
-            Iterator iterator = inventory.iterator();
-            while(true)
-            {
-                if(!iterator.hasNext())
-                {
-                    return false;
-                }
-                ItemStack stack = (ItemStack) iterator.next();
-                if(!stack.isEmpty() && stack.sameItem(targetStack))
-                {
-                    break;
-                }
-            }
-            return true;
-        }
+    public boolean contains(ItemStack pStack) {
+        for (List<ItemStack> list : this.allInventories)
+            for (ItemStack itemstack : list)
+                if (!itemstack.isEmpty() && ItemStack.isSameItemSameComponents(itemstack, pStack)) return true;
         return false;
     }
 
-    @Override
-    public void clearContent()
-    {
-        for(List<ItemStack> list : this.allInventories)
-        {
-            list.clear();
-        }
+    public boolean contains(Predicate<ItemStack> pPredicate) {
+        for (List<ItemStack> list : this.allInventories)
+            for (ItemStack itemstack : list)
+                if (pPredicate.test(itemstack)) return true;
+        return false;
     }
 
-    @Override
-    public void dropAll()
-    {
-        for(List<ItemStack> list : this.allInventories)
-        {
-            for(int i = 0; i < list.size(); ++i)
-            {
+    public void clearContent() {
+        for(List<ItemStack> list : this.allInventories) list.clear();
+    }
+
+    public void dropAll() {
+        for(List<ItemStack> list : this.allInventories) {
+            for(int i = 0; i < list.size(); ++i) {
                 ItemStack itemstack = list.get(i);
-                if(!itemstack.isEmpty())
-                {
+                if(!itemstack.isEmpty()) {
                     this.player.drop(itemstack, true, false);
                     list.set(i, ItemStack.EMPTY);
                 }
@@ -235,12 +176,11 @@ public class ExtendedPlayerInventory extends Inventory {
         }
     }
 
-    @Override
     public void tick() {
         super.tick();
         space_utilities.forEach(e -> {
             if (e.getItem() instanceof EquipmentItem eq) {
-                eq.onEquipmentTick(e, player.level, player);
+                eq.onEquipmentTick(e, player.level(), player);
             }
         });
     }

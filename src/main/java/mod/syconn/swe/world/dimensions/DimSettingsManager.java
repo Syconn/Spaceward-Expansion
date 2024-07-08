@@ -24,21 +24,17 @@ public class DimSettingsManager extends SimpleJsonResourceReloadListener {
         super(GSON, "dim_settings");
     }
 
-    protected void apply(Map<ResourceLocation, JsonElement> elementMap, ResourceManager p_10794_, ProfilerFiller p_10795_) {
-        elementMap.forEach(((resourceLocation, jsonElement) -> {
-            SETTINGS.put(resourceLocation, DimensionSettings.fromGson(jsonElement.getAsJsonObject()));
-        }));
+    protected void apply(Map<ResourceLocation, JsonElement> pJsonMap, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+        pJsonMap.forEach(((resourceLocation, jsonElement) -> SETTINGS.put(resourceLocation, DimensionSettings.fromGson(jsonElement.getAsJsonObject()))));
     }
 
     public static DimensionSettings getSettings(ResourceKey<Level> k){
-        if (SETTINGS.containsKey(k.location()))
-            return SETTINGS.get(k.location());
-        return SETTINGS.get(new ResourceLocation(Main.MODID, "default"));
+        if (SETTINGS.containsKey(k.location())) return SETTINGS.get(k.location());
+        return SETTINGS.get(Main.loc("default"));
     }
 
     public static DimensionSettings getSettings(Player p){
-        if (SETTINGS.containsKey(p.level.dimension().location()))
-            return SETTINGS.get(p.level.dimension().location());
-        return SETTINGS.get(new ResourceLocation(Main.MODID, "default"));
+        if (SETTINGS.containsKey(p.level().dimension().location())) return SETTINGS.get(p.level().dimension().location());
+        return SETTINGS.get(Main.loc("default"));
     }
 }

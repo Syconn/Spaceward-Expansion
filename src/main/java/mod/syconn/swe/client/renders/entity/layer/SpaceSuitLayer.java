@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -46,13 +47,10 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
             ItemStack itemstack = SpaceArmor.hasParachute(pLivingEntity) ? Helper.inventory(pLivingEntity).getItemBySlot(SpaceSlot.PARACHUTE) : pLivingEntity.getItemBySlot(EquipmentSlot.CHEST);
             if (itemstack.getItem() instanceof Parachute) {
                 int i = DyedItemColor.getOrDefault(itemstack, -1);
-                float f = (float) (i >> 16 & 255) / 255.0F;
-                float f1 = (float) (i >> 8 & 255) / 255.0F;
-                float f2 = (float) (i & 255) / 255.0F;
                 pPoseStack.pushPose();
                 pPoseStack.translate(0.0F, -0.80F, 0.2F);
                 VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Main.loc("textures/entity/layers/parachute.png")), itemstack.hasFoil());
-                this.pm.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, f, f1, f2, 1.0F);
+                this.pm.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(1, i));
                 pPoseStack.popPose();
                 SpaceSuit suit = pLivingEntity.getData(Registration.SPACE_SUIT);
                 if (suit.parachute()) {
@@ -60,7 +58,7 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
                     double seg = -0.69F / suit.chuteAnim().maxAnimLen();
                     pPoseStack.translate(0.0F, -0.11 + seg * suit.chuteAnim().animLen(), 0.2F);
                     VertexConsumer v2 = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Main.loc("textures/entity/layers/chute.png")), itemstack.hasFoil());
-                    this.cm.renderToBuffer(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, f, f1, f2, 1.0F);
+                    this.cm.renderToBuffer(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(1, i));
                     pPoseStack.popPose();
                 }
             }
