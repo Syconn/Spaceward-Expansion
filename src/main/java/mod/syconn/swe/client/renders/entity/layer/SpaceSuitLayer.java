@@ -66,20 +66,13 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
             itemstack = SpaceArmor.getGear(SpaceSlot.TANK, pLivingEntity);
             if (itemstack != null && itemstack.getItem() instanceof Canister canister) {
                 int i = canister.getColor(itemstack);
-                float f = (float) (i >> 16 & 255) / 255.0F;
-                float f1 = (float) (i >> 8 & 255) / 255.0F;
-                float f2 = (float) (i & 255) / 255.0F;
-                float f3 = (float) (canister.getOutlineColor() >> 16 & 255) / 255.0F;
-                float f4 = (float) (canister.getOutlineColor() >> 8 & 255) / 255.0F;
-                float f5 = (float) (canister.getOutlineColor() & 255) / 255.0F;
-                float[] red = {f, f3};
-                float[] green = {f1, f4};
-                float[] blue = {f2, f5};
+                int i2 = canister.getOutlineColor();
+                int[] colors = {i, FastColor.ARGB32.color(Canister.get(itemstack).fluid().is(Fluids.EMPTY) ? 255 : 1, i2)};
                 pPoseStack.pushPose();
                 pPoseStack.translate(0F, -0.80F, 0.3F);
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(180F));
                 VertexConsumer v2 = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Main.loc("textures/entity/layers/tank.png")), itemstack.hasFoil());
-                tm.render(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, red, green, blue, Canister.get(itemstack).fluid().is(Fluids.EMPTY) ? 255.0F : 1.0F);
+                tm.render(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, colors);
                 pPoseStack.popPose();
             }
         }

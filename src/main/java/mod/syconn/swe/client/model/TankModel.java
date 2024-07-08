@@ -64,8 +64,8 @@ public class TankModel extends Model {
 	public void renderToBuffer(PoseStack pPoseStack, VertexConsumer pBuffer, int pPackedLight, int pPackedOverlay, int pColor) { }
 
 	public void render(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int[] color) {
-		chamber1.render(poseStack, vertexConsumer, packedLight, packedOverlay, FastColor.ARGB32.color(1, color[1]));
-		chamber2.render(poseStack, vertexConsumer, packedLight, packedOverlay, FastColor.ARGB32.color(1, color[1]));
+		chamber1.render(poseStack, vertexConsumer, packedLight, packedOverlay, color[1]);
+		chamber2.render(poseStack, vertexConsumer, packedLight, packedOverlay, color[1]);
 		glass.render(poseStack, vertexConsumer, packedLight, packedOverlay, -1);
 		fluid.render(poseStack, vertexConsumer, packedLight, packedOverlay, color[0]);
 		top.render(poseStack, vertexConsumer, packedLight, packedOverlay, -1);

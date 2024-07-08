@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record MessageClickTab(BlockPos pos, Direction direction) implements CustomPacketPayload {
@@ -23,8 +24,8 @@ public record MessageClickTab(BlockPos pos, Direction direction) implements Cust
         context.enqueueWork(() -> {
             ServerPlayer player = (ServerPlayer) context.player();
             if (player.level().getBlockEntity(message.pos) instanceof PipeBlockEntity pe) {
-                pe.setTarget(message.d);
-                NetworkHooks.openScreen(player, pe, message.pos);
+                pe.setTarget(message.direction);
+                player.openMenu(pe, message.pos);
             }
         });
     }

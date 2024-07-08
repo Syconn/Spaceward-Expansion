@@ -71,7 +71,7 @@ public class AirBubblesSavedData extends SavedData {
                     CompoundTag ct = (CompoundTag) nNBT;
                     oxygenMap.put(ct.getUUID("uuid"), NbtHelper.readPosses(ct.getCompound("positions")));
                 });
-                levelBlockPositions.put(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(outerData.getString("loc"))), oxygenMap);
+                levelBlockPositions.put(ResourceKey.create(Registries.DIMENSION, ResourceLocation.withDefaultNamespace(outerData.getString("loc"))), oxygenMap);
             });
         }
     }
@@ -80,13 +80,13 @@ public class AirBubblesSavedData extends SavedData {
         return new AirBubblesSavedData();
     }
 
-    public static AirBubblesSavedData load(CompoundTag tag) {
+    public static AirBubblesSavedData load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
         AirBubblesSavedData data = create();
         data.read(tag);
         return data;
     }
 
-    public static AirBubblesSavedData get() { // TODO FIX
-        return ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage().computeIfAbsent(AirBubblesSavedData::load, AirBubblesSavedData::create, "air_bubbles");
+    public static AirBubblesSavedData get() { // TODO SWAP TO SAVED DATA PER DIMENSIN INSTEAD OF ALL ON OVERWORLD
+        return ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage().computeIfAbsent(new Factory<>(AirBubblesSavedData::create, AirBubblesSavedData::load), "air_bubbles");
     }
 }

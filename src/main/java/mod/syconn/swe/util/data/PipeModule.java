@@ -2,6 +2,7 @@ package mod.syconn.swe.util.data;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.PipeBlock;
@@ -11,6 +12,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import mod.syconn.swe.blocks.FluidBaseBlock;
 import mod.syconn.swe.blockentities.PipeBlockEntity;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 import java.util.stream.Stream;
 
@@ -146,7 +148,7 @@ public class PipeModule {
 
     private static boolean isBlock(BlockPos pos, LevelAccessor l, Direction d){
         BlockPos pos2 = pos.offset(d.getStepX(), d.getStepY(), d.getStepZ());
-        return l.getBlockEntity(pos2) != null && l.getBlockEntity(pos2).getCapability(ForgeCapabilities.FLUID_HANDLER, d.getOpposite()).isPresent();
+        return l.getBlockEntity(pos2) != null && l instanceof Level lv && lv.getCapability(Capabilities.FluidHandler.BLOCK, pos2, d.getOpposite()) != null;
     }
 
     public String getModel(){
@@ -162,7 +164,7 @@ public class PipeModule {
         return sides == 4 ? "fluid_pipe_qarm" : sides == 3 ? "fluid_pipe_tarm" : sides == 1 ? "fluid_pipe_sarm" : "fluid_pipe";
     }
 
-    public static void updateBE(LevelAccessor l, PipeBlockEntity be) {
+    public static void updateBE(Level l, PipeBlockEntity be) {
         be.getSystem().handleBlockUpdate(l);
         be.update();
     }

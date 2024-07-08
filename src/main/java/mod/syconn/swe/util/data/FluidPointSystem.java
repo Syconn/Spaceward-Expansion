@@ -5,8 +5,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import mod.syconn.swe.blockentities.PipeBlockEntity;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,15 +81,14 @@ public class FluidPointSystem {
         return fluidPoints;
     }
 
-    public void handleBlockUpdate(LevelAccessor level){
+    public void handleBlockUpdate(Level level) {
         for (Direction d : Direction.values()) {
             FluidPoint point = system.get(d);
             if (!point.equals(FluidPoint.Empty())) {
-                if (level.getBlockEntity(point.pos) == null){
+                if (level.getBlockEntity(point.pos) == null)
                     system.put(d, FluidPoint.Empty());
-                } else if (!level.getBlockEntity(point.pos).getCapability(ForgeCapabilities.FLUID_HANDLER).isPresent() || level.getBlockEntity(point.pos) instanceof PipeBlockEntity) {
+                else if (level.getCapability(Capabilities.FluidHandler.BLOCK, point.pos, Direction.NORTH) != null || level.getBlockEntity(point.pos) instanceof PipeBlockEntity)
                     system.put(d, FluidPoint.Empty());
-                }
             }
         }
     }
@@ -136,7 +137,7 @@ public class FluidPointSystem {
         }
 
         public static FluidPoint read(CompoundTag tag) {
-            return new FluidPoint(NbtUtils.readBlockPos(tag.getCompound("pos")), Direction.from3DDataValue(tag.getInt("dir")), tag.getBoolean("exporter"), tag.getInt("priority"));
+            return new FluidPoint(NbtUtils.readBlockPos(tag, "pos").orElseThrow(), Direction.from3DDataValue(tag.getInt("dir")), tag.getBoolean("exporter"), tag.getInt("priority"));
         }
     }
 }

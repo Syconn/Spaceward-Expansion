@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -52,7 +53,7 @@ public class FluidPipe extends FluidTransportBlock {
     }
 
     public BlockState updateShape(BlockState state, Direction dir, BlockState p_60543_, LevelAccessor level, BlockPos pos, BlockPos p_60546_) {
-        PipeModule.updateBE(level, level.getBlockEntity(pos, Registration.PIPE.get()).get());
+        if (level instanceof Level) PipeModule.updateBE((Level) level, level.getBlockEntity(pos, Registration.PIPE.get()).get()); // TODO WONT WORK MAYBE
         return PipeModule.getStateForPlacement(state, pos, level);
     }
 
@@ -85,37 +86,37 @@ public class FluidPipe extends FluidTransportBlock {
                 double y = result.getLocation().y - pos.getY();
                 double z = result.getLocation().z - pos.getZ();
                 if (y > 0.7) {
-                    if (stack.getOrCreateTag().getBoolean("exporter"))
+                    if (Boolean.TRUE.equals(stack.get(Registration.MODE_COMPONENT)))
                         be.setImporter(new BlockPos(pos.relative(Direction.UP)));
                     else be.setExporter(new BlockPos(pos.relative(Direction.UP)));
                 } else if (y < 0.3) {
-                    if (stack.getOrCreateTag().getBoolean("exporter"))
+                    if (Boolean.TRUE.equals(stack.get(Registration.MODE_COMPONENT)))
                         be.setImporter(new BlockPos(pos.relative(Direction.DOWN)));
                     else be.setExporter(new BlockPos(pos.relative(Direction.DOWN)));
                 } else if (z < 0.69 && z > 0.3) {
                     if (x > 0.65) {
-                        if (stack.getOrCreateTag().getBoolean("exporter"))
+                        if (Boolean.TRUE.equals(stack.get(Registration.MODE_COMPONENT)))
                             be.setImporter(new BlockPos(pos.relative(Direction.EAST)));
                         else be.setExporter(new BlockPos(pos.relative(Direction.EAST)));
                     } else if (x < 0.31) {
-                        if (stack.getOrCreateTag().getBoolean("exporter"))
+                        if (Boolean.TRUE.equals(stack.get(Registration.MODE_COMPONENT)))
                             be.setImporter(new BlockPos(pos.relative(Direction.WEST)));
                         else be.setExporter(new BlockPos(pos.relative(Direction.WEST)));
                     }
                 } else if (x < 0.69 && x > 0.3) {
                     if (z > 0.65) {
-                        if (stack.getOrCreateTag().getBoolean("exporter"))
+                        if (Boolean.TRUE.equals(stack.get(Registration.MODE_COMPONENT)))
                             be.setImporter(new BlockPos(pos.relative(Direction.SOUTH)));
                         else be.setExporter(new BlockPos(pos.relative(Direction.SOUTH)));
                     } else if (z < 0.31) {
-                        if (stack.getOrCreateTag().getBoolean("exporter"))
+                        if (Boolean.TRUE.equals(stack.get(Registration.MODE_COMPONENT)))
                             be.setImporter(new BlockPos(pos.relative(Direction.NORTH)));
                         else be.setExporter(new BlockPos(pos.relative(Direction.NORTH)));
                     }
                 }
             }
             else if (blockentity instanceof PipeBlockEntity be && !be.getSystem().getPoints().isEmpty()) {
-                NetworkHooks.openScreen((ServerPlayer) p, be, pos);
+                p.openMenu((MenuProvider) blockentity, pos);
             }
         }
         return InteractionResult.PASS;
