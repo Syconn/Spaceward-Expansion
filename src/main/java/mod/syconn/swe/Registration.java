@@ -30,6 +30,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
@@ -165,11 +166,7 @@ public class Registration {
 
     public static void addCreative(BuildCreativeModeTabContentsEvent e) {
         if (e.getTabKey() == NEXUS_TAB.getKey()) {
-            for (DyeColor c : DyeColor.values()){
-                ItemStack s = new ItemStack(PARACHUTE.get());
-                Dyeable.setColor(s, c.getFireworkColor());
-                e.accept(s);
-            }
+            for (DyeColor c : DyeColor.values()) e.accept(DyedItemColor.applyDyes(new ItemStack(PARACHUTE.get()), List.of(DyeItem.byColor(c))));
             List<ItemStack> delayed = new ArrayList<>();
             delayed.add(Canister.create(8000, 8000, Fluids.LAVA, CANISTER.get()));
             delayed.add(Canister.create(8000, 8000, Fluids.LAVA, AUTO_REFILL_CANISTER.get()));

@@ -87,7 +87,7 @@ public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
     }
 
     public AbstractContainerMenu createMenu(int id, Inventory p_39955_, Player p_39956_) {
-        return new TankMenu(id, p_39955_, this);
+        return new TankMenu(id, p_39955_, worldPosition);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, TankBlockEntity e) {

@@ -1,7 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.blocks.FluidTank;
+import mod.syconn.swe.items.Canister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -15,9 +15,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import mod.syconn.swe.items.Canister;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 public class CanisterFillerBlockEntity extends BlockEntity {
 
@@ -33,7 +33,7 @@ public class CanisterFillerBlockEntity extends BlockEntity {
         for (int i = 0; i < 4; i++) {
             if (!e.items.get(i).isEmpty()) {
                 ItemStack item = e.items.get(i);
-                if (Canister.get(item).fluid() == FluidStack.EMPTY || Canister.get(item) == e.getFluidTank().getFluid().getFluid()) {
+                if (Canister.get(item).fluid() == FluidStack.EMPTY || FluidStack.isSameFluid(Canister.get(item).fluid(), e.getFluidTank().getFluid())) {
                     if (Canister.get(item).max() > Canister.get(item).fluid().getAmount()) {
                         FluidStack fill = e.getFluidTank().drain(e.fillSpeed, IFluidHandler.FluidAction.SIMULATE);
                         if (fill.getAmount() > Canister.get(item).max() - Canister.get(item).fluid().getAmount()) {
@@ -49,7 +49,7 @@ public class CanisterFillerBlockEntity extends BlockEntity {
     }
 
     public boolean addCanister(ItemStack stack) {
-        if (stack.getItem() instanceof Canister c && (Canister.getType(stack) == Fluids.EMPTY || c.getFluid(stack).getFluid() == getFluidTank().getFluid().getFluid())) {
+        if (stack.getItem() instanceof Canister c && (Canister.get(stack).fluid().is(Fluids.EMPTY) || c.getFluid(stack).getFluid() == getFluidTank().getFluid().getFluid())) {
             for (int i = 0; i < 4; i++) {
                 if (items.get(i).isEmpty()) {
                     items.set(i, stack.copy());

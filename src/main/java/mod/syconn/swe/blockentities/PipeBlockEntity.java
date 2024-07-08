@@ -214,7 +214,7 @@ public class PipeBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
     }
 
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {
-        return new PipeMenu(p_39954_, p_39955_, this);
+        return new PipeMenu(p_39954_, p_39955_, worldPosition);
     }
 
     public Component getDisplayName() {
