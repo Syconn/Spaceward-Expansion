@@ -31,7 +31,6 @@ public class Main {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::gatherData);
-        modEventBus.addListener(this::loadData);
         modEventBus.addListener(Registration::addCreative);
         modEventBus.addListener(Registration::registerCapabilities);
         modEventBus.addListener(Channel::onRegisterPayloadHandler);
@@ -47,6 +46,8 @@ public class Main {
         Registration.TABS.register(modEventBus);
         Registration.ATTACHMENT_TYPES.register(modEventBus);
         Registration.COMPONENTS.register(modEventBus);
+
+        NeoForge.EVENT_BUS.addListener(this::loadData);
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);

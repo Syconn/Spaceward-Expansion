@@ -51,7 +51,7 @@ public class DispersibleAirBlock extends BaseEntityBlock {
     }
 
     public RenderShape getRenderShape(BlockState state) {
-        if (Config.showOxygen.get()) return RenderShape.MODEL;
+        if (Config.CLIENT_CONFIG.isLoaded() && Config.showOxygen.get()) return RenderShape.MODEL;
         return RenderShape.INVISIBLE;
     }
 
