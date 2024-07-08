@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "n": {
+      "item": "minecraft:iron_ingot"
+    },
+    "r": {
+      "item": "minecraft:bucket"
+    }
+  },
+  "pattern": [
+    "nnn",
+    "nrn",
+    "nnn"
+  ],
+  "result": {
+    "count": 1,
+    "id": "swe:canister"
+  }
+}

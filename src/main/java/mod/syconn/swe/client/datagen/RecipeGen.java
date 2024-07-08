@@ -91,7 +91,7 @@ public class RecipeGen extends RecipeProvider {
                 .requires(Items.GOLD_INGOT)
                 .unlockedBy("has_ingot", inventoryTrigger(ItemPredicate.Builder.item().of(Items.IRON_INGOT).build()))
                 .save(pRecipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Registration.CANISTER.get(), 16)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, Registration.CANISTER.get(), 1)
                 .pattern("nnn")
                 .pattern("nrn")
                 .pattern("nnn")

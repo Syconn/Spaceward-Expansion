@@ -19,7 +19,7 @@ public class BlockLootTables extends BlockLootSubProvider {
     private static final Set<Item> EXPLOSION_RESISTANT = Collections.emptySet();
 
     public BlockLootTables(HolderLookup.Provider pRegistries) {
-        super(EXPLOSION_RESISTANT, FeatureFlags.REGISTRY.allFlags(), pRegistries);
+        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags(), pRegistries);
     }
 
     protected void generate() {

@@ -57,6 +57,7 @@ import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static mod.syconn.swe.Main.MODID;
@@ -64,6 +65,8 @@ import static mod.syconn.swe.fluids.BaseFluidType.*;
 import static net.minecraft.world.level.block.state.BlockBehaviour.simpleCodec;
 
 public class Registration {
+
+    public Registration() {}
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
@@ -100,12 +103,12 @@ public class Registration {
     public static final DeferredItem<UpgradeItem> NETHERITE_UPGRADE = ITEMS.register("netherite_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1).fireResistant(), 25));
     public static final DeferredItem<BucketItem> O2_BUCKET = ITEMS.register("o2_fluid_bucket", () -> new BucketItem(O2_SOURCE.get(), new Item.Properties().stacksTo(1)));
 
-    public static final DeferredBlock<OxygenCollector> OXYGEN_COLLECTOR = register("oxygen_collector", () -> new OxygenCollector(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final DeferredBlock<DispersibleAirBlock> OXYGEN = register("oxygen", () -> new DispersibleAirBlock(Blocks.AIR.properties().noCollission().noLootTable().air().isViewBlocking((state, level, pos) -> false)));
-    public static final DeferredBlock<CanisterFiller> CANISTER_FILLER = register("canister_filler", () -> new CanisterFiller(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final DeferredBlock<OxygenDisperser> OXYGEN_DISPERSER = register("oxygen_disperser", () -> new OxygenDisperser(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final DeferredBlock<FluidPipe> FLUID_PIPE = register("fluid_pipe", () -> new FluidPipe(Blocks.IRON_BLOCK.properties().noOcclusion().dynamicShape()));
-    public static final DeferredBlock<Block> FLUID_TANK = register("fluid_tank", () -> new FluidTank(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
+    public static final DeferredBlock<OxygenCollector> OXYGEN_COLLECTOR = registerBlockAndItem("oxygen_collector", () -> new OxygenCollector(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
+    public static final DeferredBlock<DispersibleAirBlock> OXYGEN = registerBlockAndItem("oxygen", () -> new DispersibleAirBlock(Blocks.AIR.properties().noCollission().noLootTable().air().isViewBlocking((state, level, pos) -> false)));
+    public static final DeferredBlock<CanisterFiller> CANISTER_FILLER = registerBlockAndItem("canister_filler", () -> new CanisterFiller(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
+    public static final DeferredBlock<OxygenDisperser> OXYGEN_DISPERSER = registerBlockAndItem("oxygen_disperser", () -> new OxygenDisperser(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
+    public static final DeferredBlock<FluidPipe> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new FluidPipe(Blocks.IRON_BLOCK.properties().noOcclusion().dynamicShape()));
+    public static final DeferredBlock<Block> FLUID_TANK = registerBlockAndItem("fluid_tank", () -> new FluidTank(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
     public static final DeferredBlock<LiquidBlock> O2_FLUID_BLOCK = BLOCKS.register("o2_fluid_block", () -> new LiquidBlock(O2_SOURCE.get(), Blocks.WATER.properties()));
 
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<CanisterFiller>> CANISTER_FILLER_CODEC = BLOCK_TYPES.register("canister_filler", () -> simpleCodec(CanisterFiller::new));
@@ -158,10 +161,14 @@ public class Registration {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, PIPE.get(), (o, v) -> o.getItemHandler());
     }
 
-    private static <T extends Block> DeferredBlock<T> register(String id, Supplier<T> blockSupplier) {
-        DeferredBlock<T> deferredBlock = BLOCKS.register(id, blockSupplier);
-        ITEMS.registerSimpleBlockItem(id, blockSupplier);
-        return deferredBlock;
+    private static <BLOCK extends Block> DeferredBlock<BLOCK> registerBlockAndItem(String id, Supplier<BLOCK> blockSupplier) {
+        return registerBlockAndItem(id, blockSupplier, block1 -> new BlockItem(block1, new Item.Properties()));
+    }
+
+    private static <BLOCK extends Block, ITEM extends BlockItem> DeferredBlock<BLOCK> registerBlockAndItem(String name, Supplier<BLOCK> blockFactory, Function<? super BLOCK,ITEM> itemFactory) {
+        DeferredBlock<BLOCK> block = BLOCKS.register(name, blockFactory);
+        DeferredHolder<Item, ITEM> item = ITEMS.register(name, () -> itemFactory.apply(block.get()));
+        return block;
     }
 
     public static void addCreative(BuildCreativeModeTabContentsEvent e) {

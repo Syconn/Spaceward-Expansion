@@ -1,0 +1,4 @@
+// 1.21	2024-07-08T17:16:44.089652	vanilla/Tags for minecraft:block mod id swe
+be5005550f024e09cf62d0170db9c62ebbb009ac data/minecraft/tags/block/mineable/pickaxe.json
+be5005550f024e09cf62d0170db9c62ebbb009ac data/minecraft/tags/block/needs_iron_tool.json
+0695e66bfc3c6d7c73d7b3b205052296f9587053 data/swe/tags/block/o2_producing.json
