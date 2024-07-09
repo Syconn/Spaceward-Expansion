@@ -1,0 +1,11 @@
+{
+  "homepage": "https://authors.curseforge.com/#/projects/1060262/files",
+  "1.21": {
+    "0.1.0": "1.21 Port",
+    "0.1.1": "Bug Fixes"
+  },
+  "promos": {
+    "1.21-latest": "0.1.0",
+    "1.21-recommended": "0.1.0"
+  }
+}
