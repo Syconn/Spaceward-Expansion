@@ -24,15 +24,22 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.common.NeoForge;
 
+import static mod.syconn.swe.client.ClientHooks.addPlayerLayers;
+
+@EventBusSubscriber(modid = Main.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientHandler {
 
     @SubscribeEvent
-    public static void init(FMLClientSetupEvent event) {
+    public static void init(final FMLClientSetupEvent event) {
         ItemProperties.register(Registration.CANISTER.get(), Main.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
         ItemProperties.register(Registration.AUTO_REFILL_CANISTER.get(), Main.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
         ItemBlockRenderTypes.setRenderLayer(Registration.O2_SOURCE.get(), RenderType.translucent()); // TODO REPLACE IN JSON
@@ -54,13 +61,9 @@ public class ClientHandler {
     }
 
     @SubscribeEvent
-    public static void addLayers(EntityRenderersEvent.AddLayers event) {
+    public static void addRenderLayers(EntityRenderersEvent.AddLayers event) {
         addPlayerLayers(event.getSkin(PlayerSkin.Model.WIDE), event.getEntityModels());
         addPlayerLayers(event.getSkin(PlayerSkin.Model.SLIM), event.getEntityModels());
-    }
-
-    private static void addPlayerLayers(EntityRenderer<? extends Player> renderer, EntityModelSet s) {
-        if(renderer instanceof PlayerRenderer playerRenderer) playerRenderer.addLayer(new SpaceSuitLayer<>(playerRenderer, s));
     }
 
     @SubscribeEvent
@@ -78,7 +81,6 @@ public class ClientHandler {
         event.registerAbove(VanillaGuiLayers.AIR_LEVEL, Main.loc("o2"), SpaceSuitOverlay.O2_OVERLAY);
     }
 
-    @SubscribeEvent
     public static void onPlayerRenderScreen(ContainerScreenEvent.Render.Background event) {
         ClientHooks.overridePlayerScreen(event.getGuiGraphics(), event.getContainerScreen());
     }

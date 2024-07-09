@@ -1,6 +1,7 @@
 package mod.syconn.swe.world;
 
 import mod.syconn.swe.Config;
+import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.items.Parachute;
 import mod.syconn.swe.items.SpaceArmor;
@@ -18,15 +19,23 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
+import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public class CommonHandler {
 
+    public static void init(final FMLCommonSetupEvent event) {
+        NeoForge.EVENT_BUS.register(CommonHandler.class);
+    }
+
     @SubscribeEvent
-    public void entityTickEvent(EntityTickEvent.Pre event){
+    public static void entityTickEvent(EntityTickEvent.Pre event){
         if (event.getEntity() instanceof LivingEntity livingEntity) {
             AttributeInstance gravity = livingEntity.getAttribute(Attributes.GRAVITY);
             double g = DimSettingsManager.getSettings(livingEntity.level().dimension()).gravity();
@@ -36,7 +45,7 @@ public class CommonHandler {
     }
 
     @SubscribeEvent
-    public void playerTickEvent(PlayerTickEvent.Pre event){
+    public static void playerTickEvent(PlayerTickEvent.Pre event){
         if (event.getEntity() instanceof ServerPlayer p){
             if (p.getY() >= Config.spaceHeight.get() && DimensionHelper.on(p, Level.OVERWORLD)) {
                 ServerLevel serverlevel = ((ServerLevel)p.level()).getServer().getLevel(Registration.MOON_KEY);
@@ -62,7 +71,7 @@ public class CommonHandler {
     }
 
     @SubscribeEvent
-    public void fallDamageEvent(LivingFallEvent event) {
+    public static void fallDamageEvent(LivingFallEvent event) {
         if (event.getEntity().hasData(Registration.SPACE_SUIT) && event.getEntity().getData(Registration.SPACE_SUIT).parachute())
             event.setCanceled(true);
         if (DimensionHelper.onMoon(event.getEntity())) {

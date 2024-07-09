@@ -28,8 +28,8 @@ public class Main {
     public static final String MODID = "swe";
 
     public Main(IEventBus modEventBus, ModContainer modContainer) {
-        modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::clientSetup);
+        modEventBus.addListener(CommonHandler::init);
+        modEventBus.addListener(ClientHandler::init);
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(Registration::addCreative);
         modEventBus.addListener(Registration::registerCapabilities);
@@ -48,17 +48,11 @@ public class Main {
         Registration.COMPONENTS.register(modEventBus);
 
         NeoForge.EVENT_BUS.addListener(this::loadData);
+        NeoForge.EVENT_BUS.addListener(CommonHandler::playerTickEvent);
+        NeoForge.EVENT_BUS.addListener(ClientHandler::onPlayerRenderScreen);
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
-    }
-
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        NeoForge.EVENT_BUS.register(new CommonHandler());
-    }
-
-    private void clientSetup(final FMLClientSetupEvent event) {
-        NeoForge.EVENT_BUS.register(new ClientHandler());
     }
 
     public void gatherData(GatherDataEvent event) {
