@@ -1,6 +1,6 @@
 package mod.syconn.swe.blockentities;
 
-import mod.syconn.swe.util.ResourceUtil;
+import mod.syconn.swe.client.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -34,7 +34,7 @@ public abstract class GUIFluidHandlerBlockEntity extends SidedFluidHandlerBE {
     }
 
     protected void updateTextures(FluidStack resource) {
-        gfluid = new RGBImage(ResourceUtil.createFluidGuiTexture(resource.getFluid()));
+        gfluid = new RGBImage(RenderUtil.createFluidGuiTexture(resource.getFluid()));
         gfluidLoc = Minecraft.getInstance().getTextureManager().register("gfluid", gfluid.getImageFromPixels());
     }
 

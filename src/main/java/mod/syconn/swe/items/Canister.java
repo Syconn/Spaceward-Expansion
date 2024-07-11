@@ -1,10 +1,10 @@
 package mod.syconn.swe.items;
 
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.client.RenderUtil;
 import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
 import mod.syconn.swe.util.ColorUtil;
-import mod.syconn.swe.util.ResourceUtil;
 import mod.syconn.swe.util.data.AirBubblesSavedData;
 import mod.syconn.swe.util.data.SpaceSlot;
 import mod.syconn.swe.world.data.components.CanisterComponent;
@@ -74,7 +74,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     public static ItemStack create(int volume, int max, Fluid fluid, Item item){
         ItemStack itemStack = new ItemStack(item);
         FluidStack fluidStack = new FluidStack(fluid, Math.min(volume, max));
-        itemStack.set(Registration.CANISTER_COMPONENT, new CanisterComponent(fluidStack, max, ColorUtil.getColor(fluidStack)));
+        itemStack.set(Registration.CANISTER_COMPONENT, new CanisterComponent(fluidStack, max, fluid.isSame(Fluids.EMPTY) ? -1 : RenderUtil.getFluidColor(fluidStack)));
         return itemStack;
     }
 

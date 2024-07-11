@@ -1,10 +1,10 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.client.RenderUtil;
 import mod.syconn.swe.util.RGBImage;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
 import mod.syconn.swe.util.FluidHelper;
-import mod.syconn.swe.util.ResourceUtil;
 import mod.syconn.swe.world.container.TankMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -45,7 +45,7 @@ public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
 
     protected void updateTextures(FluidStack resource) {
         super.updateTextures(resource);
-        bfluid = new RGBImage(ResourceUtil.createFluidBlockTexture(resource.getFluid()));
+        bfluid = new RGBImage(RenderUtil.createFluidBlockTexture(resource.getFluid()));
         bfluidLoc = Minecraft.getInstance().getTextureManager().register("bfluid", bfluid.getImageFromPixels());
         update();
     }

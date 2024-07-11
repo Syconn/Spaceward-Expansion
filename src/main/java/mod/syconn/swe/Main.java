@@ -38,14 +38,14 @@ public class Main {
 
         Registration.ARMOR_MATERIALS.register(modEventBus);
         Registration.BLOCKS.register(modEventBus);
+        Registration.FLUID_TYPES.register(modEventBus);
+        Registration.FLUIDS.register(modEventBus);
+        Registration.ATTACHMENT_TYPES.register(modEventBus);
         Registration.ITEMS.register(modEventBus);
         Registration.BLOCK_ENTITIES.register(modEventBus);
         Registration.MENUS.register(modEventBus);
         Registration.RECIPE_SERIALIZERS.register(modEventBus);
-        Registration.FLUID_TYPES.register(modEventBus);
-        Registration.FLUIDS.register(modEventBus);
         Registration.TABS.register(modEventBus);
-        Registration.ATTACHMENT_TYPES.register(modEventBus);
         Registration.COMPONENTS.register(modEventBus);
 
         NeoForge.EVENT_BUS.addListener(this::loadData);
