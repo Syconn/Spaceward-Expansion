@@ -4,9 +4,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import mezz.jei.api.helpers.IPlatformFluidHelper;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.client.RenderUtil;
 import mod.syconn.swe.client.model.ChuteModel;
 import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
@@ -15,11 +15,11 @@ import mod.syconn.swe.items.Parachute;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.util.ColorUtil;
 import mod.syconn.swe.util.Helper;
-import mod.syconn.swe.util.ResourceUtil;
 import mod.syconn.swe.util.data.SpaceSlot;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -69,8 +69,10 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
 
             itemstack = SpaceArmor.getGear(SpaceSlot.TANK, pLivingEntity);
             if (itemstack != null && itemstack.getItem() instanceof Canister canister) { // TODO CHANGE TO STACK COLOR
+                float[] test = RenderSystem.getShaderColor();
 //                setGLColorFromInt(IClientFluidTypeExtensions.of(Canister.get(itemstack).fluid().getFluidType()).getTintColor(Canister.get(itemstack).fluid()));
-                int i = FastColor.ARGB32.color(30, ColorUtil.getColor(Canister.get(itemstack).fluid()));
+//                int i = FastColor.ARGB32.color(30, ColorUtil.getColor(Canister.get(itemstack).fluid()));
+                int i = RenderUtil.getFluidColor(Canister.get(itemstack).fluid());
                 int i2 = canister.getOutlineColor();
                 pPoseStack.pushPose();
                 pPoseStack.translate(0F, -0.80F, 0.3F);
@@ -78,6 +80,8 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
                 VertexConsumer v2 = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Main.loc("textures/entity/layers/tank.png")), itemstack.hasFoil());
                 tm.render(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, new int[]{i, i2});
                 pPoseStack.popPose();
+//                RenderSystem.setShaderColor(test[0], test[1], test[2], test[3]);
+//                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             }
         }
     }

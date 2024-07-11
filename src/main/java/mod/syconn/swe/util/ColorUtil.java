@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import com.mojang.blaze3d.platform.NativeImage;
 import mod.syconn.swe.Registration;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
@@ -48,6 +49,8 @@ public class ColorUtil {
         if (!fluid.is(Fluids.EMPTY)) {
             int i = IClientFluidTypeExtensions.of(fluid.getFluidType()).getTintColor(fluid);
             NativeImage image = ResourceUtil.getMainImage(getStillFluidSprite(fluid).get()).get();
+
+            Minecraft.getInstance().getBlockRenderer();
 //            if (i != 0xFFFFFFFF) return i;
 //            System.out.println(ResourceUtil.getMainImage(getStillFluidSprite(fluid).get()).get().getPixelRGBA(8, 8));
 
