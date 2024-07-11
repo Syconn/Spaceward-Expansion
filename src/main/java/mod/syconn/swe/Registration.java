@@ -15,7 +15,6 @@ import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
 import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
 import mod.syconn.swe.world.data.components.CanisterComponent;
-import net.minecraft.client.renderer.block.LiquidBlockRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -53,6 +52,7 @@ import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.*;
 import org.joml.Vector3f;
@@ -67,8 +67,6 @@ import static mod.syconn.swe.fluids.BaseFluidType.*;
 import static net.minecraft.world.level.block.state.BlockBehaviour.simpleCodec;
 
 public class Registration {
-
-    public Registration() {}
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
@@ -87,8 +85,8 @@ public class Registration {
             .pathType(PathType.WATER).sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY).sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH).lightLevel(1).density(15).viscosity(5)
     ));
 
-    public static final Supplier<FlowingFluid> O2 = FLUIDS.register("oxygen", O2Fluid.Source::new);
-    public static final Supplier<FlowingFluid> O2_FLOWING = FLUIDS.register("oxygen_flowing", O2Fluid.Flowing::new);
+    public static final Supplier<FlowingFluid> O2 = FLUIDS.register("oxygen", () -> new BaseFlowingFluid.Source(O2Fluid.PROPERTIES));
+    public static final Supplier<FlowingFluid> O2_FLOWING = FLUIDS.register("oxygen_flowing", () -> new BaseFlowingFluid.Flowing(O2Fluid.PROPERTIES));
 
     public static final DeferredItem<Parachute> PARACHUTE = ITEMS.register("parachute", Parachute::new);
     public static final DeferredItem<SpaceArmor> SPACE_HELMET = ITEMS.register("space_helmet", () -> new SpaceArmor(ArmorItem.Type.HELMET));
@@ -184,6 +182,7 @@ public class Registration {
             delayed.add(Canister.create(8000, 8000, Fluids.WATER, CANISTER.get()));
             delayed.add(Canister.create(8000, 8000, Fluids.WATER, AUTO_REFILL_CANISTER.get()));
             for (DeferredHolder<Item, ? extends Item> i : ITEMS.getEntries()){
+                if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof FluidPipe) continue;
                 if (i.get() instanceof Parachute || i.get() instanceof Canister) continue;
                 if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof DispersibleAirBlock) continue;
                 if (i.get() instanceof BucketItem b) {
