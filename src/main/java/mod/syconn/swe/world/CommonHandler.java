@@ -1,7 +1,6 @@
 package mod.syconn.swe.world;
 
 import mod.syconn.swe.Config;
-import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.items.Parachute;
 import mod.syconn.swe.items.SpaceArmor;
@@ -19,9 +18,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
-import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;

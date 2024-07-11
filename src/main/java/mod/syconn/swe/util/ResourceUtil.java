@@ -1,38 +1,49 @@
 package mod.syconn.swe.util;
 
 import com.mojang.blaze3d.platform.NativeImage;
-import mod.syconn.swe.Registration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
+import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.fluids.FluidStack;
+
+import java.util.Optional;
 
 public class ResourceUtil {
 
-    private static final Minecraft mc = Minecraft.getInstance();
-
-    public static int getColor(Fluid fluid){
-        if (fluid == Fluids.WATER) return DyeColor.BLUE.getTextColor();
-        if (fluid == Registration.O2_SOURCE.get()) return 0xFF3F76E4;
-        if (fluid != null && fluid != Fluids.EMPTY) {
-            int i = IClientFluidTypeExtensions.of(fluid).getTintColor();
-            if (i != -1) return i;
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(IClientFluidTypeExtensions.of(fluid).getStillTexture());
-            return -sprite.getPixelRGBA(0, 0, 4);
+    public static Optional<NativeImage> getMainImage(TextureAtlasSprite sprite) {
+        SpriteContents contents = sprite.contents();
+        NativeImage[] frames = contents.byMipLevel;
+        if (frames.length == 0) {
+            return Optional.empty();
         }
-        return -1;
+        NativeImage frame = frames[0];
+        return Optional.ofNullable(frame);
     }
 
-    public static int getColorCorrected(Fluid fluid){
-        return ColorUtil.getClosetColor(getColor(fluid)).getMapColor().col;
+
+    // FROM JEI FLUID HELPER CLASS
+    public static Optional<TextureAtlasSprite> getStillFluidSprite(FluidStack fluidStack) {
+        Fluid fluid = fluidStack.getFluid();
+        IClientFluidTypeExtensions renderProperties = IClientFluidTypeExtensions.of(fluid);
+        ResourceLocation fluidStill = renderProperties.getStillTexture(fluidStack);
+        return Optional.ofNullable(fluidStill)
+                .map(f -> Minecraft.getInstance()
+                        .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
+                        .apply(f)
+                )
+                .filter(s -> s.atlasLocation() != MissingTextureAtlasSprite.getLocation());
     }
 
+
+    // TODO TF optimize
     public static NativeImage createFluidBlockTexture(Fluid fluid){
-        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(IClientFluidTypeExtensions.of(fluid).getStillTexture());
+        TextureAtlasSprite sprite = getStillFluidSprite(new FluidStack(fluid, 1)).get();
         NativeImage input = sprite.contents().getOriginalImage();
         NativeImage result = new NativeImage(64, 64, false);
         for (int t = 1; t < 3; t++) {

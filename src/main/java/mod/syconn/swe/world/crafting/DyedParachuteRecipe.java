@@ -1,6 +1,7 @@
 package mod.syconn.swe.world.crafting;
 
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.util.ColorUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.MapColor;
+import net.neoforged.neoforge.common.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,7 @@ public class DyedParachuteRecipe extends CustomRecipe {
             }
             if (pInput.getItem(3).getItem() == Items.STRING && pInput.getItem(5).getItem() == Items.STRING && pInput.getItem(7).getItem() == Items.STRING) {
                 List<DyeItem> colors = new ArrayList<>();
-                for (int i = 0; i < 3; i++) colors.add(DyeItem.byColor(DyeColor.getColor(pInput.getItem(i))));
+                for (int i = 0; i < 3; i++) colors.add(ColorUtil.DYE_BY_WOOL.get(pInput.getItem(i).getItem()));
                 return DyedItemColor.applyDyes(new ItemStack(Registration.PARACHUTE.get()), colors);
             }
         }

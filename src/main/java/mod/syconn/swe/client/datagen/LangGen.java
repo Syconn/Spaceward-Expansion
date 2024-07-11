@@ -33,7 +33,7 @@ public class LangGen extends LanguageProvider {
         add(Registration.CANISTER_FILLER.get(), "Canister Filler");
         add(Registration.OXYGEN_COLLECTOR.get(), "Oxygen Collector");
       
-        add("itemGroup.space", "Spaceward Expansion");
+        add("itemGroup.swe", "Spaceward Expansion");
         add("swe.fluid.o2", "Oxygen");
     }
 }

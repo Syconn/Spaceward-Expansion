@@ -1,6 +1,5 @@
 package mod.syconn.swe.blockentities;
 
-import cpw.mods.util.Lazy;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.util.RGBImage;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
@@ -23,6 +22,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.EmptyFluid;
+import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;

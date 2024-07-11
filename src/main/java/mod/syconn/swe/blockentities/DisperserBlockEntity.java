@@ -2,7 +2,6 @@ package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -20,7 +19,6 @@ import mod.syconn.swe.util.data.AirBubblesSavedData;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +49,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
                 return super.fill(resource, action);
             }
 
-            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2_SOURCE.get(); }
+            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2.get(); }
         };
     }
 

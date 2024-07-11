@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -44,16 +45,19 @@ public class OxygenDisperser extends FluidBaseBlock {
         return RenderShape.MODEL;
     }
 
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+        if (pLevel.isClientSide) return ItemInteractionResult.SUCCESS;
+        if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, null)) return ItemInteractionResult.CONSUME;
+        if (FluidHelper.interactWithFluidHandler(pPlayer.getItemInHand(pHand), pLevel, pPos, null)) return ItemInteractionResult.CONSUME;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
+
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
-        else {
-            if(FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, null)) return InteractionResult.SUCCESS;
-            if (FluidHelper.interactWithFluidHandler(pPlayer.getItemInHand(pHand), pLevel, pPos, null)) return InteractionResult.SUCCESS;
-            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof DisperserBlockEntity) {
-                pPlayer.openMenu((MenuProvider) blockentity, pPos);
-                return InteractionResult.SUCCESS;
-            }
+        BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+        if (blockentity instanceof DisperserBlockEntity) {
+            pPlayer.openMenu((MenuProvider) blockentity, pPos);
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
     }
@@ -92,7 +96,7 @@ public class OxygenDisperser extends FluidBaseBlock {
 
     public static void addBlock(Level l, BlockPos target, BlockPos source, int distance){
         if (l.getBlockState(target).isAir() && !(l.getBlockState(target).getBlock() instanceof DispersibleAirBlock) && l.getBlockEntity(source, Registration.DISPERSER.get()).isPresent()) {
-            l.setBlock(target, Registration.OXYGEN.get().defaultBlockState(), 2);
+            l.setBlock(target, Registration.OXYGEN_DISPERSIBLE.get().defaultBlockState(), 2);
             l.getBlockEntity(source, Registration.DISPERSER.get()).get().list.add(target);
             if (l.getBlockEntity(target, Registration.AIR.get()).isPresent()) l.getBlockEntity(target, Registration.AIR.get()).get().setup(distance, source);
         }

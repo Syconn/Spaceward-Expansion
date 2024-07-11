@@ -12,20 +12,19 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class SpaceSuit implements IItemHandler, INBTSerializable<CompoundTag> { // TODO SYNC WITH CLIENT
+public class SpaceSuit implements IItemHandlerModifiable, INBTSerializable<CompoundTag> { // TODO SYNC WITH CLIENT
 
     private static final String PARACHUTE_NBT = "parachute";
     private static final String CHUTE_NBT = "animchute";
     private static final String OXYGEN_NBT = "oxygen";
     private boolean parachute;
-    private Animator chute = new Animator(100);
+    private Animator chute = new Animator(10);
     private int oxygen = maxO2();
     private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
 

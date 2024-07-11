@@ -6,12 +6,17 @@ import mod.syconn.swe.blockentities.TankBlockEntity;
 import mod.syconn.swe.fluids.FluidStorageBlock;
 import mod.syconn.swe.util.FluidHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.CraftingTableBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -25,17 +30,25 @@ public class FluidTank extends FluidBaseBlock implements FluidStorageBlock {
         super(properties);
     }
 
-    public InteractionResult use(BlockState state, Level l, BlockPos pos, Player p, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!l.isClientSide) {
-            if (FluidUtil.interactWithFluidHandler(p, pHand, l, pos, pHitResult.getDirection())) return InteractionResult.SUCCESS;
-            else if (FluidHelper.interactWithFluidHandler(p.getItemInHand(pHand), l, pos, null)) return InteractionResult.SUCCESS;
-            BlockEntity blockentity = l.getBlockEntity(pos);
-            if (blockentity instanceof TankBlockEntity) {
-                p.openMenu((MenuProvider) blockentity, pos);
-                return InteractionResult.SUCCESS;
-            }
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+        BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+        if (pLevel.isClientSide) {
+            return InteractionResult.SUCCESS;
+        } else if (blockentity instanceof TankBlockEntity) {
+            pPlayer.openMenu((MenuProvider) blockentity, pPos);
+            return InteractionResult.CONSUME;
         }
-        return InteractionResult.PASS;
+        return InteractionResult.FAIL;
+    }
+
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+        if (!pLevel.isClientSide) {
+            if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection()))
+                return ItemInteractionResult.CONSUME;
+            else if (FluidHelper.interactWithFluidHandler(pPlayer.getItemInHand(pHand), pLevel, pPos, null))
+                return ItemInteractionResult.CONSUME;
+        }
+        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l, BlockState p_153213_, BlockEntityType<T> p_153214_) {

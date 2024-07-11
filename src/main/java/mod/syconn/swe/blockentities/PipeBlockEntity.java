@@ -1,6 +1,5 @@
 package mod.syconn.swe.blockentities;
 
-import cpw.mods.util.Lazy;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.blocks.FluidBaseBlock;
 import mod.syconn.swe.items.UpgradeItem;
@@ -22,6 +21,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;

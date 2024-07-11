@@ -6,32 +6,24 @@ import mod.syconn.swe.client.model.*;
 import mod.syconn.swe.client.renders.ber.CanisterBER;
 import mod.syconn.swe.client.renders.ber.PipeBER;
 import mod.syconn.swe.client.renders.ber.TankBER;
-import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
 import mod.syconn.swe.client.screen.CollectorScreen;
 import mod.syconn.swe.client.screen.DisperserScreen;
 import mod.syconn.swe.client.screen.PipeScreen;
 import mod.syconn.swe.client.screen.TankScreen;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.items.Canister;
-import mod.syconn.swe.util.ColorUtil;
 import mod.syconn.swe.util.worldgen.dimension.MoonSpecialEffects;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
-import net.neoforged.neoforge.common.NeoForge;
 
 import static mod.syconn.swe.client.ClientHooks.addPlayerLayers;
 
@@ -42,7 +34,7 @@ public class ClientHandler {
     public static void init(final FMLClientSetupEvent event) {
         ItemProperties.register(Registration.CANISTER.get(), Main.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
         ItemProperties.register(Registration.AUTO_REFILL_CANISTER.get(), Main.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
-        ItemBlockRenderTypes.setRenderLayer(Registration.O2_SOURCE.get(), RenderType.translucent()); // TODO REPLACE IN JSON
+        ItemBlockRenderTypes.setRenderLayer(Registration.O2.get(), RenderType.translucent()); // TODO REPLACE IN JSON
         ItemBlockRenderTypes.setRenderLayer(Registration.O2_FLOWING.get(), RenderType.translucent()); // TODO REPLACE IN JSON
     }
 
@@ -57,7 +49,7 @@ public class ClientHandler {
     @SubscribeEvent
     public static void coloredItems(RegisterColorHandlersEvent.Item event) {
         event.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, Registration.PARACHUTE.get());
-        event.register((s, layer) -> layer == 1 ? ColorUtil.getClosetColor(s.getBarColor()).getMapColor().col : -1, Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
+        event.register((s, layer) -> layer == 1 && s.has(Registration.CANISTER_COMPONENT) ? s.get(Registration.CANISTER_COMPONENT).color() : -1, Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
     }
 
     @SubscribeEvent

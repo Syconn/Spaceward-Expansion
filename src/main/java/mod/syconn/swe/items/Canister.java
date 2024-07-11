@@ -3,12 +3,14 @@ package mod.syconn.swe.items;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
+import mod.syconn.swe.util.ColorUtil;
 import mod.syconn.swe.util.ResourceUtil;
 import mod.syconn.swe.util.data.AirBubblesSavedData;
 import mod.syconn.swe.util.data.SpaceSlot;
 import mod.syconn.swe.world.data.components.CanisterComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -61,9 +63,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public Component getName(ItemStack stack) {
-        if (get(stack).fluid() != FluidStack.EMPTY) {
-            return getFluid(stack).getHoverName().copy().append(" ").append(super.getName(stack));
-        }
+        if (!get(stack).fluid().is(Fluids.EMPTY)) return getFluid(stack).getHoverName().copy().append(" ").append(super.getName(stack));
         return super.getName(stack);
     }
 
@@ -72,9 +72,10 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public static ItemStack create(int volume, int max, Fluid fluid, Item item){
-        ItemStack stack = new ItemStack(item);
-        stack.set(Registration.CANISTER_COMPONENT, new CanisterComponent(new FluidStack(fluid, Math.min(volume, max)), max, ResourceUtil.getColor(fluid)));
-        return stack;
+        ItemStack itemStack = new ItemStack(item);
+        FluidStack fluidStack = new FluidStack(fluid, Math.min(volume, max));
+        itemStack.set(Registration.CANISTER_COMPONENT, new CanisterComponent(fluidStack, max, ColorUtil.getColor(fluidStack)));
+        return itemStack;
     }
 
     public void setAmount(ItemStack stack, int v, Fluid fluid) {
@@ -132,6 +133,6 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public int getOutlineColor() {
-        return -1;
+        return FastColor.ARGB32.color(117, 116, 116);
     }
 }

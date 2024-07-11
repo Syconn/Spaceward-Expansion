@@ -18,11 +18,6 @@ public class Animator implements INBTSerializable<CompoundTag> {
         this.manAnim = manAnim;
     }
 
-    public Animator(int manAnim, int inc) {
-        this.manAnim = manAnim;
-        this.inc = inc;
-    }
-
     public boolean chuteAnimation() {
         boolean t = anim > 0;
         if (t) anim -= inc;

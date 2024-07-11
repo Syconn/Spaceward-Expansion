@@ -22,11 +22,11 @@ public class OxygenCollector extends FluidBaseBlock {
         super(properties);
     }
 
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player p, InteractionHand hand, BlockHitResult result) {
-        if (level.isClientSide) return InteractionResult.SUCCESS;
-        BlockEntity blockentity = level.getBlockEntity(pos);
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
+        if (pLevel.isClientSide) return InteractionResult.SUCCESS;
+        BlockEntity blockentity = pLevel.getBlockEntity(pPos);
         if (blockentity instanceof CollectorBlockEntity) {
-            p.openMenu((MenuProvider) blockentity, pos);
+            pPlayer.openMenu((MenuProvider) blockentity, pPos);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;

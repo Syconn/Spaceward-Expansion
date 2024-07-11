@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements 
             if (DimSettingsManager.getSettings(level.dimension()).breathable()) {
                 total += 186;
             }
-            e.tank.fill(new FluidStack(Registration.O2_SOURCE.get(), (int) total), IFluidHandler.FluidAction.EXECUTE);
+            e.tank.fill(new FluidStack(Registration.O2.get(), (int) total), IFluidHandler.FluidAction.EXECUTE);
             e.rate = (int) total;
         }
         e.update();
