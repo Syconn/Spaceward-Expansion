@@ -57,14 +57,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     public void onEquipmentTick(ItemStack stack, Level level, Player player) {
         if (!level.isClientSide){
             if (get(stack).fluidType().is(Fluids.LAVA)) {
-                if (!player.fireImmune()) {
-//                    player.setRemainingFireTicks(player.getRemainingFireTicks() + 1);
-//                    if (player.getRemainingFireTicks() == 0) {
-//                        player.igniteForSeconds(3.0F);
-//                    }
-                    player.igniteForSeconds(3.0F);
-                }
-
+                if (!player.fireImmune()) player.igniteForSeconds(3.0F);
                 player.hurt(level.damageSources().inFire(), 2f);
             }
             else if (get(stack).fluidType().is(Registration.O2_FLUID_TYPE.get()) && !AirBubblesSavedData.get().breathable(player.level().dimension(), player.getOnPos().above(1)) && !player.isCreative()) {

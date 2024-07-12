@@ -70,4 +70,12 @@ public class TankModel extends Model {
 		fluid.render(poseStack, vertexConsumer, packedLight, packedOverlay, color[0]);
 		top.render(poseStack, vertexConsumer, packedLight, packedOverlay, -1);
 	}
+
+	public void fluidScaling(float i) {
+		fluid.yScale = i;
+	}
+
+	public ModelPart getFluid() {
+		return fluid;
+	}
 }

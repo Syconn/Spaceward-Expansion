@@ -49,7 +49,6 @@ public class CanisterFiller extends FluidBaseTopperBlock {
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
-
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.FILLER.get(), CanisterFillerBlockEntity::serverTick) : null;
     }

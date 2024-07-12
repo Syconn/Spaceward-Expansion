@@ -69,12 +69,13 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
 
             itemstack = SpaceArmor.getGear(SpaceSlot.TANK, pLivingEntity);
             if (itemstack != null && itemstack.getItem() instanceof Canister canister) {
-                int i = RenderUtil.getFluidColor(Canister.get(itemstack).fluidType());
+                int i = Canister.get(itemstack).color();
                 int i2 = canister.getOutlineColor();
                 pPoseStack.pushPose();
                 pPoseStack.translate(0F, -0.80F, 0.3F);
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(180F));
                 VertexConsumer v2 = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Main.loc("textures/entity/layers/tank.png")), itemstack.hasFoil());
+                tm.fluidScaling((float) Canister.get(itemstack).volume() / Canister.get(itemstack).max());
                 tm.render(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, new int[]{i, i2});
                 pPoseStack.popPose();
             }
