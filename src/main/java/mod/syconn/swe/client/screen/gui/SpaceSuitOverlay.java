@@ -7,6 +7,7 @@ import mod.syconn.swe.world.dimensions.DimSettingsManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
@@ -16,19 +17,24 @@ import net.neoforged.api.distmarker.OnlyIn;
 public class SpaceSuitOverlay {
 
     private static final Minecraft minecraft = Minecraft.getInstance();
+    private static final ResourceLocation AIR_SPRITE = ResourceLocation.withDefaultNamespace("hud/air");
+    private static final ResourceLocation AIR_BURSTING_SPRITE = ResourceLocation.withDefaultNamespace("hud/air_bursting");
 
     public static LayeredDraw.Layer O2_OVERLAY = (pGuiGraphics, partialTicks) -> {
         Player player = (Player) minecraft.getCameraEntity();
         if (player != null && !minecraft.options.hideGui && minecraft.gameMode.canHurtPlayer() && displayOxygen(player) && player.hasData(Registration.SPACE_SUIT)) {
-            minecraft.getProfiler().push("o2");
-            SpaceSuit iSpaceSuit = player.getData(Registration.SPACE_SUIT);
-            RenderSystem.enableBlend();
             int left = pGuiGraphics.guiWidth() / 2 + 91;
-            int top = pGuiGraphics.guiHeight() - 49;
-            int air = iSpaceSuit.O2();
-            int full = Mth.ceil((double) (air - 2) * 10.0D / (double) iSpaceSuit.maxO2());
-            int partial = Mth.ceil((double) air * 10.0D / (double) iSpaceSuit.maxO2()) - full;
-            for (int i = 0; i < full + partial; ++i) pGuiGraphics.blit(ResourceLocation.withDefaultNamespace("hud/air"), left - i * 8 - 9, top, (i < full ? 16 : 25), 18, 9, 9);
+            minecraft.getProfiler().push("oxygen");
+            SpaceSuit iSpaceSuit = player.getData(Registration.SPACE_SUIT);
+            int max = iSpaceSuit.maxO2();
+            int j2 = pGuiGraphics.guiHeight() - 49;
+            int full = Mth.ceil((double) (Math.min(iSpaceSuit.O2(), max) - 2) * 10.0D / (double) iSpaceSuit.maxO2());
+            int partial = Mth.ceil((double) Math.min(iSpaceSuit.O2(), max) * 10.0D / (double) iSpaceSuit.maxO2()) - full;
+            RenderSystem.enableBlend();
+            for (int x = 0; x < full + partial; x++) {
+                if (x < full) pGuiGraphics.blitSprite(AIR_SPRITE, left - x * 8 - 9, j2, 9, 9);
+                else pGuiGraphics.blitSprite(AIR_BURSTING_SPRITE, left - x * 8 - 9, j2, 9, 9);
+            }
             RenderSystem.disableBlend();
             minecraft.getProfiler().pop();
         }

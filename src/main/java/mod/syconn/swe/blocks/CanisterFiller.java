@@ -35,16 +35,15 @@ public class CanisterFiller extends FluidBaseTopperBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide) {
-            ItemStack heldItem = pPlayer.getItemInHand(pHand);
-            if (pLevel.getBlockEntity(pPos) instanceof CanisterFillerBlockEntity ce) {
-                if (heldItem.isEmpty()) {
-                    pPlayer.setItemInHand(pHand, ce.removeCanister());
-                    return ItemInteractionResult.SUCCESS;
-                } else if (ce.addCanister(heldItem)) {
-                    pPlayer.getItemInHand(pHand).shrink(1);
-                    return ItemInteractionResult.SUCCESS;
-                }
+        if (pLevel.isClientSide) return ItemInteractionResult.SUCCESS;
+        ItemStack heldItem = pPlayer.getItemInHand(pHand);
+        if (pLevel.getBlockEntity(pPos) instanceof CanisterFillerBlockEntity ce) {
+            if (heldItem.isEmpty()) {
+                pPlayer.setItemInHand(pHand, ce.removeCanister());
+                return ItemInteractionResult.CONSUME;
+            } else if (ce.addCanister(heldItem)) {
+                pPlayer.getItemInHand(pHand).shrink(1);
+                return ItemInteractionResult.CONSUME;
             }
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

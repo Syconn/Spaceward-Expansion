@@ -8,6 +8,8 @@ import mod.syconn.swe.world.dimensions.DimSettingsManager;
 import mod.syconn.swe.world.dimensions.OxygenProductionManager;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageScaling;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -52,8 +54,8 @@ public class Main {
         NeoForge.EVENT_BUS.addListener(CommonHandler::playerTickEvent);
         NeoForge.EVENT_BUS.addListener(ClientHandler::onPlayerRenderScreen);
 
-        modContainer.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG, "swe/swe-client.toml");
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG, "swe/swe-common.toml");
     }
 
     public void gatherData(GatherDataEvent event) {

@@ -33,12 +33,10 @@ public class CanisterFillerBlockEntity extends BlockEntity {
         for (int i = 0; i < 4; i++) {
             if (!e.items.get(i).isEmpty()) {
                 ItemStack item = e.items.get(i);
-                if (Canister.get(item).fluid() == FluidStack.EMPTY || FluidStack.isSameFluid(Canister.get(item).fluid(), e.getFluidTank().getFluid())) {
-                    if (Canister.get(item).max() > Canister.get(item).fluid().getAmount()) {
+                if (Canister.get(item).fluidType().is(Fluids.EMPTY) || FluidStack.isSameFluid(Canister.get(item).fluidType(), e.getFluidTank().getFluid())) {
+                    if (Canister.get(item).max() > Canister.get(item).volume()) {
                         FluidStack fill = e.getFluidTank().drain(e.fillSpeed, IFluidHandler.FluidAction.SIMULATE);
-                        if (fill.getAmount() > Canister.get(item).max() - Canister.get(item).fluid().getAmount()) {
-                            fill.setAmount(Canister.get(item).max() - Canister.get(item).fluid().getAmount());
-                        }
+                        if (fill.getAmount() > Canister.get(item).max() - Canister.get(item).volume()) fill.setAmount(Canister.get(item).max() - Canister.get(item).volume());
                         e.getFluidTank().drain(fill, IFluidHandler.FluidAction.EXECUTE);
                         Canister.increaseFluid(item, fill);
                         e.update();
@@ -49,7 +47,7 @@ public class CanisterFillerBlockEntity extends BlockEntity {
     }
 
     public boolean addCanister(ItemStack stack) {
-        if (stack.getItem() instanceof Canister c && (Canister.get(stack).fluid().is(Fluids.EMPTY) || c.getFluid(stack).getFluid() == getFluidTank().getFluid().getFluid())) {
+        if (stack.getItem() instanceof Canister c && (Canister.get(stack).fluidType().is(Fluids.EMPTY) || c.getFluid(stack).is(getFluidTank().getFluid().getFluid()))) {
             for (int i = 0; i < 4; i++) {
                 if (items.get(i).isEmpty()) {
                     items.set(i, stack.copy());
@@ -101,7 +99,6 @@ public class CanisterFillerBlockEntity extends BlockEntity {
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
-
 
     protected void update(){
         setChanged();

@@ -9,9 +9,12 @@ import mod.syconn.swe.util.DimensionHelper;
 import mod.syconn.swe.util.data.AirBubblesSavedData;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
 import mod.syconn.swe.world.dimensions.DimSettingsManager;
+import mod.syconn.swe.world.dimensions.PlanetTraveler;
 import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -24,6 +27,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+
+import java.util.Objects;
 
 public class CommonHandler {
 
@@ -43,11 +48,15 @@ public class CommonHandler {
 
     @SubscribeEvent
     public static void playerTickEvent(PlayerTickEvent.Pre event){
-        if (event.getEntity() instanceof ServerPlayer p){
-            if (p.getY() >= Config.spaceHeight.get() && DimensionHelper.on(p, Level.OVERWORLD)) {
-                ServerLevel serverlevel = ((ServerLevel)p.level()).getServer().getLevel(Registration.MOON_KEY);
-                if (serverlevel == null) return;
-                p.changeDimension(new DimensionTransition(serverlevel, event.getEntity(), DimensionTransition.DO_NOTHING));
+        if (event.getEntity() instanceof ServerPlayer p && p.level() instanceof ServerLevel serverlevel){
+            if (p.getY() >= Config.spaceHeight.get()) { // TODO REDO
+                DimensionTransition dimensiontransition = PlanetTraveler.changePlanet(serverlevel, p); // SPAWING IN AIR
+                if (dimensiontransition != null) {
+                    ServerLevel serverlevel1 = dimensiontransition.newLevel();
+                    if (serverlevel.getServer().isLevelEnabled(serverlevel1) && (serverlevel1.dimension() == serverlevel.dimension() || p.canChangeDimensions(serverlevel, serverlevel1))) {
+                        p.changeDimension(dimensiontransition);
+                    }
+                }
             }
         }
         Player p = event.getEntity();
@@ -60,11 +69,11 @@ public class CommonHandler {
             suit.decreaseO2(p);
             if (suit.O2() <= -30) {
                 suit.setO2(0);
-                p.hurt(p.level().damageSources().source(Registration.ANOXIA), 2.0F);
+                p.hurt(p.level().damageSources().source(Registration.ANOXIA), 4.0F);
             }
         }
         p.setData(Registration.SPACE_SUIT, suit);
-        if (p.getInventory() instanceof ExtendedPlayerInventory i) i.getSpaceUtil().forEach(stack -> { if (stack.getItem() instanceof EquipmentItem eq) eq.onEquipmentTick(stack, p.level(), p); });
+        if (p.getInventory() instanceof ExtendedPlayerInventory i && SpaceArmor.hasFullKit(p)) i.getSpaceUtil().forEach(stack -> { if (stack.getItem() instanceof EquipmentItem eq) eq.onEquipmentTick(stack, p.level(), p); });
     }
 
     @SubscribeEvent
