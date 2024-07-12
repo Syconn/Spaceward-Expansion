@@ -2,6 +2,7 @@ package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,6 +17,7 @@ import mod.syconn.swe.world.container.DisperserMenu;
 import mod.syconn.swe.util.BlockInfo;
 import mod.syconn.swe.util.NbtHelper;
 import mod.syconn.swe.util.data.AirBubblesSavedData;
+import net.minecraft.world.ticks.TickPriority;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
@@ -23,6 +25,8 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static mod.syconn.swe.blocks.OxygenDisperser.addBlock;
 
 public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider, BlockInfo {
 
@@ -59,8 +63,8 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
                 e.testRate--;
                 if (e.testRate <= 0) {
                     e.testRate = 100;
-//                    addBlock(level, pos.relative(Direction.UP), pos, 1);
-//                    level.scheduleTick(pos, ModInit.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
+                    addBlock(level, pos.relative(Direction.UP), pos, 1);
+                    level.scheduleTick(pos, Registration.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
                 }
             } else { // TODO OPTIMISE
                 AirBubblesSavedData.get().remove(level.dimension(), e.uuid);
@@ -91,30 +95,30 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
     }
 
     public void failed(boolean t) {
-//        for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
-//        if (t) {
-//            active = false;
-//            list.clear();
-//            AirBubblesSavedData.get().remove(level.dimension(), uuid);
-//        } else {
-//            if (list.size() / rate > tank.getFluidAmount()) {
-//                active = false;
-//                list.clear();
-//                AirBubblesSavedData.get().remove(level.dimension(), uuid);
-//            } else {
-//                active = true;
-//                tank.drain(list.size() / rate, IFluidHandler.FluidAction.EXECUTE);
-//                AirBubblesSavedData.get().set(level.dimension(), uuid, list);
-//            }
-//        }
+        for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
+        if (t) {
+            active = false;
+            list.clear();
+            AirBubblesSavedData.get().remove(level.dimension(), uuid);
+        } else {
+            if (list.size() / rate > tank.getFluidAmount()) {
+                active = false;
+                list.clear();
+                AirBubblesSavedData.get().remove(level.dimension(), uuid);
+            } else {
+                active = true;
+                tank.drain(list.size() / rate, IFluidHandler.FluidAction.EXECUTE);
+                AirBubblesSavedData.get().set(level.dimension(), uuid, list);
+            }
+        }
     }
 
     public void toggleEnabled() {
         this.enabled = !this.enabled;
         if (this.enabled && tank.getFluidInTank(0).getAmount() > 0) {
             testRate = 100;
-//            addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
-//            level.scheduleTick(worldPosition, ModInit.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
+            addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
+            level.scheduleTick(worldPosition, Registration.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
         }
         update();
     }

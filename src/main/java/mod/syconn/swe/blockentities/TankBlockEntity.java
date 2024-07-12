@@ -8,6 +8,7 @@ import mod.syconn.swe.util.FluidHelper;
 import mod.syconn.swe.world.container.TankMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

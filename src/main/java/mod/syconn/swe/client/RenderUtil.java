@@ -45,6 +45,7 @@ public class RenderUtil {
     }
 
     private static TextureAtlasSprite getSprite(FluidStack fluidStack) { // TODO if works cache colors
+        if (fluidStack.isEmpty()) return getSprite(MissingTextureAtlasSprite.getLocation());
         IClientFluidTypeExtensions props = IClientFluidTypeExtensions.of(fluidStack.getFluidType());
         return getSprite(props.getStillTexture(fluidStack));
     }
@@ -71,14 +72,13 @@ public class RenderUtil {
     }
 
     public static NativeImage createFluidGuiTexture(Fluid fluid){
-        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(IClientFluidTypeExtensions.of(fluid).getStillTexture());
-        NativeImage input = sprite.contents().getOriginalImage();
+        TextureAtlasSprite sprite = getSprite(new FluidStack(fluid, 1));
         NativeImage result = new NativeImage(80, 80, false);
         for (int w = 0; w < 5; w++) {
             for (int h = 0; h < 5; h++) {
                 for (int x = 0; x < 16; x++) {
                     for (int y = 0; y < 16; y++) {
-                        result.setPixelRGBA(w * 16 + x, h * 16 + y, input.getPixelRGBA(x, y));
+                        result.setPixelRGBA(w * 16 + x, h * 16 + y, sprite.getPixelRGBA(0, x, y));
                     }
                 }
             }

@@ -14,7 +14,7 @@ public class PlanetTraveler {
         ResourceKey<Level> resourcekey = pLevel.dimension() == Level.OVERWORLD ? Registration.MOON_KEY : Level.OVERWORLD;
         ServerLevel serverlevel = pLevel.getServer().getLevel(resourcekey);
         if (serverlevel == null) return null;
-        BlockPos blockpos = serverlevel.getSharedSpawnPos();
+        BlockPos blockpos = serverlevel.getSharedSpawnPos().offset(0, 30, 0);
         return new DimensionTransition(serverlevel, blockpos.getCenter(), pEntity.getDeltaMovement(), pEntity.getYRot(), pEntity.getXRot(), DimensionTransition.DO_NOTHING);
     }
 }

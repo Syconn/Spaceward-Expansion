@@ -71,7 +71,7 @@ public class AirBubblesSavedData extends SavedData {
                     CompoundTag ct = (CompoundTag) nNBT;
                     oxygenMap.put(ct.getUUID("uuid"), NbtHelper.readPosses(ct.getCompound("positions")));
                 });
-                levelBlockPositions.put(ResourceKey.create(Registries.DIMENSION, ResourceLocation.withDefaultNamespace(outerData.getString("loc"))), oxygenMap);
+                levelBlockPositions.put(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(outerData.getString("loc"))), oxygenMap);
             });
         }
     }

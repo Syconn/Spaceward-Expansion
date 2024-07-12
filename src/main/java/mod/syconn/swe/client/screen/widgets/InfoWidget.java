@@ -47,5 +47,9 @@ public class InfoWidget extends AbstractWidget {
         else pGuiGraphics.blit(TEXTURE, getX(), getY(), 0, 0, 20, 20);
     }
 
+    public void setFocused(boolean pFocused) {
+        super.setFocused(false);
+    }
+
     protected void updateWidgetNarration(NarrationElementOutput p_259858_) { this.defaultButtonNarrationText(p_259858_); }
 }
