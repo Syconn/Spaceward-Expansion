@@ -1,6 +1,12 @@
 package mod.syconn.swe.fluids;
 
 import mod.syconn.swe.Registration;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 
 public abstract class O2Fluid extends BaseFlowingFluid {

@@ -2,6 +2,7 @@ package mod.syconn.swe.world.inventory;
 
 import com.google.common.collect.ImmutableList;
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.util.data.SpaceSlot;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
@@ -174,10 +175,12 @@ public class ExtendedPlayerInventory extends Inventory {
 
     public void tick() {
         super.tick();
-        space_utilities.forEach(e -> {
-            if (e.getItem() instanceof EquipmentItem eq) {
-                eq.onEquipmentTick(e, player.level(), player);
-            }
-        });
+        if (SpaceArmor.hasFullKit(player)) {
+            space_utilities.forEach(e -> {
+                if (e.getItem() instanceof EquipmentItem eq) {
+                    eq.onEquipmentTick(e, player.level(), player);
+                }
+            });
+        }
     }
 }

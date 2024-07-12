@@ -26,7 +26,7 @@ public class Config {
 
     private static void setupCommon(ModConfigSpec.Builder builder) {
         builder.push("General Settings");
-        spaceHeight = builder.defineInRange("Height to Enter Space", 400, 200, Integer.MAX_VALUE);
+        spaceHeight = builder.defineInRange("Height to Enter Space", 500, 350, Integer.MAX_VALUE);
         builder.pop();
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -39,9 +40,10 @@ public class FluidHelper {
     }
 
     public static void fillHandlerUpdateStack(ItemStack stack, FluidTank tank, int max){
-        if (stack.getItem() instanceof ItemFluidHandler handler && (handler.getFluid(stack).isEmpty() || handler.getFluid(stack).getFluid() == tank.getFluidInTank(0).getFluid())){
+        if (stack.getItem() instanceof ItemFluidHandler handler && (handler.getFluid(stack).isEmpty() || handler.getFluid(stack).getFluid() == tank.getFluidInTank(0).getFluid()) && !tank.isEmpty()){
             if (max > handler.getSpace(stack)) max = handler.getSpace(stack);
-            handler.setAmount(stack, tank.drain(max, IFluidHandler.FluidAction.EXECUTE).getAmount() + handler.getFluid(stack).getAmount(), tank.getFluidInTank(0).getFluid());
+            Fluid fluid = tank.getFluidInTank(0).getFluid();
+            handler.setAmount(stack, tank.drain(max, IFluidHandler.FluidAction.EXECUTE).getAmount() + handler.getFluid(stack).getAmount(), fluid);
         }
     }
 
