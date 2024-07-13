@@ -3,24 +3,22 @@ package mod.syconn.swe;
 import mod.syconn.swe.client.ClientHandler;
 import mod.syconn.swe.client.datagen.*;
 import mod.syconn.swe.network.Channel;
+import mod.syconn.swe.network.messages.ClientBoundUpdatePlanetSettings;
 import mod.syconn.swe.world.CommonHandler;
-import mod.syconn.swe.world.dimensions.DimSettingsManager;
+import mod.syconn.swe.world.dimensions.PlanetManager;
 import mod.syconn.swe.world.dimensions.OxygenProductionManager;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.damagesource.DamageScaling;
-import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.item.BucketItem;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,11 +30,20 @@ public class Main {
 
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(CommonHandler::init);
-        modEventBus.addListener(ClientHandler::init);
         modEventBus.addListener(this::gatherData);
         modEventBus.addListener(Registration::addCreative);
         modEventBus.addListener(Registration::registerCapabilities);
         modEventBus.addListener(Channel::onRegisterPayloadHandler);
+
+        if (FMLEnvironment.dist.isClient()) {
+            modEventBus.addListener(ClientHandler::init);
+            NeoForge.EVENT_BUS.addListener(ClientHandler::onPlayerRenderScreen);
+        } else if (FMLEnvironment.dist.isDedicatedServer()) {
+            NeoForge.EVENT_BUS.addListener(this::syncServerDataEvent);
+        }
+
+        NeoForge.EVENT_BUS.addListener(this::loadData);
+        NeoForge.EVENT_BUS.addListener(CommonHandler::playerTickEvent);
 
         Registration.ARMOR_MATERIALS.register(modEventBus);
         Registration.BLOCKS.register(modEventBus);
@@ -49,10 +56,6 @@ public class Main {
         Registration.RECIPE_SERIALIZERS.register(modEventBus);
         Registration.TABS.register(modEventBus);
         Registration.COMPONENTS.register(modEventBus);
-
-        NeoForge.EVENT_BUS.addListener(this::loadData);
-        NeoForge.EVENT_BUS.addListener(CommonHandler::playerTickEvent);
-        NeoForge.EVENT_BUS.addListener(ClientHandler::onPlayerRenderScreen);
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG, "swe/swe-client.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG, "swe/swe-common.toml");
@@ -72,8 +75,12 @@ public class Main {
     }
 
     public void loadData(AddReloadListenerEvent e){
-        e.addListener(new DimSettingsManager());
+        e.addListener(new PlanetManager());
         e.addListener(new OxygenProductionManager());
+    }
+
+    public void syncServerDataEvent(OnDatapackSyncEvent event) {
+        event.getRelevantPlayers().forEach(serverPlayer -> Channel.sendToPlayer(new ClientBoundUpdatePlanetSettings(List.copyOf(PlanetManager.getSettings())), serverPlayer));
     }
 
     public static ResourceLocation loc(String s) {

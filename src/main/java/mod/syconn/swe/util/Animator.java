@@ -1,17 +1,15 @@
 package mod.syconn.swe.util;
 
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.neoforged.neoforge.common.util.INBTSerializable;
 
-public class Animator implements INBTSerializable<CompoundTag> {
+public class Animator {
 
     private int manAnim;
     private int anim = 0;
     private int inc = 1;
 
-    public Animator(HolderLookup.Provider provider, CompoundTag nbt) {
-        this.deserializeNBT(provider, nbt);
+    public Animator(CompoundTag nbt) {
+        this.deserializeNBT(nbt);
     }
 
     public Animator(int manAnim) {
@@ -36,7 +34,7 @@ public class Animator implements INBTSerializable<CompoundTag> {
         return manAnim - anim;
     }
 
-    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
+    public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
         nbt.putInt("max", manAnim);
         nbt.putInt("anim", anim);
@@ -44,7 +42,7 @@ public class Animator implements INBTSerializable<CompoundTag> {
         return nbt;
     }
 
-    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         manAnim = nbt.getInt("max");
         anim = nbt.getInt("anim");
         inc = nbt.getInt("inc");

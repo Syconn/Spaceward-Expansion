@@ -16,7 +16,7 @@ import mod.syconn.swe.blocks.DispersibleAirBlock;
 import mod.syconn.swe.world.container.DisperserMenu;
 import mod.syconn.swe.util.BlockInfo;
 import mod.syconn.swe.util.NbtHelper;
-import mod.syconn.swe.util.data.AirBubblesSavedData;
+import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
 import net.minecraft.world.ticks.TickPriority;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -34,7 +34,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
     //  - Pipe dont show fluid
 
     public List<BlockPos> list = new ArrayList<>();
-    public int maxFill = 20;
+    public int maxFill = 20; // TODO CONFIG THIS SHIT ALSO REDO
     private int testRate = 0;
     private int lowerRate = 0;
     private final int rate = 15;
@@ -85,13 +85,15 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
                     }
                 }
             } else e.o2Usage = 0;
-            e.update();
         } else e.o2Usage = 0;
+        e.update();
     }
 
     public static void remove(Level level, BlockPos defPos) {
-        List<BlockPos> list = level.getBlockEntity(defPos, Registration.DISPERSER.get()).get().list;
-        for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
+        if (level.getBlockEntity(defPos, Registration.DISPERSER.get()).isPresent()) {
+            List<BlockPos> list = level.getBlockEntity(defPos, Registration.DISPERSER.get()).get().list;
+            for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
+        }
     }
 
     public void failed(boolean t) {
@@ -111,6 +113,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
                 AirBubblesSavedData.get().set(level.dimension(), uuid, list);
             }
         }
+        update();
     }
 
     public void toggleEnabled() {
@@ -135,6 +138,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
         if(this.uuid == null) {
             this.uuid = randomUUID;
         }
+        update();
     }
 
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {

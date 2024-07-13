@@ -4,10 +4,9 @@ import mod.syconn.swe.Registration;
 import mod.syconn.swe.client.RenderUtil;
 import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
-import mod.syconn.swe.util.ColorUtil;
-import mod.syconn.swe.util.data.AirBubblesSavedData;
-import mod.syconn.swe.util.data.SpaceSlot;
+import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.world.data.components.CanisterComponent;
+import mod.syconn.swe.world.dimensions.PlanetManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FastColor;
@@ -17,12 +16,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseFireBlock;
-import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
-import oshi.hardware.common.AbstractFirmware;
 
 import java.util.List;
 
@@ -60,7 +56,10 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
                 if (!player.fireImmune()) player.igniteForSeconds(3.0F);
                 player.hurt(level.damageSources().inFire(), 2f);
             }
-            else if (get(stack).fluidType().is(Registration.O2_FLUID_TYPE.get()) && !AirBubblesSavedData.get().breathable(player.level().dimension(), player.getOnPos().above(1)) && !player.isCreative()) {
+//           TODO OLD else if (get(stack).fluidType().is(Registration.O2_FLUID_TYPE.get()) && !AirBubblesSavedData.get().breathable(player.level().dimension(), player.getOnPos().above(1)) && !player.isCreative()) {
+//                setAmount(stack, get(stack).volume() - 1, getFluid(stack).getFluid());
+//            }
+            else if (get(stack).fluidType().is(Registration.O2_FLUID_TYPE.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
                 setAmount(stack, get(stack).volume() - 1, getFluid(stack).getFluid());
             }
         }
@@ -71,8 +70,8 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
         return Component.literal("Empty ").append(super.getName(stack));
     }
 
-    public SpaceSlot getSlot() {
-        return SpaceSlot.TANK;
+    public EquipmentItemSlot.SpaceSlot getSlot() {
+        return EquipmentItemSlot.SpaceSlot.TANK;
     }
 
     public static ItemStack create(int volume, int max, Fluid fluid, Item item){

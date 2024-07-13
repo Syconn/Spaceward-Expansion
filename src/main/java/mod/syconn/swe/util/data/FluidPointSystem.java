@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Deprecated(forRemoval = true)
 public class FluidPointSystem {
 
     private final Map<Direction, FluidPoint> system;

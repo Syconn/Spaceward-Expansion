@@ -3,7 +3,7 @@ package mod.syconn.swe.blockentities;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.util.BlockInfo;
 import mod.syconn.swe.world.container.CollectorMenu;
-import mod.syconn.swe.world.dimensions.DimSettingsManager;
+import mod.syconn.swe.world.dimensions.PlanetManager;
 import mod.syconn.swe.world.dimensions.OxygenProductionManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -40,7 +40,7 @@ public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements 
                     total += OxygenProductionManager.getValue(level.getBlockState(blockPos));
                 }
             }
-            if (DimSettingsManager.getSettings(level.dimension()).breathable()) {
+            if (PlanetManager.getSettings(level.dimension()).breathable()) {
                 total += 186;
             }
             e.tank.fill(new FluidStack(Registration.O2.get(), (int) total), IFluidHandler.FluidAction.EXECUTE);

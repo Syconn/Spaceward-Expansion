@@ -183,6 +183,7 @@ public class Registration {
             delayed.add(Canister.create(8000, 8000, Fluids.WATER, AUTO_REFILL_CANISTER.get()));
             for (DeferredHolder<Item, ? extends Item> i : ITEMS.getEntries()){
                 if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof FluidPipe) continue;
+                if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof OxygenDisperser) continue;
                 if (i.get() instanceof Parachute || i.get() instanceof Canister) continue;
                 if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof DispersibleAirBlock) continue;
                 if (i.get() instanceof BucketItem b) {

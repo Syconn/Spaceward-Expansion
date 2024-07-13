@@ -1,25 +1,21 @@
 package mod.syconn.swe.client.renders.entity.layer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.client.RenderUtil;
 import mod.syconn.swe.client.model.ChuteModel;
 import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.items.Parachute;
 import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.util.ColorUtil;
 import mod.syconn.swe.util.Helper;
-import mod.syconn.swe.util.data.SpaceSlot;
+import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -31,7 +27,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 
 public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends RenderLayer<P, M> {
 
@@ -48,7 +43,7 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
 
     public void render(PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, P pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         if (SpaceArmor.hasFullKit(pLivingEntity)) {
-            ItemStack itemstack = SpaceArmor.hasParachute(pLivingEntity) ? Helper.inventory(pLivingEntity).getItemBySlot(SpaceSlot.PARACHUTE) : pLivingEntity.getItemBySlot(EquipmentSlot.CHEST);
+            ItemStack itemstack = SpaceArmor.hasParachute(pLivingEntity) ? Helper.inventory(pLivingEntity).getItemBySlot(EquipmentItemSlot.SpaceSlot.PARACHUTE) : pLivingEntity.getItemBySlot(EquipmentSlot.CHEST);
             if (itemstack.getItem() instanceof Parachute) {
                 int i = DyedItemColor.getOrDefault(itemstack, -1);
                 pPoseStack.pushPose();
@@ -67,7 +62,7 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
                 }
             }
 
-            itemstack = SpaceArmor.getGear(SpaceSlot.TANK, pLivingEntity);
+            itemstack = SpaceArmor.getGear(EquipmentItemSlot.SpaceSlot.TANK, pLivingEntity);
             if (itemstack != null && itemstack.getItem() instanceof Canister canister) {
                 int i = Canister.get(itemstack).color();
                 int i2 = canister.getOutlineColor();

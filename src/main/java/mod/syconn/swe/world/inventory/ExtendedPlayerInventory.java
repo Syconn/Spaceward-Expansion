@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.util.data.SpaceSlot;
+import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -36,8 +36,8 @@ public class ExtendedPlayerInventory extends Inventory {
         return suit.getInv();
     }
 
-    public ItemStack getItemBySlot(SpaceSlot s){
-        if (s == SpaceSlot.TANK)
+    public ItemStack getItemBySlot(EquipmentItemSlot.SpaceSlot s){
+        if (s == EquipmentItemSlot.SpaceSlot.TANK)
             return space_utilities.get(0);
         else return space_utilities.get(1);
     }

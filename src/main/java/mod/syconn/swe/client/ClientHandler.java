@@ -12,7 +12,7 @@ import mod.syconn.swe.client.screen.PipeScreen;
 import mod.syconn.swe.client.screen.TankScreen;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.items.Canister;
-import mod.syconn.swe.util.worldgen.dimension.MoonSpecialEffects;
+import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;

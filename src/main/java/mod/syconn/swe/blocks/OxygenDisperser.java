@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -18,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -28,7 +26,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import mod.syconn.swe.blockentities.DisperserBlockEntity;
 import mod.syconn.swe.util.FluidHelper;
-import mod.syconn.swe.util.data.AirBubblesSavedData;
+import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
 import java.util.UUID;
@@ -104,6 +102,7 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     public static int maxFill(Level l, BlockPos pos) {
-        return l.getBlockEntity(pos, Registration.DISPERSER.get()).get().maxFill;
+        if (l.getBlockEntity(pos, Registration.DISPERSER.get()).isPresent()) return l.getBlockEntity(pos, Registration.DISPERSER.get()).get().maxFill;
+        else return 20;
     }
 }

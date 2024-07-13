@@ -12,28 +12,38 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import mod.syconn.swe.Main;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DimSettingsManager extends SimpleJsonResourceReloadListener {
+public class PlanetManager extends SimpleJsonResourceReloadListener {
 
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
-    private static final Map<ResourceLocation, DimensionSettings> SETTINGS = new HashMap<>();
+    private static Map<ResourceLocation, PlanetSettings> SETTINGS = new HashMap<>();
 
-    public DimSettingsManager() {
-        super(GSON, "dim_settings");
+    public PlanetManager() {
+        super(GSON, "planet_settings");
     }
 
     protected void apply(Map<ResourceLocation, JsonElement> pJsonMap, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
-        pJsonMap.forEach(((resourceLocation, jsonElement) -> SETTINGS.put(resourceLocation, DimensionSettings.fromGson(jsonElement.getAsJsonObject()))));
+        pJsonMap.forEach(((resourceLocation, jsonElement) -> SETTINGS.put(resourceLocation, PlanetSettings.fromGson(resourceLocation, jsonElement.getAsJsonObject()))));
     }
 
-    public static DimensionSettings getSettings(ResourceKey<Level> k){
+    public static void replaceSettings(Iterable<PlanetSettings> pSettings) {
+        SETTINGS = new HashMap<>();
+        pSettings.forEach(settings -> SETTINGS.put(settings.location(), settings));
+    }
+
+    public static Collection<PlanetSettings> getSettings() {
+        return SETTINGS.values();
+    }
+
+    public static PlanetSettings getSettings(ResourceKey<Level> k){
         if (SETTINGS.containsKey(k.location())) return SETTINGS.get(k.location());
         return SETTINGS.get(Main.loc("default"));
     }
 
-    public static DimensionSettings getSettings(Player p){
+    public static PlanetSettings getSettings(Player p){
         if (SETTINGS.containsKey(p.level().dimension().location())) return SETTINGS.get(p.level().dimension().location());
         return SETTINGS.get(Main.loc("default"));
     }

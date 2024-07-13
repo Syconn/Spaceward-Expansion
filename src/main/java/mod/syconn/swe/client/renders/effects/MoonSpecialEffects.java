@@ -1,25 +1,22 @@
-package mod.syconn.swe.util.worldgen.dimension;
+package mod.syconn.swe.client.renders.effects;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
+import mod.syconn.swe.Main;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
-import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
-import mod.syconn.swe.Main;
 
 public class MoonSpecialEffects extends DimensionSpecialEffects {
 
     private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
     private static final ResourceLocation EARTH_LOCATION = Main.loc("textures/environment/earth.png");
-    private static final ResourceLocation MOON_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/moon_phases.png");
     private static final ResourceLocation SKY_LOCATION = Main.loc("textures/environment/sky.png");
 
     private final Minecraft minecraft = Minecraft.getInstance();

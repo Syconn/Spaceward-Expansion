@@ -1,7 +1,7 @@
 package mod.syconn.swe.items;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.util.data.AirBubblesSavedData;
+import mod.syconn.swe.world.dimensions.PlanetManager;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +21,7 @@ public class AutoRefillCanister extends Canister {
 
     public void inventoryTick(ItemStack stack, Level level, Entity e, int p_41407_, boolean p_41408_) {
         if (e instanceof Player player) {
-            if (!level.isClientSide && AirBubblesSavedData.get().breathable(level.dimension(), player.getOnPos().above(1)) && SpaceArmor.hasFullKit(player)) {
+            if (!level.isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.hasFullKit(player)) {
                 if (get(stack).fluidType().is(Fluids.EMPTY) || get(stack).fluidType().is(Registration.O2.get()) && get(stack).volume() < get(stack).max())
                     increaseFluid(stack, new FluidStack(Registration.O2.get(), 1));
             }
@@ -30,7 +30,7 @@ public class AutoRefillCanister extends Canister {
 
     public void onEquipmentTick(ItemStack stack, Level level, Player player) {
         super.onEquipmentTick(stack, level, player);
-        if (!level.isClientSide && AirBubblesSavedData.get().breathable(level.dimension(), player.getOnPos().above(1)) && SpaceArmor.hasFullKit(player)) {
+        if (!level.isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.hasFullKit(player)) {
             if (get(stack).fluidType().is(EMPTY) || get(stack).fluidType().is(Registration.O2.get()) && get(stack).volume() < get(stack).max())
                 increaseFluid(stack, new FluidStack(Registration.O2.get(), 1));
         }

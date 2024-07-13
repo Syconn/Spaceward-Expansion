@@ -3,11 +3,10 @@ package mod.syconn.swe.client.screen.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
-import mod.syconn.swe.world.dimensions.DimSettingsManager;
+import mod.syconn.swe.world.dimensions.PlanetManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
@@ -43,6 +42,6 @@ public class SpaceSuitOverlay {
     public static boolean displayOxygen(Player p){
         SpaceSuit suit = p.getData(Registration.SPACE_SUIT);
         if (suit.O2() >= suit.maxO2()) return false;
-        return !DimSettingsManager.getSettings(p).breathable();
+        return !PlanetManager.getSettings(p).breathable();
     }
 }
