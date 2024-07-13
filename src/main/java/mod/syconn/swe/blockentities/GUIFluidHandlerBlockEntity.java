@@ -12,13 +12,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import mod.syconn.swe.util.RGBImage;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 public abstract class GUIFluidHandlerBlockEntity extends SidedFluidHandlerBE {
 
-    private RGBImage gfluid;
-    private ResourceLocation gfluidLoc;
+    protected RGBImage gfluid;
+    protected ResourceLocation gfluidLoc;
 
     public GUIFluidHandlerBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state, int size) {
         super(blockEntityType, pos, state);
@@ -34,16 +35,18 @@ public abstract class GUIFluidHandlerBlockEntity extends SidedFluidHandlerBE {
     }
 
     protected void updateTextures(FluidStack resource) {
-        gfluid = new RGBImage(RenderUtil.createFluidGuiTexture(resource.getFluid()));
-        gfluidLoc = Minecraft.getInstance().getTextureManager().register("gfluid", gfluid.getImageFromPixels());
+        if (FMLEnvironment.dist.isClient()) {
+            gfluid = new RGBImage(RenderUtil.createFluidGuiTexture(resource.getFluid()));
+            gfluidLoc = Minecraft.getInstance().getTextureManager().register("gfluid", gfluid.getImageFromPixels());
+            update();
+        }
     }
 
     public ResourceLocation getGuiTexture() {
         return gfluidLoc;
     }
 
-    public FluidTank getFluidTank()
-    {
+    public FluidTank getFluidTank() {
         return this.tank;
     }
 
