@@ -2,13 +2,12 @@ package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.client.RenderUtil;
-import mod.syconn.swe.util.RGBImage;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
 import mod.syconn.swe.util.FluidHelper;
+import mod.syconn.swe.util.RGBImage;
 import mod.syconn.swe.world.container.TankMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -33,8 +32,6 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider {
 
     private final int fillSpeed = 500;
-    private RGBImage bfluid;
-    private ResourceLocation bfluidLoc;
     private final ItemStackHandler items = new ItemStackHandler(getContainerSize()) {
         public void onContentsChanged(int slot) { update(); }
     };
@@ -44,38 +41,27 @@ public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
         super(Registration.TANK.get(), pos, state, 16000);
     }
 
-    protected void updateTextures(FluidStack resource) {
-        super.updateTextures(resource);
-        bfluid = new RGBImage(RenderUtil.createFluidBlockTexture(resource.getFluid()));
-        bfluidLoc = Minecraft.getInstance().getTextureManager().register("bfluid", bfluid.getImageFromPixels());
-        update();
-    }
-
     public ItemStackHandler getItems() {
         return items;
     }
 
     public ResourceLocation getFluidTexture() {
-        return bfluidLoc;
+        return gfluidLoc;
     }
 
     protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.loadAdditional(pTag, pRegistries);
         if (pTag.contains("Inventory")) items.deserializeNBT(pRegistries, pTag.getCompound("Inventory"));
-        if (pTag.contains("bfluid")) bfluid = RGBImage.read(pTag.getCompound("bfluid"));
-        if (bfluid != null) bfluidLoc = Minecraft.getInstance().getTextureManager().register("bfluid", bfluid.getImageFromPixels());
     }
 
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.saveAdditional(pTag, pRegistries);
         pTag.put("Inventory", items.serializeNBT(pRegistries));
-        if (bfluid != null) pTag.put("bfluid", bfluid.write());
     }
 
     public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
         CompoundTag tag = super.getUpdateTag(pRegistries);
         tag.put("items", items.serializeNBT(pRegistries));
-        if (bfluid != null) tag.put("bfluid", bfluid.write());
         return tag;
     }
 

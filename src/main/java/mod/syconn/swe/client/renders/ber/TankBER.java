@@ -20,7 +20,7 @@ public class TankBER implements BlockEntityRenderer<TankBlockEntity> {
     }
 
     public void render(TankBlockEntity pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-        if (!pBlockEntity.getFluidTank().isEmpty()) {
+        if (!pBlockEntity.getFluidTank().isEmpty() && pBlockEntity.getFluidTexture() != null) {
             pPoseStack.pushPose();
             float i = (float) (pBlockEntity.getFluidTank().getFluidAmount()) / pBlockEntity.getFluidTank().getCapacity();
             pPoseStack.translate(1, 0, 0);
