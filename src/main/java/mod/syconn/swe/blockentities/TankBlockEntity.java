@@ -1,12 +1,9 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.client.RenderUtil;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
 import mod.syconn.swe.util.FluidHelper;
-import mod.syconn.swe.util.RGBImage;
 import mod.syconn.swe.world.container.TankMenu;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

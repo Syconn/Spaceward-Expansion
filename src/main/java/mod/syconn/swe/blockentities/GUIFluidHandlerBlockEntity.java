@@ -16,7 +16,7 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
-public abstract class GUIFluidHandlerBlockEntity extends SidedFluidHandlerBE {
+public abstract class GUIFluidHandlerBlockEntity extends SidedFluidHandlerBE { // TODO GET RID OF TEXTURE UTIL AND DO IT ON CLIENT
 
     protected RGBImage gfluid;
     protected ResourceLocation gfluidLoc;

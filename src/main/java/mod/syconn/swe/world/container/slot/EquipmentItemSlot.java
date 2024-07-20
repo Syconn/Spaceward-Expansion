@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class EquipmentItemSlot extends SlotItemHandler {
+public class EquipmentItemSlot extends SlotItemHandler { // TODO SWAP OVER TO API VERSION
 
     private final Player player;
     private final SpaceSlot slot;

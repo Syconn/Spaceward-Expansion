@@ -9,7 +9,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import mod.syconn.swe.blockentities.TankBlockEntity;
-import mod.syconn.swe.world.container.slot.ItemFluidHandlerSlot;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -25,7 +24,7 @@ public class TankMenu extends AbstractContainerMenu {
         if (handler != null) {
             this.addSlot(new SlotItemHandler(handler, 0, 14, 9));
             this.addSlot(new SlotItemHandler(handler, 1, 14, 61));
-            this.addSlot(new ItemFluidHandlerSlot(handler, 2, 72, 9));
+//            this.addSlot(new ItemFluidHandlerSlot(handler, 2, 72, 9)); TODO COME BACK AND FIX
         }
 
         for(int l = 0; l < 3; ++l) {
