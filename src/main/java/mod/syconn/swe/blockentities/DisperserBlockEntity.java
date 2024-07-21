@@ -1,6 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.api.blockEntity.AbstractTankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -28,7 +29,7 @@ import java.util.UUID;
 
 import static mod.syconn.swe.blocks.OxygenDisperser.addBlock;
 
-public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider, BlockInfo {
+public class DisperserBlockEntity extends AbstractTankBE implements MenuProvider, BlockInfo {
 
     //TODO change to blocks and look for blockUpdates
     //  - Pipe dont show fluid
@@ -46,13 +47,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
     public DisperserBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
         super(Registration.DISPERSER.get(), p_155229_, p_155230_, 1000);
         this.tank = new FluidTank(1000){
-            public void onContentsChanged() { update(); }
-
-            public int fill(FluidStack resource, FluidAction action) {
-                if (fluid.isEmpty()) updateTextures(resource);
-                return super.fill(resource, action);
-            }
-
+            public void onContentsChanged() { markDirty(); }
             public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2.get(); }
         };
     }
@@ -86,7 +81,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
                 }
             } else e.o2Usage = 0;
         } else e.o2Usage = 0;
-        e.update();
+        e.markDirty();
     }
 
     public static void remove(Level level, BlockPos defPos) {
@@ -113,7 +108,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
                 AirBubblesSavedData.get().set(level.dimension(), uuid, list);
             }
         }
-        update();
+        markDirty();
     }
 
     public void toggleEnabled() {
@@ -123,7 +118,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
             addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
             level.scheduleTick(worldPosition, Registration.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
         }
-        update();
+        markDirty();
     }
 
     public boolean isEnabled() {
@@ -138,7 +133,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
         if(this.uuid == null) {
             this.uuid = randomUUID;
         }
-        update();
+        markDirty();
     }
 
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {

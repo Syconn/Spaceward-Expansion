@@ -1,6 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.blocks.FluidBaseBlock;
 import mod.syconn.swe.items.UpgradeItem;
 import mod.syconn.swe.util.Helper;
@@ -30,7 +31,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 import static mod.syconn.swe.util.data.FluidPointSystem.FluidPoint;
 
-public class PipeBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider {
+public class PipeBlockEntity extends AbstractTankBE implements MenuProvider {
 
     private FluidPointSystem system = new FluidPointSystem();
     private Direction target = null;
@@ -207,10 +208,6 @@ public class PipeBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
     private static void update(Level level, BlockPos pos, BlockState state){
         setChanged(level, pos, state);
         level.sendBlockUpdated(pos, state, state, 2);
-    }
-
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {

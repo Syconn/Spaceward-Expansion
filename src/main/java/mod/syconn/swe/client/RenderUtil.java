@@ -1,32 +1,18 @@
 package mod.syconn.swe.client;
 
-import com.mojang.blaze3d.platform.NativeImage;
-import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
-import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -35,6 +21,7 @@ import java.util.Map;
 public class RenderUtil {
 
     public static int getFluidColor(FluidStack fluidStack) {
+        if (fluidStack.isEmpty()) return -1;
         IClientFluidTypeExtensions props = IClientFluidTypeExtensions.of(fluidStack.getFluidType());
         int i = props.getTintColor(fluidStack);
         TextureAtlasSprite sprite = getSprite(fluidStack);
@@ -44,7 +31,7 @@ public class RenderUtil {
         return tintRGBA(c, i);
     }
 
-    public static int tintRGBA(int color, int tintColor) {
+    private static int tintRGBA(int color, int tintColor) {
         int r1 = FastColor.ARGB32.red(color);
         int g1 = FastColor.ARGB32.green(color);
         int b1 = FastColor.ARGB32.blue(color);
@@ -62,46 +49,10 @@ public class RenderUtil {
         return atlas.getOrDefault(texture, atlas.get(MissingTextureAtlasSprite.getLocation()));
     }
 
-    private static TextureAtlasSprite getSprite(FluidStack fluidStack) { // TODO if works cache colors
+    public static TextureAtlasSprite getSprite(FluidStack fluidStack) { // TODO if works cache colors
         if (fluidStack.isEmpty()) return getSprite(MissingTextureAtlasSprite.getLocation());
         IClientFluidTypeExtensions props = IClientFluidTypeExtensions.of(fluidStack.getFluidType());
         return getSprite(props.getStillTexture(fluidStack));
-    }
-
-    // TODO TF optimize
-    public static NativeImage createFluidBlockTexture(Fluid fluid){
-        TextureAtlasSprite sprite = getSprite(new FluidStack(fluid, 1));
-        NativeImage result = new NativeImage(64, 64, false);
-        for (int t = 1; t < 3; t++) {
-            for (int x = 0; x < 16; x++) {
-                for (int y = 0; y < 15; y++) {
-                    result.setPixelRGBA(16 * t + x , 1 + y, sprite.getPixelRGBA(0, x, y));
-                }
-            }
-        }
-        for (int t = 0; t < 4; t++) {
-            for (int x = 0; x < 16; x++) {
-                for (int y = 0; y < 15; y++) {
-                    result.setPixelRGBA( 16 * t + x, 16 + y, sprite.getPixelRGBA(0, x, y));
-                }
-            }
-        }
-        return result;
-    }
-
-    public static NativeImage createFluidGuiTexture(Fluid fluid){
-        TextureAtlasSprite sprite = getSprite(new FluidStack(fluid, 1));
-        NativeImage result = new NativeImage(80, 80, false);
-        for (int w = 0; w < 5; w++) {
-            for (int h = 0; h < 5; h++) {
-                for (int x = 0; x < 16; x++) {
-                    for (int y = 0; y < 16; y++) {
-                        result.setPixelRGBA(w * 16 + x, h * 16 + y, sprite.getPixelRGBA(0, x, y));
-                    }
-                }
-            }
-        }
-        return result;
     }
 
     //TODO Could optimize with positional data
@@ -172,6 +123,6 @@ public class RenderUtil {
     }
 
     private static void add(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float u, float v, int tint) {
-        renderer.addVertex(stack.last().pose(), x, y, z).setColor(tint).setUv(u, v).setUv2(0, 240).setNormal(1, 0, 0);
+        renderer.addVertex(stack.last().pose(), x, y, z).setColor(tint).setUv(u, v).setUv2(0, 200).setNormal(1, 0, 0); // pV: Brightness
     }
 }

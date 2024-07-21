@@ -31,6 +31,10 @@ public class ExtendedPlayerInventory extends Inventory {
         allInventories = ImmutableList.of(this.items, this.armor, this.offhand, this.space_utilities);
     }
 
+    public void setChanged() {
+        super.setChanged();
+    }
+
     public NonNullList<ItemStack> getSpaceUtil()
     {
         return suit.getInv();

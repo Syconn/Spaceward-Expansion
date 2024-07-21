@@ -49,7 +49,7 @@ public class ClientHandler {
     @SubscribeEvent
     public static void coloredItems(RegisterColorHandlersEvent.Item event) {
         event.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, Registration.PARACHUTE.get());
-        event.register((s, layer) -> layer == 1 && s.has(Registration.CANISTER_COMPONENT) ? s.get(Registration.CANISTER_COMPONENT).color() : -1, Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
+        event.register((s, layer) -> layer == 1 ? RenderUtil.getFluidColor(Canister.get(s).fluidStack()) : -1, Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
     }
 
     @SubscribeEvent

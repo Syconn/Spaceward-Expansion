@@ -54,10 +54,11 @@ public class DisperserScreen extends AbstractContainerScreen<DisperserMenu> {
         FluidTank tank = menu.getBE().getFluidTank();
         if (!tank.isEmpty()) {
             FluidStack stack = menu.getBE().getFluidTank().getFluidInTank(0);
-            int i = IClientFluidTypeExtensions.of(stack.getFluid()).getTintColor(stack);
+            IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(stack.getFluid());
+            int i = extension.getTintColor(stack);
             int u = (int) ((double) (menu.getBE().getFluidTank().getFluidAmount()) / menu.getBE().getFluidTank().getCapacity() * 70);
             RenderSystem.setShaderColor((float) (i >> 16 & 255) / 255.0F, (float) (i >> 8 & 255) / 255.0F, (float) (i & 255) / 255.0F, 255.0F);
-            pGuiGraphics.blit(menu.getBE().getGuiTexture(), leftPos + 10, topPos + 8 + (70 - u), 0, 70, 34, u);
+            pGuiGraphics.blit(extension.getStillTexture(stack), leftPos + 10, topPos + 8 + (70 - u), 0, 70, 34, u);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             pGuiGraphics.blit(BG, leftPos + 10, topPos + 8, 176, 0, 6, 70);
             Component infoComponent = Component.literal(tank.getFluidAmount() + "mb/" + tank.getCapacity() + "mb").withStyle(ChatFormatting.GRAY);

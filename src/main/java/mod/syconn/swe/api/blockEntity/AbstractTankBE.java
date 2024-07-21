@@ -1,4 +1,4 @@
-package mod.syconn.swe.blockentities;
+package mod.syconn.swe.api.blockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -12,26 +12,29 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 
-public class SidedFluidHandlerBE extends BlockEntity {
+public abstract class AbstractTankBE extends SyncedBlockEntity {
 
-    protected FluidTank tank = new FluidTank(FluidType.BUCKET_VOLUME);
+    protected FluidTank tank;
     private final Lazy<IFluidHandler> holder = Lazy.of(() -> tank);
 
-    public SidedFluidHandlerBE(@NotNull BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state) {
+    public AbstractTankBE(@NotNull BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state, int size) {
         super(blockEntityType, pos, state);
+        tank = new FluidTank(size) {
+            protected void onContentsChanged() {
+                markDirty();
+            }
+        };
     }
 
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
+    protected void loadClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         tank.readFromNBT(pRegistries, pTag);
     }
 
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
+    protected void saveClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         tank.writeToNBT(pRegistries, pTag);
     }
 
-    public FluidTank getTank() {
+    public FluidTank getFluidTank() {
         return tank;
     }
 

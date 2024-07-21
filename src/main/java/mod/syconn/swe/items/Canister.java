@@ -35,7 +35,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public int getBarColor(ItemStack stack) {
-        return get(stack).color();
+        return RenderUtil.getFluidColor(get(stack).fluidStack());
     }
 
     public int getBarWidth(ItemStack stack) {
@@ -77,7 +77,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     public static ItemStack create(int volume, int max, Fluid fluid, Item item){
         ItemStack itemStack = new ItemStack(item);
         FluidStack fluidStack = new FluidStack(fluid, 1);
-        itemStack.set(Registration.CANISTER_COMPONENT, new CanisterComponent(fluidStack, volume, max, fluid.isSame(Fluids.EMPTY) ? -1 : RenderUtil.getFluidColor(fluidStack)));
+        itemStack.set(Registration.CANISTER_COMPONENT, new CanisterComponent(fluidStack, volume, max));
         return itemStack;
     }
 
@@ -128,7 +128,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public int getColor(ItemStack stack) {
-        return get(stack).color();
+        return getBarColor(stack);
     }
 
     public int getCapacity(ItemStack stack) {

@@ -8,6 +8,7 @@ import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
 import mod.syconn.swe.util.Animator;
 import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
 import mod.syconn.swe.world.dimensions.PlanetManager;
+import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -57,10 +58,12 @@ public class SpaceSuit implements IItemHandlerModifiable, INBTSerializable<Compo
     }
 
     public void decreaseO2(Player p) {
-        ItemStack stack = getStackInSlot(0);
-        if ((SpaceArmor.hasFullKit(p) && stack.getItem() instanceof Canister c && c.getCapacity(stack) > 0) || PlanetManager.getSettings(p).breathable()) {
+        if (p.getInventory() instanceof ExtendedPlayerInventory ext) {
+            ItemStack stack = ext.getSpaceUtil().get(0);
+            if ((SpaceArmor.hasFullKit(p) && stack.getItem() instanceof Canister c && c.getFluid(stack).getAmount() > 0) || PlanetManager.getSettings(p).breathable()) {
             if (oxygen < maxO2()) setO2(oxygen + 1, p);
-        } else setO2(new Random().nextInt(2) > 0 ? O2() : O2() - 1, p);
+            } else setO2(new Random().nextInt(2) > 0 ? O2() : O2() - 1, p);
+        }
     }
 
     public int maxO2() {

@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.client.RenderUtil;
 import mod.syconn.swe.client.model.ChuteModel;
 import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
@@ -64,7 +65,7 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
 
             itemstack = SpaceArmor.getGear(EquipmentItemSlot.SpaceSlot.TANK, pLivingEntity);
             if (itemstack != null && itemstack.getItem() instanceof Canister canister) {
-                int i = Canister.get(itemstack).color();
+                int i = canister.getColor(itemstack);
                 int i2 = canister.getOutlineColor();
                 pPoseStack.pushPose();
                 pPoseStack.translate(0F, -0.80F, 0.3F);

@@ -22,6 +22,12 @@ public class EquipmentItemSlot extends SlotItemHandler { // TODO SWAP OVER TO AP
         slot = s;
     }
 
+    public void setChanged() { // TODO HACK FIX HERE
+        System.out.println("SLOT CHANGE");
+        player.getInventory().setChanged();
+        super.setChanged();
+    }
+
     public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
         return Pair.of(InventoryMenu.BLOCK_ATLAS, Main.loc("custom/" + slot.getLoc()));
     }
