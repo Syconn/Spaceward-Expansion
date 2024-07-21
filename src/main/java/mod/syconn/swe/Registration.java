@@ -25,6 +25,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
@@ -51,6 +52,7 @@ import net.neoforged.neoforge.common.SoundActions;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.*;
 import org.joml.Vector3f;
@@ -66,8 +68,6 @@ import static net.minecraft.world.level.block.state.BlockBehaviour.simpleCodec;
 
 public class Registration {
 
-    public Registration() {}
-
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(BuiltInRegistries.ARMOR_MATERIAL, MODID);
@@ -75,18 +75,18 @@ public class Registration {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, MODID);
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, MODID);
-    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, Main.MODID);
+    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, Main.MODID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, Main.MODID);
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MODID);
     public static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(MODID);
     public static final DeferredRegister<MapCodec<? extends Block>> BLOCK_TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, MODID);
 
-    public static Supplier<FluidType> O2_FLUID_TYPE = FLUID_TYPES.register("o2_fluid", () -> new BaseFluidType(O2_STILL_RL, O2_FLOWING_RL, O2_OVERLAY_RL, -1, new Vector3f(68f / 255f, 149f / 255f, 168f / 255f), FluidType.Properties.create().descriptionId("swe.fluid.o2").canSwim(true).canExtinguish(false).canDrown(false)
+    public static Supplier<FluidType> O2_FLUID_TYPE = FLUID_TYPES.register("oxygen", () -> new BaseFluidType(O2_STILL_RL, O2_FLOWING_RL, O2_OVERLAY_RL, -1, new Vector3f(68f / 255f, 149f / 255f, 168f / 255f), FluidType.Properties.create().descriptionId("swe.fluid.o2").canSwim(true).canExtinguish(false).canDrown(false)
             .pathType(PathType.WATER).sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY).sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH).lightLevel(1).density(15).viscosity(5)
     ));
 
-    public static final Supplier<FlowingFluid> O2_SOURCE = FLUIDS.register("o2_source", O2Fluid.Source::new);
-    public static final Supplier<FlowingFluid> O2_FLOWING = FLUIDS.register("o2_flowing", O2Fluid.Flowing::new);
+    public static final Supplier<FlowingFluid> O2 = FLUIDS.register("oxygen", () -> new BaseFlowingFluid.Source(O2Fluid.PROPERTIES));
+    public static final Supplier<FlowingFluid> O2_FLOWING = FLUIDS.register("oxygen_flowing", () -> new BaseFlowingFluid.Flowing(O2Fluid.PROPERTIES));
 
     public static final DeferredItem<Parachute> PARACHUTE = ITEMS.register("parachute", Parachute::new);
     public static final DeferredItem<SpaceArmor> SPACE_HELMET = ITEMS.register("space_helmet", () -> new SpaceArmor(ArmorItem.Type.HELMET));
@@ -101,21 +101,21 @@ public class Registration {
     public static final DeferredItem<UpgradeItem> DIAMOND_UPGRADE = ITEMS.register("diamond_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1), 10));
     public static final DeferredItem<UpgradeItem> EMERALD_UPGRADE = ITEMS.register("emerald_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1), 15));
     public static final DeferredItem<UpgradeItem> NETHERITE_UPGRADE = ITEMS.register("netherite_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1).fireResistant(), 25));
-    public static final DeferredItem<BucketItem> O2_BUCKET = ITEMS.register("o2_fluid_bucket", () -> new BucketItem(O2_SOURCE.get(), new Item.Properties().stacksTo(1)));
+    public static final DeferredItem<BucketItem> O2_BUCKET = ITEMS.register("o2_fluid_bucket", () -> new BucketItem(O2.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
 
     public static final DeferredBlock<OxygenCollector> OXYGEN_COLLECTOR = registerBlockAndItem("oxygen_collector", () -> new OxygenCollector(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final DeferredBlock<DispersibleAirBlock> OXYGEN = registerBlockAndItem("oxygen", () -> new DispersibleAirBlock(Blocks.AIR.properties().noCollission().noLootTable().air().isViewBlocking((state, level, pos) -> false)));
+    public static final DeferredBlock<DispersibleAirBlock> OXYGEN_DISPERSIBLE = registerBlockAndItem("oxygen_dispersible", () -> new DispersibleAirBlock(Blocks.AIR.properties().noCollission().noLootTable().air().isViewBlocking((state, level, pos) -> false)));
     public static final DeferredBlock<CanisterFiller> CANISTER_FILLER = registerBlockAndItem("canister_filler", () -> new CanisterFiller(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final DeferredBlock<OxygenDisperser> OXYGEN_DISPERSER = registerBlockAndItem("oxygen_disperser", () -> new OxygenDisperser(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final DeferredBlock<FluidPipe> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new FluidPipe(Blocks.IRON_BLOCK.properties().noOcclusion().dynamicShape()));
     public static final DeferredBlock<Block> FLUID_TANK = registerBlockAndItem("fluid_tank", () -> new FluidTank(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
-    public static final DeferredBlock<LiquidBlock> O2_FLUID_BLOCK = BLOCKS.register("o2_fluid_block", () -> new LiquidBlock(O2_SOURCE.get(), Blocks.WATER.properties()));
+    public static final DeferredBlock<LiquidBlock> O2_FLUID_BLOCK = BLOCKS.register("oxygen", () -> new LiquidBlock(O2.get(), Blocks.LAVA.properties().lightLevel(blockstate -> 0)));
 
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<CanisterFiller>> CANISTER_FILLER_CODEC = BLOCK_TYPES.register("canister_filler", () -> simpleCodec(CanisterFiller::new));
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<FluidTank>> FLUID_TANK_CODEC = BLOCK_TYPES.register("fluid_tank", () -> simpleCodec(FluidTank::new));
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<OxygenCollector>> OXYGEN_COLLECTOR_CODEC = BLOCK_TYPES.register("oxygen_collector", () -> simpleCodec(OxygenCollector::new));
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<OxygenDisperser>> OXYGEN_DISPERSER_CODEC = BLOCK_TYPES.register("oxygen_disperser", () -> simpleCodec(OxygenDisperser::new));
-    public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<DispersibleAirBlock>> OXYGEN_CODEC = BLOCK_TYPES.register("oxygen", () -> simpleCodec(DispersibleAirBlock::new));
+    public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<DispersibleAirBlock>> OXYGEN_CODEC = BLOCK_TYPES.register("oxygen_dispersible", () -> simpleCodec(DispersibleAirBlock::new));
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<FluidPipe>> FLUID_PIPE_CODEC = BLOCK_TYPES.register("fluid_pipe", () -> simpleCodec(FluidPipe::new));
 
     public static final Holder<ArmorMaterial> SPACE_SUIT_MATERIAL = ARMOR_MATERIALS.register("space_suit", () -> new ArmorMaterial(SpaceArmor.DEFENSE, 20,
@@ -125,7 +125,7 @@ public class Registration {
     public static final Supplier<BlockEntityType<TankBlockEntity>> TANK = BLOCK_ENTITIES.register("tank", () -> BlockEntityType.Builder.of(TankBlockEntity::new, FLUID_TANK.get()).build(null));
     public static final Supplier<BlockEntityType<CanisterFillerBlockEntity>> FILLER = BLOCK_ENTITIES.register("filler", () -> BlockEntityType.Builder.of(CanisterFillerBlockEntity::new, CANISTER_FILLER.get()).build(null));
     public static final Supplier<BlockEntityType<DisperserBlockEntity>> DISPERSER = BLOCK_ENTITIES.register("disperser", () -> BlockEntityType.Builder.of(DisperserBlockEntity::new, OXYGEN_DISPERSER.get()).build(null));
-    public static final Supplier<BlockEntityType<AirBlockEntity>> AIR = BLOCK_ENTITIES.register("air", () -> BlockEntityType.Builder.of(AirBlockEntity::new, OXYGEN.get()).build(null));
+    public static final Supplier<BlockEntityType<AirBlockEntity>> AIR = BLOCK_ENTITIES.register("air", () -> BlockEntityType.Builder.of(AirBlockEntity::new, OXYGEN_DISPERSIBLE.get()).build(null));
     public static final Supplier<BlockEntityType<CollectorBlockEntity>> COLLECTOR = BLOCK_ENTITIES.register("collector", () -> BlockEntityType.Builder.of(CollectorBlockEntity::new, OXYGEN_COLLECTOR.get()).build(null));
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEXUS_TAB = TABS.register("nexus", () -> CreativeModeTab.builder()
@@ -151,6 +151,8 @@ public class Registration {
 
     public static final TagKey<Item> GLASS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Main.MODID, "glass"));
     public static final TagKey<Block> O2_PRODUCING = BlockTags.create(ResourceLocation.fromNamespaceAndPath(Main.MODID, "o2_producing"));
+    public static final TagKey<Block> INFINBURN_MOON = BlockTags.create(ResourceLocation.fromNamespaceAndPath(Main.MODID, "infinburn_moon"));
+    public static final TagKey<Fluid> OXYGEN = FluidTags.create(Main.loc("oxygen"));
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, DISPERSER.get(), (o, v) -> o.getFluidHandler());
@@ -180,6 +182,8 @@ public class Registration {
             delayed.add(Canister.create(8000, 8000, Fluids.WATER, CANISTER.get()));
             delayed.add(Canister.create(8000, 8000, Fluids.WATER, AUTO_REFILL_CANISTER.get()));
             for (DeferredHolder<Item, ? extends Item> i : ITEMS.getEntries()){
+                if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof FluidPipe) continue;
+                if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof OxygenDisperser) continue;
                 if (i.get() instanceof Parachute || i.get() instanceof Canister) continue;
                 if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof DispersibleAirBlock) continue;
                 if (i.get() instanceof BucketItem b) {

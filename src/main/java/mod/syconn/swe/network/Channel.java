@@ -1,9 +1,6 @@
 package mod.syconn.swe.network;
 
-import mod.syconn.swe.network.messages.MessageChange;
-import mod.syconn.swe.network.messages.MessageClickArrow;
-import mod.syconn.swe.network.messages.MessageClickTab;
-import mod.syconn.swe.network.messages.MessageToggleDisperser;
+import mod.syconn.swe.network.messages.*;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -18,6 +15,8 @@ public class Channel {
         registrar.playToServer(MessageClickTab.TYPE, MessageClickTab.STREAM_CODEC, MessageClickTab::handle);
         registrar.playToServer(MessageClickArrow.TYPE, MessageClickArrow.STREAM_CODEC, MessageClickArrow::handle);
         registrar.playToServer(MessageToggleDisperser.TYPE, MessageToggleDisperser.STREAM_CODEC, MessageToggleDisperser::handle);
+        registrar.playToClient(ClientBoundUpdatePlanetSettings.TYPE, ClientBoundUpdatePlanetSettings.STREAM_CODEC, ClientBoundUpdatePlanetSettings::handle);
+        registrar.playBidirectional(BiBoundUpdateSpaceSuit.TYPE, BiBoundUpdateSpaceSuit.STREAM_CODEC, BiBoundUpdateSpaceSuit::handle);
     }
 
     public static <MSG extends CustomPacketPayload> void sendToServer(MSG message) {

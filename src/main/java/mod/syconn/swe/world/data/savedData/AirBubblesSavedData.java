@@ -1,5 +1,6 @@
-package mod.syconn.swe.util.data;
+package mod.syconn.swe.world.data.savedData;
 
+import mod.syconn.swe.world.dimensions.PlanetManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -10,7 +11,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import mod.syconn.swe.world.dimensions.DimSettingsManager;
 import mod.syconn.swe.util.NbtHelper;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
@@ -36,7 +36,7 @@ public class AirBubblesSavedData extends SavedData {
     }
 
     public boolean breathable(ResourceKey<Level> level, BlockPos pos) {
-        if (DimSettingsManager.getSettings(level).breathable()) return true;
+        if (PlanetManager.getSettings(level).breathable()) return true;
         if (!levelBlockPositions.containsKey(level)) return false;
         for (List<BlockPos> positions : levelBlockPositions.get(level).values()) if (positions.contains(pos)) return true;
         return false;
@@ -71,7 +71,7 @@ public class AirBubblesSavedData extends SavedData {
                     CompoundTag ct = (CompoundTag) nNBT;
                     oxygenMap.put(ct.getUUID("uuid"), NbtHelper.readPosses(ct.getCompound("positions")));
                 });
-                levelBlockPositions.put(ResourceKey.create(Registries.DIMENSION, ResourceLocation.withDefaultNamespace(outerData.getString("loc"))), oxygenMap);
+                levelBlockPositions.put(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(outerData.getString("loc"))), oxygenMap);
             });
         }
     }

@@ -72,8 +72,8 @@ public class ChuteModel extends Model {
 	}
 
 	public void renderToBuffer(PoseStack pPoseStack, VertexConsumer pBuffer, int pPackedLight, int pPackedOverlay, int pColor) {
-		test.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, pColor);
-		test2.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, pColor);
+		test.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, -1);
+		test2.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, -1);
 		brella.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, pColor);
 		brella2.render(pPoseStack, pBuffer, pPackedLight, pPackedOverlay, pColor);
 	}

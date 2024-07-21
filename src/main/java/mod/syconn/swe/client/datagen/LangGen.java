@@ -24,7 +24,7 @@ public class LangGen extends LanguageProvider {
         add(Registration.IRON_UPGRADE.get(), "Iron Upgrade");
         add(Registration.EMERALD_UPGRADE.get(), "Emerald Upgrade");
         add(Registration.NETHERITE_UPGRADE.get(), "Netherite Upgrade");
-        add(Registration.O2_BUCKET.get(), "O2 Bucket");
+        add(Registration.O2_BUCKET.get(), "Oxygen Bucket");
         add(Registration.AUTO_REFILL_CANISTER.get(), "Auto Refilling Canister");
 
         add(Registration.FLUID_PIPE.get(), "Fluid Pipe");
@@ -33,7 +33,10 @@ public class LangGen extends LanguageProvider {
         add(Registration.CANISTER_FILLER.get(), "Canister Filler");
         add(Registration.OXYGEN_COLLECTOR.get(), "Oxygen Collector");
       
-        add("itemGroup.space", "Spaceward Expansion");
+        add("itemGroup.swe", "Spaceward Expansion");
         add("swe.fluid.o2", "Oxygen");
+
+        add("death.attack.anoxia", "%1$s ran out of Oxygen");
+        add("death.attack.anoxia.player", "%1$s ran out of Oxygen while trying to escape %2$s");
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -33,23 +34,19 @@ public class CanisterFiller extends FluidBaseTopperBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    public InteractionResult use(BlockState p_60503_, Level p_60504_, BlockPos p_60505_, Player p_60506_, InteractionHand p_60507_, BlockHitResult p_60508_) {
-        if (!p_60504_.isClientSide) {
-            ItemStack heldItem = p_60506_.getItemInHand(p_60507_);
-            if (p_60504_.getBlockEntity(p_60505_) instanceof CanisterFillerBlockEntity ce) {
-                if (heldItem.isEmpty()) {
-                    p_60506_.setItemInHand(p_60507_, ce.removeCanister());
-                    return InteractionResult.SUCCESS;
-                } else {
-                    if (ce.addCanister(heldItem)) {
-                        p_60506_.getItemInHand(p_60507_).shrink(1);
-                        return InteractionResult.SUCCESS;
-                    }
-                }
-                return InteractionResult.PASS;
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+        if (pLevel.isClientSide) return ItemInteractionResult.SUCCESS;
+        ItemStack heldItem = pPlayer.getItemInHand(pHand);
+        if (pLevel.getBlockEntity(pPos) instanceof CanisterFillerBlockEntity ce) {
+            if (heldItem.isEmpty()) {
+                pPlayer.setItemInHand(pHand, ce.removeCanister());
+                return ItemInteractionResult.CONSUME;
+            } else if (ce.addCanister(heldItem)) {
+                pPlayer.getItemInHand(pHand).shrink(1);
+                return ItemInteractionResult.CONSUME;
             }
         }
-        return InteractionResult.CONSUME;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {

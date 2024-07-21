@@ -1,7 +1,7 @@
 package mod.syconn.swe.items;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.util.data.SpaceSlot;
+import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
 import net.minecraft.Util;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -33,10 +33,10 @@ public class SpaceArmor extends ArmorItem {
     }
 
     public static boolean hasParachute(Player p){
-        return p.getInventory() instanceof ExtendedPlayerInventory i && i.getItemBySlot(SpaceSlot.PARACHUTE).getItem() instanceof Parachute && hasFullKit(p);
+        return p.getInventory() instanceof ExtendedPlayerInventory i && i.getItemBySlot(EquipmentItemSlot.SpaceSlot.PARACHUTE).getItem() instanceof Parachute && hasFullKit(p);
     }
 
-    public static ItemStack getGear(SpaceSlot slot, Player p){
+    public static ItemStack getGear(EquipmentItemSlot.SpaceSlot slot, Player p){
         if (p.getInventory() instanceof ExtendedPlayerInventory i){
             return i.getItemBySlot(slot);
         } return null;

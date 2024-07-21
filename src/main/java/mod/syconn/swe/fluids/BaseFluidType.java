@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 
 public class BaseFluidType extends FluidType {
 
-    public static final ResourceLocation O2_STILL_RL = ResourceLocation.fromNamespaceAndPath(Main.MODID, "block/o_still");
+    public static final ResourceLocation O2_STILL_RL = ResourceLocation.fromNamespaceAndPath(Main.MODID, "block/o2_still");
     public static final ResourceLocation O2_FLOWING_RL = ResourceLocation.fromNamespaceAndPath(Main.MODID,"block/o2_flowing");
     public static final ResourceLocation O2_OVERLAY_RL = ResourceLocation.fromNamespaceAndPath(Main.MODID, "block/o2_overlay.png");
 
@@ -36,7 +36,6 @@ public class BaseFluidType extends FluidType {
         this.fogColor = fogColor;
     }
 
-    @Override
     public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
         consumer.accept(new IClientFluidTypeExtensions() {
             public ResourceLocation getStillTexture() {
@@ -52,7 +51,7 @@ public class BaseFluidType extends FluidType {
             }
 
             public int getTintColor() {
-                return tintColor;
+                return tintColor != -1 ? tintColor : 0xFFFFFFFF;
             }
 
             public @NotNull Vector3f modifyFogColor(Camera camera, float partialTick, ClientLevel level, int renderDistance, float darkenWorldAmount, Vector3f fluidFogColor) {

@@ -1,7 +1,7 @@
 package mod.syconn.swe.blockentities;
 
-import cpw.mods.util.Lazy;
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.blocks.FluidBaseBlock;
 import mod.syconn.swe.items.UpgradeItem;
 import mod.syconn.swe.util.Helper;
@@ -22,6 +22,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -30,7 +31,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 import static mod.syconn.swe.util.data.FluidPointSystem.FluidPoint;
 
-public class PipeBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider {
+public class PipeBlockEntity extends AbstractTankBE implements MenuProvider {
 
     private FluidPointSystem system = new FluidPointSystem();
     private Direction target = null;
@@ -207,10 +208,6 @@ public class PipeBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
     private static void update(Level level, BlockPos pos, BlockState state){
         setChanged(level, pos, state);
         level.sendBlockUpdated(pos, state, state, 2);
-    }
-
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     public AbstractContainerMenu createMenu(int p_39954_, Inventory p_39955_, Player p_39956_) {

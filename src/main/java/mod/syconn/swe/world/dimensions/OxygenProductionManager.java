@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class OxygenProductionManager extends SimpleJsonResourceReloadListener {
 
@@ -32,8 +33,8 @@ public class OxygenProductionManager extends SimpleJsonResourceReloadListener {
     protected void apply(Map<ResourceLocation, JsonElement> p_10793_, ResourceManager p_10794_, ProfilerFiller p_10795_) {
         p_10793_.forEach(((resourceLocation, jsonElement) -> {
             JsonObject json = jsonElement.getAsJsonObject();
-            if (json.has("tag")) TAGS.put(TagKey.create(Registries.BLOCK, ResourceLocation.withDefaultNamespace(json.get("tag").getAsString())), json.get("value").getAsDouble());
-            else BLOCKS.put(BuiltInRegistries.BLOCK.get(ResourceLocation.withDefaultNamespace(json.get("block").getAsString())), json.get("value").getAsDouble());
+            if (json.has("tag")) TAGS.put(TagKey.create(Registries.BLOCK, Objects.requireNonNull(ResourceLocation.tryParse(json.get("tag").getAsString()))), json.get("value").getAsDouble());
+            else BLOCKS.put(BuiltInRegistries.BLOCK.get(Objects.requireNonNull(ResourceLocation.tryParse(json.get("block").getAsString()))), json.get("value").getAsDouble());
         }));
     }
 

@@ -1,18 +1,14 @@
 package mod.syconn.swe.blockentities;
 
-import cpw.mods.util.Lazy;
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.util.RGBImage;
+import mod.syconn.swe.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
 import mod.syconn.swe.util.FluidHelper;
-import mod.syconn.swe.util.ResourceUtil;
 import mod.syconn.swe.world.container.TankMenu;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -23,19 +19,18 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.EmptyFluid;
+import net.neoforged.neoforge.common.util.Lazy;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
-public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider {
+public class TankBlockEntity extends AbstractTankBE implements MenuProvider {
 
     private final int fillSpeed = 500;
-    private RGBImage bfluid;
-    private ResourceLocation bfluidLoc;
     private final ItemStackHandler items = new ItemStackHandler(getContainerSize()) {
-        public void onContentsChanged(int slot) { update(); }
+        public void onContentsChanged(int slot) { markDirty(); }
     };
     private final Lazy<IItemHandler> holder = Lazy.of(() -> items);
 
@@ -43,40 +38,20 @@ public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
         super(Registration.TANK.get(), pos, state, 16000);
     }
 
-    protected void updateTextures(FluidStack resource) {
-        super.updateTextures(resource);
-        bfluid = new RGBImage(ResourceUtil.createFluidBlockTexture(resource.getFluid()));
-        bfluidLoc = Minecraft.getInstance().getTextureManager().register("bfluid", bfluid.getImageFromPixels());
-        update();
-    }
-
     public ItemStackHandler getItems() {
         return items;
     }
 
-    public ResourceLocation getFluidTexture() {
-        return bfluidLoc;
-    }
-
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        if (pTag.contains("Inventory")) items.deserializeNBT(pRegistries, pTag.getCompound("Inventory"));
-        if (pTag.contains("bfluid")) bfluid = RGBImage.read(pTag.getCompound("bfluid"));
-        if (bfluid != null) bfluidLoc = Minecraft.getInstance().getTextureManager().register("bfluid", bfluid.getImageFromPixels());
-    }
-
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
+    protected void saveClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.saveClientData(pTag, pRegistries);
         pTag.put("Inventory", items.serializeNBT(pRegistries));
-        if (bfluid != null) pTag.put("bfluid", bfluid.write());
     }
 
-    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-        CompoundTag tag = super.getUpdateTag(pRegistries);
-        tag.put("items", items.serializeNBT(pRegistries));
-        if (bfluid != null) tag.put("bfluid", bfluid.write());
-        return tag;
+    protected void loadClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.loadClientData(pTag, pRegistries);
+        if (pTag.contains("Inventory")) items.deserializeNBT(pRegistries, pTag.getCompound("Inventory"));
     }
+
 
     private int getContainerSize(){
         return 3;
@@ -98,7 +73,7 @@ public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
                 if (fill > 0) {
                     e.getItems().extractItem(0, 1, false);
                     e.getItems().insertItem(1, new ItemStack(Items.BUCKET), false);
-                } else if (b.content instanceof EmptyFluid && !e.getFluidTank().isEmpty() && !(e.getItems().getStackInSlot(1).getItem() instanceof BucketItem)) {
+                } else if (b.content instanceof EmptyFluid && !e.tank.isEmpty() && !(e.getItems().getStackInSlot(1).getItem() instanceof BucketItem)) {
                     FluidStack fluidStack = FluidUtil.getFluidHandler(heldItem).map(handler -> e.tank.drain(handler.getTankCapacity(0), IFluidHandler.FluidAction.EXECUTE)).orElse(FluidStack.EMPTY);
                     e.getItems().extractItem(0, 1, false);
                     if (fluidStack == FluidStack.EMPTY) e.getItems().insertItem(1, new ItemStack(Items.BUCKET), false);
@@ -112,6 +87,7 @@ public class TankBlockEntity extends GUIFluidHandlerBlockEntity implements MenuP
             if (item.getItem() instanceof ItemFluidHandler) {
                 FluidHelper.fillHandlerUpdateStack(item, e.tank, e.fillSpeed);
             }
+            e.markDirty();
         }
     }
 

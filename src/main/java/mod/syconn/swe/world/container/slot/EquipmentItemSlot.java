@@ -1,21 +1,17 @@
 package mod.syconn.swe.world.container.slot;
 
 import com.mojang.datafixers.util.Pair;
+import mod.syconn.swe.Main;
+import mod.syconn.swe.items.SpaceArmor;
+import mod.syconn.swe.items.extras.EquipmentItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
-import mod.syconn.swe.Main;
-import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.util.data.SpaceSlot;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-import javax.annotation.Nullable;
-
-public class EquipmentItemSlot extends SlotItemHandler {
+public class EquipmentItemSlot extends SlotItemHandler { // TODO SWAP OVER TO API VERSION
 
     private final Player player;
     private final SpaceSlot slot;
@@ -24,6 +20,12 @@ public class EquipmentItemSlot extends SlotItemHandler {
         super(inventoryIn, index, xPosition, yPosition);
         player = p;
         slot = s;
+    }
+
+    public void setChanged() { // TODO HACK FIX HERE
+        System.out.println("SLOT CHANGE");
+        player.getInventory().setChanged();
+        super.setChanged();
     }
 
     public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
@@ -36,5 +38,21 @@ public class EquipmentItemSlot extends SlotItemHandler {
 
     public boolean mayPlace(ItemStack stack) {
         return stack.getItem() instanceof EquipmentItem && isActive() && ((EquipmentItem) stack.getItem()).getSlot() == slot;
+    }
+
+    public enum SpaceSlot {
+
+        TANK("empty_canister"),
+        PARACHUTE("empty_parachute");
+
+        final String loc;
+
+        SpaceSlot(String loc) {
+            this.loc = loc;
+        }
+
+        public String getLoc() {
+            return loc;
+        }
     }
 }

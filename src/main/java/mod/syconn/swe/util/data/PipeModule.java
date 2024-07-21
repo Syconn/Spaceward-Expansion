@@ -16,6 +16,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 
 import java.util.stream.Stream;
 
+@Deprecated(forRemoval = true)
 public class PipeModule {
 
     private final boolean n, e, s, w;

@@ -1,6 +1,8 @@
 package mod.syconn.swe.mixins;
 
 import com.mojang.authlib.GameProfile;
+import mod.syconn.swe.world.container.ExtendedPlayerContainer;
+import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,9 +15,8 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import mod.syconn.swe.world.container.ExtendedPlayerContainer;
-import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
 
+// TODO Deprecate
 @Mixin(Player.class)
 public class PlayerMixin {
     @Shadow

@@ -1,6 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.api.blockEntity.AbstractTankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -16,23 +17,25 @@ import mod.syconn.swe.blocks.DispersibleAirBlock;
 import mod.syconn.swe.world.container.DisperserMenu;
 import mod.syconn.swe.util.BlockInfo;
 import mod.syconn.swe.util.NbtHelper;
-import mod.syconn.swe.util.data.AirBubblesSavedData;
+import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
+import net.minecraft.world.ticks.TickPriority;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider, BlockInfo {
+import static mod.syconn.swe.blocks.OxygenDisperser.addBlock;
+
+public class DisperserBlockEntity extends AbstractTankBE implements MenuProvider, BlockInfo {
 
     //TODO change to blocks and look for blockUpdates
     //  - Pipe dont show fluid
 
     public List<BlockPos> list = new ArrayList<>();
-    public int maxFill = 20;
+    public int maxFill = 20; // TODO CONFIG THIS SHIT ALSO REDO
     private int testRate = 0;
     private int lowerRate = 0;
     private final int rate = 15;
@@ -44,14 +47,8 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
     public DisperserBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
         super(Registration.DISPERSER.get(), p_155229_, p_155230_, 1000);
         this.tank = new FluidTank(1000){
-            public void onContentsChanged() { update(); }
-
-            public int fill(FluidStack resource, FluidAction action) {
-                if (fluid.isEmpty()) updateTextures(resource);
-                return super.fill(resource, action);
-            }
-
-            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2_SOURCE.get(); }
+            public void onContentsChanged() { markDirty(); }
+            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2.get(); }
         };
     }
 
@@ -61,8 +58,8 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
                 e.testRate--;
                 if (e.testRate <= 0) {
                     e.testRate = 100;
-//                    addBlock(level, pos.relative(Direction.UP), pos, 1);
-//                    level.scheduleTick(pos, ModInit.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
+                    addBlock(level, pos.relative(Direction.UP), pos, 1);
+                    level.scheduleTick(pos, Registration.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
                 }
             } else { // TODO OPTIMISE
                 AirBubblesSavedData.get().remove(level.dimension(), e.uuid);
@@ -83,42 +80,45 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
                     }
                 }
             } else e.o2Usage = 0;
-            e.update();
         } else e.o2Usage = 0;
+        e.markDirty();
     }
 
     public static void remove(Level level, BlockPos defPos) {
-        List<BlockPos> list = level.getBlockEntity(defPos, Registration.DISPERSER.get()).get().list;
-        for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
+        if (level.getBlockEntity(defPos, Registration.DISPERSER.get()).isPresent()) {
+            List<BlockPos> list = level.getBlockEntity(defPos, Registration.DISPERSER.get()).get().list;
+            for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
+        }
     }
 
     public void failed(boolean t) {
-//        for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
-//        if (t) {
-//            active = false;
-//            list.clear();
-//            AirBubblesSavedData.get().remove(level.dimension(), uuid);
-//        } else {
-//            if (list.size() / rate > tank.getFluidAmount()) {
-//                active = false;
-//                list.clear();
-//                AirBubblesSavedData.get().remove(level.dimension(), uuid);
-//            } else {
-//                active = true;
-//                tank.drain(list.size() / rate, IFluidHandler.FluidAction.EXECUTE);
-//                AirBubblesSavedData.get().set(level.dimension(), uuid, list);
-//            }
-//        }
+        for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
+        if (t) {
+            active = false;
+            list.clear();
+            AirBubblesSavedData.get().remove(level.dimension(), uuid);
+        } else {
+            if (list.size() / rate > tank.getFluidAmount()) {
+                active = false;
+                list.clear();
+                AirBubblesSavedData.get().remove(level.dimension(), uuid);
+            } else {
+                active = true;
+                tank.drain(list.size() / rate, IFluidHandler.FluidAction.EXECUTE);
+                AirBubblesSavedData.get().set(level.dimension(), uuid, list);
+            }
+        }
+        markDirty();
     }
 
     public void toggleEnabled() {
         this.enabled = !this.enabled;
         if (this.enabled && tank.getFluidInTank(0).getAmount() > 0) {
             testRate = 100;
-//            addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
-//            level.scheduleTick(worldPosition, ModInit.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
+            addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
+            level.scheduleTick(worldPosition, Registration.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
         }
-        update();
+        markDirty();
     }
 
     public boolean isEnabled() {
@@ -133,6 +133,7 @@ public class DisperserBlockEntity extends GUIFluidHandlerBlockEntity implements 
         if(this.uuid == null) {
             this.uuid = randomUUID;
         }
+        markDirty();
     }
 
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {

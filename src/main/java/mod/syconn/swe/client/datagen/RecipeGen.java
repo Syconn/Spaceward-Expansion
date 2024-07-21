@@ -1,5 +1,6 @@
 package mod.syconn.swe.client.datagen;
 
+import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
 import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
@@ -19,8 +20,8 @@ public class RecipeGen extends RecipeProvider {
     }
 
     protected void buildRecipes(RecipeOutput pRecipeOutput) {
-        SpecialRecipeBuilder.special(DyedParachuteRecipe::new).save(pRecipeOutput, "dyed_parachute");
-        SpecialRecipeBuilder.special(RefillingCanisterRecipe::new).save(pRecipeOutput, "refill_canister");
+        SpecialRecipeBuilder.special(DyedParachuteRecipe::new).save(pRecipeOutput, Main.loc("dyed_parachute"));
+        SpecialRecipeBuilder.special(RefillingCanisterRecipe::new).save(pRecipeOutput, Main.loc("refill_canister"));
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Registration.CANISTER_FILLER.get())
                 .pattern("ggg")
                 .pattern("gig")

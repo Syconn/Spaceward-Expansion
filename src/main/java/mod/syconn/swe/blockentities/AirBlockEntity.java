@@ -31,6 +31,7 @@ public class AirBlockEntity extends BlockEntity {
                 }
             }
             e.has_run = true;
+            e.update();
         }
     }
 
@@ -41,6 +42,7 @@ public class AirBlockEntity extends BlockEntity {
     public void setup(int dis, BlockPos s) {
         distance = dis;
         pos = s;
+        update();
     }
 
     protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
@@ -55,5 +57,10 @@ public class AirBlockEntity extends BlockEntity {
         pTag.putInt("distance", distance);
         pTag.put("pos", NbtUtils.writeBlockPos(pos));
         pTag.putBoolean("run", has_run);
+    }
+
+    protected void update(){
+        setChanged();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
     }
 }

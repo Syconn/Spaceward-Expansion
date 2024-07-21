@@ -3,29 +3,35 @@ package mod.syconn.swe.world.data.attachments;
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.items.extras.EquipmentItem;
+import mod.syconn.swe.network.Channel;
+import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
 import mod.syconn.swe.util.Animator;
-import mod.syconn.swe.util.data.AirBubblesSavedData;
+import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
+import mod.syconn.swe.world.dimensions.PlanetManager;
+import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.util.INBTSerializable;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class SpaceSuit implements IItemHandler, INBTSerializable<CompoundTag> { // TODO SYNC WITH CLIENT
+public class SpaceSuit implements IItemHandlerModifiable, INBTSerializable<CompoundTag> {
 
-    private static final String PARACHUTE_NBT = "parachute";
-    private static final String CHUTE_NBT = "animchute";
-    private static final String OXYGEN_NBT = "oxygen";
     private boolean parachute;
-    private Animator chute = new Animator(100);
+    private Animator chute = new Animator(20);
     private int oxygen = maxO2();
     private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
 
@@ -37,9 +43,10 @@ public class SpaceSuit implements IItemHandler, INBTSerializable<CompoundTag> { 
         return chute;
     }
 
-    public void parachute(boolean p) {
-        if (p) chute.start();
-        parachute = p;
+    public void parachute(boolean activate, Player player) {
+        if (activate) chute.start();
+        parachute = activate;
+        sync(player);
     }
 
     public NonNullList<ItemStack> getInv() {
@@ -51,25 +58,28 @@ public class SpaceSuit implements IItemHandler, INBTSerializable<CompoundTag> { 
     }
 
     public void decreaseO2(Player p) {
-        ItemStack stack = getStackInSlot(0);
-        if ((SpaceArmor.hasFullKit(p) && stack.getItem() instanceof Canister c && c.getCapacity(stack) > 0) || AirBubblesSavedData.get().breathable(p.level().dimension(), p.getOnPos().above(1))) {
-            if (oxygen < maxO2()) oxygen++;
-        } else setO2(new Random().nextInt(2) > 0 ? O2() : O2() - 1);
+        if (p.getInventory() instanceof ExtendedPlayerInventory ext) {
+            ItemStack stack = ext.getSpaceUtil().get(0);
+            if ((SpaceArmor.hasFullKit(p) && stack.getItem() instanceof Canister c && c.getFluid(stack).getAmount() > 0) || PlanetManager.getSettings(p).breathable()) {
+            if (oxygen < maxO2()) setO2(oxygen + 1, p);
+            } else setO2(new Random().nextInt(2) > 0 ? O2() : O2() - 1, p);
+        }
     }
 
     public int maxO2() {
         return 300;
     }
 
-    public void setO2(int o2) {
+    public void setO2(int o2, Player player) {
         oxygen = o2;
+        sync(player);
     }
 
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag t = new CompoundTag();
-        t.putBoolean(PARACHUTE_NBT, parachute);
-        t.put(CHUTE_NBT, chute.serializeNBT(provider));
-        t.putInt(OXYGEN_NBT, oxygen);
+        t.putBoolean("parachute", parachute);
+        t.put("animchute", chute.serializeNBT());
+        t.putInt("oxygen", oxygen);
 
         ListTag nbtTagList = new ListTag();
         for (int i = 0; i < stacks.size(); i++) {
@@ -85,9 +95,9 @@ public class SpaceSuit implements IItemHandler, INBTSerializable<CompoundTag> { 
     }
 
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        parachute = nbt.getBoolean(PARACHUTE_NBT);
-        chute = new Animator(provider, nbt.getCompound(CHUTE_NBT));
-        oxygen = nbt.getInt(OXYGEN_NBT);
+        parachute = nbt.getBoolean("parachute");
+        chute = new Animator(nbt.getCompound("animchute"));
+        oxygen = nbt.getInt("oxygen");
         setSize(nbt.contains("Size", Tag.TAG_INT) ? nbt.getInt("Size") : stacks.size());
         ListTag tagList = nbt.getList("Items", Tag.TAG_COMPOUND);
         for (int i = 0; i < tagList.size(); i++) {
@@ -107,9 +117,8 @@ public class SpaceSuit implements IItemHandler, INBTSerializable<CompoundTag> { 
     }
 
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (stack.isEmpty()) return ItemStack.EMPTY;
+       if (stack.isEmpty()) return ItemStack.EMPTY;
         if (!isItemValid(slot, stack)) return stack;
-
         validateSlotIndex(slot);
         ItemStack existing = this.stacks.get(slot);
         int limit = getStackLimit(slot, stack);
@@ -129,13 +138,9 @@ public class SpaceSuit implements IItemHandler, INBTSerializable<CompoundTag> { 
 
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
         if (amount == 0) return ItemStack.EMPTY;
-
         validateSlotIndex(slot);
-
         ItemStack existing = this.stacks.get(slot);
-
         if (existing.isEmpty()) return ItemStack.EMPTY;
-
         int toExtract = Math.min(amount, existing.getMaxStackSize());
         if (existing.getCount() <= toExtract) {
             if (!simulate) {
@@ -172,6 +177,27 @@ public class SpaceSuit implements IItemHandler, INBTSerializable<CompoundTag> { 
 
     public void setStackInSlot(int slot, @NotNull ItemStack stack) {
         stacks.set(slot, stack);
+    }
+
+    private CompoundTag writeSyncedData() {
+        CompoundTag t = new CompoundTag();
+        t.putBoolean("parachute", parachute);
+        t.put("animchute", chute.serializeNBT());
+        t.putInt("oxygen", oxygen);
+        return t;
+    }
+
+    public SpaceSuit readSyncedData(SpaceSuit suit, CompoundTag nbt) {
+        suit.parachute = nbt.getBoolean("parachute");
+        suit.chute = new Animator(nbt.getCompound("animchute"));
+        suit.oxygen = nbt.getInt("oxygen");
+        return suit;
+    }
+
+    private void sync(Player player) {
+        BiBoundUpdateSpaceSuit packet = new BiBoundUpdateSpaceSuit(writeSyncedData());
+        if (player instanceof ServerPlayer serverPlayer) Channel.sendToPlayer(packet, serverPlayer);
+        else Channel.sendToServer(packet);
     }
 }
 

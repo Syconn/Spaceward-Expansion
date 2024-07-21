@@ -1,13 +1,14 @@
-// 1.21	2024-07-08T17:16:44.0860185	vanilla/Block States: swe
+// 1.21	2024-07-11T00:05:14.6232725	vanilla/Block States: swe
 8f9b9b8dd73b59f10cff1929666fda017ec5590f assets/swe/blockstates/canister_filler.json
 96484598c4d30a9e8fe515d0829fc3473f75d7f1 assets/swe/blockstates/fluid_pipe.json
 a4332eacf646dbba1ee90b1cc8346c806940f448 assets/swe/blockstates/fluid_tank.json
-138b01a2fc57cb99f38214335f0b00394381ba95 assets/swe/blockstates/oxygen.json
 e95c4ab73ac3b9273156ac09743cac2b6a9511d3 assets/swe/blockstates/oxygen_collector.json
 b4e632477f02485521f22d8ee1098a0a4e61987e assets/swe/blockstates/oxygen_disperser.json
-36c23a51a5fdc8a5bc0b5c602b4496392fd33973 assets/swe/models/block/oxygen.json
+698fb5b1c5ceacb0b4f358e09342ddfc158a92e2 assets/swe/blockstates/oxygen_dispersible.json
+8a88467a593e92c50b6d2df2330589591bf6e7b1 assets/swe/models/block/oxygen_dispersible.json
 636af9fef77ca9f2b687de06f003acc59ddd4c90 assets/swe/models/item/canister_filler.json
 0862301b6a761085586ff20d8f062ce22092f853 assets/swe/models/item/fluid_pipe.json
 707f332e8b0ff7fc1db93cf4d248c7e2b121d294 assets/swe/models/item/fluid_tank.json
 2924f43a637ef3027111a376035e31be6efdc6f0 assets/swe/models/item/oxygen_collector.json
 f458d04836a8bfc368065f57dbb19969fab40e49 assets/swe/models/item/oxygen_disperser.json
+e989132bfec9280bf303638f0cdfc3f6e1d84c7f assets/swe/models/item/oxygen_dispersible.json

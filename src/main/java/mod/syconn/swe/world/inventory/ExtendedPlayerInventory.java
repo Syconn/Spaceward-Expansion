@@ -2,8 +2,9 @@ package mod.syconn.swe.world.inventory;
 
 import com.google.common.collect.ImmutableList;
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.util.data.SpaceSlot;
+import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -30,13 +31,17 @@ public class ExtendedPlayerInventory extends Inventory {
         allInventories = ImmutableList.of(this.items, this.armor, this.offhand, this.space_utilities);
     }
 
+    public void setChanged() {
+        super.setChanged();
+    }
+
     public NonNullList<ItemStack> getSpaceUtil()
     {
         return suit.getInv();
     }
 
-    public ItemStack getItemBySlot(SpaceSlot s){
-        if (s == SpaceSlot.TANK)
+    public ItemStack getItemBySlot(EquipmentItemSlot.SpaceSlot s){
+        if (s == EquipmentItemSlot.SpaceSlot.TANK)
             return space_utilities.get(0);
         else return space_utilities.get(1);
     }
@@ -107,30 +112,26 @@ public class ExtendedPlayerInventory extends Inventory {
     }
 
     public ListTag save(ListTag pListTag) {
-        for (int k = 0; k < this.offhand.size(); k++) {
+        ListTag listTag = super.save(pListTag);
+        for (int k = 0; k < this.space_utilities.size(); k++) {
             if (!this.space_utilities.get(k).isEmpty()) {
                 CompoundTag compound = new CompoundTag();
-                compound.putByte("Slot", (byte)(k + 200));
-                pListTag.add(this.offhand.get(k).save(this.player.registryAccess(), compound));
+                compound.putByte("Slot", (byte) (k + 200));
+                listTag.add(this.space_utilities.get(k).save(this.player.registryAccess(), compound));
             }
         }
-        return pListTag;
+        return listTag;
     }
 
     public void load(ListTag pListTag) {
-        space_utilities.clear();
+        super.load(pListTag);
+        this.space_utilities.clear();
 
         for (int i = 0; i < pListTag.size(); i++) {
             CompoundTag compoundtag = pListTag.getCompound(i);
             int j = compoundtag.getByte("Slot") & 255;
             ItemStack itemstack = ItemStack.parse(this.player.registryAccess(), compoundtag).orElse(ItemStack.EMPTY);
-            if (j >= 0 && j < this.items.size()) {
-                this.items.set(j, itemstack);
-            } else if (j >= 100 && j < this.armor.size() + 100) {
-                this.armor.set(j - 100, itemstack);
-            } else if (j >= 150 && j < this.offhand.size() + 150) {
-                this.offhand.set(j - 150, itemstack);
-            } else if (j >= 200 && j < this.space_utilities.size() + 200) {
+            if (j >= 200 && j < this.space_utilities.size() + 200) {
                 this.space_utilities.set(j - 200, itemstack);
             }
         }
@@ -178,10 +179,12 @@ public class ExtendedPlayerInventory extends Inventory {
 
     public void tick() {
         super.tick();
-        space_utilities.forEach(e -> {
-            if (e.getItem() instanceof EquipmentItem eq) {
-                eq.onEquipmentTick(e, player.level(), player);
-            }
-        });
+        if (SpaceArmor.hasFullKit(player)) {
+            space_utilities.forEach(e -> {
+                if (e.getItem() instanceof EquipmentItem eq) {
+                    eq.onEquipmentTick(e, player.level(), player);
+                }
+            });
+        }
     }
 }

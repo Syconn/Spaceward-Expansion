@@ -1,14 +1,15 @@
 package mod.syconn.swe.items;
 
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.client.RenderUtil;
 import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
-import mod.syconn.swe.util.ResourceUtil;
-import mod.syconn.swe.util.data.AirBubblesSavedData;
-import mod.syconn.swe.util.data.SpaceSlot;
+import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.world.data.components.CanisterComponent;
+import mod.syconn.swe.world.dimensions.PlanetManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,52 +30,55 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public boolean isBarVisible(ItemStack stack) {
-        if (get(stack).fluid() == FluidStack.EMPTY) return false;
+        if (get(stack).fluidType().is(Fluids.EMPTY)) return false;
         return getDisplayValue(stack) != 6F;
     }
 
     public int getBarColor(ItemStack stack) {
-        return get(stack).color();
+        return RenderUtil.getFluidColor(get(stack).fluidStack());
     }
 
     public int getBarWidth(ItemStack stack) {
-        return 13 * get(stack).fluid().getAmount() / get(stack).max();
+        return 13 * get(stack).volume() / get(stack).max();
     }
 
     public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        if (get(pStack).fluid() != FluidStack.EMPTY) {
+        if (!get(pStack).fluidType().is(Fluids.EMPTY)) {
             pTooltipComponents.add(Component.empty());
-            pTooltipComponents.add(Component.literal(get(pStack).fluid().getAmount() + "mb / " + get(pStack).max() + "mb").withStyle(ChatFormatting.YELLOW));
+            pTooltipComponents.add(Component.literal(get(pStack).volume() + "mb / " + get(pStack).max() + "mb").withStyle(ChatFormatting.YELLOW));
         }
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 
     public void onEquipmentTick(ItemStack stack, Level level, Player player) {
         if (!level.isClientSide){
-            if (get(stack).fluid().is(Fluids.LAVA)) {
-                player.setRemainingFireTicks(2);
+            if (get(stack).fluidType().is(Fluids.LAVA)) {
+                if (!player.fireImmune()) player.igniteForSeconds(3.0F);
+                player.hurt(level.damageSources().inFire(), 2f);
             }
-            else if (get(stack).fluid().getFluidType().equals(Registration.O2_FLUID_TYPE) && !AirBubblesSavedData.get().breathable(player.level().dimension(), player.getOnPos().above(1)) && !player.isCreative()) {
-                setAmount(stack, get(stack).fluid().getAmount() - 1, getFluid(stack).getFluid());
+//           TODO OLD else if (get(stack).fluidType().is(Registration.O2_FLUID_TYPE.get()) && !AirBubblesSavedData.get().breathable(player.level().dimension(), player.getOnPos().above(1)) && !player.isCreative()) {
+//                setAmount(stack, get(stack).volume() - 1, getFluid(stack).getFluid());
+//            }
+            else if (get(stack).fluidType().is(Registration.O2_FLUID_TYPE.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
+                setAmount(stack, get(stack).volume() - 1, getFluid(stack).getFluid());
             }
         }
     }
 
     public Component getName(ItemStack stack) {
-        if (get(stack).fluid() != FluidStack.EMPTY) {
-            return getFluid(stack).getHoverName().copy().append(" ").append(super.getName(stack));
-        }
-        return super.getName(stack);
+        if (!get(stack).fluidType().is(Fluids.EMPTY)) return getFluid(stack).getHoverName().copy().append(" ").append(super.getName(stack));
+        return Component.literal("Empty ").append(super.getName(stack));
     }
 
-    public SpaceSlot getSlot() {
-        return SpaceSlot.TANK;
+    public EquipmentItemSlot.SpaceSlot getSlot() {
+        return EquipmentItemSlot.SpaceSlot.TANK;
     }
 
     public static ItemStack create(int volume, int max, Fluid fluid, Item item){
-        ItemStack stack = new ItemStack(item);
-        stack.set(Registration.CANISTER_COMPONENT, new CanisterComponent(new FluidStack(fluid, Math.min(volume, max)), max, ResourceUtil.getColor(fluid)));
-        return stack;
+        ItemStack itemStack = new ItemStack(item);
+        FluidStack fluidStack = new FluidStack(fluid, 1);
+        itemStack.set(Registration.CANISTER_COMPONENT, new CanisterComponent(fluidStack, volume, max));
+        return itemStack;
     }
 
     public void setAmount(ItemStack stack, int v, Fluid fluid) {
@@ -86,7 +90,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public FluidStack getFluid(ItemStack stack) {
-        return get(stack).fluid();
+        return get(stack).fluidStack();
     }
 
     public static CanisterComponent get(ItemStack stack) {
@@ -95,16 +99,16 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
 
     public static float getDisplayValue(ItemStack stack){
         if (stack.has(Registration.CANISTER_COMPONENT))
-            return (float) (get(stack).fluid().getAmount()) / get(stack).max() * 6.0f;
+            return (float) (get(stack).volume()) / get(stack).max() * 6.0f;
         return 0;
     }
 
     public static boolean increaseFluid(ItemStack pStack, FluidStack fluid) {
-        if (get(pStack).fluid().is(fluid.getFluidType())) {
+        if (get(pStack).fluidType().is(fluid.getFluidType())) {
             pStack.update(Registration.CANISTER_COMPONENT, CanisterComponent.DEFAULT, canister -> canister.increase(fluid));
             return true;
         }
-        else if (get(pStack).fluid() == FluidStack.EMPTY) {
+        else if (get(pStack).fluidType() == FluidStack.EMPTY) {
             pStack.update(Registration.CANISTER_COMPONENT, CanisterComponent.DEFAULT, canister -> canister.set(fluid));
             return true;
         }
@@ -124,7 +128,7 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public int getColor(ItemStack stack) {
-        return get(stack).color();
+        return getBarColor(stack);
     }
 
     public int getCapacity(ItemStack stack) {
@@ -132,6 +136,6 @@ public class Canister extends Item implements EquipmentItem, ItemFluidHandler {
     }
 
     public int getOutlineColor() {
-        return -1;
+        return FastColor.ARGB32.color(117, 116, 116);
     }
 }

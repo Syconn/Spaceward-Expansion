@@ -1,9 +1,10 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.util.BlockInfo;
 import mod.syconn.swe.world.container.CollectorMenu;
-import mod.syconn.swe.world.dimensions.DimSettingsManager;
+import mod.syconn.swe.world.dimensions.PlanetManager;
 import mod.syconn.swe.world.dimensions.OxygenProductionManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -17,12 +18,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements MenuProvider, BlockInfo {
+public class CollectorBlockEntity extends AbstractTankBE implements MenuProvider, BlockInfo {
 
     private int ticks = 0;
     private int rate = 0;
@@ -41,33 +41,27 @@ public class CollectorBlockEntity extends GUIFluidHandlerBlockEntity implements 
                     total += OxygenProductionManager.getValue(level.getBlockState(blockPos));
                 }
             }
-            if (DimSettingsManager.getSettings(level.dimension()).breathable()) {
+            if (PlanetManager.getSettings(level.dimension()).breathable()) {
                 total += 186;
             }
-            e.tank.fill(new FluidStack(Registration.O2_SOURCE.get(), (int) total), IFluidHandler.FluidAction.EXECUTE);
+            e.tank.fill(new FluidStack(Registration.O2.get(), (int) total), IFluidHandler.FluidAction.EXECUTE);
             e.rate = (int) total;
         }
-        e.update();
+        e.markDirty();
     }
 
     public int getRate() {
         return rate;
     }
 
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(tag, pRegistries);
-        tag.putInt("rate", rate);
+    protected void saveClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.saveClientData(pTag, pRegistries);
+        pTag.putInt("rate", rate);
     }
 
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
+    protected void loadClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+        super.loadClientData(pTag, pRegistries);
         rate = pTag.getInt("rate");
-    }
-
-    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-        CompoundTag tag = super.getUpdateTag(pRegistries);
-        tag.putInt("rate", rate);
-        return tag;
     }
 
     public Component getDisplayName() {

@@ -4,10 +4,10 @@ import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -27,7 +26,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import mod.syconn.swe.blockentities.DisperserBlockEntity;
 import mod.syconn.swe.util.FluidHelper;
-import mod.syconn.swe.util.data.AirBubblesSavedData;
+import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
 import java.util.UUID;
@@ -44,16 +43,20 @@ public class OxygenDisperser extends FluidBaseBlock {
         return RenderShape.MODEL;
     }
 
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+        if (!pLevel.isClientSide) {
+            if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection())) return ItemInteractionResult.CONSUME;
+            else if (FluidHelper.interactWithFluidHandler(pPlayer.getItemInHand(pHand), pLevel, pPos, null)) return ItemInteractionResult.CONSUME;
+        }
+        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
+    }
+
+    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
-        else {
-            if(FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, null)) return InteractionResult.SUCCESS;
-            if (FluidHelper.interactWithFluidHandler(pPlayer.getItemInHand(pHand), pLevel, pPos, null)) return InteractionResult.SUCCESS;
-            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof DisperserBlockEntity) {
-                pPlayer.openMenu((MenuProvider) blockentity, pPos);
-                return InteractionResult.SUCCESS;
-            }
+        BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+        if (blockentity instanceof DisperserBlockEntity) {
+            pPlayer.openMenu((MenuProvider) blockentity, pPos);
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
     }
@@ -92,13 +95,14 @@ public class OxygenDisperser extends FluidBaseBlock {
 
     public static void addBlock(Level l, BlockPos target, BlockPos source, int distance){
         if (l.getBlockState(target).isAir() && !(l.getBlockState(target).getBlock() instanceof DispersibleAirBlock) && l.getBlockEntity(source, Registration.DISPERSER.get()).isPresent()) {
-            l.setBlock(target, Registration.OXYGEN.get().defaultBlockState(), 2);
+            l.setBlock(target, Registration.OXYGEN_DISPERSIBLE.get().defaultBlockState(), 2);
             l.getBlockEntity(source, Registration.DISPERSER.get()).get().list.add(target);
             if (l.getBlockEntity(target, Registration.AIR.get()).isPresent()) l.getBlockEntity(target, Registration.AIR.get()).get().setup(distance, source);
         }
     }
 
     public static int maxFill(Level l, BlockPos pos) {
-        return l.getBlockEntity(pos, Registration.DISPERSER.get()).get().maxFill;
+        if (l.getBlockEntity(pos, Registration.DISPERSER.get()).isPresent()) return l.getBlockEntity(pos, Registration.DISPERSER.get()).get().maxFill;
+        else return 20;
     }
 }
