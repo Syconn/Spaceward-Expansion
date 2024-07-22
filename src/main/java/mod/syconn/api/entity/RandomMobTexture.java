@@ -1,4 +1,4 @@
-package mod.syconn.swe.api.entity;
+package mod.syconn.api.entity;
 
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
