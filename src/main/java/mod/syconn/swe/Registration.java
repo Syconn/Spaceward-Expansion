@@ -2,6 +2,8 @@ package mod.syconn.swe;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import mod.syconn.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.api.blocks.BaseFluidPipe;
 import mod.syconn.swe.blockentities.*;
 import mod.syconn.swe.blocks.*;
 import mod.syconn.swe.fluids.BaseFluidType;
@@ -107,6 +109,7 @@ public class Registration {
     public static final DeferredBlock<CanisterFiller> CANISTER_FILLER = registerBlockAndItem("canister_filler", () -> new CanisterFiller(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final DeferredBlock<OxygenDisperser> OXYGEN_DISPERSER = registerBlockAndItem("oxygen_disperser", () -> new OxygenDisperser(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final DeferredBlock<Block> FLUID_TANK = registerBlockAndItem("fluid_tank", () -> new FluidTank(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
+    public static final DeferredBlock<BaseFluidPipe> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new BaseFluidPipe(Blocks.GLASS.properties()));
     public static final DeferredBlock<LiquidBlock> O2_FLUID_BLOCK = BLOCKS.register("oxygen", () -> new LiquidBlock(O2.get(), Blocks.LAVA.properties().lightLevel(blockstate -> 0)));
 
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<CanisterFiller>> CANISTER_FILLER_CODEC = BLOCK_TYPES.register("canister_filler", () -> simpleCodec(CanisterFiller::new));
@@ -114,6 +117,7 @@ public class Registration {
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<OxygenCollector>> OXYGEN_COLLECTOR_CODEC = BLOCK_TYPES.register("oxygen_collector", () -> simpleCodec(OxygenCollector::new));
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<OxygenDisperser>> OXYGEN_DISPERSER_CODEC = BLOCK_TYPES.register("oxygen_disperser", () -> simpleCodec(OxygenDisperser::new));
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<DispersibleAirBlock>> OXYGEN_CODEC = BLOCK_TYPES.register("oxygen_dispersible", () -> simpleCodec(DispersibleAirBlock::new));
+    public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<BaseFluidPipe>> FlUID_PIPE_CODEC = BLOCK_TYPES.register("fluid_pipe", () -> simpleCodec(BaseFluidPipe::new));
 
     public static final Holder<ArmorMaterial> SPACE_SUIT_MATERIAL = ARMOR_MATERIALS.register("space_suit", () -> new ArmorMaterial(SpaceArmor.DEFENSE, 20,
                     SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(Tags.Items.INGOTS_IRON), List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(MODID, "space_suit"))),0,0));
@@ -123,6 +127,7 @@ public class Registration {
     public static final Supplier<BlockEntityType<DisperserBE>> DISPERSER = BLOCK_ENTITIES.register("disperser", () -> BlockEntityType.Builder.of(DisperserBE::new, OXYGEN_DISPERSER.get()).build(null));
     public static final Supplier<BlockEntityType<AirBlockEntity>> AIR = BLOCK_ENTITIES.register("air", () -> BlockEntityType.Builder.of(AirBlockEntity::new, OXYGEN_DISPERSIBLE.get()).build(null));
     public static final Supplier<BlockEntityType<CollectorBE>> COLLECTOR = BLOCK_ENTITIES.register("collector", () -> BlockEntityType.Builder.of(CollectorBE::new, OXYGEN_COLLECTOR.get()).build(null));
+    public static final Supplier<BlockEntityType<BaseFluidPipeBE>> PIPE = BLOCK_ENTITIES.register("pipe", () -> BlockEntityType.Builder.of(BaseFluidPipeBE::new, FLUID_PIPE.get()).build(null));
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEXUS_TAB = TABS.register("nexus", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup." + MODID)).icon(() -> SPACE_HELMET.get().getDefaultInstance()).build());

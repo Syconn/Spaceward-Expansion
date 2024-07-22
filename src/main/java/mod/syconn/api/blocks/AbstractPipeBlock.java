@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -138,10 +139,10 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
 //        if (world.getBlockEntity(pos) instanceof AbstractPipeBE be && be.canConnect((Level) world, pos, facing)) return CABLE; TODO USE THIS TOO
 //        else if (isConnectable(world, connectorPos, facing)) return OUTPUT;
 //        else return PipeConnectionTypes.NONE;
-        return getConnectorType((Level) world, connectorPos, connectorPos.relative(facing), facing);
+        return getConnectorType(world, connectorPos, connectorPos.relative(facing), facing);
     }
 
-    protected abstract PipeConnectionTypes getConnectorType(Level level, BlockPos thisPos, BlockPos connectionPos, Direction facing);
+    protected abstract PipeConnectionTypes getConnectorType(BlockGetter level, BlockPos thisPos, BlockPos connectionPos, Direction facing);
 
 //    public static boolean isConnectable(BlockGetter world, BlockPos connectorPos, Direction facing) { TODO HANDLE INDIVIDUALLY EXAMPLE
 //        BlockPos pos = connectorPos.relative(facing);
@@ -174,6 +175,10 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
 
     public FluidState getFluidState(BlockState state) {
         return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    protected RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.MODEL;
     }
 
 //  TODO IMPLEMENT NETWORK SYSTEM

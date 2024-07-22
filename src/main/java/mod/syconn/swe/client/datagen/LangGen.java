@@ -12,26 +12,27 @@ public class LangGen extends LanguageProvider {
     }
 
     protected void addTranslations() {
-        add(Registration.PARACHUTE.get(), "Parachute");
-        add(Registration.SPACE_HELMET.get(), "Space Helmet");
-        add(Registration.SPACE_BOOTS.get(), "Space Boots");
-        add(Registration.SPACE_CHESTPLATE.get(), "Space Chestplate");
-        add(Registration.SPACE_LEGGINGS.get(), "Space Leggings");
-        add(Registration.CANISTER.get(), "Canister");
-        add(Registration.WRENCH.get(), "Wrench");
-        add(Registration.DIAMOND_UPGRADE.get(), "Diamond Upgrade");
-        add(Registration.GOLD_UPGRADE.get(), "Gold Upgrade");
-        add(Registration.IRON_UPGRADE.get(), "Iron Upgrade");
-        add(Registration.EMERALD_UPGRADE.get(), "Emerald Upgrade");
-        add(Registration.NETHERITE_UPGRADE.get(), "Netherite Upgrade");
-        add(Registration.O2_BUCKET.get(), "Oxygen Bucket");
-        add(Registration.AUTO_REFILL_CANISTER.get(), "Auto Refilling Canister");
+        addItem(Registration.PARACHUTE, "Parachute");
+        addItem(Registration.SPACE_HELMET, "Space Helmet");
+        addItem(Registration.SPACE_BOOTS, "Space Boots");
+        addItem(Registration.SPACE_CHESTPLATE, "Space Chestplate");
+        addItem(Registration.SPACE_LEGGINGS, "Space Leggings");
+        addItem(Registration.CANISTER, "Canister");
+        addItem(Registration.WRENCH, "Wrench");
+        addItem(Registration.DIAMOND_UPGRADE, "Diamond Upgrade");
+        addItem(Registration.GOLD_UPGRADE, "Gold Upgrade");
+        addItem(Registration.IRON_UPGRADE, "Iron Upgrade");
+        addItem(Registration.EMERALD_UPGRADE, "Emerald Upgrade");
+        addItem(Registration.NETHERITE_UPGRADE, "Netherite Upgrade");
+        addItem(Registration.O2_BUCKET, "Oxygen Bucket");
+        addItem(Registration.AUTO_REFILL_CANISTER, "Auto Refilling Canister");
 
-        add(Registration.FLUID_TANK.get(), "Fluid Tank");
-        add(Registration.OXYGEN_DISPERSER.get(), "Oxygen Disperser");
-        add(Registration.CANISTER_FILLER.get(), "Canister Filler");
-        add(Registration.OXYGEN_COLLECTOR.get(), "Oxygen Collector");
-      
+        addBlock(Registration.FLUID_TANK, "Fluid Tank");
+        addBlock(Registration.OXYGEN_DISPERSER, "Oxygen Disperser");
+        addBlock(Registration.CANISTER_FILLER, "Canister Filler");
+        addBlock(Registration.OXYGEN_COLLECTOR, "Oxygen Collector");
+        addBlock(Registration.FLUID_PIPE, "Fluid Pipe");
+
         add("itemGroup.swe", "Spaceward Expansion");
         add("swe.fluid.o2", "Oxygen");
 

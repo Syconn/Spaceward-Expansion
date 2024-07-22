@@ -1,5 +1,6 @@
 package mod.syconn.swe.client.datagen;
 
+import mod.syconn.api.util.DataGenHelper;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.blocks.CanisterFiller;
@@ -33,6 +34,7 @@ public class BlockModelGen extends BlockStateProvider {
         itemModels().withExistingParent(BuiltInRegistries.BLOCK.getKey(Registration.CANISTER_FILLER.get()).getPath(), modLoc("block/canister_filler"));
         itemModels().withExistingParent(BuiltInRegistries.BLOCK.getKey(Registration.OXYGEN_DISPERSER.get()).getPath(), modLoc("block/oxygen_disperser"));
         itemModels().withExistingParent(BuiltInRegistries.BLOCK.getKey(Registration.OXYGEN_DISPERSIBLE.get()).getPath(), modLoc("block/oxygen_dispersible"));
+        DataGenHelper.registerItemCables(this, Registration.FLUID_PIPE.get());
     }
 
     private ModelFile generated(String loc) {

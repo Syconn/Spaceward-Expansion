@@ -1,5 +1,6 @@
 package mod.syconn.swe.client;
 
+import mod.syconn.api.client.loader.PipeModelLoader;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.client.model.*;
@@ -34,6 +35,11 @@ public class ClientHandler {
         ItemProperties.register(Registration.AUTO_REFILL_CANISTER.get(), Main.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
         ItemBlockRenderTypes.setRenderLayer(Registration.O2.get(), RenderType.translucent()); // TODO REPLACE IN JSON
         ItemBlockRenderTypes.setRenderLayer(Registration.O2_FLOWING.get(), RenderType.translucent()); // TODO REPLACE IN JSON
+    }
+
+    @SubscribeEvent
+    public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
+        PipeModelLoader.register(event);
     }
 
     @SubscribeEvent
