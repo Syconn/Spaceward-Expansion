@@ -1,7 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.api.blockEntity.AbstractTankBE;
+import mod.syconn.api.blockEntity.AbstractTankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -29,7 +29,7 @@ import java.util.UUID;
 
 import static mod.syconn.swe.blocks.OxygenDisperser.addBlock;
 
-public class DisperserBlockEntity extends AbstractTankBE implements MenuProvider, BlockInfo {
+public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockInfo {
 
     //TODO change to blocks and look for blockUpdates
     //  - Pipe dont show fluid
@@ -44,7 +44,7 @@ public class DisperserBlockEntity extends AbstractTankBE implements MenuProvider
     private boolean active = false;
     private boolean enabled = true;
 
-    public DisperserBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
+    public DisperserBE(BlockPos p_155229_, BlockState p_155230_) {
         super(Registration.DISPERSER.get(), p_155229_, p_155230_, 1000);
         this.tank = new FluidTank(1000){
             public void onContentsChanged() { markDirty(); }
@@ -52,7 +52,7 @@ public class DisperserBlockEntity extends AbstractTankBE implements MenuProvider
         };
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, DisperserBlockEntity e) {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, DisperserBE e) {
         if (e.enabled) {
             if (e.tank.getFluidInTank(0).getAmount() > 0) {
                 e.testRate--;

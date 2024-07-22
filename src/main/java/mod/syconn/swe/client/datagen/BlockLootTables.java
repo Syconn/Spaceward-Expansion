@@ -24,7 +24,6 @@ public class BlockLootTables extends BlockLootSubProvider {
 
     protected void generate() {
         dropSelf(Registration.FLUID_TANK.get());
-        dropSelf(Registration.FLUID_PIPE.get());
         dropSelf(Registration.OXYGEN_DISPERSER.get());
         dropSelf(Registration.CANISTER_FILLER.get());
         dropSelf(Registration.OXYGEN_COLLECTOR.get());

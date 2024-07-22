@@ -4,11 +4,9 @@ import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.client.model.*;
 import mod.syconn.swe.client.renders.ber.CanisterBER;
-import mod.syconn.swe.client.renders.ber.PipeBER;
 import mod.syconn.swe.client.renders.ber.TankBER;
 import mod.syconn.swe.client.screen.CollectorScreen;
 import mod.syconn.swe.client.screen.DisperserScreen;
-import mod.syconn.swe.client.screen.PipeScreen;
 import mod.syconn.swe.client.screen.TankScreen;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.items.Canister;
@@ -41,7 +39,6 @@ public class ClientHandler {
     @SubscribeEvent
     public static void registerMenuScreens(RegisterMenuScreensEvent event) {
         event.register(Registration.TANK_MENU.get(), TankScreen::new);
-        event.register(Registration.PIPE_MENU.get(), PipeScreen::new);
         event.register(Registration.DISPERSER_MENU.get(), DisperserScreen::new);
         event.register(Registration.COLLECTOR_MENU.get(), CollectorScreen::new);
     }
@@ -63,8 +60,6 @@ public class ClientHandler {
         event.registerLayerDefinition(ParachuteModel.LAYER_LOCATION, ParachuteModel::createBodyLayer);
         event.registerLayerDefinition(ChuteModel.LAYER_LOCATION, ChuteModel::createBodyLayer);
         event.registerLayerDefinition(TankModel.LAYER_LOCATION, TankModel::createBodyLayer);
-        event.registerLayerDefinition(FluidPipeModel.LAYER_LOCATION, FluidPipeModel::createBodyLayer);
-        event.registerLayerDefinition(FluidInPipeModel.LAYER_LOCATION, FluidInPipeModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -78,7 +73,6 @@ public class ClientHandler {
 
     @SubscribeEvent
     public static void entityRender(EntityRenderersEvent.RegisterRenderers event){
-        event.registerBlockEntityRenderer(Registration.PIPE.get(), PipeBER::new);
         event.registerBlockEntityRenderer(Registration.TANK.get(), TankBER::new);
         event.registerBlockEntityRenderer(Registration.FILLER.get(), CanisterBER::new);
     }

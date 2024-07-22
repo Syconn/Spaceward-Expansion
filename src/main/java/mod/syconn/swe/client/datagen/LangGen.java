@@ -27,7 +27,6 @@ public class LangGen extends LanguageProvider {
         add(Registration.O2_BUCKET.get(), "Oxygen Bucket");
         add(Registration.AUTO_REFILL_CANISTER.get(), "Auto Refilling Canister");
 
-        add(Registration.FLUID_PIPE.get(), "Fluid Pipe");
         add(Registration.FLUID_TANK.get(), "Fluid Tank");
         add(Registration.OXYGEN_DISPERSER.get(), "Oxygen Disperser");
         add(Registration.CANISTER_FILLER.get(), "Canister Filler");

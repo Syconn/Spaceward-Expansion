@@ -36,7 +36,7 @@ public class AirBlockEntity extends BlockEntity {
     }
 
     public void blockUpdate() {
-        DisperserBlockEntity.remove(level, pos);
+        DisperserBE.remove(level, pos);
     }
 
     public void setup(int dis, BlockPos s) {

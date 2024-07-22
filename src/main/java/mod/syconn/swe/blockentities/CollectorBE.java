@@ -1,7 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.api.blockEntity.AbstractTankBE;
+import mod.syconn.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.util.BlockInfo;
 import mod.syconn.swe.world.container.CollectorMenu;
 import mod.syconn.swe.world.dimensions.PlanetManager;
@@ -22,16 +22,16 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectorBlockEntity extends AbstractTankBE implements MenuProvider, BlockInfo {
+public class CollectorBE extends AbstractTankBE implements MenuProvider, BlockInfo {
 
     private int ticks = 0;
     private int rate = 0;
 
-    public CollectorBlockEntity(BlockPos pos, BlockState state) {
+    public CollectorBE(BlockPos pos, BlockState state) {
         super(Registration.COLLECTOR.get(), pos, state, 8000);
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, CollectorBlockEntity e) {
+    public static void tick(Level level, BlockPos pos, BlockState state, CollectorBE e) {
         e.ticks++;
         if (e.ticks >= 20) {
             e.ticks = 0;

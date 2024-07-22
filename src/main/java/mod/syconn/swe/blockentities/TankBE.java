@@ -1,7 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.api.blockEntity.AbstractTankBE;
+import mod.syconn.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.items.extras.ItemFluidHandler;
 import mod.syconn.swe.util.FluidHelper;
 import mod.syconn.swe.world.container.TankMenu;
@@ -26,7 +26,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
-public class TankBlockEntity extends AbstractTankBE implements MenuProvider {
+public class TankBE extends AbstractTankBE implements MenuProvider {
 
     private final int fillSpeed = 500;
     private final ItemStackHandler items = new ItemStackHandler(getContainerSize()) {
@@ -34,7 +34,7 @@ public class TankBlockEntity extends AbstractTankBE implements MenuProvider {
     };
     private final Lazy<IItemHandler> holder = Lazy.of(() -> items);
 
-    public TankBlockEntity(BlockPos pos, BlockState state) {
+    public TankBE(BlockPos pos, BlockState state) {
         super(Registration.TANK.get(), pos, state, 16000);
     }
 
@@ -65,7 +65,7 @@ public class TankBlockEntity extends AbstractTankBE implements MenuProvider {
         return new TankMenu(id, p_39955_, worldPosition);
     }
 
-    public static void serverTick(Level level, BlockPos pos, BlockState state, TankBlockEntity e) {
+    public static void serverTick(Level level, BlockPos pos, BlockState state, TankBE e) {
         if (!level.isClientSide) {
             ItemStack heldItem = e.getItems().getStackInSlot(0);
             if (heldItem.getItem() instanceof BucketItem b) {

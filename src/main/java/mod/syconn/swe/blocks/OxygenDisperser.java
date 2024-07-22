@@ -2,6 +2,7 @@ package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.blockentities.DisperserBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import mod.syconn.swe.blockentities.DisperserBlockEntity;
 import mod.syconn.swe.util.FluidHelper;
 import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
 import net.neoforged.neoforge.fluids.FluidUtil;
@@ -54,7 +54,7 @@ public class OxygenDisperser extends FluidBaseBlock {
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-        if (blockentity instanceof DisperserBlockEntity) {
+        if (blockentity instanceof DisperserBE) {
             pPlayer.openMenu((MenuProvider) blockentity, pPos);
             return InteractionResult.SUCCESS;
         }
@@ -66,7 +66,7 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     public void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
-        if (p_60515_.hasBlockEntity() && (!p_60515_.is(p_60518_.getBlock()) || !p_60518_.hasBlockEntity()) && p_60516_.getBlockEntity(p_60517_) instanceof DisperserBlockEntity de) {
+        if (p_60515_.hasBlockEntity() && (!p_60515_.is(p_60518_.getBlock()) || !p_60518_.hasBlockEntity()) && p_60516_.getBlockEntity(p_60517_) instanceof DisperserBE de) {
             AirBubblesSavedData.get().remove(p_60516_.dimension(), de.getUUID());
             for (BlockPos pos : de.list) p_60516_.removeBlock(pos, false);
         }
@@ -74,19 +74,19 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity entity, ItemStack stack) {
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof DisperserBlockEntity be) be.setUUID(UUID.randomUUID());
+        if (!level.isClientSide && level.getBlockEntity(pos) instanceof DisperserBE be) be.setUUID(UUID.randomUUID());
     }
 
     public void tick(BlockState p_222945_, ServerLevel p_222946_, BlockPos p_222947_, RandomSource p_222948_) {
-        if (p_222946_.getBlockEntity(p_222947_) instanceof DisperserBlockEntity de) de.failed(false);
+        if (p_222946_.getBlockEntity(p_222947_) instanceof DisperserBE de) de.failed(false);
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.DISPERSER.get(), DisperserBlockEntity::serverTick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.DISPERSER.get(), DisperserBE::serverTick) : null;
     }
 
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new DisperserBlockEntity(p_153215_, p_153216_);
+        return new DisperserBE(p_153215_, p_153216_);
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {

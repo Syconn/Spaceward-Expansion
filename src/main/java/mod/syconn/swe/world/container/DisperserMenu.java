@@ -1,7 +1,7 @@
 package mod.syconn.swe.world.container;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.DisperserBlockEntity;
+import mod.syconn.swe.blockentities.DisperserBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class DisperserMenu extends AbstractContainerMenu {
 
-    private final DisperserBlockEntity be;
+    private final DisperserBE be;
 
     public DisperserMenu(int id, Inventory inventory, BlockPos pos) {
         super(Registration.DISPERSER_MENU.get(), id);
@@ -28,7 +28,7 @@ public class DisperserMenu extends AbstractContainerMenu {
         }
     }
 
-    public DisperserBlockEntity getBE() {
+    public DisperserBE getBE() {
         return be;
     }
 

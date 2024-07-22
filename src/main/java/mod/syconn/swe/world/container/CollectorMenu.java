@@ -1,7 +1,7 @@
 package mod.syconn.swe.world.container;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.CollectorBlockEntity;
+import mod.syconn.swe.blockentities.CollectorBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class CollectorMenu extends AbstractContainerMenu {
 
-    private final CollectorBlockEntity be;
+    private final CollectorBE be;
 
     public CollectorMenu(int id, Inventory inventory, BlockPos pos) {
         super(Registration.COLLECTOR_MENU.get(), id);
@@ -28,7 +28,7 @@ public class CollectorMenu extends AbstractContainerMenu {
         }
     }
 
-    public CollectorBlockEntity getBE() {
+    public CollectorBE getBE() {
         return be;
     }
 

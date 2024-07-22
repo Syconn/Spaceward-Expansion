@@ -8,14 +8,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import mod.syconn.swe.blockentities.TankBlockEntity;
+import mod.syconn.swe.blockentities.TankBE;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class TankMenu extends AbstractContainerMenu {
 
-    private final TankBlockEntity be;
+    private final TankBE be;
 
     public TankMenu(int id, Inventory inventory, BlockPos pos) {
         super(Registration.TANK_MENU.get(), id);
@@ -38,7 +38,7 @@ public class TankMenu extends AbstractContainerMenu {
         }
     }
 
-    public TankBlockEntity getBE() {
+    public TankBE getBE() {
         return be;
     }
 
