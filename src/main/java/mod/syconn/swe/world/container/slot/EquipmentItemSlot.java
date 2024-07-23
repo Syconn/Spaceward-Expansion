@@ -22,8 +22,7 @@ public class EquipmentItemSlot extends SlotItemHandler { // TODO SWAP OVER TO AP
         slot = s;
     }
 
-    public void setChanged() { // TODO HACK FIX HERE
-        System.out.println("SLOT CHANGE");
+    public void setChanged() {
         player.getInventory().setChanged();
         super.setChanged();
     }

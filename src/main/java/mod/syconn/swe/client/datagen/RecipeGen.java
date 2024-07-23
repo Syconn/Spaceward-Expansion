@@ -70,14 +70,14 @@ public class RecipeGen extends RecipeProvider {
                 .define('r', Items.REDSTONE)
                 .unlockedBy("has_ingot", inventoryTrigger(ItemPredicate.Builder.item().of(Items.IRON_INGOT).build()))
                 .save(pRecipeOutput);
-        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Registration.FLUID_PIPE.get(), 16)
-                .pattern("nnn")
-                .pattern("nrn")
-                .pattern("nnn")
-                .define('n', Tags.Items.GLASS_PANES)
-                .define('r', Items.BUCKET)
-                .unlockedBy("has_bucket", inventoryTrigger(ItemPredicate.Builder.item().of(Items.BUCKET).build()))
-                .save(pRecipeOutput);
+//        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Registration.FLUID_PIPE.get(), 16)
+//                .pattern("nnn")
+//                .pattern("nrn")
+//                .pattern("nnn")
+//                .define('n', Tags.Items.GLASS_PANES)
+//                .define('r', Items.BUCKET)
+//                .unlockedBy("has_bucket", inventoryTrigger(ItemPredicate.Builder.item().of(Items.BUCKET).build()))
+//                .save(pRecipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Registration.FLUID_TANK.get())
                 .pattern("bbb")
                 .pattern("nrn")

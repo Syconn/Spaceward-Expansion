@@ -2,6 +2,8 @@ package mod.syconn.swe;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import mod.syconn.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.api.blocks.BaseFluidPipe;
 import mod.syconn.swe.blockentities.*;
 import mod.syconn.swe.blocks.*;
 import mod.syconn.swe.fluids.BaseFluidType;
@@ -9,7 +11,6 @@ import mod.syconn.swe.fluids.O2Fluid;
 import mod.syconn.swe.items.*;
 import mod.syconn.swe.world.container.CollectorMenu;
 import mod.syconn.swe.world.container.DisperserMenu;
-import mod.syconn.swe.world.container.PipeMenu;
 import mod.syconn.swe.world.container.TankMenu;
 import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
 import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
@@ -109,8 +110,8 @@ public class Registration {
     public static final DeferredBlock<DispersibleAirBlock> OXYGEN_DISPERSIBLE = registerBlockAndItem("oxygen_dispersible", () -> new DispersibleAirBlock(Blocks.AIR.properties().noCollission().noLootTable().air().isViewBlocking((state, level, pos) -> false)));
     public static final DeferredBlock<CanisterFiller> CANISTER_FILLER = registerBlockAndItem("canister_filler", () -> new CanisterFiller(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final DeferredBlock<OxygenDisperser> OXYGEN_DISPERSER = registerBlockAndItem("oxygen_disperser", () -> new OxygenDisperser(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final DeferredBlock<FluidPipe> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new FluidPipe(Blocks.IRON_BLOCK.properties().noOcclusion().dynamicShape()));
     public static final DeferredBlock<Block> FLUID_TANK = registerBlockAndItem("fluid_tank", () -> new FluidTank(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
+    public static final DeferredBlock<BaseFluidPipe> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new BaseFluidPipe(Blocks.GLASS.properties()));
     public static final DeferredBlock<LiquidBlock> O2_FLUID_BLOCK = BLOCKS.register("oxygen", () -> new LiquidBlock(O2.get(), Blocks.LAVA.properties().lightLevel(blockstate -> 0)));
 
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<CanisterFiller>> CANISTER_FILLER_CODEC = BLOCK_TYPES.register("canister_filler", () -> simpleCodec(CanisterFiller::new));
@@ -118,23 +119,22 @@ public class Registration {
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<OxygenCollector>> OXYGEN_COLLECTOR_CODEC = BLOCK_TYPES.register("oxygen_collector", () -> simpleCodec(OxygenCollector::new));
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<OxygenDisperser>> OXYGEN_DISPERSER_CODEC = BLOCK_TYPES.register("oxygen_disperser", () -> simpleCodec(OxygenDisperser::new));
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<DispersibleAirBlock>> OXYGEN_CODEC = BLOCK_TYPES.register("oxygen_dispersible", () -> simpleCodec(DispersibleAirBlock::new));
-    public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<FluidPipe>> FLUID_PIPE_CODEC = BLOCK_TYPES.register("fluid_pipe", () -> simpleCodec(FluidPipe::new));
+    public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<BaseFluidPipe>> FlUID_PIPE_CODEC = BLOCK_TYPES.register("fluid_pipe", () -> simpleCodec(BaseFluidPipe::new));
 
     public static final Holder<ArmorMaterial> SPACE_SUIT_MATERIAL = ARMOR_MATERIALS.register("space_suit", () -> new ArmorMaterial(SpaceArmor.DEFENSE, 20,
                     SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(Tags.Items.INGOTS_IRON), List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(MODID, "space_suit"))),0,0));
 
-    public static final Supplier<BlockEntityType<PipeBlockEntity>> PIPE = BLOCK_ENTITIES.register("pipe", () -> BlockEntityType.Builder.of(PipeBlockEntity::new, FLUID_PIPE.get()).build(null));
-    public static final Supplier<BlockEntityType<TankBlockEntity>> TANK = BLOCK_ENTITIES.register("tank", () -> BlockEntityType.Builder.of(TankBlockEntity::new, FLUID_TANK.get()).build(null));
+    public static final Supplier<BlockEntityType<TankBE>> TANK = BLOCK_ENTITIES.register("tank", () -> BlockEntityType.Builder.of(TankBE::new, FLUID_TANK.get()).build(null));
     public static final Supplier<BlockEntityType<CanisterFillerBlockEntity>> FILLER = BLOCK_ENTITIES.register("filler", () -> BlockEntityType.Builder.of(CanisterFillerBlockEntity::new, CANISTER_FILLER.get()).build(null));
-    public static final Supplier<BlockEntityType<DisperserBlockEntity>> DISPERSER = BLOCK_ENTITIES.register("disperser", () -> BlockEntityType.Builder.of(DisperserBlockEntity::new, OXYGEN_DISPERSER.get()).build(null));
+    public static final Supplier<BlockEntityType<DisperserBE>> DISPERSER = BLOCK_ENTITIES.register("disperser", () -> BlockEntityType.Builder.of(DisperserBE::new, OXYGEN_DISPERSER.get()).build(null));
     public static final Supplier<BlockEntityType<AirBlockEntity>> AIR = BLOCK_ENTITIES.register("air", () -> BlockEntityType.Builder.of(AirBlockEntity::new, OXYGEN_DISPERSIBLE.get()).build(null));
-    public static final Supplier<BlockEntityType<CollectorBlockEntity>> COLLECTOR = BLOCK_ENTITIES.register("collector", () -> BlockEntityType.Builder.of(CollectorBlockEntity::new, OXYGEN_COLLECTOR.get()).build(null));
+    public static final Supplier<BlockEntityType<CollectorBE>> COLLECTOR = BLOCK_ENTITIES.register("collector", () -> BlockEntityType.Builder.of(CollectorBE::new, OXYGEN_COLLECTOR.get()).build(null));
+    public static final Supplier<BlockEntityType<BaseFluidPipeBE>> PIPE = BLOCK_ENTITIES.register("pipe", () -> BlockEntityType.Builder.of(BaseFluidPipeBE::new, FLUID_PIPE.get()).build(null));
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> NEXUS_TAB = TABS.register("nexus", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup." + MODID)).icon(() -> SPACE_HELMET.get().getDefaultInstance()).build());
 
     public static final Supplier<MenuType<TankMenu>> TANK_MENU = MENUS.register("tank", () -> IMenuTypeExtension.create((windowId, inv, data) -> new TankMenu(windowId, inv, data.readBlockPos())));
-    public static final Supplier<MenuType<PipeMenu>> PIPE_MENU = MENUS.register("pipe_menu", () -> IMenuTypeExtension.create((windowId, inv, data) -> new PipeMenu(windowId, inv, data.readBlockPos())));
     public static final Supplier<MenuType<DisperserMenu>> DISPERSER_MENU = MENUS.register("disperser_menu", () -> IMenuTypeExtension.create((windowId, inv, data) -> new DisperserMenu(windowId, inv, data.readBlockPos())));
     public static final Supplier<MenuType<CollectorMenu>> COLLECTOR_MENU = MENUS.register("collector_menu", () -> IMenuTypeExtension.create((windowId, inv, data) -> new CollectorMenu(windowId, inv, data.readBlockPos())));
 
@@ -159,12 +159,10 @@ public class Registration {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new ItemFluidWrapper(FLUID_COMPONENT, stack, 8000), CANISTER, AUTO_REFILL_CANISTER);
 
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, DISPERSER.get(), (o, ctx) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COLLECTOR.get(), (o, ctx) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TANK.get(), (o, ctx) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TANK.get(), (o, ctx) -> o.getItemHandler());
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, PIPE.get(), (o, ctx) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, PIPE.get(), (o, ctx) -> o.getItemHandler());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, DISPERSER.get(), (o, v) -> o.getFluidHandler());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COLLECTOR.get(), (o, v) -> o.getFluidHandler());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TANK.get(), (o, v) -> o.getFluidHandler());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TANK.get(), (o, v) -> o.getItemHandler());
     }
 
     private static <BLOCK extends Block> DeferredBlock<BLOCK> registerBlockAndItem(String id, Supplier<BLOCK> blockSupplier) {
@@ -186,7 +184,6 @@ public class Registration {
             delayed.add(Canister.create(8000, 8000, Fluids.WATER, CANISTER.get()));
             delayed.add(Canister.create(8000, 8000, Fluids.WATER, AUTO_REFILL_CANISTER.get()));
             for (DeferredHolder<Item, ? extends Item> i : ITEMS.getEntries()){
-                if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof FluidPipe) continue;
                 if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof OxygenDisperser) continue;
                 if (i.get() instanceof Parachute || i.get() instanceof Canister) continue;
                 if (i.get() instanceof BlockItem bi && bi.getBlock() instanceof DispersibleAirBlock) continue;

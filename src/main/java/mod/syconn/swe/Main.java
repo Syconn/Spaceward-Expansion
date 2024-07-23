@@ -71,6 +71,7 @@ public class Main {
         pack.addProvider(pOutput -> new BlockModelGen(pOutput, fileHelper));
         pack.addProvider(pOutput -> blockTags);
         pack.addProvider(pOutput -> new ItemTagsGen(pOutput, event.getLookupProvider(), blockTags.contentsGetter(), fileHelper));
+        pack.addProvider(pOutput -> new FluidTagsGen(pOutput, event.getLookupProvider(), fileHelper));
         pack.addProvider(pOutput -> new LootTableProvider(pOutput, Collections.emptySet(), List.of(new LootTableProvider.SubProviderEntry(BlockLootTables::new, LootContextParamSets.BLOCK)), event.getLookupProvider()));
     }
 

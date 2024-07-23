@@ -2,7 +2,7 @@ package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.TankBlockEntity;
+import mod.syconn.swe.blockentities.TankBE;
 import mod.syconn.swe.fluids.FluidStorageBlock;
 import mod.syconn.swe.util.FluidHelper;
 import net.minecraft.core.BlockPos;
@@ -33,7 +33,7 @@ public class FluidTank extends FluidBaseBlock implements FluidStorageBlock {
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
         if (pLevel.isClientSide) {
             return InteractionResult.SUCCESS;
-        } else if (blockentity instanceof TankBlockEntity) {
+        } else if (blockentity instanceof TankBE) {
             pPlayer.openMenu((MenuProvider) blockentity, pPos);
             return InteractionResult.CONSUME;
         }
@@ -46,11 +46,11 @@ public class FluidTank extends FluidBaseBlock implements FluidStorageBlock {
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return createTickerHelper(p_153214_, Registration.TANK.get(), TankBlockEntity::serverTick);
+        return createTickerHelper(p_153214_, Registration.TANK.get(), TankBE::serverTick);
     }
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new TankBlockEntity(pos, state);
+        return new TankBE(pos, state);
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {
@@ -62,7 +62,7 @@ public class FluidTank extends FluidBaseBlock implements FluidStorageBlock {
     }
 
     public int getAnalogOutputSignal(BlockState state, Level l, BlockPos pos) {
-        if (l.getBlockEntity(pos) instanceof TankBlockEntity te) {
+        if (l.getBlockEntity(pos) instanceof TankBE te) {
             double o = (double) (te.getFluidTank().getFluidAmount()) / te.getFluidTank().getCapacity();
             return (int) (o * 15);
         }
