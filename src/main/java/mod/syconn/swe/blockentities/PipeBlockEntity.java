@@ -1,7 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.api.blockEntity.AbstractTankBE;
+import mod.syconn.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.blocks.FluidBaseBlock;
 import mod.syconn.swe.items.UpgradeItem;
 import mod.syconn.swe.util.Helper;
@@ -12,9 +12,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

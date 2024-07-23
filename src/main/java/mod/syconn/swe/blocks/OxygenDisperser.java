@@ -2,6 +2,8 @@ package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Registration;
+import mod.syconn.swe.blockentities.DisperserBlockEntity;
+import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -24,16 +26,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import mod.syconn.swe.blockentities.DisperserBlockEntity;
-import mod.syconn.swe.util.FluidHelper;
-import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
 import java.util.UUID;
 
 public class OxygenDisperser extends FluidBaseBlock {
-
-    // TODO BUG CAN SEE OUT OF FLUID TANK
     
     public OxygenDisperser(Properties properties) {
         super(properties);
@@ -44,10 +41,7 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide) {
-            if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection())) return ItemInteractionResult.CONSUME;
-            else if (FluidHelper.interactWithFluidHandler(pPlayer.getItemInHand(pHand), pLevel, pPos, null)) return ItemInteractionResult.CONSUME;
-        }
+        if (!pLevel.isClientSide && FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection())) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 
