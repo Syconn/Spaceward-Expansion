@@ -14,7 +14,7 @@ import mod.syconn.swe.world.container.TankMenu;
 import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
 import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
-import mod.syconn.swe.world.data.components.CanisterComponent;
+import mod.syconn.swe.world.data.capabilities.ItemFluidWrapper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -54,6 +54,8 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.neoforged.neoforge.registries.*;
 import org.joml.Vector3f;
 
@@ -141,7 +143,7 @@ public class Registration {
     public static final Supplier<SimpleCraftingRecipeSerializer<DyedParachuteRecipe>> PARACHUTE_RECIPE = RECIPE_SERIALIZERS.register("parachute_recipe", () -> new SimpleCraftingRecipeSerializer<>(DyedParachuteRecipe::new));
     public static final Supplier<SimpleCraftingRecipeSerializer<RefillingCanisterRecipe>> REFILLING_CANISTER = RECIPE_SERIALIZERS.register("refilling_canister_recipe", () -> new SimpleCraftingRecipeSerializer<>(RefillingCanisterRecipe::new));
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CanisterComponent>> CANISTER_COMPONENT = COMPONENTS.registerComponentType("canister", builder -> builder.persistent(CanisterComponent.BASIC_CODEC).networkSynchronized(CanisterComponent.BASIC_STREAM_CODEC));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> FLUID_COMPONENT = COMPONENTS.registerComponentType("fluid", builder -> builder.persistent(SimpleFluidContent.CODEC).networkSynchronized(SimpleFluidContent.STREAM_CODEC).cacheEncoding());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> MODE_COMPONENT = COMPONENTS.registerComponentType("exporter", builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
     public static final ResourceLocation MOON = ResourceLocation.fromNamespaceAndPath(Main.MODID, "moon");
@@ -155,12 +157,14 @@ public class Registration {
     public static final TagKey<Fluid> OXYGEN = FluidTags.create(Main.loc("oxygen"));
 
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, DISPERSER.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COLLECTOR.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TANK.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TANK.get(), (o, v) -> o.getItemHandler());
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, PIPE.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, PIPE.get(), (o, v) -> o.getItemHandler());
+        event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new ItemFluidWrapper(FLUID_COMPONENT, stack, 8000), CANISTER, AUTO_REFILL_CANISTER);
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, DISPERSER.get(), (o, ctx) -> o.getFluidHandler());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COLLECTOR.get(), (o, ctx) -> o.getFluidHandler());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TANK.get(), (o, ctx) -> o.getFluidHandler());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TANK.get(), (o, ctx) -> o.getItemHandler());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, PIPE.get(), (o, ctx) -> o.getFluidHandler());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, PIPE.get(), (o, ctx) -> o.getItemHandler());
     }
 
     private static <BLOCK extends Block> DeferredBlock<BLOCK> registerBlockAndItem(String id, Supplier<BLOCK> blockSupplier) {
@@ -169,7 +173,7 @@ public class Registration {
 
     private static <BLOCK extends Block, ITEM extends BlockItem> DeferredBlock<BLOCK> registerBlockAndItem(String name, Supplier<BLOCK> blockFactory, Function<? super BLOCK,ITEM> itemFactory) {
         DeferredBlock<BLOCK> block = BLOCKS.register(name, blockFactory);
-        DeferredHolder<Item, ITEM> item = ITEMS.register(name, () -> itemFactory.apply(block.get()));
+        ITEMS.register(name, () -> itemFactory.apply(block.get()));
         return block;
     }
 

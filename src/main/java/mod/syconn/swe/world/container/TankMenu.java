@@ -24,7 +24,7 @@ public class TankMenu extends AbstractContainerMenu {
         if (handler != null) {
             this.addSlot(new SlotItemHandler(handler, 0, 14, 9));
             this.addSlot(new SlotItemHandler(handler, 1, 14, 61));
-//            this.addSlot(new ItemFluidHandlerSlot(handler, 2, 72, 9)); TODO COME BACK AND FIX
+//            this.addSlot(new (handler, 2, 72, 9)); TODO FIX ON MERGE
         }
 
         for(int l = 0; l < 3; ++l) {
