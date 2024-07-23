@@ -17,7 +17,6 @@ public class SpecifiedSlotHandler extends SlotItemHandler {
     }
 
     public boolean mayPlace(@NotNull ItemStack stack) {
-        if (stack.is(onlyType)) return false;
-        return super.mayPlace(stack);
+        return stack.is(onlyType);
     }
 }
