@@ -11,10 +11,7 @@ public class Channel {
 
     public static void onRegisterPayloadHandler(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar("1");
-        registrar.playToServer(MessageChange.TYPE, MessageChange.STREAM_CODEC, MessageChange::handle);
-        registrar.playToServer(MessageClickTab.TYPE, MessageClickTab.STREAM_CODEC, MessageClickTab::handle);
-        registrar.playToServer(MessageClickArrow.TYPE, MessageClickArrow.STREAM_CODEC, MessageClickArrow::handle);
-        registrar.playToServer(MessageToggleDisperser.TYPE, MessageToggleDisperser.STREAM_CODEC, MessageToggleDisperser::handle);
+        registrar.playToServer(ServerBoundToggleDisperser.TYPE, ServerBoundToggleDisperser.STREAM_CODEC, ServerBoundToggleDisperser::handle);
         registrar.playToClient(ClientBoundUpdatePlanetSettings.TYPE, ClientBoundUpdatePlanetSettings.STREAM_CODEC, ClientBoundUpdatePlanetSettings::handle);
         registrar.playBidirectional(BiBoundUpdateSpaceSuit.TYPE, BiBoundUpdateSpaceSuit.STREAM_CODEC, BiBoundUpdateSpaceSuit::handle);
     }

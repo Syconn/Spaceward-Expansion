@@ -2,7 +2,7 @@ package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.CollectorBlockEntity;
+import mod.syconn.swe.blockentities.CollectorBE;
 import mod.syconn.swe.util.FluidHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -27,17 +27,14 @@ public class OxygenCollector extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide) {
-            if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection())) return ItemInteractionResult.CONSUME;
-            else if (FluidHelper.interactWithFluidHandler(pPlayer.getItemInHand(pHand), pLevel, pPos, null)) return ItemInteractionResult.CONSUME;
-        }
+        if (!pLevel.isClientSide && FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection())) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-        if (blockentity instanceof CollectorBlockEntity) {
+        if (blockentity instanceof CollectorBE) {
             pPlayer.openMenu((MenuProvider) blockentity, pPos);
             return InteractionResult.SUCCESS;
         }
@@ -45,11 +42,11 @@ public class OxygenCollector extends FluidBaseBlock {
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.COLLECTOR.get(), CollectorBlockEntity::tick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.COLLECTOR.get(), CollectorBE::tick) : null;
     }
 
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new CollectorBlockEntity(p_153215_, p_153216_);
+        return new CollectorBE(p_153215_, p_153216_);
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {

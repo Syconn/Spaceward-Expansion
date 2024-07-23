@@ -10,6 +10,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import static net.minecraft.world.level.material.Fluids.EMPTY;
 
@@ -22,8 +23,7 @@ public class AutoRefillCanister extends Canister {
     public void inventoryTick(ItemStack stack, Level level, Entity e, int p_41407_, boolean p_41408_) {
         if (e instanceof Player player) {
             if (!level.isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.hasFullKit(player)) {
-                if (get(stack).fluidType().is(Fluids.EMPTY) || get(stack).fluidType().is(Registration.O2.get()) && get(stack).volume() < get(stack).max())
-                    increaseFluid(stack, new FluidStack(Registration.O2.get(), 1));
+                if (getHandler(stack).getFluidInTank(0).is(Fluids.EMPTY) || getHandler(stack).getFluidInTank(0).is(Registration.O2.get())) getHandler(stack).fill(new FluidStack(Registration.O2.get(), 1), IFluidHandler.FluidAction.EXECUTE);
             }
         }
     }
@@ -31,8 +31,7 @@ public class AutoRefillCanister extends Canister {
     public void onEquipmentTick(ItemStack stack, Level level, Player player) {
         super.onEquipmentTick(stack, level, player);
         if (!level.isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.hasFullKit(player)) {
-            if (get(stack).fluidType().is(EMPTY) || get(stack).fluidType().is(Registration.O2.get()) && get(stack).volume() < get(stack).max())
-                increaseFluid(stack, new FluidStack(Registration.O2.get(), 1));
+            if (getHandler(stack).getFluidInTank(0).is(Fluids.EMPTY) || getHandler(stack).getFluidInTank(0).is(Registration.O2.get())) getHandler(stack).fill(new FluidStack(Registration.O2.get(), 1), IFluidHandler.FluidAction.EXECUTE);
         }
     }
 

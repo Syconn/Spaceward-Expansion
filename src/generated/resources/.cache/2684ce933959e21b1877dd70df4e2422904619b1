@@ -1,4 +1,4 @@
-// 1.21	2024-07-09T16:58:47.2509912	vanilla/Recipes
+// 1.21	2024-07-23T15:26:20.5942145	vanilla/Recipes
 fe2150cd70da39fadf3b81bc2cf2468507692060 data/swe/advancement/recipes/decorations/canister_filler.json
 0b5b07968f42231ba1989d1873c9fe0ea3b83182 data/swe/advancement/recipes/misc/diamond_upgrade.json
 09b83db3d26dad35afcddd8e89cb9ae46a60cc64 data/swe/advancement/recipes/misc/emerald_upgrade.json
@@ -7,15 +7,13 @@ fe2150cd70da39fadf3b81bc2cf2468507692060 data/swe/advancement/recipes/decoration
 5180dee876dfa7cc46d73ab494d10bd2eb4fbf72 data/swe/advancement/recipes/misc/netherite_upgrade.json
 c86193e34336a895f312942b7ee277c6c6194d57 data/swe/advancement/recipes/tools/canister.json
 29db18d84d15038f7c519fc1972deb338a754ca0 data/swe/advancement/recipes/tools/wrench.json
-baf271a74cb39d53e690c50fb230a98a53c56a13 data/swe/advancement/recipes/transportation/fluid_pipe.json
 ceca08e64a76c32c756a933d6d618a1fb74fdc95 data/swe/advancement/recipes/transportation/fluid_tank.json
 03c3d214456af4d32d266db4338d6ffe5885bd5a data/swe/recipe/canister.json
 f7bf5c0f85c5421845f111919b5a94697f30de3c data/swe/recipe/canister_filler.json
 847d83ca4ecd28c4e5e5e8737f6680b7f07abb1e data/swe/recipe/diamond_upgrade.json
 ca5f3d7ba05250e5b39e20486871bee999a7401c data/swe/recipe/dyed_parachute.json
 ed9b1dcf14763d038c7e5404746c1ae1406e6612 data/swe/recipe/emerald_upgrade.json
-6c925d3846316e4aaff26280ebf61a1afd13ee63 data/swe/recipe/fluid_pipe.json
-b17488df1aa1b58185c178b644dc9737ed9eab69 data/swe/recipe/fluid_tank.json
+be3252da4b5ae1b2f2ff1a9893945a02f0151181 data/swe/recipe/fluid_tank.json
 555c052603d2b7cf281e07d3494e669f3cd363d7 data/swe/recipe/gold_upgrade.json
 166270abad1a3f414c16bddfd521722770d85520 data/swe/recipe/iron_upgrade.json
 b1355025026b9fec596413f50f7fda2cb6fcfd5e data/swe/recipe/netherite_upgrade.json

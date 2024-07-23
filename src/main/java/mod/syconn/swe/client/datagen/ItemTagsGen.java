@@ -21,7 +21,7 @@ public class ItemTagsGen extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(Registration.GLASS).replace(false).addTags(Tags.Items.GLASS_BLOCKS);
+        this.tag(Registration.CANISTERS).add(Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
         this.tag(ItemTags.DYEABLE).replace(false).add(Registration.PARACHUTE.get());
     }
 }

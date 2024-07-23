@@ -37,7 +37,7 @@ public class RefillingCanisterRecipe extends CustomRecipe {
             }
             if (pInput.getItem(4).is(Registration.CANISTER.get())) {
                 ItemStack result = new ItemStack(Registration.AUTO_REFILL_CANISTER.get());
-                Canister.clone(result, pInput.getItem(4));
+                result.set(Registration.FLUID_COMPONENT, pInput.getItem(4).get(Registration.FLUID_COMPONENT));
                 return result;
             }
         }
@@ -45,7 +45,8 @@ public class RefillingCanisterRecipe extends CustomRecipe {
     }
 
     public ItemStack getResultItem(HolderLookup.Provider pRegistries) {
-        return Registration.CANISTER.get().create(FluidStack.EMPTY);
+//        return Registration.CANISTER.get().create(FluidStack.EMPTY);
+        return Registration.CANISTER.get().getDefaultInstance();
     }
 
     public boolean canCraftInDimensions(int width, int height) {

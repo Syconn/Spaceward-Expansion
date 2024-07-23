@@ -10,7 +10,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractTankBE extends SyncedBlockEntity {
+public abstract class AbstractTankBE extends SyncedBE {
 
     protected FluidTank tank;
     private final Lazy<IFluidHandler> holder = Lazy.of(() -> tank);

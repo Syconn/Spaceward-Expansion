@@ -1,0 +1,17 @@
+{
+  "parent": "minecraft:block/cube",
+  "facade": false,
+  "loader": "swe:pipe",
+  "locations": [
+    "block/loader/fluid_pipe/connector",
+    "block/loader/fluid_pipe/normal",
+    "block/loader/fluid_pipe/none",
+    "block/loader/fluid_pipe/end",
+    "block/loader/fluid_pipe/corner",
+    "block/loader/fluid_pipe/three",
+    "block/loader/fluid_pipe/cross",
+    "block/loader/fluid_pipe/side"
+  ],
+  "render_type": "minecraft:cutout",
+  "size": 0.3
+}
