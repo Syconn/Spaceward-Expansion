@@ -15,11 +15,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
-public class CanisterFillerBlockEntity extends BlockEntity {
+public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH ALL FLUID ITEM HANDLERS
 
     // TODO O2 tanks work when no space suit + render (Shouldnt)
     private final int fillSpeed = 10;
@@ -32,13 +34,13 @@ public class CanisterFillerBlockEntity extends BlockEntity {
     public static void serverTick(Level level, BlockPos pos, BlockState state, CanisterFillerBlockEntity e) {
         for (int i = 0; i < 4; i++) {
             if (!e.items.get(i).isEmpty()) {
-                ItemStack item = e.items.get(i);
-                if (Canister.get(item).fluidType().is(Fluids.EMPTY) || FluidStack.isSameFluid(Canister.get(item).fluidType(), e.getFluidTank().getFluid())) {
-                    if (Canister.get(item).max() > Canister.get(item).volume()) {
-                        FluidStack fill = e.getFluidTank().drain(e.fillSpeed, IFluidHandler.FluidAction.SIMULATE);
-                        if (fill.getAmount() > Canister.get(item).max() - Canister.get(item).volume()) fill.setAmount(Canister.get(item).max() - Canister.get(item).volume());
-                        e.getFluidTank().drain(fill, IFluidHandler.FluidAction.EXECUTE);
-                        Canister.increaseFluid(item, fill);
+                ItemStack itemStack = e.items.get(i);
+                IFluidHandlerItem handler = itemStack.getCapability(Capabilities.FluidHandler.ITEM);
+                if (handler != null) {
+                    FluidStack fluidStack = handler.getFluidInTank(0);
+                    if (handler.getTankCapacity(0) >= fluidStack.getAmount() + e.fillSpeed && fluidStack.is(Fluids.EMPTY) || FluidStack.isSameFluid(fluidStack, e.getFluidTank().getFluid())) {
+                        FluidStack resource = e.getFluidTank().drain(e.fillSpeed, IFluidHandler.FluidAction.EXECUTE);
+                        e.getFluidTank().fill(resource.copyWithAmount(resource.getAmount() - handler.fill(resource, IFluidHandler.FluidAction.EXECUTE)), IFluidHandler.FluidAction.EXECUTE);
                         e.update();
                     }
                 }
@@ -47,7 +49,8 @@ public class CanisterFillerBlockEntity extends BlockEntity {
     }
 
     public boolean addCanister(ItemStack stack) {
-        if (stack.getItem() instanceof Canister c && (Canister.get(stack).fluidType().is(Fluids.EMPTY) || c.getFluid(stack).is(getFluidTank().getFluid().getFluid()))) {
+        IFluidHandlerItem handler = stack.getCapability(Capabilities.FluidHandler.ITEM);
+        if (handler != null && stack.getItem() instanceof Canister && handler.getFluidInTank(0).is(Fluids.EMPTY) || FluidStack.isSameFluid(handler.getFluidInTank(0), getFluidTank().getFluidInTank(0))) {
             for (int i = 0; i < 4; i++) {
                 if (items.get(i).isEmpty()) {
                     items.set(i, stack.copy());

@@ -6,7 +6,7 @@
       "item": "minecraft:iron_block"
     },
     "n": {
-      "tag": "swe:glass"
+      "tag": "c:glass_blocks"
     },
     "r": {
       "item": "minecraft:bucket"

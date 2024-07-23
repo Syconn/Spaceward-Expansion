@@ -2,63 +2,66 @@ package mod.syconn.swe.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import mod.syconn.swe.items.extras.ItemFluidHandler;
-import net.minecraft.world.level.material.Fluid;
-import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidActionResult;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
-/** SIMILAR TO FORGE VERSION BUT FOR {@link ItemFluidHandler} */
-@Deprecated(forRemoval = true)
 public class FluidHelper {
 
-    public static ItemStack fillTankReturnStack(ItemStack stack, FluidTank tank) {
-        if (stack.getItem() instanceof ItemFluidHandler handler){
-            FluidStack fluid = handler.getFluid(stack);
-            if (fluid.isEmpty()) return fillHandlerReturnStack(stack, tank);
-            if (!tank.isFluidValid(fluid)) return stack;
-            int filled = tank.fill(fluid, IFluidHandler.FluidAction.EXECUTE);
-            return handler.create(new FluidStack(fluid.getFluid(), fluid.getAmount() - filled));
-        }
-        return stack;
-    }
-
-    public static ItemStack fillHandlerReturnStack(ItemStack stack, FluidTank tank){
-        return stack.getItem() instanceof ItemFluidHandler handler ? handler.create(tank.drain(handler.getSpace(stack), IFluidHandler.FluidAction.EXECUTE)) : stack;
-    }
-
-    public static ItemStack fillHandlerReturnStack(ItemStack stack, FluidTank tank, int max){
-        if (stack.getItem() instanceof ItemFluidHandler handler){
-            if (max > handler.getSpace(stack)) max = handler.getSpace(stack);
-            FluidStack fluidStack = tank.drain(max, IFluidHandler.FluidAction.EXECUTE);
-            return handler.create(new FluidStack(fluidStack.getFluid(), fluidStack.getAmount() + handler.getFluid(stack).getAmount()));
-        }
-        return stack;
-    }
-
-    public static void fillHandlerUpdateStack(ItemStack stack, FluidTank tank, int max){
-        if (stack.getItem() instanceof ItemFluidHandler handler && (handler.getFluid(stack).isEmpty() || handler.getFluid(stack).getFluid() == tank.getFluidInTank(0).getFluid()) && !tank.isEmpty()){
-            if (max > handler.getSpace(stack)) max = handler.getSpace(stack);
-            Fluid fluid = tank.getFluidInTank(0).getFluid();
-            handler.setAmount(stack, tank.drain(max, IFluidHandler.FluidAction.EXECUTE).getAmount() + handler.getFluid(stack).getAmount(), fluid);
-        }
-    }
-
-    public static boolean interactWithFluidHandler(ItemStack stack, Level l, BlockPos pos, Direction side) {
-        IFluidHandler tank = l.getCapability(Capabilities.FluidHandler.BLOCK, pos, side);
-        if (stack.getItem() instanceof ItemFluidHandler handler) {
-            if (handler.getFluid(stack).isEmpty() && !tank.getFluidInTank(0).isEmpty()) {
-                handler.setFluid(stack, tank.drain(handler.getSpace(stack), IFluidHandler.FluidAction.EXECUTE));
-                return true;
-            } else if (!handler.getFluid(stack).isEmpty() && tank.isFluidValid(0, handler.getFluid(stack))) {
-                int i = tank.fill(handler.getFluid(stack), IFluidHandler.FluidAction.EXECUTE);
-                handler.setFluid(stack, new FluidStack(handler.getFluid(stack).getFluid(), handler.getFluid(stack).getAmount() - i));
-                return true;
+    public static void handleInventoryMaxTransfer(IFluidHandler blockHandler, IFluidHandlerItem itemHandler, IItemHandlerModifiable inventory, int slot1, int slot2) {
+        if (!inventory.getStackInSlot(slot1).isEmpty() && inventory.getStackInSlot(slot2).isEmpty()) {
+            boolean success;
+            ItemStack movedStack = inventory.getStackInSlot(slot1);
+            boolean isBucket = movedStack.getItem() instanceof BucketItem;
+            if (blockHandler.getFluidInTank(0).isEmpty() || itemHandler.getFluidInTank(0).getAmount() == itemHandler.getTankCapacity(0)) {
+                success = fillBlockFromItemStack(blockHandler, itemHandler, Integer.MAX_VALUE, movedStack).isSuccess();
+                movedStack = new ItemStack(Items.BUCKET);
+            } else {
+                movedStack = FluidUtil.getFilledBucket(blockHandler.getFluidInTank(0));
+                success = fillItemStackFromBlock(blockHandler, itemHandler, Integer.MAX_VALUE, movedStack).isSuccess();
+            }
+            if (success) {
+                inventory.extractItem(slot1, 1, false);
+                inventory.setStackInSlot(slot2, isBucket ? movedStack : itemHandler.getContainer());
             }
         }
-        return false;
+    }
+
+    public static FluidActionResult maxTransferStackToBlock(Level pLevel, BlockPos pPos, Direction pDir, ItemStack pStack) {
+        IFluidHandler blockHandler = FluidUtil.getFluidHandler(pLevel, pPos, pDir).orElseThrow();
+        IFluidHandler itemHandler = FluidUtil.getFluidHandler(pStack).orElseThrow();
+        return maxTransferStackToBlock(blockHandler, itemHandler, pStack);
+    }
+
+    public static FluidActionResult maxTransferStackToBlock(IFluidHandler blockHandler, IFluidHandler itemHandler, ItemStack pStack) {
+        if (blockHandler.getFluidInTank(0).isEmpty() || itemHandler.getFluidInTank(0).getAmount() == itemHandler.getTankCapacity(0)) return fillBlockFromItemStack(blockHandler, itemHandler, Integer.MAX_VALUE, pStack);
+        return fillItemStackFromBlock(blockHandler, itemHandler, Integer.MAX_VALUE, pStack);
+    }
+
+    public static FluidActionResult fillBlockFromItemStack(IFluidHandler block, IFluidHandler item, int amount, ItemStack stack) {
+        if (block.isFluidValid(0, item.getFluidInTank(0))) {
+            FluidStack fluidStack = item.drain(amount, IFluidHandler.FluidAction.SIMULATE);
+            int fill = block.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+            item.drain(fill, IFluidHandler.FluidAction.EXECUTE);
+            return fill > 0 ? new FluidActionResult(stack) : FluidActionResult.FAILURE;
+        }
+        return FluidActionResult.FAILURE;
+    }
+
+    public static FluidActionResult fillItemStackFromBlock(IFluidHandler block, IFluidHandler item, int amount, ItemStack stack) {
+        if (item.isFluidValid(0, block.getFluidInTank(0))){
+            FluidStack fluidStack = block.drain(amount, IFluidHandler.FluidAction.SIMULATE);
+            int fill = item.fill(fluidStack, IFluidHandler.FluidAction.EXECUTE);
+            block.drain(fill, IFluidHandler.FluidAction.EXECUTE);
+            return fill > 0 ? new FluidActionResult(stack) : FluidActionResult.FAILURE;
+        }
+        return FluidActionResult.FAILURE;
     }
 }

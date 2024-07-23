@@ -32,8 +32,6 @@ import net.neoforged.neoforge.fluids.FluidUtil;
 import java.util.UUID;
 
 public class OxygenDisperser extends FluidBaseBlock {
-
-    // TODO BUG CAN SEE OUT OF FLUID TANK
     
     public OxygenDisperser(Properties properties) {
         super(properties);
@@ -44,10 +42,7 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide) {
-            if (FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection())) return ItemInteractionResult.CONSUME;
-            else if (FluidHelper.interactWithFluidHandler(pPlayer.getItemInHand(pHand), pLevel, pPos, null)) return ItemInteractionResult.CONSUME;
-        }
+        if (!pLevel.isClientSide && FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection())) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 

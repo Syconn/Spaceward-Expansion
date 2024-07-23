@@ -21,6 +21,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
@@ -52,7 +53,7 @@ public class ClientHandler {
     @SubscribeEvent
     public static void coloredItems(RegisterColorHandlersEvent.Item event) {
         event.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, Registration.PARACHUTE.get());
-        event.register((s, layer) -> layer == 1 ? RenderUtil.getFluidColor(Canister.get(s).fluidStack()) : -1, Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
+        event.register((s, layer) -> layer == 1  && s.getCapability(Capabilities.FluidHandler.ITEM) != null ? RenderUtil.getFluidColor(s.getCapability(Capabilities.FluidHandler.ITEM).getFluidInTank(0)) : -1, Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
     }
 
     @SubscribeEvent

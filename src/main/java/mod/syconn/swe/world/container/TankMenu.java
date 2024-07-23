@@ -1,5 +1,6 @@
 package mod.syconn.swe.world.container;
 
+import mod.syconn.api.containers.slots.SpecifiedSlotHandler;
 import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +25,7 @@ public class TankMenu extends AbstractContainerMenu {
         if (handler != null) {
             this.addSlot(new SlotItemHandler(handler, 0, 14, 9));
             this.addSlot(new SlotItemHandler(handler, 1, 14, 61));
-//            this.addSlot(new ItemFluidHandlerSlot(handler, 2, 72, 9)); TODO COME BACK AND FIX
+            this.addSlot(new SpecifiedSlotHandler(handler, 2, 72, 9, Registration.CANISTERS));
         }
 
         for(int l = 0; l < 3; ++l) {

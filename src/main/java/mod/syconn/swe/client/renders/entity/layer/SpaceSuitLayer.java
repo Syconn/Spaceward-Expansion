@@ -28,6 +28,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 
 public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends RenderLayer<P, M> {
 
@@ -64,14 +66,15 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
             }
 
             itemstack = SpaceArmor.getGear(EquipmentItemSlot.SpaceSlot.TANK, pLivingEntity);
-            if (itemstack != null && itemstack.getItem() instanceof Canister canister) {
-                int i = canister.getColor(itemstack);
+            if (itemstack != null && itemstack.getItem() instanceof Canister canister && itemstack.getCapability(Capabilities.FluidHandler.ITEM) != null) {
+                IFluidHandlerItem handler = itemstack.getCapability(Capabilities.FluidHandler.ITEM);
+                int i = canister.getBarColor(itemstack);
                 int i2 = canister.getOutlineColor();
                 pPoseStack.pushPose();
                 pPoseStack.translate(0F, -0.80F, 0.3F);
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(180F));
                 VertexConsumer v2 = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Main.loc("textures/entity/layers/tank.png")), itemstack.hasFoil());
-                tm.fluidScaling((float) Canister.get(itemstack).volume() / Canister.get(itemstack).max());
+                tm.fluidScaling((float) handler.getFluidInTank(0).getAmount() / handler.getTankCapacity(0));
                 tm.render(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, new int[]{i, i2});
                 pPoseStack.popPose();
             }

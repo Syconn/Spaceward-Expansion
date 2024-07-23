@@ -82,7 +82,7 @@ public class RecipeGen extends RecipeProvider {
                 .pattern("bbb")
                 .pattern("nrn")
                 .pattern("bbb")
-                .define('n', Registration.GLASS)
+                .define('n', Tags.Items.GLASS_BLOCKS)
                 .define('r', Items.BUCKET)
                 .define('b', Items.IRON_BLOCK)
                 .unlockedBy("has_bucket", inventoryTrigger(ItemPredicate.Builder.item().of(Items.BUCKET).build()))

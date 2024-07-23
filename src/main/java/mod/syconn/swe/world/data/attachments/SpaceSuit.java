@@ -22,7 +22,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 import org.jetbrains.annotations.NotNull;
 
@@ -59,9 +61,9 @@ public class SpaceSuit implements IItemHandlerModifiable, INBTSerializable<Compo
 
     public void decreaseO2(Player p) {
         if (p.getInventory() instanceof ExtendedPlayerInventory ext) {
-            ItemStack stack = ext.getSpaceUtil().get(0);
-            if ((SpaceArmor.hasFullKit(p) && stack.getItem() instanceof Canister c && c.getFluid(stack).getAmount() > 0) || PlanetManager.getSettings(p).breathable()) {
-            if (oxygen < maxO2()) setO2(oxygen + 1, p);
+            IFluidHandlerItem handler = ext.getSpaceUtil().get(0).getCapability(Capabilities.FluidHandler.ITEM);
+            if ((SpaceArmor.hasFullKit(p) && handler != null && !handler.getFluidInTank(0).isEmpty() || PlanetManager.getSettings(p).breathable())) {
+                if (oxygen < maxO2()) setO2(oxygen + 1, p);
             } else setO2(new Random().nextInt(2) > 0 ? O2() : O2() - 1, p);
         }
     }
