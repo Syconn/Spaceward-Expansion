@@ -47,6 +47,8 @@ public class CollectorBE extends AbstractTankBE implements MenuProvider, BlockIn
             e.tank.fill(new FluidStack(Registration.O2.get(), (int) total), IFluidHandler.FluidAction.EXECUTE);
             e.rate = (int) total;
         }
+        e.tank.handlePull(level, pos);
+        e.tank.handlePush(level, pos);
         e.markDirty();
     }
 

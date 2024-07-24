@@ -75,6 +75,7 @@ public class TankBE extends AbstractTankBE implements MenuProvider {
             if (handler != null) FluidHelper.fillItemStackFromBlock(e.tank, handler, e.fillSpeed, itemStack);
 
             e.tank.handlePush(level, pos);
+            e.tank.handlePull(level, pos);
             e.markDirty();
         }
     }

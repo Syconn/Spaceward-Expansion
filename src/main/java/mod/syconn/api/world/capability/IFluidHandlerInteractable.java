@@ -45,15 +45,6 @@ public interface IFluidHandlerInteractable extends IFluidHandler {
         }
     }
 
-    Map<Direction, Interaction> sided_interactions = new HashMap<>() {{
-        put(Direction.NORTH, Interaction.NONE);
-        put(Direction.SOUTH, Interaction.NONE);
-        put(Direction.EAST, Interaction.NONE);
-        put(Direction.WEST, Interaction.NONE);
-        put(Direction.DOWN, Interaction.NONE);
-        put(Direction.UP, Interaction.NONE);
-    }};
-
     Interaction getSideInteraction(Direction side);
     void setSideInteraction(Direction side, Interaction interaction);
     void handlePush(Level level, BlockPos blockPos);
