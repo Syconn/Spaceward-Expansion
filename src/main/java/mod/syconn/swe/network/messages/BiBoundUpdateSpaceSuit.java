@@ -14,9 +14,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public record BiBoundUpdateSpaceSuit(CompoundTag tag) implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<BiBoundUpdateSpaceSuit> TYPE = new CustomPacketPayload.Type<>(Main.loc("update_space_siot"));
-    public static final StreamCodec<ByteBuf, BiBoundUpdateSpaceSuit> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.COMPOUND_TAG, BiBoundUpdateSpaceSuit::tag, BiBoundUpdateSpaceSuit::new
-    );
+    public static final StreamCodec<ByteBuf, BiBoundUpdateSpaceSuit> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG, BiBoundUpdateSpaceSuit::tag,BiBoundUpdateSpaceSuit::new);
 
     public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
         return TYPE;

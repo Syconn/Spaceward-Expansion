@@ -45,11 +45,11 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     private boolean enabled = true;
 
     public DisperserBE(BlockPos p_155229_, BlockState p_155230_) {
-        super(Registration.DISPERSER.get(), p_155229_, p_155230_, 1000);
-        this.tank = new FluidTank(1000){
-            public void onContentsChanged() { markDirty(); }
-            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2.get(); }
-        };
+        super(Registration.DISPERSER.get(), p_155229_, p_155230_, 1000, 15);
+//        this.tank = new C(1000, ){
+//            public void onContentsChanged() { markDirty(); }
+//            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2.get(); }
+//        };
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, DisperserBE e) {

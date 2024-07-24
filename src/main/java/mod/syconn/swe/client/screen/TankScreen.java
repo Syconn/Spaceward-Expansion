@@ -1,33 +1,34 @@
 package mod.syconn.swe.client.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
+import mod.syconn.api.client.screen.InteractionSelectorScreen;
+import mod.syconn.api.world.capability.IFluidHandlerInteractable;
+import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.client.RenderUtil;
+import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.world.container.TankMenu;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.blockentity.BedRenderer;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
+import java.util.Map;
 
-public class TankScreen extends AbstractContainerScreen<TankMenu> {
+public class TankScreen extends InteractionSelectorScreen<TankMenu> {
 
     private static final ResourceLocation BG = Main.loc("textures/gui/tank.png");
 
-    public TankScreen(TankMenu p_97741_, Inventory p_97742_, Component p_97743_) {
-        super(p_97741_, p_97742_, p_97743_);
+    public TankScreen(TankMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank());
     }
 
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) { }
@@ -40,6 +41,7 @@ public class TankScreen extends AbstractContainerScreen<TankMenu> {
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         FluidTank tank = menu.getBE().getFluidTank();
         pGuiGraphics.blit(BG, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
 
         FluidStack fluidStack = tank.getFluidInTank(0);
         IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(fluidStack.getFluid());
@@ -53,10 +55,30 @@ public class TankScreen extends AbstractContainerScreen<TankMenu> {
         float blue = (tintColor & 0xFF) / 255f;
         pGuiGraphics.setColor(red, green, blue, alpha);
         pGuiGraphics.blit(this.leftPos + 34, topPos + 8 + (70 - u), 0, 34, u, sprite);
-
         pGuiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+
         Component infoComponent = Component.literal(tank.getFluidAmount() + "mb/" + tank.getCapacity() + "mb").withStyle(ChatFormatting.GRAY);
         if (leftPos + 34 <= pMouseX && pMouseX <= leftPos + 67 && topPos + 8 <= pMouseY && pMouseY <= topPos + 77)
             pGuiGraphics.renderComponentTooltip(font, List.of(tank.getFluidInTank(0).getHoverName(), infoComponent), pMouseX, pMouseY);
+    }
+
+    protected int getMenuX() {
+        return -85;
+    }
+
+    protected int getMenuY() {
+        return 2;
+    }
+
+    protected int getSpriteX() {
+        return leftPos - 27;
+    }
+
+    protected int getSpriteY() {
+        return topPos + 6;
+    }
+
+    protected void sendPacket(Interactables interactable, Direction direction) {
+        Channel.sendToServer(new ServerBoundInteractableButtonPress(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
     }
 }

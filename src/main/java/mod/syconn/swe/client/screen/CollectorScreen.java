@@ -2,11 +2,15 @@ package mod.syconn.swe.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import mod.syconn.api.client.screen.InteractionSelectorScreen;
+import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
 import mod.syconn.swe.client.RenderUtil;
+import mod.syconn.swe.network.Channel;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -21,12 +25,12 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
 
-public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
+public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
 
     private static final ResourceLocation BG = Main.loc("textures/gui/disperser.png");
 
     public CollectorScreen(CollectorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle);
+        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank());
     }
 
     protected void init() {
@@ -44,6 +48,7 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         FluidTank tank = menu.getBE().getFluidTank();
         pGuiGraphics.blit(BG, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
 
         FluidStack fluidStack = tank.getFluidInTank(0);
         IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(fluidStack.getFluid());
@@ -65,5 +70,25 @@ public class CollectorScreen extends AbstractContainerScreen<CollectorMenu> {
         Component infoComponent = Component.literal(tank.getFluidAmount() + "mb/" + tank.getCapacity() + "mb").withStyle(ChatFormatting.GRAY);
         if (leftPos + 10 <= pMouseX && pMouseX <= leftPos + 43 && topPos + 8 <= pMouseY && pMouseY <= topPos + 77 && !fluidStack.is(Fluids.EMPTY))
             pGuiGraphics.renderComponentTooltip(font, List.of(tank.getFluidInTank(0).getHoverName(), infoComponent), pMouseX, pMouseY);
+    }
+
+    protected int getMenuX() {
+        return -85;
+    }
+
+    protected int getMenuY() {
+        return 2;
+    }
+
+    protected int getSpriteX() {
+        return leftPos - 27;
+    }
+
+    protected int getSpriteY() {
+        return topPos + 6;
+    }
+
+    protected void sendPacket(Interactables interactable, Direction direction) {
+        Channel.sendToServer(new ServerBoundInteractableButtonPress(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
     }
 }
