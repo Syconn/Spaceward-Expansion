@@ -1,5 +1,6 @@
 package mod.syconn.swe.network;
 
+import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
 import mod.syconn.swe.network.messages.*;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
@@ -12,7 +13,10 @@ public class Channel {
     public static void onRegisterPayloadHandler(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar("1");
         registrar.playToServer(ServerBoundToggleDisperser.TYPE, ServerBoundToggleDisperser.STREAM_CODEC, ServerBoundToggleDisperser::handle);
+        registrar.playToServer(ServerBoundInteractableButtonPress.TYPE, ServerBoundInteractableButtonPress.STREAM_CODEC, ServerBoundInteractableButtonPress::handle);
+
         registrar.playToClient(ClientBoundUpdatePlanetSettings.TYPE, ClientBoundUpdatePlanetSettings.STREAM_CODEC, ClientBoundUpdatePlanetSettings::handle);
+
         registrar.playBidirectional(BiBoundUpdateSpaceSuit.TYPE, BiBoundUpdateSpaceSuit.STREAM_CODEC, BiBoundUpdateSpaceSuit::handle);
     }
 

@@ -1,23 +1,23 @@
 package mod.syconn.api.blockEntity;
 
+import mod.syconn.api.world.capability.IFluidHandlerInteractable;
+import mod.syconn.api.world.capability.InteractableFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.Lazy;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractTankBE extends SyncedBE {
 
-    protected FluidTank tank;
-    private final Lazy<IFluidHandler> holder = Lazy.of(() -> tank);
+    protected InteractableFluidTank tank;
+    private final Lazy<IFluidHandlerInteractable> holder = Lazy.of(() -> tank);
 
-    public AbstractTankBE(@NotNull BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state, int size) {
+    public AbstractTankBE(@NotNull BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state, int size, int speed) {
         super(blockEntityType, pos, state);
-        tank = new FluidTank(size) {
+        tank = new InteractableFluidTank(size, speed) {
             protected void onContentsChanged() {
                 markDirty();
             }
@@ -32,11 +32,11 @@ public abstract class AbstractTankBE extends SyncedBE {
         tank.writeToNBT(pRegistries, pTag);
     }
 
-    public FluidTank getFluidTank() {
+    public InteractableFluidTank getFluidTank() {
         return tank;
     }
 
-    public IFluidHandler getFluidHandler() {
+    public IFluidHandlerInteractable getFluidHandler() {
         return holder.get();
     }
 }

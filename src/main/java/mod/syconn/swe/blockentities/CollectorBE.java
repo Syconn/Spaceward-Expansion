@@ -28,7 +28,7 @@ public class CollectorBE extends AbstractTankBE implements MenuProvider, BlockIn
     private int rate = 0;
 
     public CollectorBE(BlockPos pos, BlockState state) {
-        super(Registration.COLLECTOR.get(), pos, state, 8000);
+        super(Registration.COLLECTOR.get(), pos, state, 8000, 250);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, CollectorBE e) {

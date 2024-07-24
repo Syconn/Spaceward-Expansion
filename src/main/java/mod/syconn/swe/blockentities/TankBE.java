@@ -35,7 +35,7 @@ public class TankBE extends AbstractTankBE implements MenuProvider {
     private final Lazy<IItemHandler> holder = Lazy.of(() -> items);
 
     public TankBE(BlockPos pos, BlockState state) {
-        super(Registration.TANK.get(), pos, state, 16000);
+        super(Registration.TANK.get(), pos, state, 16000, 500);
     }
 
     public ItemStackHandler getItems() {
@@ -73,6 +73,8 @@ public class TankBE extends AbstractTankBE implements MenuProvider {
             itemStack = e.getItems().getStackInSlot(2);
             handler = itemStack.getCapability(Capabilities.FluidHandler.ITEM);
             if (handler != null) FluidHelper.fillItemStackFromBlock(e.tank, handler, e.fillSpeed, itemStack);
+
+            e.tank.handlePush(level, pos);
             e.markDirty();
         }
     }

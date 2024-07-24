@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.api.blockEntity.BaseFluidPipeBE;
 import mod.syconn.api.blocks.BaseFluidPipe;
+import mod.syconn.api.world.capability.APICapabilities;
 import mod.syconn.swe.blockentities.*;
 import mod.syconn.swe.blocks.*;
 import mod.syconn.swe.fluids.BaseFluidType;
@@ -162,6 +163,7 @@ public class Registration {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, DISPERSER.get(), (o, v) -> o.getFluidHandler());
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COLLECTOR.get(), (o, v) -> o.getFluidHandler());
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, TANK.get(), (o, v) -> o.getFluidHandler());
+        event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, TANK.get(), (o, v) -> o.getFluidHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TANK.get(), (o, v) -> o.getItemHandler());
     }
 
