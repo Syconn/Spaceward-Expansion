@@ -2,8 +2,8 @@ package mod.syconn.api.world.packets;
 
 import io.netty.buffer.ByteBuf;
 import mod.syconn.api.Constants;
-import mod.syconn.api.world.capability.APICapabilities;
-import mod.syconn.api.world.capability.IFluidHandlerInteractable;
+import mod.syconn.api.world.data.capability.APICapabilities;
+import mod.syconn.api.world.data.capability.IFluidHandlerInteractable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.codec.StreamCodec;

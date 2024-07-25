@@ -1,4 +1,4 @@
-package mod.syconn.api.world.capability;
+package mod.syconn.api.world.data.capability;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
@@ -8,9 +8,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public interface IFluidHandlerInteractable extends IFluidHandler {
 

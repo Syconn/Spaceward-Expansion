@@ -1,11 +1,9 @@
-package mod.syconn.api.world.capability;
+package mod.syconn.api.world.data.capability;
 
 import mod.syconn.api.Constants;
-import mod.syconn.swe.Main;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.capabilities.BlockCapability;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class APICapabilities {

@@ -2,8 +2,8 @@ package mod.syconn.api.client.screen;
 
 import mod.syconn.api.Constants;
 import mod.syconn.api.client.screen.widget.SpriteButton;
-import mod.syconn.api.world.capability.IFluidHandlerInteractable;
-import mod.syconn.api.world.capability.InteractableFluidTank;
+import mod.syconn.api.world.data.capability.IFluidHandlerInteractable;
+import mod.syconn.api.world.data.capability.InteractableFluidTank;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

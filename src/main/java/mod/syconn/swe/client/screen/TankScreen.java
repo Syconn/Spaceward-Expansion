@@ -1,7 +1,6 @@
 package mod.syconn.swe.client.screen;
 
 import mod.syconn.api.client.screen.InteractionSelectorScreen;
-import mod.syconn.api.world.capability.IFluidHandlerInteractable;
 import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.client.RenderUtil;
@@ -9,9 +8,7 @@ import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.world.container.TankMenu;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +18,6 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
-import java.util.Map;
 
 public class TankScreen extends InteractionSelectorScreen<TankMenu> {
 

@@ -16,12 +16,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import mod.syconn.swe.blocks.DispersibleAirBlock;
 import mod.syconn.swe.world.container.DisperserMenu;
 import mod.syconn.swe.util.BlockInfo;
-import mod.syconn.swe.util.NbtHelper;
+import mod.syconn.api.util.NbtHelper;
 import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
 import net.minecraft.world.ticks.TickPriority;
-import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +136,7 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
 
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.saveAdditional(pTag, pRegistries);
-        pTag.put("list", NbtHelper.writePosses(list));
+        pTag.put("list", NbtHelper.writePositionList(list));
         pTag.putInt("fill", maxFill);
         pTag.putBoolean("active", active);
         pTag.putBoolean("enabled", enabled);
@@ -148,7 +146,7 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
 
     protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
         super.loadAdditional(pTag, pRegistries);
-        list = NbtHelper.readPosses(pTag.getCompound("list"));
+        list = NbtHelper.readPositionList(pTag.getCompound("list"));
         maxFill = pTag.getInt("fill");
         active = pTag.getBoolean("active");
         enabled = pTag.getBoolean("enabled");
@@ -158,7 +156,7 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
 
     public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
         CompoundTag tag = super.getUpdateTag(pRegistries);
-        tag.put("list", NbtHelper.writePosses(list));
+        tag.put("list", NbtHelper.writePositionList(list));
         tag.putInt("fill", maxFill);
         tag.putBoolean("active", active);
         tag.putBoolean("enabled", enabled);
