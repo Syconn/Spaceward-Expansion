@@ -1,10 +1,12 @@
 package mod.syconn.swe.world;
 
+import mod.syconn.api.client.debug.PipeNetworkRenderer;
 import mod.syconn.swe.Config;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.items.Parachute;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.items.extras.EquipmentItem;
+import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.util.DimensionHelper;
 import mod.syconn.swe.world.data.attachments.SpaceSuit;
 import mod.syconn.swe.world.dimensions.PlanetManager;
@@ -19,8 +21,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.portal.DimensionTransition;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -81,5 +85,17 @@ public class CommonHandler {
             event.setDistance(event.getDistance() - 4.0f);
             event.setDamageMultiplier(0.16f);
         }
+    }
+
+    public static void playerJoined(PlayerEvent.PlayerLoggedInEvent event) {
+        if (FMLEnvironment.dist.isDedicatedServer() && event.getEntity() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerJoined(event), sp);
+    }
+
+    public static void playerLeft(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (FMLEnvironment.dist.isDedicatedServer() && event.getEntity() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerLeft(event), sp);
+    }
+
+    public static void playerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
+        if (FMLEnvironment.dist.isDedicatedServer() && event.getEntity() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerChangedDimension(event), sp);
     }
 }

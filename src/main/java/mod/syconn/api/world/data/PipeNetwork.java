@@ -27,6 +27,14 @@ public class PipeNetwork {
         this.networkID = networkID;
         this.executor = new PipeExecutor(this);
         this.pipes = new ArrayList<>();
+        addPipe(level.getBlockState(firstPipe), firstPipe);
+    }
+
+    public PipeNetwork(UUID networkID, Level level, List<BlockPos> pipes) {
+        this.networkID = networkID;
+        this.executor = new PipeExecutor(this);
+        this.pipes = new ArrayList<>();
+        addAllPipes(level, pipes);
     }
 
     public PipeNetwork(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
@@ -42,6 +50,10 @@ public class PipeNetwork {
             return true;
         }
         return false;
+    }
+
+    public void addAllPipes(Level level, List<BlockPos> pipes) {
+        pipes.forEach(pos -> addPipe(level.getBlockState(pos), pos));
     }
 
     public void updatePipe(BlockState state, BlockPos pos) {
@@ -60,12 +72,14 @@ public class PipeNetwork {
         if (state.getValue(AbstractPipeBlock.WEST).isInteractionPoint()) executor.addInteractionPoint(pos, Direction.WEST, state.getValue(AbstractPipeBlock.WEST));
     }
 
-    public boolean removePipe(BlockState state, BlockPos pos) {
-        if (state.getBlock() instanceof AbstractPipeBlock) {
-            pipes.remove(pos);
-            executor.resetInteractionPoint(pos);
-        }
+    public boolean removePipe(BlockPos pos) {
+        pipes.remove(pos);
+        executor.resetInteractionPoint(pos);
         return pipes.isEmpty();
+    }
+
+    public List<BlockPos> getPipes() {
+        return pipes;
     }
 
     public CompoundTag serializeNBT() {

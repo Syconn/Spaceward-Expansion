@@ -1,5 +1,6 @@
 package mod.syconn.swe.network;
 
+import mod.syconn.api.client.packets.ClientBoundUpdatePipeCache;
 import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
 import mod.syconn.swe.network.messages.*;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -16,6 +17,7 @@ public class Channel {
         registrar.playToServer(ServerBoundInteractableButtonPress.TYPE, ServerBoundInteractableButtonPress.STREAM_CODEC, ServerBoundInteractableButtonPress::handle);
 
         registrar.playToClient(ClientBoundUpdatePlanetSettings.TYPE, ClientBoundUpdatePlanetSettings.STREAM_CODEC, ClientBoundUpdatePlanetSettings::handle);
+        registrar.playToClient(ClientBoundUpdatePipeCache.TYPE, ClientBoundUpdatePipeCache.STREAM_CODEC, ClientBoundUpdatePipeCache::handle);
 
         registrar.playBidirectional(BiBoundUpdateSpaceSuit.TYPE, BiBoundUpdateSpaceSuit.STREAM_CODEC, BiBoundUpdateSpaceSuit::handle);
     }

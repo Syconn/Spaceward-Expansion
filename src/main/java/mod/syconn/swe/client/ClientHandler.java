@@ -1,5 +1,6 @@
 package mod.syconn.swe.client;
 
+import mod.syconn.api.client.debug.PipeNetworkRenderer;
 import mod.syconn.api.client.loader.PipeModelLoader;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
@@ -12,18 +13,22 @@ import mod.syconn.swe.client.screen.TankScreen;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
+import mod.syconn.swe.network.Channel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 import static mod.syconn.swe.client.ClientHooks.addPlayerLayers;
 
@@ -87,5 +92,9 @@ public class ClientHandler {
     @SubscribeEvent
     public static void dimensionEffects(RegisterDimensionSpecialEffectsEvent event){
         event.register(Main.loc("moon"), new MoonSpecialEffects());
+    }
+
+    public static void renderBlockOutline(RenderLevelStageEvent event) {
+        PipeNetworkRenderer.renderBlockOutline(event);
     }
 }
