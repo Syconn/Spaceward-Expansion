@@ -40,9 +40,9 @@ public class PipeNetworks extends SavedData {
             if (connectionUUIDS.isEmpty()) networks.put(uuid, new PipeNetwork(uuid, level, pos));
             else if (connectionUUIDS.contains(uuid) && networks.containsKey(uuid)) {
                 connectionUUIDS.remove(uuid);
-                networks.get(uuid).addAllPipes(level, conjoin(pos, connectionUUIDS));
+                createLine(uuid, conjoin(pos, connectionUUIDS));
             }
-            else networks.put(uuid, new PipeNetwork(uuid, level, conjoin(pos, connectionUUIDS)));
+            else createLine(uuid, conjoin(pos, connectionUUIDS));
             setDirty();
             return uuid;
         }
@@ -52,59 +52,9 @@ public class PipeNetworks extends SavedData {
     public void removePipe(BlockPos pos) {
         if (level.getBlockEntity(pos) instanceof AbstractPipeBE pipeBE && networks.containsKey(pipeBE.getNetworkID())) {
             if (networks.get(pipeBE.getNetworkID()).removePipe(pos)) networks.remove(pipeBE.getNetworkID());
-            else validLine(pipeBE.getNetworkID());
+            else validate(pipeBE.getNetworkID());
         }
         setDirty();
-    }
-
-    public void fixList() {
-        List<UUID> removeElement = new ArrayList<>();
-        for (Map.Entry<UUID, PipeNetwork> entry : networks.entrySet()) {
-            if (entry.getValue().getPipes().isEmpty()) removeElement.add(entry.getKey());
-            else {
-                entry.getValue().getPipes().forEach(pos -> {
-                    if (!(level.getBlockEntity(pos) instanceof AbstractPipeBE)) removeElement.add(entry.getKey());
-                });
-            }
-        }
-        removeElement.forEach(networks::remove);
-        setDirty();
-    }
-
-    private void validLine(UUID uuid) { // TODO BROKEN
-        if (networks.containsKey(uuid)) {
-            List<BlockPos> validPosList = new ArrayList<>();
-            List<BlockPos> posList = networks.get(uuid).getPipes();
-            validPosList.add(posList.get(0));
-            for (Direction d : Direction.values()) if (posList.contains(posList.get(0).relative(d))) validPosList.add(posList.get(0).relative(d));
-            int lastSize = 0;
-            while (lastSize < validPosList.size()) {
-                lastSize = validPosList.size();
-                List<BlockPos> testPos = List.of(validPosList.toArray(BlockPos[]::new));
-                for (BlockPos pos : testPos)
-                    for (Direction d : Direction.values())
-                        if (posList.contains(pos.relative(d)) && !validPosList.contains(pos.relative(d)))
-                            validPosList.add(pos.relative(d));
-            }
-            newLine(uuid, validPosList);
-            for (BlockPos pos : posList) {
-                if (!validPosList.contains(pos)) {
-                    validLine(uuid);
-                    return;
-                }
-            }
-        }
-    }
-
-    private void newLine(UUID oldUUID, List<BlockPos> positions) {
-        for (BlockPos pos : positions) if (networks.containsKey(oldUUID) && networks.get(oldUUID).removePipe(pos)) networks.remove(oldUUID);
-        UUID uuid = UUID.randomUUID();
-        networks.put(uuid, new PipeNetwork(uuid, level, positions));
-        for (BlockPos pos : positions) if (level.getBlockEntity(pos) instanceof AbstractPipeBE be) be.setNetworkID(uuid);
-    }
-
-    private void debugPipes(Level level) {
-        if (render() && level instanceof ServerLevel sl) sl.getPlayers(LivingEntity::isAlive).forEach(serverPlayer -> Channel.sendToPlayer(new ClientBoundUpdatePipeCache(getDataMap()), serverPlayer));
     }
 
     private List<BlockPos> conjoin(BlockPos pos, List<UUID> connectionUUIDS) {
@@ -120,13 +70,53 @@ public class PipeNetworks extends SavedData {
         return positions;
     }
 
+    private void validate(UUID networkID) {
+        List<BlockPos> unchecked = networks.get(networkID).getPipes();
+        networks.remove(networkID);
+        while (!unchecked.isEmpty()) {
+            createLine(networkID, findValidLine(unchecked.getFirst(), new ArrayList<>(), unchecked));
+            networkID = UUID.randomUUID();
+        }
+    }
+
+    private List<BlockPos> findValidLine(BlockPos checkPos, List<BlockPos> checked, List<BlockPos> unchecked) {
+        checked.add(checkPos);
+        unchecked.remove(checkPos);
+        for (Direction direction : Direction.values()) if (unchecked.contains(checkPos.relative(direction))) findValidLine(checkPos.relative(direction), checked, unchecked);
+        return checked;
+    }
+
+    private void createLine(UUID networkID, List<BlockPos> positions) {
+        if (networks.containsKey(networkID)) positions.addAll(networks.get(networkID).getPipes());
+        networks.put(networkID, new PipeNetwork(networkID, level, positions));
+        positions.forEach(pos -> { if (level.getBlockEntity(pos) instanceof AbstractPipeBE pipeBE) pipeBE.setNetworkID(networkID); });
+    }
+
+    private void renderPipes(Level level) {
+        if (render() && level instanceof ServerLevel sl) sl.getPlayers(LivingEntity::isAlive).forEach(serverPlayer -> Channel.sendToPlayer(new ClientBoundUpdatePipeCache(getDataMap()), serverPlayer));
+    }
+
     protected boolean render() {
         return true;
     }
 
     public void setDirty() {
-        debugPipes(level);
+        renderPipes(level);
         super.setDirty();
+    }
+
+    public void fixList() {
+        List<UUID> removeElement = new ArrayList<>();
+        for (Map.Entry<UUID, PipeNetwork> entry : networks.entrySet()) {
+            if (entry.getValue().getPipes().isEmpty()) removeElement.add(entry.getKey());
+            else {
+                entry.getValue().getPipes().forEach(pos -> {
+                    if (!(level.getBlockEntity(pos) instanceof AbstractPipeBE)) removeElement.add(entry.getKey());
+                });
+            }
+        }
+        removeElement.forEach(networks::remove);
+        setDirty();
     }
 
     public Map<UUID, Set<BlockPos>> getDataMap() {

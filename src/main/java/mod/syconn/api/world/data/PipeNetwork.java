@@ -56,10 +56,16 @@ public class PipeNetwork {
         pipes.forEach(pos -> addPipe(level.getBlockState(pos), pos));
     }
 
-    public void updatePipe(BlockState state, BlockPos pos) {
-        if (pipes.contains(pos) && state.getBlock() instanceof AbstractPipeBlock) {
+    public boolean removePipe(BlockPos pos) {
+        pipes.remove(pos);
+        executor.resetInteractionPoint(pos);
+        return pipes.isEmpty();
+    }
+
+    public void updatePipe(Level level, BlockPos pos) {
+        if (pipes.contains(pos) && level.getBlockState(pos).getBlock() instanceof AbstractPipeBlock) {
             executor.resetInteractionPoint(pos);
-            addToExecutor(state, pos);
+            addToExecutor(level.getBlockState(pos), pos);
         }
     }
 
@@ -70,12 +76,6 @@ public class PipeNetwork {
         if (state.getValue(AbstractPipeBlock.SOUTH).isInteractionPoint()) executor.addInteractionPoint(pos, Direction.SOUTH, state.getValue(AbstractPipeBlock.SOUTH));
         if (state.getValue(AbstractPipeBlock.EAST).isInteractionPoint()) executor.addInteractionPoint(pos, Direction.EAST, state.getValue(AbstractPipeBlock.EAST));
         if (state.getValue(AbstractPipeBlock.WEST).isInteractionPoint()) executor.addInteractionPoint(pos, Direction.WEST, state.getValue(AbstractPipeBlock.WEST));
-    }
-
-    public boolean removePipe(BlockPos pos) {
-        pipes.remove(pos);
-        executor.resetInteractionPoint(pos);
-        return pipes.isEmpty();
     }
 
     public List<BlockPos> getPipes() {

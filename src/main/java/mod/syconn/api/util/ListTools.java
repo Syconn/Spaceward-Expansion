@@ -13,6 +13,7 @@ public class ListTools {
             for (T element : list) {
                 int found = 0;
                 for (T check : list) {
+                    if (element == null) continue;
                     if (element.equals(check)) found++;
                 }
                 if (found > times) {

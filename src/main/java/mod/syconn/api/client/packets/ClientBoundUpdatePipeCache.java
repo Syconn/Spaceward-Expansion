@@ -25,9 +25,6 @@ public record ClientBoundUpdatePipeCache(Map<UUID, Set<BlockPos>> data) implemen
         context.enqueueWork(() -> {
             PipeNetworkRenderer.requestedRefresh = true;
             PipeNetworkRenderer.PIPE_RENDERS = message.data;
-            List<UUID> remove = new ArrayList<>();
-            for (UUID uuid : PipeNetworkRenderer.COLORS.keySet()) if (!message.data.containsKey(uuid)) remove.add(uuid);
-            remove.forEach(PipeNetworkRenderer.COLORS::remove);
         });
     }
 }

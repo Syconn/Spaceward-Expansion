@@ -36,7 +36,8 @@ public class BaseFluidPipe extends AbstractPipeBlock {
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel instanceof ServerLevel sl) {
 //            PipeNetworks.get(sl).fixList();
-            System.out.println(PipeNetworks.get(sl).getDataMap());
+//            System.out.println(PipeNetworks.get(sl).getDataMap());
+            return InteractionResult.CONSUME;
         }
         return InteractionResult.PASS;
     }

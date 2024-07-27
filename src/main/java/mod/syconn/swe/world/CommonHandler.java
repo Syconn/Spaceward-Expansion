@@ -88,14 +88,14 @@ public class CommonHandler {
     }
 
     public static void playerJoined(PlayerEvent.PlayerLoggedInEvent event) {
-        if (FMLEnvironment.dist.isDedicatedServer() && event.getEntity() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerJoined(event), sp);
+        if (event.getEntity() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerJoined(event), sp);
     }
 
     public static void playerLeft(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (FMLEnvironment.dist.isDedicatedServer() && event.getEntity() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerLeft(event), sp);
+        if (event.getEntity() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerLeft(event), sp);
     }
 
     public static void playerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (FMLEnvironment.dist.isDedicatedServer() && event.getEntity() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerChangedDimension(event), sp);
+        if (event.getEntity() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerChangedDimension(event), sp);
     }
 }

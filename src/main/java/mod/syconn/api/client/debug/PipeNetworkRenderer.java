@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.FastColor;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -27,23 +28,22 @@ import java.util.UUID;
 public class PipeNetworkRenderer {
 
     public static Map<UUID, Set<BlockPos>> PIPE_RENDERS = new HashMap<>();
-    public static final Map<UUID, Integer> COLORS = new HashMap<>();
     public static boolean requestedRefresh = false;
     private static VertexBuffer vertexBuffer;
     private static int color = 0;
 
     public static @Nullable CustomPacketPayload playerJoined(PlayerEvent.PlayerLoggedInEvent event) {
-        if (FMLEnvironment.dist.isDedicatedServer() && event.getEntity().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(PipeNetworks.get(sl).getDataMap());
+        if (event.getEntity().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(PipeNetworks.get(sl).getDataMap());
         return null;
     }
 
     public static @Nullable CustomPacketPayload playerLeft(PlayerEvent.PlayerLoggedOutEvent event) {
-        if (FMLEnvironment.dist.isDedicatedServer() && event.getEntity().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(new HashMap<>());
+        if (event.getEntity().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(new HashMap<>());
         return null;
     }
 
     public static @Nullable CustomPacketPayload playerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-        if (FMLEnvironment.dist.isDedicatedServer() && event.getEntity().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(PipeNetworks.get(sl).getDataMap());
+        if (event.getEntity().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(PipeNetworks.get(sl).getDataMap());
         return null;
     }
 
@@ -59,14 +59,7 @@ public class PipeNetworkRenderer {
 
                 var opacity = 1F;
                 PIPE_RENDERS.forEach((uuid, positionList) -> {
-                    int color;
-                    if (COLORS.containsKey(uuid)) color = COLORS.get(uuid);
-                    else {
-                        color = DyeColor.byId(PipeNetworkRenderer.color).getFireworkColor();
-                        COLORS.put(uuid, color);
-                        PipeNetworkRenderer.color++;
-                        if (PipeNetworkRenderer.color > 6) PipeNetworkRenderer.color = 0;
-                    }
+                    int color = uuidToRGBA(uuid);
                     positionList.forEach(pos -> {
                         final float size = 1.0f;
                         final int x = pos.getX(), y = pos.getY(), z = pos.getZ();
@@ -149,5 +142,13 @@ public class PipeNetworkRenderer {
                 RenderSystem.applyModelViewMatrix();
             }
         }
+    }
+
+    public static int uuidToRGBA(UUID uuid) {
+        long mostSigBits = uuid.getMostSignificantBits();
+        int r = (int) ((mostSigBits >> 32) & 0xFF);
+        int g = (int) ((mostSigBits >> 16) & 0xFF);
+        int b = (int) (mostSigBits & 0xFF);
+        return FastColor.ARGB32.color(r, g, b);
     }
 }
