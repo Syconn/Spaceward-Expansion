@@ -71,10 +71,6 @@ public class PipeNetwork {
         }
     }
 
-    public boolean hasInteractionPoint(BlockPos pos) {
-        return executor.hasInteractionPoint(pos);
-    }
-
     private void addToExecutor(BlockState state, BlockPos pos) {
         if (state.getValue(AbstractPipeBlock.UP).isInteractionPoint()) executor.addInteractionPoint(pos, Direction.UP, state.getValue(AbstractPipeBlock.UP));
         if (state.getValue(AbstractPipeBlock.DOWN).isInteractionPoint()) executor.addInteractionPoint(pos, Direction.DOWN, state.getValue(AbstractPipeBlock.DOWN));
@@ -151,10 +147,6 @@ public class PipeNetwork {
             interactionPoint.remove(pos);
             imports.remove(pos);
             exports.remove(pos);
-        }
-
-        public boolean hasInteractionPoint(BlockPos pos) {
-            return interactionPoint.contains(pos);
         }
 
         public void generateTasks() { // MAY BE TO INTENSIVE

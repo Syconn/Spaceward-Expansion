@@ -109,25 +109,6 @@ public class PipeNetworks extends SavedData {
         super.setDirty();
     }
 
-    public boolean hasInteractionPoint(UUID uuid, BlockPos pos) {
-        if (networks.containsKey(uuid)) return networks.get(uuid).hasInteractionPoint(pos);
-        return false;
-    }
-
-    public void fixList() {
-        List<UUID> removeElement = new ArrayList<>();
-        for (Map.Entry<UUID, PipeNetwork> entry : networks.entrySet()) {
-            if (entry.getValue().getPipes().isEmpty()) removeElement.add(entry.getKey());
-            else {
-                entry.getValue().getPipes().forEach(pos -> {
-                    if (!(level.getBlockEntity(pos) instanceof AbstractPipeBE)) removeElement.add(entry.getKey());
-                });
-            }
-        }
-        removeElement.forEach(networks::remove);
-        setDirty();
-    }
-
     public Map<UUID, Set<BlockPos>> getDataMap() {
         Map<UUID, Set<BlockPos>> dataMap = new HashMap<>();
         networks.forEach(((uuid, network) -> dataMap.put(uuid, Sets.newHashSet(network.getPipes()))));
