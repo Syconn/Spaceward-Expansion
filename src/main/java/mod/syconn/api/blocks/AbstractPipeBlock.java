@@ -101,7 +101,8 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
 
     private VoxelShape combineShape(VoxelShape shape, PipeConnectionTypes ConnectionType, VoxelShape cableShape, VoxelShape blockShape) {
         if (ConnectionType == CABLE) return Shapes.join(shape, cableShape, BooleanOp.OR);
-        else if (ConnectionType == INPUT || ConnectionType == OUTPUT) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
+//        else if (ConnectionType == INPUT || ConnectionType == OUTPUT) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
+        else if (ConnectionType == BLOCK) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
         else return shape;
     }
 

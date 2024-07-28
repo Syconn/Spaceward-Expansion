@@ -95,6 +95,7 @@ public class ClientHandler {
     }
 
     public static void renderBlockOutline(RenderLevelStageEvent event) {
+//      TODO EASY TOGGLE
         PipeNetworkRenderer.renderBlockOutline(event);
     }
 }

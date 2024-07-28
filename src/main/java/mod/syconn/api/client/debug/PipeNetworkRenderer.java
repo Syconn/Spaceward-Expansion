@@ -49,7 +49,7 @@ public class PipeNetworkRenderer {
 
     @OnlyIn(Dist.CLIENT)
     public static void renderBlockOutline(RenderLevelStageEvent event) {
-        if (RenderLevelStageEvent.Stage.AFTER_LEVEL == event.getStage()) {
+        if (RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS == event.getStage()) {
             if (vertexBuffer == null || requestedRefresh) {
                 requestedRefresh = false;
                 vertexBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);

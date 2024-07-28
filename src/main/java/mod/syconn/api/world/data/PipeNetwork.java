@@ -7,7 +7,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -39,7 +41,7 @@ public class PipeNetwork {
 
     public PipeNetwork(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
         this.networkID = tag.getUUID("uuid");
-        this.executor = new PipeExecutor(this, tag.getCompound("executor"), provider);
+        this.executor = new PipeExecutor(this, tag.getCompound("executor"));
         this.pipes = NbtHelper.readPositionList(tag.getCompound("pipes"));
     }
 
@@ -69,6 +71,10 @@ public class PipeNetwork {
         }
     }
 
+    public boolean hasInteractionPoint(BlockPos pos) {
+        return executor.hasInteractionPoint(pos);
+    }
+
     private void addToExecutor(BlockState state, BlockPos pos) {
         if (state.getValue(AbstractPipeBlock.UP).isInteractionPoint()) executor.addInteractionPoint(pos, Direction.UP, state.getValue(AbstractPipeBlock.UP));
         if (state.getValue(AbstractPipeBlock.DOWN).isInteractionPoint()) executor.addInteractionPoint(pos, Direction.DOWN, state.getValue(AbstractPipeBlock.DOWN));
@@ -96,30 +102,59 @@ public class PipeNetwork {
 
     static class PipeExecutor {
         private final PipeNetwork network;
-        private final Map<BlockPos, List<Direction>> imports = new HashMap<>();
-        private final Map<BlockPos, List<Direction>> exports = new HashMap<>();
-        private final List<Task> tasks = new ArrayList<>();
+        private final Map<BlockPos, List<Direction>> imports;
+        private final Map<BlockPos, List<Direction>> exports;
+        private final List<BlockPos> interactionPoint;
+        private final List<Task> tasks;
         private Task lastTask = null;
         private int activeTask = 0;
 
         public PipeExecutor(PipeNetwork network) {
             this.network = network;
+            imports = new HashMap<>();
+            exports = new HashMap<>();
+            interactionPoint = new ArrayList<>();
+            tasks = new ArrayList<>();
         }
 
-        public PipeExecutor(PipeNetwork network, @NotNull CompoundTag nbt, HolderLookup.Provider provider) {
+        public PipeExecutor(PipeNetwork network, CompoundTag tag) {
             this.network = network;
+            Map<BlockPos, List<Direction>> imports = new HashMap<>();
+            tag.getList("imports", Tag.TAG_COMPOUND).forEach(nbt -> {
+                CompoundTag data = (CompoundTag) nbt;
+                imports.put(NbtUtils.readBlockPos(data, "pos").get(), NbtHelper.readDirectionList(data.getCompound("directions")));
+            });
+            this.imports = imports;
+            Map<BlockPos, List<Direction>> exports = new HashMap<>();
+            tag.getList("exports", Tag.TAG_COMPOUND).forEach(nbt -> {
+                CompoundTag data = (CompoundTag) nbt;
+                exports.put(NbtUtils.readBlockPos(data, "pos").get(), NbtHelper.readDirectionList(data.getCompound("directions")));
+            });
+            this.exports = exports;
+            this.interactionPoint = NbtHelper.readPositionList(tag.getCompound("interaction_point"));
+            List<Task> tasks = new ArrayList<>();
+            tag.getList("tasks", Tag.TAG_COMPOUND).forEach(nbt -> tasks.add(new Task((CompoundTag) nbt)));
+            this.tasks = tasks;
+            if (tag.contains("last_task")) this.lastTask = new Task(tag.getCompound("last_task"));
+            this.activeTask = tag.getInt("active_task");
         }
 
         public void addInteractionPoint(BlockPos pos, Direction direction, PipeConnectionTypes type) {
             if (network.pipes.contains(pos)) {
+                if (type.isInteractionPoint() && !interactionPoint.contains(pos)) interactionPoint.add(pos);
                 if (type.isImport()) addImport(pos, direction);
                 if (type.isExport()) addExport(pos, direction);
             }
         }
 
         public void resetInteractionPoint(BlockPos pos) {
+            interactionPoint.remove(pos);
             imports.remove(pos);
             exports.remove(pos);
+        }
+
+        public boolean hasInteractionPoint(BlockPos pos) {
+            return interactionPoint.contains(pos);
         }
 
         public void generateTasks() { // MAY BE TO INTENSIVE
@@ -141,12 +176,12 @@ public class PipeNetwork {
 
         private void addImport(BlockPos pos, Direction direction) {
             if (imports.containsKey(pos) && !imports.get(pos).contains(direction)) imports.get(pos).add(direction);
-            else if (imports.containsKey(pos)) imports.put(pos, Arrays.asList(direction));
+            else if (!imports.containsKey(pos)) imports.put(pos, Arrays.asList(direction));
         }
 
         private void addExport(BlockPos pos, Direction direction) {
             if (exports.containsKey(pos) && !exports.get(pos).contains(direction)) exports.get(pos).add(direction);
-            else if (exports.containsKey(pos)) exports.put(pos, Arrays.asList(direction));
+            else if (!exports.containsKey(pos)) exports.put(pos, Arrays.asList(direction));
         }
 
         private Task generateTask(BlockPos start, BlockPos stop) {
@@ -155,6 +190,28 @@ public class PipeNetwork {
 
         public CompoundTag serializeNBT() {
             CompoundTag tag = new CompoundTag();
+            ListTag importList = new ListTag();
+            imports.forEach(((pos, directions) -> {
+                CompoundTag data = new CompoundTag();
+                data.put("pos", NbtUtils.writeBlockPos(pos));
+                data.put("directions", NbtHelper.writeDirectionList(directions));
+                importList.add(data);
+            }));
+            tag.put("imports", importList);
+            ListTag exportList = new ListTag();
+            imports.forEach(((pos, directions) -> {
+                CompoundTag data = new CompoundTag();
+                data.put("pos", NbtUtils.writeBlockPos(pos));
+                data.put("directions", NbtHelper.writeDirectionList(directions));
+                exportList.add(data);
+            }));
+            tag.put("exports", exportList);
+            tag.put("interaction_point", NbtHelper.writePositionList(interactionPoint));
+            ListTag taskList = new ListTag();
+            tasks.forEach(task -> taskList.add(task.serializeNBT()));
+            tag.put("tasks", taskList);
+            if (lastTask != null) tag.put("last_task", lastTask.serializeNBT());
+            tag.putInt("active_task", this.activeTask);
             return tag;
         }
     }

@@ -18,7 +18,8 @@ public class DataGenHelper {
         BlockModelBuilder model = gen.models().getBuilder(name)
                 .parent(gen.models().getExistingFile(ResourceLocation.parse("cube"))).renderType("cutout")
                 .customLoader((builder, helper) -> new PipeLoaderBuilder(PipeModelLoader.GENERATOR_LOADER, builder, helper, false, .3, new String[]{"block/loader/" + name + "/connector",
-                        "block/loader/" + name + "/normal", "block/loader/" + name + "/none", "block/loader/" + name + "/end", "block/loader/" + name + "/corner", "block/loader/" + name + "/three", "block/loader/" + name + "/cross", "block/loader/" + name + "/side"}))
+                        "block/loader/" + name + "/normal", "block/loader/" + name + "/none", "block/loader/" + name + "/end", "block/loader/" + name + "/corner", "block/loader/" + name + "/three", "block/loader/" + name + "/cross",
+                        "block/loader/" + name + "/side_block", "block/loader/" + name + "/side_import", "block/loader/" + name + "/side_export", "block/loader/" + name + "/side_both"}))
                 .end();
         gen.simpleBlockWithItem(block, model);
     }

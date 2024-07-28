@@ -49,12 +49,16 @@ public class PipeNetworks extends SavedData {
         return null;
     }
 
-    public void removePipe(BlockPos pos) {
-        if (level.getBlockEntity(pos) instanceof AbstractPipeBE pipeBE && networks.containsKey(pipeBE.getNetworkID())) {
-            if (networks.get(pipeBE.getNetworkID()).removePipe(pos)) networks.remove(pipeBE.getNetworkID());
-            else validate(pipeBE.getNetworkID());
+    public void removePipe(UUID uuid, BlockPos pos) {
+        if (networks.containsKey(uuid)) {
+            if (networks.get(uuid).removePipe(pos)) networks.remove(uuid);
+            else validate(uuid);
         }
         setDirty();
+    }
+
+    public void updatePipe(UUID uuid, BlockPos pos) {
+        if (networks.containsKey(uuid)) networks.get(uuid).updatePipe(level, pos);
     }
 
     private List<BlockPos> conjoin(BlockPos pos, List<UUID> connectionUUIDS) {
@@ -103,6 +107,11 @@ public class PipeNetworks extends SavedData {
     public void setDirty() {
         renderPipes(level);
         super.setDirty();
+    }
+
+    public boolean hasInteractionPoint(UUID uuid, BlockPos pos) {
+        if (networks.containsKey(uuid)) return networks.get(uuid).hasInteractionPoint(pos);
+        return false;
     }
 
     public void fixList() {
