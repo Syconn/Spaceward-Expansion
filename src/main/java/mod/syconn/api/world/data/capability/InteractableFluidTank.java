@@ -75,7 +75,7 @@ public class InteractableFluidTank extends FluidTank implements IFluidHandlerInt
     }
 
     public CompoundTag writeToNBT(HolderLookup.Provider lookupProvider, CompoundTag nbt) {
-        super.writeToNBT(lookupProvider, nbt);
+        CompoundTag tag = super.writeToNBT(lookupProvider, nbt);
         ListTag listTag = new ListTag();
         for (Map.Entry<Direction, Interaction> entry : sided_interactions.entrySet()) {
             CompoundTag data = new CompoundTag();
@@ -83,7 +83,7 @@ public class InteractableFluidTank extends FluidTank implements IFluidHandlerInt
             data.putInt("interaction", entry.getValue().i);
             listTag.add(data);
         }
-        nbt.put("sided_interactions", listTag);
-        return nbt;
+        tag.put("sided_interactions", listTag);
+        return tag;
     }
 }

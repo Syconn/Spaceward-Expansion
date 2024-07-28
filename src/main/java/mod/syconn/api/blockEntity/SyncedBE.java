@@ -50,6 +50,6 @@ public abstract class SyncedBE extends BlockEntity {
 
     public void markDirty() {
         setChanged();
-        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
     }
 }

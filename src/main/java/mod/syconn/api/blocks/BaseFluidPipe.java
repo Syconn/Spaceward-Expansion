@@ -30,13 +30,16 @@ public class BaseFluidPipe extends AbstractPipeBlock {
     }
 
     protected PipeConnectionTypes getConnectorType(BlockGetter level, BlockPos thisPos, BlockPos connectionPos, Direction facing) {
-        if (level instanceof ILevelExtension ext && ext.getCapability(Capabilities.FluidHandler.BLOCK, connectionPos, facing.getOpposite()) != null)
-            return PipeConnectionTypes.BLOCK;
+        if (level instanceof ILevelExtension ext && ext.getCapability(Capabilities.FluidHandler.BLOCK, connectionPos, facing.getOpposite()) != null) return PipeConnectionTypes.BLOCK;
         return level.getBlockEntity(connectionPos) instanceof AbstractPipeBE ? PipeConnectionTypes.CABLE : PipeConnectionTypes.NONE;
     }
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide) return InteractionResult.SUCCESS;
+        if (!pLevel.isClientSide && pLevel instanceof ServerLevel sl) {
+            PipeNetworks.get(sl).fixList();
+            System.out.println(PipeNetworks.get(sl).getDataMap());
+            return InteractionResult.SUCCESS;
+        }
         if (FMLEnvironment.dist.isClient() && pLevel.getBlockEntity(pPos) instanceof BaseFluidPipeBE pipeBE && pipeBE.hasMenu()) {
             Minecraft.getInstance().setScreen(new FluidPipeScreen(pipeBE));
             return InteractionResult.SUCCESS;

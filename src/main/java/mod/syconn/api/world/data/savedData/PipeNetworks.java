@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,6 +25,7 @@ import java.util.*;
 public class PipeNetworks extends SavedData {
 
     private final Map<UUID, PipeNetwork> networks = new HashMap<>();
+    private int tick = 0;
     private final ServerLevel level;
 
     public PipeNetworks(ServerLevel level) {
@@ -59,6 +61,7 @@ public class PipeNetworks extends SavedData {
 
     public void updatePipe(UUID uuid, BlockPos pos) {
         if (networks.containsKey(uuid)) networks.get(uuid).updatePipe(level, pos);
+        setDirty();
     }
 
     private List<BlockPos> conjoin(BlockPos pos, List<UUID> connectionUUIDS) {
@@ -96,6 +99,30 @@ public class PipeNetworks extends SavedData {
         positions.forEach(pos -> { if (level.getBlockEntity(pos) instanceof AbstractPipeBE pipeBE) pipeBE.setNetworkID(networkID); });
     }
 
+    private void tick() {
+        tick++;
+        if (tick > 100) {
+            fixList();
+            networks.forEach((uuid, network) -> network.tick(level));
+            tick = 0;
+            setDirty();
+        }
+    }
+
+    public void fixList() {
+        List<UUID> removeElement = new ArrayList<>();
+        for (Map.Entry<UUID, PipeNetwork> entry : networks.entrySet()) {
+            if (entry.getValue().getPipes().isEmpty()) removeElement.add(entry.getKey());
+            else {
+                entry.getValue().getPipes().forEach(pos -> {
+                    if (!(level.getBlockEntity(pos) instanceof AbstractPipeBE)) removeElement.add(entry.getKey());
+                });
+            }
+        }
+        removeElement.forEach(networks::remove);
+        setDirty();
+    }
+
     private void renderPipes(Level level) {
         if (render() && level instanceof ServerLevel sl) sl.getPlayers(LivingEntity::isAlive).forEach(serverPlayer -> Channel.sendToPlayer(new ClientBoundUpdatePipeCache(getDataMap()), serverPlayer));
     }
@@ -124,6 +151,7 @@ public class PipeNetworks extends SavedData {
             list.add(tag);
         }
         pTag.put("networks", list);
+        pTag.putInt("tick", tick);
         return pTag;
     }
 
@@ -132,6 +160,7 @@ public class PipeNetworks extends SavedData {
         if (pTag.contains("networks")) pTag.getList("networks", Tag.TAG_COMPOUND).forEach(nbt -> {
             CompoundTag tag = (CompoundTag) nbt;
             pipeNetworks.networks.put(tag.getUUID("uuid"), PipeNetwork.deserializeNBT(tag.getCompound("network"), lookupProvider));
+            pipeNetworks.tick = pTag.getInt("tick");
         });
         return pipeNetworks;
     }
@@ -142,5 +171,9 @@ public class PipeNetworks extends SavedData {
 
     public static PipeNetworks get(ServerLevel server) {
         return server.getDataStorage().computeIfAbsent(new Factory<>(() -> create(server), (t, p) -> load(server, t, p)), "pipe_network");
+    }
+
+    public static void onTick(LevelTickEvent.Post event) {
+        if (event.getLevel() instanceof ServerLevel sl) get(sl).tick();
     }
 }

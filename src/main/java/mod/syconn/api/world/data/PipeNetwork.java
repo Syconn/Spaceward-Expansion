@@ -10,9 +10,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -80,6 +83,10 @@ public class PipeNetwork {
         if (state.getValue(AbstractPipeBlock.WEST).isInteractionPoint()) executor.addInteractionPoint(pos, Direction.WEST, state.getValue(AbstractPipeBlock.WEST));
     }
 
+    public void tick(ServerLevel level) {
+        executor.runTasks(level, 15);
+    }
+
     public List<BlockPos> getPipes() {
         return pipes;
     }
@@ -140,6 +147,7 @@ public class PipeNetwork {
                 if (type.isInteractionPoint() && !interactionPoint.contains(pos)) interactionPoint.add(pos);
                 if (type.isImport()) addImport(pos, direction);
                 if (type.isExport()) addExport(pos, direction);
+                generatePositionalTask(pos, direction, type);
             }
         }
 
@@ -147,37 +155,61 @@ public class PipeNetwork {
             interactionPoint.remove(pos);
             imports.remove(pos);
             exports.remove(pos);
+            removeTasksForPosition(pos, PipeConnectionTypes.BOTH);
         }
 
-        public void generateTasks() { // MAY BE TO INTENSIVE
-
+        private void generatePositionalTask(BlockPos pos, Direction direction, PipeConnectionTypes type) {
+            removeTasksForPosition(pos, type);
+            if (type.isImport()) {
+                for (Map.Entry<BlockPos, List<Direction>> importEntry : imports.entrySet()) {
+                    for (Direction importDirection : importEntry.getValue()) {
+                        if (pos.equals(importEntry.getValue()) && direction.equals(importDirection)) continue;
+                        tasks.add(new Task(pos, direction, importEntry.getKey(), importDirection, network.pipes)); // TODO SPECIFIC PATH MAYBE????
+                    }
+                }
+            }
+            if (type.isExport()) {
+                for (Map.Entry<BlockPos, List<Direction>> exportEntry : exports.entrySet()) {
+                    for (Direction exportDirection : exportEntry.getValue()) {
+                        if (pos.equals(exportEntry.getValue()) && direction.equals(exportDirection)) continue;
+                        tasks.add(new Task(exportEntry.getKey(), exportDirection, pos, direction, network.pipes)); // TODO SPECIFIC PATH MAYBE????
+                    }
+                }
+            }
         }
 
         public void runTasks(Level level, int transferRate) {
             if (!tasks.isEmpty()) {
-                Task currentTask = lastTask == null || activeTask > tasks.size() ? tasks.get(0) : tasks.get(activeTask);
+                Task currentTask = lastTask == null || activeTask >= tasks.size() ? tasks.get(0) : tasks.get(activeTask);
                 if (currentTask != null) {
                     Task.TaskResult result = currentTask.run(level, lastTask, transferRate);
                     if (result.skip()) activeTask++;
-                    if (result.failedLine()) tasks.set(activeTask, generateTask(currentTask.startPos, currentTask.endPos));
+                    if (result.failedLine()) tasks.set(activeTask, generateSpecificTask(currentTask.startPos, currentTask.startDirection, currentTask.endPos, currentTask.endDirection));
                     if (result.failed()) tasks.remove(currentTask);
                     lastTask = currentTask;
                 }
             }
         }
 
+        private Task generateSpecificTask(BlockPos startPosition, Direction startDirection, BlockPos stopPosition, Direction stopDirection) { // TODO SPECIFIC PATH MAYBE????
+            return new Task(startPosition, startDirection, stopPosition, stopDirection, network.pipes);
+        }
+
+        private void removeTasksForPosition(BlockPos pos, PipeConnectionTypes type) {
+            List<Task> removeTask = new ArrayList<>();
+            tasks.forEach(task -> { if (task.hasPoint(pos, type)) removeTask.add(task); });
+            removeTask.forEach(tasks::remove);
+        }
+
         private void addImport(BlockPos pos, Direction direction) {
             if (imports.containsKey(pos) && !imports.get(pos).contains(direction)) imports.get(pos).add(direction);
             else if (!imports.containsKey(pos)) imports.put(pos, Arrays.asList(direction));
+
         }
 
         private void addExport(BlockPos pos, Direction direction) {
             if (exports.containsKey(pos) && !exports.get(pos).contains(direction)) exports.get(pos).add(direction);
             else if (!exports.containsKey(pos)) exports.put(pos, Arrays.asList(direction));
-        }
-
-        private Task generateTask(BlockPos start, BlockPos stop) {
-            return null;
         }
 
         public CompoundTag serializeNBT() {
@@ -230,7 +262,7 @@ public class PipeNetwork {
             this.endPos = NbtUtils.readBlockPos(tag, "endpos").get();
             this.endDirection = Direction.from3DDataValue(tag.getInt("enddirection"));
             this.directions = NbtHelper.readPositionList(tag.getCompound("directions"));
-            this.result = TaskResult.fromNumber(tag.getInt("result"));
+            if (tag.contains("result")) this.result = TaskResult.fromNumber(tag.getInt("result"));
         }
 
         private TaskResult setResultT(TaskResult result) {
@@ -242,10 +274,8 @@ public class PipeNetwork {
             IFluidHandler startHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, startPos.relative(startDirection), startDirection.getOpposite());
             IFluidHandler endHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, endPos.relative(endDirection), endDirection.getOpposite());
             if (startHandler == null || endHandler == null) return setResultT(TaskResult.FAILED);
-            if (!endHandler.isFluidValid(0, startHandler.getFluidInTank(0)) || startHandler.getFluidInTank(0).isEmpty()
-                    || endHandler.getFluidInTank(0).getAmount() >= endHandler.getTankCapacity(0)) return setResultT(TaskResult.SKIP);
-
-            if (lastRunTask != this) {
+            if (!endHandler.isFluidValid(0, startHandler.getFluidInTank(0)) || startHandler.getFluidInTank(0).isEmpty() || endHandler.getFluidInTank(0).getAmount() >= endHandler.getTankCapacity(0)) return setResultT(TaskResult.SKIP);
+            if (lastRunTask != null && !lastRunTask.equals(this)) {
                 endLastTask(level, lastRunTask);
                 for (BlockPos pos : directions) {
                     BlockState state = level.getBlockState(pos);
@@ -253,9 +283,11 @@ public class PipeNetwork {
                     // TODO SET FLUID LINE FLUID DISPLAY
                 }
             }
-
-            int fill = endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(Math.min(transferRate, startHandler.getFluidInTank(0).getAmount())), IFluidHandler.FluidAction.SIMULATE);
-            startHandler.drain(endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(fill), IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+//            int fill = endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(Math.min(transferRate, startHandler.getFluidInTank(0).getAmount())), IFluidHandler.FluidAction.SIMULATE);
+//            startHandler.drain(endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(fill), IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+//            System.out.println(startHandler.drain(15, IFluidHandler.FluidAction.EXECUTE));
+            System.out.println(endHandler.fill(new FluidStack(Fluids.WATER, 15), IFluidHandler.FluidAction.EXECUTE));
+            int fill = 1;
             return fill > 0 ? setResultT(TaskResult.SUCCESS) : setResultT(TaskResult.SKIP);
         }
 
@@ -267,6 +299,10 @@ public class PipeNetwork {
             }
         }
 
+        public boolean hasPoint(BlockPos pos, PipeConnectionTypes type) {
+            return startPos.equals(pos) && type.isImport() || endPos.equals(pos) && type.isExport();
+        }
+
         public CompoundTag serializeNBT() {
             CompoundTag tag = new CompoundTag();
             tag.put("startpos", NbtUtils.writeBlockPos(startPos));
@@ -274,7 +310,7 @@ public class PipeNetwork {
             tag.put("endpos", NbtUtils.writeBlockPos(endPos));
             tag.putInt("enddirection", endDirection.get3DDataValue());
             tag.put("directions", NbtHelper.writePositionList(directions));
-            tag.putInt("result", result.number);
+            if (result != null) tag.putInt("result", result.number);
             return tag;
         }
 
