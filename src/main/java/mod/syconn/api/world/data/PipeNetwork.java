@@ -84,7 +84,7 @@ public class PipeNetwork {
     }
 
     public void tick(ServerLevel level) {
-        executor.runTasks(level, 15);
+        executor.runTasks(level, 250);
     }
 
     public List<BlockPos> getPipes() {
@@ -160,18 +160,18 @@ public class PipeNetwork {
 
         private void generatePositionalTask(BlockPos pos, Direction direction, PipeConnectionTypes type) {
             removeTasksForPosition(pos, type);
-            if (type.isImport()) {
+            if (type.isExport()) {
                 for (Map.Entry<BlockPos, List<Direction>> importEntry : imports.entrySet()) {
                     for (Direction importDirection : importEntry.getValue()) {
-                        if (pos.equals(importEntry.getValue()) && direction.equals(importDirection)) continue;
+                        if (pos.equals(importEntry.getKey()) && direction.equals(importDirection)) continue;
                         tasks.add(new Task(pos, direction, importEntry.getKey(), importDirection, network.pipes)); // TODO SPECIFIC PATH MAYBE????
                     }
                 }
             }
-            if (type.isExport()) {
+            if (type.isImport()) {
                 for (Map.Entry<BlockPos, List<Direction>> exportEntry : exports.entrySet()) {
                     for (Direction exportDirection : exportEntry.getValue()) {
-                        if (pos.equals(exportEntry.getValue()) && direction.equals(exportDirection)) continue;
+                        if (pos.equals(exportEntry.getKey()) && direction.equals(exportDirection)) continue;
                         tasks.add(new Task(exportEntry.getKey(), exportDirection, pos, direction, network.pipes)); // TODO SPECIFIC PATH MAYBE????
                     }
                 }
@@ -204,7 +204,6 @@ public class PipeNetwork {
         private void addImport(BlockPos pos, Direction direction) {
             if (imports.containsKey(pos) && !imports.get(pos).contains(direction)) imports.get(pos).add(direction);
             else if (!imports.containsKey(pos)) imports.put(pos, Arrays.asList(direction));
-
         }
 
         private void addExport(BlockPos pos, Direction direction) {
@@ -283,11 +282,8 @@ public class PipeNetwork {
                     // TODO SET FLUID LINE FLUID DISPLAY
                 }
             }
-//            int fill = endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(Math.min(transferRate, startHandler.getFluidInTank(0).getAmount())), IFluidHandler.FluidAction.SIMULATE);
-//            startHandler.drain(endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(fill), IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
-//            System.out.println(startHandler.drain(15, IFluidHandler.FluidAction.EXECUTE));
-            System.out.println(endHandler.fill(new FluidStack(Fluids.WATER, 15), IFluidHandler.FluidAction.EXECUTE));
-            int fill = 1;
+            int fill = endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(Math.min(transferRate, startHandler.getFluidInTank(0).getAmount())), IFluidHandler.FluidAction.SIMULATE);
+            startHandler.drain(endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(fill), IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
             return fill > 0 ? setResultT(TaskResult.SUCCESS) : setResultT(TaskResult.SKIP);
         }
 

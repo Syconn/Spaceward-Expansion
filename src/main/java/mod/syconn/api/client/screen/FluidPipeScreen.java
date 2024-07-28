@@ -33,6 +33,7 @@ public class FluidPipeScreen extends Screen {
         int i = 0;
         for (Direction direction : Direction.values()) {
             PipeConnectionTypes type = pipe.getConnectionType(direction);
+            interactions[direction.get3DDataValue()] = Interaction.NONE;
             if (type.isInteractionPoint()) {
                 Interaction interaction = Interaction.fromPipeConnection(type);
                 int xMove = i < 4 ? i * (boxSize + 18) : (i - 3) * (boxSize + 18);
@@ -57,7 +58,6 @@ public class FluidPipeScreen extends Screen {
 
     private void interactionButton(int i) {
         setSpriteButton(interactionButtons[i], interactions[i] = interactions[i].rotate());
-        Channel.sendToServer(new ServerBoundUpdatePipeState(pipe.getBlockPos(), Direction.from3DDataValue(i), interactions[i].type));
     }
 
     private void setSpriteButton(SpriteButton button, Interaction interaction) {
@@ -65,11 +65,20 @@ public class FluidPipeScreen extends Screen {
         button.setHoverInfo(Component.literal(interaction.msg));
     }
 
+    public void onClose() {
+        super.onClose();
+        for (Direction direction : Direction.values()) {
+            if (interactions[direction.get3DDataValue()] != Interaction.NONE)
+                Channel.sendToServer(new ServerBoundUpdatePipeState(pipe.getBlockPos(), Direction.from3DDataValue(direction.get3DDataValue()), interactions[direction.get3DDataValue()].type));
+        }
+    }
+
     protected enum Interaction {
         IMPORT(232, 26, "Input Interface", PipeConnectionTypes.INPUT),
         EXPORT(206, 26, "Export Interface", PipeConnectionTypes.OUTPUT),
         BOTH(180, 26, "Input & Export Interface", PipeConnectionTypes.BOTH),
-        BLOCK(180, 0, "Block Interface", PipeConnectionTypes.BLOCK);
+        BLOCK(180, 0, "Block Interface", PipeConnectionTypes.BLOCK),
+        NONE(0, 0, "", PipeConnectionTypes.NONE);
 
         final int xLoc, yLoc;
         final String msg;
@@ -88,6 +97,7 @@ public class FluidPipeScreen extends Screen {
                 case EXPORT -> BOTH;
                 case BOTH -> BLOCK;
                 case BLOCK -> IMPORT;
+                case NONE -> NONE;
             };
         }
 

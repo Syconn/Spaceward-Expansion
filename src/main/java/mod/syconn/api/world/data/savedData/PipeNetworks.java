@@ -24,7 +24,7 @@ import java.util.*;
 
 public class PipeNetworks extends SavedData {
 
-    private final Map<UUID, PipeNetwork> networks = new HashMap<>();
+    private final Map<UUID, PipeNetwork> networks = new HashMap<>(); // TODO TEST BREAKING PIPES WITH PIPE EXECUTOR
     private int tick = 0;
     private final ServerLevel level;
 
@@ -101,7 +101,7 @@ public class PipeNetworks extends SavedData {
 
     private void tick() {
         tick++;
-        if (tick > 100) {
+        if (tick > 2) {
             fixList();
             networks.forEach((uuid, network) -> network.tick(level));
             tick = 0;
