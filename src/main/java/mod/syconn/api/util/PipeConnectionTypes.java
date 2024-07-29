@@ -1,6 +1,7 @@
 package mod.syconn.api.util;
 
 import io.netty.buffer.ByteBuf;
+import mod.syconn.api.blocks.AbstractPipeBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

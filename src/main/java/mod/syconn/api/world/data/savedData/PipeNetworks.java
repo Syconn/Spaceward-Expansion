@@ -24,7 +24,7 @@ import java.util.*;
 
 public class PipeNetworks extends SavedData {
 
-    private final Map<UUID, PipeNetwork> networks = new HashMap<>(); // TODO TEST BREAKING PIPES WITH PIPE EXECUTOR
+    private final Map<UUID, PipeNetwork> networks = new HashMap<>(); // TODO Breaking Network Resets BlockState
     private int tick = 0;
     private final ServerLevel level;
 
@@ -159,7 +159,7 @@ public class PipeNetworks extends SavedData {
         PipeNetworks pipeNetworks = create(serverLevel);
         if (pTag.contains("networks")) pTag.getList("networks", Tag.TAG_COMPOUND).forEach(nbt -> {
             CompoundTag tag = (CompoundTag) nbt;
-            pipeNetworks.networks.put(tag.getUUID("uuid"), PipeNetwork.deserializeNBT(tag.getCompound("network"), lookupProvider));
+            pipeNetworks.networks.put(tag.getUUID("uuid"), PipeNetwork.deserializeNBT(tag.getCompound("network")));
             pipeNetworks.tick = pTag.getInt("tick");
         });
         return pipeNetworks;

@@ -5,7 +5,6 @@ import mod.syconn.api.util.NbtHelper;
 import mod.syconn.api.util.PipeConnectionTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
@@ -13,9 +12,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -42,7 +39,7 @@ public class PipeNetwork {
         addAllPipes(level, pipes);
     }
 
-    public PipeNetwork(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
+    public PipeNetwork(@NotNull CompoundTag tag) {
         this.networkID = tag.getUUID("uuid");
         this.executor = new PipeExecutor(this, tag.getCompound("executor"));
         this.pipes = NbtHelper.readPositionList(tag.getCompound("pipes"));
@@ -99,8 +96,8 @@ public class PipeNetwork {
         return tag;
     }
 
-    public static PipeNetwork deserializeNBT(@NotNull CompoundTag tag, HolderLookup.Provider provider) {
-        return new PipeNetwork(tag, provider);
+    public static PipeNetwork deserializeNBT(@NotNull CompoundTag tag) {
+        return new PipeNetwork(tag);
     }
 
     static class PipeExecutor {
@@ -180,14 +177,13 @@ public class PipeNetwork {
 
         public void runTasks(Level level, int transferRate) {
             if (!tasks.isEmpty()) {
-                Task currentTask = lastTask == null || activeTask >= tasks.size() ? tasks.get(0) : tasks.get(activeTask);
-                if (currentTask != null) {
-                    Task.TaskResult result = currentTask.run(level, lastTask, transferRate);
-                    if (result.skip()) activeTask++;
-                    if (result.failedLine()) tasks.set(activeTask, generateSpecificTask(currentTask.startPos, currentTask.startDirection, currentTask.endPos, currentTask.endDirection));
-                    if (result.failed()) tasks.remove(currentTask);
-                    lastTask = currentTask;
-                }
+                if (activeTask >= tasks.size()) activeTask = 0;
+                Task currentTask = tasks.get(activeTask);
+                Task.TaskResult result = currentTask.run(level, lastTask, transferRate);
+                if (result.skip()) activeTask++;
+                else if (result.failedLine()) tasks.set(activeTask, generateSpecificTask(currentTask.startPos, currentTask.startDirection, currentTask.endPos, currentTask.endDirection));
+                else if (result.failed()) tasks.remove(currentTask);
+                lastTask = currentTask;
             }
         }
 

@@ -120,7 +120,7 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
     public BlockState updateShape(BlockState state, @Nonnull Direction direction, @Nonnull BlockState neighbourState, @Nonnull LevelAccessor world, @Nonnull BlockPos current, @Nonnull BlockPos offset) {
         if (state.getValue(BlockStateProperties.WATERLOGGED))
             world.getFluidTicks().schedule(new ScheduledTick<>(Fluids.WATER, current, Fluids.WATER.getTickDelay(world), 0L));
-        return calculateState(world, current, state);
+        return updateState(world, current, state, direction);
     }
 
     public void setPlacedBy(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nullable LivingEntity placer, @Nonnull ItemStack stack) {
@@ -157,12 +157,27 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         return state.setValue(NORTH, north).setValue(SOUTH, south).setValue(WEST, west).setValue(EAST, east).setValue(UP, up).setValue(DOWN, down);
     }
 
+    protected BlockState updateState(LevelAccessor world, BlockPos pos, BlockState state, Direction direction) {
+        return state.setValue(fromDirection(direction), getConnectorType(world, pos, direction));
+    }
+
     public FluidState getFluidState(BlockState state) {
         return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
     protected RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
+    }
+
+    public static EnumProperty<PipeConnectionTypes> fromDirection(Direction direction) {
+        return switch (direction) {
+            case DOWN -> DOWN;
+            case UP -> UP;
+            case NORTH -> NORTH;
+            case SOUTH -> SOUTH;
+            case WEST -> WEST;
+            case EAST -> EAST;
+        };
     }
 }
 

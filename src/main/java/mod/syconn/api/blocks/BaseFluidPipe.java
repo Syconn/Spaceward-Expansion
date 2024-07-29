@@ -35,11 +35,6 @@ public class BaseFluidPipe extends AbstractPipeBlock {
     }
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && pLevel instanceof ServerLevel sl) {
-            PipeNetworks.get(sl).fixList();
-            System.out.println(PipeNetworks.get(sl).getDataMap());
-            return InteractionResult.SUCCESS;
-        }
         if (FMLEnvironment.dist.isClient() && pLevel.getBlockEntity(pPos) instanceof BaseFluidPipeBE pipeBE && pipeBE.hasMenu()) {
             Minecraft.getInstance().setScreen(new FluidPipeScreen(pipeBE));
             return InteractionResult.SUCCESS;

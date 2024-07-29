@@ -1,5 +1,6 @@
 package mod.syconn.swe.client;
 
+import mod.syconn.api.client.ber.FluidPipeBER;
 import mod.syconn.api.client.debug.PipeNetworkRenderer;
 import mod.syconn.api.client.loader.PipeModelLoader;
 import mod.syconn.swe.Main;
@@ -13,22 +14,18 @@ import mod.syconn.swe.client.screen.TankScreen;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
-import mod.syconn.swe.network.Channel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.resources.PlayerSkin;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
 import static mod.syconn.swe.client.ClientHooks.addPlayerLayers;
 
@@ -87,6 +84,7 @@ public class ClientHandler {
     public static void entityRender(EntityRenderersEvent.RegisterRenderers event){
         event.registerBlockEntityRenderer(Registration.TANK.get(), TankBER::new);
         event.registerBlockEntityRenderer(Registration.FILLER.get(), CanisterBER::new);
+        event.registerBlockEntityRenderer(Registration.PIPE.get(), FluidPipeBER::new);
     }
 
     @SubscribeEvent
@@ -96,6 +94,6 @@ public class ClientHandler {
 
     public static void renderBlockOutline(RenderLevelStageEvent event) {
 //      TODO EASY TOGGLE
-        PipeNetworkRenderer.renderBlockOutline(event);
+//        PipeNetworkRenderer.renderBlockOutline(event);
     }
 }

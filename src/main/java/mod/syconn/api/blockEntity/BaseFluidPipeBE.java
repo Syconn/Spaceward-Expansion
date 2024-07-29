@@ -8,6 +8,9 @@ import mod.syconn.swe.Registration;
 import mod.syconn.swe.blockentities.TankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
@@ -16,10 +19,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class BaseFluidPipeBE extends AbstractPipeBE {
+
+    private Fluid fluid = null;
 
     public BaseFluidPipeBE(BlockPos pos, BlockState state) {
         super(Registration.PIPE.get(), pos, state);
@@ -35,26 +42,32 @@ public class BaseFluidPipeBE extends AbstractPipeBE {
     }
 
     public PipeConnectionTypes getConnectionType(Direction direction) {
-        BlockState state = level.getBlockState(worldPosition);
-        return switch (direction) {
-            case DOWN -> state.getValue(AbstractPipeBlock.DOWN);
-            case UP -> state.getValue(AbstractPipeBlock.UP);
-            case NORTH -> state.getValue(AbstractPipeBlock.NORTH);
-            case SOUTH -> state.getValue(AbstractPipeBlock.SOUTH);
-            case WEST -> state.getValue(AbstractPipeBlock.WEST);
-            case EAST -> state.getValue(AbstractPipeBlock.EAST);
-        };
+        return getBlockState().getValue(AbstractPipeBlock.fromDirection(direction));
     }
 
-    public void setConnectionType(Direction side, PipeConnectionTypes type) {
-        BlockState state = level.getBlockState(worldPosition);
-        switch (side) {
-            case DOWN -> level.setBlock(worldPosition, state.setValue(AbstractPipeBlock.DOWN, type), 2);
-            case UP -> level.setBlock(worldPosition, state.setValue(AbstractPipeBlock.UP, type), 2);
-            case NORTH -> level.setBlock(worldPosition, state.setValue(AbstractPipeBlock.NORTH, type), 2);
-            case SOUTH -> level.setBlock(worldPosition, state.setValue(AbstractPipeBlock.SOUTH, type), 2);
-            case WEST -> level.setBlock(worldPosition, state.setValue(AbstractPipeBlock.WEST, type), 2);
-            case EAST -> level.setBlock(worldPosition, state.setValue(AbstractPipeBlock.EAST, type), 2);
-        };
+    public void setConnectionType(Direction direction, PipeConnectionTypes type) {
+        level.setBlock(worldPosition, getBlockState().setValue(AbstractPipeBlock.fromDirection(direction), type), 2);
+    }
+
+    protected void saveClientData(CompoundTag tag, HolderLookup.Provider pRegistries) {
+        super.saveClientData(tag, pRegistries);
+        if (fluid != null) tag.putInt("fluid", BuiltInRegistries.FLUID.getId(fluid));
+    }
+
+    protected void loadClientData(CompoundTag tag, HolderLookup.Provider pRegistries) {
+        super.loadClientData(tag, pRegistries);
+        if (tag.contains("fluid")) fluid = BuiltInRegistries.FLUID.byId(tag.getInt("fluid"));
+    }
+
+    public void setFluid(@Nullable Fluid fluid) {
+        this.fluid = fluid;
+    }
+
+    public boolean hasFluid() {
+        return fluid != null;
+    }
+
+    public FluidStack getFluid() {
+        return new FluidStack(fluid, 1000);
     }
 }
