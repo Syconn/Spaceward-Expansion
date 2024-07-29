@@ -61,6 +61,7 @@ public class BaseFluidPipeBE extends AbstractPipeBE {
 
     public void setFluid(@Nullable Fluid fluid) {
         this.fluid = fluid;
+        markDirty();
     }
 
     public boolean hasFluid() {

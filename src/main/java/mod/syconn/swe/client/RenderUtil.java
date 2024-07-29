@@ -15,6 +15,7 @@ import net.minecraft.util.FastColor;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -113,29 +114,97 @@ public class RenderUtil {
         }
     }
 
-    public static void renderTilledFluid(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, PipeConnectionTypes type) {
+    public static void renderTiledFluid(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, PipeConnectionTypes type, Direction direction) {
         if (!fluid.isSame(Fluids.EMPTY)) {
             IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(fluid);
-            ResourceLocation fluidStill = extension.getStillTexture();
+            ResourceLocation fluidFlowing = extension.getFlowingTexture();
             int tint = extension.getTintColor(new FluidStack(fluid, 1));
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidStill);
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidFlowing);
             VertexConsumer builder = pBufferSource.getBuffer(RenderType.translucent());
 
             if (type == PipeConnectionTypes.NONE) {
-                add(builder, pPoseStack, 0.625f, 0.625f, 0.6999f, sprite.getU0(), sprite.getV0(), tint);
-                add(builder, pPoseStack, 0.375f, 0.625f, 0.6999f, sprite.getU1(), sprite.getV0(), tint);
-                add(builder, pPoseStack, 0.375f, 0.375f, 0.6999f, sprite.getU1(), sprite.getV1(), tint);
-                add(builder, pPoseStack, 0.625f, 0.375f, 0.6999f, sprite.getU0(), sprite.getV1(), tint);
+                createSquaredFace(builder, pPoseStack, 0.375f, 0.625f, 0.3001f, 0.6999f, sprite, tint, direction);
             } else if (type == PipeConnectionTypes.CABLE) {
-                add(builder, pPoseStack, 1, 0.625f, 0.6999f, sprite.getU0(), sprite.getV0(), tint);
-                add(builder, pPoseStack, 0.375f, 0.625f, 0.6999f, sprite.getU1(), sprite.getV0(), tint);
-                add(builder, pPoseStack, 0.375f, 0.375f, 0.6999f, sprite.getU1(), sprite.getV1(), tint);
-                add(builder, pPoseStack, 1, 0.375f, 0.6999f, sprite.getU0(), sprite.getV1(), tint);
+                for (Direction faceRotation : getFaceRotation(direction)) {
+                    if (direction.getAxis() == Direction.Axis.X) {
+                        if (direction.getAxisDirection() == Direction.AxisDirection.NEGATIVE)
+                            createRectangularFace(builder, pPoseStack, 0f, 0.375f, 0.375f, 0.625f, 0.3001f, 0.6999f, sprite, tint, faceRotation);
+                        else createRectangularFace(builder, pPoseStack, 0.625f, 1f, 0.375f, 0.625f, 0.3001f, 0.6999f, sprite, tint, faceRotation);
+                    } else if (direction.getAxis() == Direction.Axis.Z) {
+                        if (direction.getAxisDirection() == Direction.AxisDirection.NEGATIVE)
+                            createRectangularFace(builder, pPoseStack, 0.375f, 0.625f, 0f, 0.375f, 0.3001f, 0.6999f, sprite, tint, faceRotation);
+                        else createRectangularFace(builder, pPoseStack, 0.375f, 0.625f, 0.625f, 1f, 0.3001f, 0.6999f, sprite, tint, faceRotation);
+                    } else {
+                        if (faceRotation.getAxis() == Direction.Axis.X) {
+                            if (direction.getAxisDirection() == Direction.AxisDirection.NEGATIVE)
+                                createRectangularFace(builder, pPoseStack, 0f, 0.375f, 0.375f, 0.625f, 0.3001f, 0.6999f, sprite, tint, faceRotation);
+                            else createRectangularFace(builder, pPoseStack, 0.625f, 1f, 0.375f, 0.625f, 0.3001f, 0.6999f, sprite, tint, faceRotation);
+                        }
+                        if (faceRotation.getAxis() == Direction.Axis.Z) {
+                            if (direction.getAxisDirection() == Direction.AxisDirection.NEGATIVE)
+                                createRectangularFace(builder, pPoseStack, 0.375f, 0.625f, 0f, 0.375f, 0.3001f, 0.6999f, sprite, tint, faceRotation);
+                            else createRectangularFace(builder, pPoseStack, 0.375f, 0.625f, 0.625f, 1f, 0.3001f, 0.6999f, sprite, tint, faceRotation);
+                        }
+                    }
+                }
             }
         }
     }
 
+    private static void createSquaredFace(VertexConsumer builder, PoseStack poseStack, float min, float max, float posMin, float posMax, TextureAtlasSprite sprite, int tint, Direction rotation) {
+        switch (rotation) {
+            case DOWN -> createFace(builder, poseStack, v(min, posMin, max), v(min, posMin, min), v(max, posMin, min), v(max, posMin, max), sprite, tint); // D;
+            case UP -> createFace(builder, poseStack, v(max, posMax, max), v(max, posMax, min), v(min, posMax, min), v(min, posMax, max), sprite, tint); // U;
+            case NORTH -> createFace(builder, poseStack, v(max, min, posMin), v(min, min, posMin), v(min, max, posMin), v(max, max, posMin), sprite, tint); // N;
+            case SOUTH -> createFace(builder, poseStack, v(max, max, posMax), v(min, max, posMax), v(min, min, posMax), v(max, min, posMax), sprite, tint); // S;
+            case WEST -> createFace(builder, poseStack, v(posMin, max, max), v(posMin, max, min), v(posMin, min, min), v(posMin, min, max), sprite, tint); // W;
+            case EAST -> createFace(builder, poseStack, v(posMax, min, max), v(posMax, min, min), v(posMax, max, min), v(posMax, max, max), sprite, tint); // E;
+        }
+    }
+
+    private static void createRectangularFace(VertexConsumer builder, PoseStack poseStack, float minA, float maxA, float minB, float maxB, float minC, float maxC, TextureAtlasSprite sprite, int tint, Direction rotation) {
+        switch (rotation) {
+            case DOWN -> createFace(builder, poseStack, v(minA, minC, maxB), v(minA, minC, minB), v(maxA, minC, minB), v(maxA, minC, maxB), sprite, tint); // D;
+            case UP -> createFace(builder, poseStack, v(maxA, maxC, maxB), v(maxA, maxC, minB), v(minA, maxC, minB), v(minA, maxC, maxB), sprite, tint); // U;
+            case NORTH -> createFace(builder, poseStack,
+                    v(maxA, minB, minC),
+                    v(minA, minB, minC),
+                    v(minA, maxB, minC),
+                    v(maxA, maxB, minC), sprite, tint); // N;
+            case SOUTH -> createFace(builder, poseStack, v(maxA, maxB, maxC), v(minA, maxB, maxC), v(minA, minB, maxC), v(maxA, minB, maxC), sprite, tint); // S;
+            case WEST -> createFace(builder, poseStack, v(minC, maxA, maxB), v(minC, maxA, minB), v(minC, minA, minB), v(minC, minA, maxB), sprite, tint); // W;
+            case EAST -> createFace(builder, poseStack,
+                    v(maxC, minA, maxB),
+                    v(maxC, minA, minB),
+                    v(maxC, maxA, minB),
+                    v(maxC, maxA, maxB), sprite, tint); // E;
+        }
+    }
+
+    private static void createFace(VertexConsumer builder, PoseStack poseStack, Vec3 v1, Vec3 v2, Vec3 v3, Vec3 v4, TextureAtlasSprite sprite, int tint) {
+        add(builder, poseStack, v1.x, v1.y, v1.z, sprite.getU0(), sprite.getV0(), tint);
+        add(builder, poseStack, v2.x, v2.y, v2.z, sprite.getU1(), sprite.getV0(), tint);
+        add(builder, poseStack, v3.x, v3.y, v3.z, sprite.getU1(), sprite.getV1(), tint);
+        add(builder, poseStack, v4.x, v4.y, v4.z, sprite.getU0(), sprite.getV1(), tint);
+    }
+
+    private static Direction[] getFaceRotation(Direction direction) {
+        return switch (direction.getAxis()) {
+            case X -> new Direction[] {Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH};
+            case Y -> new Direction[] {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
+            case Z -> new Direction[] {Direction.DOWN, Direction.UP, Direction.WEST, Direction.EAST};
+        };
+    }
+
     private static void add(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float u, float v, int tint) {
         renderer.addVertex(stack.last().pose(), x, y, z).setColor(tint).setUv(u, v).setUv2(0, 200).setNormal(1, 0, 0); // pV: Brightness
+    }
+
+    private static void add(VertexConsumer renderer, PoseStack stack, double x, double y, double z, float u, float v, int tint) {
+        renderer.addVertex(stack.last().pose(), (float) x, (float) y, (float) z).setColor(tint).setUv(u, v).setUv2(0, 200).setNormal(1, 0, 0); // pV: Brightness
+    }
+
+    private static Vec3 v(float x, float y, float z) {
+        return new Vec3(x, y, z);
     }
 }

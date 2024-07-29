@@ -30,7 +30,7 @@ public class PipeNetworkRenderer {
     public static Map<UUID, Set<BlockPos>> PIPE_RENDERS = new HashMap<>();
     public static boolean requestedRefresh = false;
     private static VertexBuffer vertexBuffer;
-    private static int color = 0;
+    private static final int color = 0;
 
     public static @Nullable CustomPacketPayload playerJoined(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(PipeNetworks.get(sl).getDataMap());

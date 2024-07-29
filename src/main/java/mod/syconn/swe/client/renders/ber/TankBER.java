@@ -17,7 +17,7 @@ public class TankBER implements BlockEntityRenderer<TankBE> {
             FluidStack fluidStack = pBlockEntity.getFluidTank().getFluidInTank(0);
             float height = (float) (pBlockEntity.getFluidTank().getFluidAmount()) / pBlockEntity.getFluidTank().getCapacity() * 0.9999f;
             pPoseStack.pushPose();
-            RenderUtil.renderLiquid(pPoseStack, pBufferSource, fluidStack.getFluid(), 0.02f, 0.98f, height);
+            RenderUtil.renderLiquid(pPoseStack, pBufferSource, fluidStack.getFluid(), 0.1f, 0.98f, 2);
             pPoseStack.popPose();
         }
     }

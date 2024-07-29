@@ -1,5 +1,6 @@
 package mod.syconn.api.world.data;
 
+import mod.syconn.api.blockEntity.BaseFluidPipeBE;
 import mod.syconn.api.blocks.AbstractPipeBlock;
 import mod.syconn.api.util.NbtHelper;
 import mod.syconn.api.util.PipeConnectionTypes;
@@ -11,7 +12,9 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
@@ -180,7 +183,10 @@ public class PipeNetwork {
                 if (activeTask >= tasks.size()) activeTask = 0;
                 Task currentTask = tasks.get(activeTask);
                 Task.TaskResult result = currentTask.run(level, lastTask, transferRate);
-                if (result.skip()) activeTask++;
+                if (result.skip()) {
+                    if (lastTask.result.skip()) resetPipeFluid(level, lastTask);
+                    activeTask++;
+                }
                 else if (result.failedLine()) tasks.set(activeTask, generateSpecificTask(currentTask.startPos, currentTask.startDirection, currentTask.endPos, currentTask.endDirection));
                 else if (result.failed()) tasks.remove(currentTask);
                 lastTask = currentTask;
@@ -199,12 +205,19 @@ public class PipeNetwork {
 
         private void addImport(BlockPos pos, Direction direction) {
             if (imports.containsKey(pos) && !imports.get(pos).contains(direction)) imports.get(pos).add(direction);
-            else if (!imports.containsKey(pos)) imports.put(pos, Arrays.asList(direction));
+            else if (!imports.containsKey(pos)) imports.put(pos, Collections.singletonList(direction));
         }
 
         private void addExport(BlockPos pos, Direction direction) {
             if (exports.containsKey(pos) && !exports.get(pos).contains(direction)) exports.get(pos).add(direction);
-            else if (!exports.containsKey(pos)) exports.put(pos, Arrays.asList(direction));
+            else if (!exports.containsKey(pos)) exports.put(pos, Collections.singletonList(direction));
+        }
+
+        private void resetPipeFluid(Level level, Task lastRunTask) {
+            for (BlockPos pos : lastRunTask.directions) {
+                BlockEntity be = level.getBlockEntity(pos);
+                if (be instanceof BaseFluidPipeBE pipeBE) pipeBE.setFluid(Fluids.EMPTY);
+            }
         }
 
         public CompoundTag serializeNBT() {
@@ -271,24 +284,15 @@ public class PipeNetwork {
             if (startHandler == null || endHandler == null) return setResultT(TaskResult.FAILED);
             if (!endHandler.isFluidValid(0, startHandler.getFluidInTank(0)) || startHandler.getFluidInTank(0).isEmpty() || endHandler.getFluidInTank(0).getAmount() >= endHandler.getTankCapacity(0)) return setResultT(TaskResult.SKIP);
             if (lastRunTask != null && !lastRunTask.equals(this)) {
-                endLastTask(level, lastRunTask);
                 for (BlockPos pos : directions) {
-                    BlockState state = level.getBlockState(pos);
-                    if (!(state.getBlock() instanceof AbstractPipeBlock)) return setResultT(TaskResult.FAILED_LINE);
-                    // TODO SET FLUID LINE FLUID DISPLAY
+                    BlockEntity be = level.getBlockEntity(pos);
+                    if (be instanceof BaseFluidPipeBE pipeBE) pipeBE.setFluid(startHandler.getFluidInTank(0).getFluid());
+                    else return setResultT(TaskResult.FAILED_LINE);
                 }
             }
             int fill = endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(Math.min(transferRate, startHandler.getFluidInTank(0).getAmount())), IFluidHandler.FluidAction.SIMULATE);
             startHandler.drain(endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(fill), IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
             return fill > 0 ? setResultT(TaskResult.SUCCESS) : setResultT(TaskResult.SKIP);
-        }
-
-        public void endLastTask(Level level, Task lastRunTask) {
-            for (BlockPos pos : lastRunTask.directions) {
-                BlockState state = level.getBlockState(pos);
-                if (!(state.getBlock() instanceof AbstractPipeBlock));
-                    // TODO RESET FLUID LINE FLUID DISPLAY
-            }
         }
 
         public boolean hasPoint(BlockPos pos, PipeConnectionTypes type) {
