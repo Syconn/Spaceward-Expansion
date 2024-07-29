@@ -17,7 +17,7 @@ public class FluidPipeBER implements BlockEntityRenderer<BaseFluidPipeBE> {
         if (pBlockEntity.hasFluid()) {
             FluidStack fluidStack = pBlockEntity.getFluid();
             for (Direction direction : Direction.values()) {
-                RenderUtil.renderTiledFluid(pPoseStack, pBufferSource, fluidStack.getFluid(), pBlockEntity.getConnectionType(direction), direction);
+                RenderUtil.renderFluidInPipe(pPoseStack, pBufferSource, fluidStack.getFluid(), pBlockEntity.getConnectionType(direction), direction);
             }
         }
     }

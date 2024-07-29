@@ -102,19 +102,7 @@ public class RenderUtil {
         }
     }
 
-    public static void directionCorrection(PoseStack poseStack, Direction direction) {
-        if (direction.get2DDataValue() != -1) poseStack.mulPose(Axis.YP.rotationDegrees(90 * (direction.get2DDataValue() - 2)));
-        else poseStack.mulPose(Axis.XP.rotationDegrees(-90 * direction.getAxisDirection().getStep()));
-        switch (direction) {
-            case SOUTH -> poseStack.translate(-1f, 0, -1f);
-            case EAST -> poseStack.translate(-1f, 0, 0);
-            case WEST -> poseStack.translate(0, 0, -1f);
-            case UP -> poseStack.translate(0, -1f, 0f);
-            case DOWN -> poseStack.translate(0f, 0, -1f);
-        }
-    }
-
-    public static void renderTiledFluid(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, PipeConnectionTypes type, Direction direction) {
+    public static void renderFluidInPipe(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, PipeConnectionTypes type, Direction direction) {
         if (!fluid.isSame(Fluids.EMPTY)) {
             IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(fluid);
             ResourceLocation fluidFlowing = extension.getFlowingTexture();
@@ -166,18 +154,10 @@ public class RenderUtil {
         switch (rotation) {
             case DOWN -> createFace(builder, poseStack, v(minA, minC, maxB), v(minA, minC, minB), v(maxA, minC, minB), v(maxA, minC, maxB), sprite, tint); // D;
             case UP -> createFace(builder, poseStack, v(maxA, maxC, maxB), v(maxA, maxC, minB), v(minA, maxC, minB), v(minA, maxC, maxB), sprite, tint); // U;
-            case NORTH -> createFace(builder, poseStack,
-                    v(maxA, minB, minC),
-                    v(minA, minB, minC),
-                    v(minA, maxB, minC),
-                    v(maxA, maxB, minC), sprite, tint); // N;
+            case NORTH -> createFace(builder, poseStack, v(maxA, minB, minC), v(minA, minB, minC), v(minA, maxB, minC), v(maxA, maxB, minC), sprite, tint); // N;
             case SOUTH -> createFace(builder, poseStack, v(maxA, maxB, maxC), v(minA, maxB, maxC), v(minA, minB, maxC), v(maxA, minB, maxC), sprite, tint); // S;
             case WEST -> createFace(builder, poseStack, v(minC, maxA, maxB), v(minC, maxA, minB), v(minC, minA, minB), v(minC, minA, maxB), sprite, tint); // W;
-            case EAST -> createFace(builder, poseStack,
-                    v(maxC, minA, maxB),
-                    v(maxC, minA, minB),
-                    v(maxC, maxA, minB),
-                    v(maxC, maxA, maxB), sprite, tint); // E;
+            case EAST -> createFace(builder, poseStack, v(maxC, minA, maxB), v(maxC, minA, minB), v(maxC, maxA, minB), v(maxC, maxA, maxB), sprite, tint); // E;
         }
     }
 
