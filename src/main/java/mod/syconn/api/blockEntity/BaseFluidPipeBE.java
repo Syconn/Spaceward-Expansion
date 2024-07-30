@@ -20,6 +20,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -65,7 +66,7 @@ public class BaseFluidPipeBE extends AbstractPipeBE {
     }
 
     public boolean hasFluid() {
-        return fluid != null;
+        return fluid != null && !fluid.isSame(Fluids.EMPTY);
     }
 
     public FluidStack getFluid() {

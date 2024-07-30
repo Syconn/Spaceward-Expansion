@@ -109,7 +109,6 @@ public class PipeNetwork {
         private final Map<BlockPos, List<Direction>> exports;
         private final List<BlockPos> interactionPoint;
         private final List<Task> tasks;
-        private Task lastTask = null;
         private int activeTask = 0;
 
         public PipeExecutor(PipeNetwork network) {
@@ -138,7 +137,6 @@ public class PipeNetwork {
             List<Task> tasks = new ArrayList<>();
             tag.getList("tasks", Tag.TAG_COMPOUND).forEach(nbt -> tasks.add(new Task((CompoundTag) nbt)));
             this.tasks = tasks;
-            if (tag.contains("last_task")) this.lastTask = new Task(tag.getCompound("last_task"));
             this.activeTask = tag.getInt("active_task");
         }
 
@@ -182,14 +180,13 @@ public class PipeNetwork {
             if (!tasks.isEmpty()) {
                 if (activeTask >= tasks.size()) activeTask = 0;
                 Task currentTask = tasks.get(activeTask);
-                Task.TaskResult result = currentTask.run(level, lastTask, transferRate);
+                Task.TaskResult result = currentTask.run(level, transferRate);
                 if (result.skip()) {
-                    if (lastTask.result.skip()) resetPipeFluid(level, lastTask);
+                    resetPipeFluid(level, currentTask);
                     activeTask++;
                 }
                 else if (result.failedLine()) tasks.set(activeTask, generateSpecificTask(currentTask.startPos, currentTask.startDirection, currentTask.endPos, currentTask.endDirection));
                 else if (result.failed()) tasks.remove(currentTask);
-                lastTask = currentTask;
             }
         }
 
@@ -213,10 +210,9 @@ public class PipeNetwork {
             else if (!exports.containsKey(pos)) exports.put(pos, Collections.singletonList(direction));
         }
 
-        private void resetPipeFluid(Level level, Task lastRunTask) {
-            for (BlockPos pos : lastRunTask.directions) {
-                BlockEntity be = level.getBlockEntity(pos);
-                if (be instanceof BaseFluidPipeBE pipeBE) pipeBE.setFluid(Fluids.EMPTY);
+        private void resetPipeFluid(Level level, Task currentTask) {
+            if (level.getBlockEntity(currentTask.startPos) instanceof BaseFluidPipeBE pipeBE && pipeBE.hasFluid()) {
+                for (BlockPos pos : currentTask.directions) if (level.getBlockEntity(pos) instanceof BaseFluidPipeBE pipeBE2) pipeBE2.setFluid(Fluids.EMPTY);
             }
         }
 
@@ -242,7 +238,6 @@ public class PipeNetwork {
             ListTag taskList = new ListTag();
             tasks.forEach(task -> taskList.add(task.serializeNBT()));
             tag.put("tasks", taskList);
-            if (lastTask != null) tag.put("last_task", lastTask.serializeNBT());
             tag.putInt("active_task", this.activeTask);
             return tag;
         }
@@ -278,15 +273,14 @@ public class PipeNetwork {
             return result;
         }
 
-        public TaskResult run(Level level, @Nullable Task lastRunTask, int transferRate) {
+        public TaskResult run(Level level, int transferRate) {
             IFluidHandler startHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, startPos.relative(startDirection), startDirection.getOpposite());
             IFluidHandler endHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, endPos.relative(endDirection), endDirection.getOpposite());
             if (startHandler == null || endHandler == null) return setResultT(TaskResult.FAILED);
             if (!endHandler.isFluidValid(0, startHandler.getFluidInTank(0)) || startHandler.getFluidInTank(0).isEmpty() || endHandler.getFluidInTank(0).getAmount() >= endHandler.getTankCapacity(0)) return setResultT(TaskResult.SKIP);
-            if (lastRunTask != null && !lastRunTask.equals(this)) {
+            if (level.getBlockEntity(startPos) instanceof BaseFluidPipeBE pipeBE && !pipeBE.getFluid().is(startHandler.getFluidInTank(0).getFluid())) {
                 for (BlockPos pos : directions) {
-                    BlockEntity be = level.getBlockEntity(pos);
-                    if (be instanceof BaseFluidPipeBE pipeBE) pipeBE.setFluid(startHandler.getFluidInTank(0).getFluid());
+                    if (level.getBlockEntity(pos) instanceof BaseFluidPipeBE pipeBE2) pipeBE2.setFluid(startHandler.getFluidInTank(0).getFluid());
                     else return setResultT(TaskResult.FAILED_LINE);
                 }
             }

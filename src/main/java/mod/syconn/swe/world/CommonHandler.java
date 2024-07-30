@@ -67,7 +67,7 @@ public class CommonHandler {
                 suit.decreaseO2(p);
                 if (suit.O2() <= -30) {
                     suit.setO2(0, p);
-                    p.hurt(p.level().damageSources().source(Registration.ANOXIA), 4.0F);
+                    p.hurt(p.level().damageSources().campfire(), 4.0F);
                 }
             }
             p.setData(Registration.SPACE_SUIT, suit);

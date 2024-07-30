@@ -1,15 +1,20 @@
 package mod.syconn.api.blocks;
 
+import com.mojang.authlib.minecraft.client.MinecraftClient;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.api.blockEntity.AbstractPipeBE;
 import mod.syconn.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.api.client.ClientHooks;
 import mod.syconn.api.client.screen.FluidPipeScreen;
 import mod.syconn.api.util.PipeConnectionTypes;
 import mod.syconn.api.world.data.savedData.PipeNetworks;
 import mod.syconn.swe.Registration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -35,8 +40,8 @@ public class BaseFluidPipe extends AbstractPipeBlock {
     }
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (FMLEnvironment.dist.isClient() && pLevel.getBlockEntity(pPos) instanceof BaseFluidPipeBE pipeBE && pipeBE.hasMenu()) {
-            Minecraft.getInstance().setScreen(new FluidPipeScreen(pipeBE));
+        if (pLevel.getBlockEntity(pPos) instanceof BaseFluidPipeBE pipeBE && pipeBE.hasMenu()) {
+            if (pLevel.isClientSide()) ClientHooks.openPipeScreen(pipeBE);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
