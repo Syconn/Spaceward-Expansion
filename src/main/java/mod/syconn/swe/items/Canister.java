@@ -1,7 +1,7 @@
 package mod.syconn.swe.items;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.client.RenderUtil;
+import mod.syconn.api.client.RenderUtil;
 import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.world.dimensions.PlanetManager;

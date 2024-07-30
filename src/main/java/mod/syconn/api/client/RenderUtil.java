@@ -1,4 +1,4 @@
-package mod.syconn.swe.client;
+package mod.syconn.api.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -74,9 +74,9 @@ public class RenderUtil {
     public static void renderFluidInPipe(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, PipeConnectionTypes type, Direction direction) {
         if (!fluid.isSame(Fluids.EMPTY)) {
             IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(fluid);
-            ResourceLocation fluidFlowing = extension.getFlowingTexture();
+            ResourceLocation fluidLoc = extension.getStillTexture();
             int tint = extension.getTintColor(new FluidStack(fluid, 1));
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidFlowing);
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidLoc);
             VertexConsumer builder = pBufferSource.getBuffer(RenderType.translucent());
 
             if (type == PipeConnectionTypes.NONE) {

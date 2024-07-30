@@ -1,20 +1,17 @@
 package mod.syconn.swe.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import mod.syconn.api.client.screen.InteractionSelectorScreen;
 import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
-import mod.syconn.swe.client.RenderUtil;
+import mod.syconn.api.client.RenderUtil;
 import mod.syconn.swe.network.Channel;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.client.screen.widgets.InfoWidget;

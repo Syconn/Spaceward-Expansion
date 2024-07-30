@@ -2,6 +2,7 @@ package mod.syconn.swe.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import mod.syconn.api.client.RenderUtil;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,6 +12,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import mod.syconn.swe.Main;
 import net.minecraft.util.FastColor;
+import net.neoforged.neoforge.fluids.FluidUtil;
 
 public class TankModel extends Model {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Main.loc("tank"), "main");
