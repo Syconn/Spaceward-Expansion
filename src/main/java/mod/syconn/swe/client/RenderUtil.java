@@ -2,7 +2,6 @@ package mod.syconn.swe.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import mod.syconn.api.util.PipeConnectionTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -58,7 +57,7 @@ public class RenderUtil {
         return getSprite(props.getStillTexture(fluidStack));
     }
 
-    public static void renderLiquid(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, float minScale, float maxScale, float height) {
+    public static void renderLiquid(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, Direction... directions) {
         if (!fluid.isSame(Fluids.EMPTY)) {
             IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(fluid);
             ResourceLocation fluidStill = extension.getStillTexture();
@@ -66,39 +65,9 @@ public class RenderUtil {
             TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidStill);
             VertexConsumer builder = pBufferSource.getBuffer(RenderType.translucent());
 
-            pPoseStack.pushPose();
-            // Top Face
-            if (height < 0.99f) {
-                add(builder, pPoseStack, minScale, height, maxScale, sprite.getU0(), sprite.getV1(), tint);
-                add(builder, pPoseStack, maxScale, height, maxScale, sprite.getU1(), sprite.getV1(), tint);
-                add(builder, pPoseStack, maxScale, height, minScale, sprite.getU1(), sprite.getV0(), tint);
-                add(builder, pPoseStack, minScale, height, minScale, sprite.getU0(), sprite.getV0(), tint);
+            for (Direction faceDirection : directions) {
+                createSquaredFace(builder, pPoseStack, 0f, 1f, 0f, 1f, sprite, tint, faceDirection);
             }
-
-            // Front Faces [NORTH - SOUTH]
-            add(builder, pPoseStack, maxScale, height, maxScale, sprite.getU0(), sprite.getV0(), tint);
-            add(builder, pPoseStack, minScale, height, maxScale, sprite.getU1(), sprite.getV0(), tint);
-            add(builder, pPoseStack, minScale, minScale, maxScale, sprite.getU1(), sprite.getV1(), tint);
-            add(builder, pPoseStack, maxScale, minScale, maxScale, sprite.getU0(), sprite.getV1(), tint);
-
-            add(builder, pPoseStack, maxScale, minScale, minScale, sprite.getU0(), sprite.getV1(), tint);
-            add(builder, pPoseStack, minScale, minScale, minScale, sprite.getU1(), sprite.getV1(), tint);
-            add(builder, pPoseStack, minScale, height, minScale, sprite.getU1(), sprite.getV0(), tint);
-            add(builder, pPoseStack, maxScale, height, minScale, sprite.getU0(), sprite.getV0(), tint);
-
-            pPoseStack.mulPose(Axis.YP.rotationDegrees(90));
-            pPoseStack.translate(-1f, 0, 0);
-
-            add(builder, pPoseStack, maxScale, height, maxScale, sprite.getU0(), sprite.getV0(), tint);
-            add(builder, pPoseStack, minScale, height, maxScale, sprite.getU1(), sprite.getV0(), tint);
-            add(builder, pPoseStack, minScale, minScale, maxScale, sprite.getU1(), sprite.getV1(), tint);
-            add(builder, pPoseStack, maxScale, minScale, maxScale, sprite.getU0(), sprite.getV1(), tint);
-
-            add(builder, pPoseStack, maxScale, minScale, minScale, sprite.getU0(), sprite.getV1(), tint);
-            add(builder, pPoseStack, minScale, minScale, minScale, sprite.getU1(), sprite.getV1(), tint);
-            add(builder, pPoseStack, minScale, height, minScale, sprite.getU1(), sprite.getV0(), tint);
-            add(builder, pPoseStack, maxScale, height, minScale, sprite.getU0(), sprite.getV0(), tint);
-            pPoseStack.popPose();
         }
     }
 
