@@ -30,8 +30,8 @@ public class PipeModelLoader implements IGeometryLoader<PipeModelLoader.CableMod
     public CableModelGeometry read(JsonObject jsonObject, JsonDeserializationContext deserializationContext) throws JsonParseException {
         boolean facade = jsonObject.has("facade") && jsonObject.get("facade").getAsBoolean();
         double size = jsonObject.has("size") ? jsonObject.get("size").getAsDouble() : 0;
-        String[] array = new String[8];
-        if (jsonObject.has("locations")) for (int i = 0; i < 8; i++) array[i] = jsonObject.getAsJsonArray("locations").asList().get(i).getAsString();
+        String[] array = new String[11];
+        if (jsonObject.has("locations")) for (int i = 0; i < array.length; i++) array[i] = jsonObject.getAsJsonArray("locations").asList().get(i).getAsString();
         return new CableModelGeometry(facade, size, array);
     }
 

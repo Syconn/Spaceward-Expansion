@@ -2,7 +2,6 @@ package mod.syconn.swe.blockentities;
 
 import mod.syconn.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.Registration;
-import mod.syconn.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.util.FluidHelper;
 import mod.syconn.swe.world.container.TankMenu;
 import net.minecraft.core.BlockPos;
@@ -13,16 +12,12 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.Lazy;
-import net.neoforged.neoforge.fluids.FluidActionResult;
-import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.fluids.capability.wrappers.FluidBucketWrapper;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
@@ -35,7 +30,7 @@ public class TankBE extends AbstractTankBE implements MenuProvider {
     private final Lazy<IItemHandler> holder = Lazy.of(() -> items);
 
     public TankBE(BlockPos pos, BlockState state) {
-        super(Registration.TANK.get(), pos, state, 16000);
+        super(Registration.TANK.get(), pos, state, 16000, 500);
     }
 
     public ItemStackHandler getItems() {
@@ -73,6 +68,9 @@ public class TankBE extends AbstractTankBE implements MenuProvider {
             itemStack = e.getItems().getStackInSlot(2);
             handler = itemStack.getCapability(Capabilities.FluidHandler.ITEM);
             if (handler != null) FluidHelper.fillItemStackFromBlock(e.tank, handler, e.fillSpeed, itemStack);
+
+            e.tank.handlePush(level, pos);
+            e.tank.handlePull(level, pos);
             e.markDirty();
         }
     }

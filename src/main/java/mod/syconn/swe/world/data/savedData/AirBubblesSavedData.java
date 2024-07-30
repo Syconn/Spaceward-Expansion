@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import mod.syconn.swe.util.NbtHelper;
+import mod.syconn.api.util.NbtHelper;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.HashMap;
@@ -51,7 +51,7 @@ public class AirBubblesSavedData extends SavedData {
             positions.forEach(((uuid, blockPos) -> {
                 CompoundTag ct = new CompoundTag();
                 ct.putUUID("uuid", uuid);
-                ct.put("positions", NbtHelper.writePosses(blockPos));
+                ct.put("positions", NbtHelper.writePositionList(blockPos));
                 cpList.add(ct);
             }));
             cp.put("cdata", cpList);
@@ -69,7 +69,7 @@ public class AirBubblesSavedData extends SavedData {
                 Map<UUID, List<BlockPos>> oxygenMap = new HashMap<>();
                 outerData.getList("cdata", Tag.TAG_COMPOUND).forEach(nNBT -> {
                     CompoundTag ct = (CompoundTag) nNBT;
-                    oxygenMap.put(ct.getUUID("uuid"), NbtHelper.readPosses(ct.getCompound("positions")));
+                    oxygenMap.put(ct.getUUID("uuid"), NbtHelper.readPositionList(ct.getCompound("positions")));
                 });
                 levelBlockPositions.put(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(outerData.getString("loc"))), oxygenMap);
             });

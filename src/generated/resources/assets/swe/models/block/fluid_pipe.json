@@ -10,7 +10,10 @@
     "block/loader/fluid_pipe/corner",
     "block/loader/fluid_pipe/three",
     "block/loader/fluid_pipe/cross",
-    "block/loader/fluid_pipe/side"
+    "block/loader/fluid_pipe/side_block",
+    "block/loader/fluid_pipe/side_import",
+    "block/loader/fluid_pipe/side_export",
+    "block/loader/fluid_pipe/side_both"
   ],
   "render_type": "minecraft:cutout",
   "size": 0.3

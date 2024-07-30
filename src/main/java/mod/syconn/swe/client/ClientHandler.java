@@ -1,5 +1,7 @@
 package mod.syconn.swe.client;
 
+import mod.syconn.api.client.ber.FluidPipeBER;
+import mod.syconn.api.client.debug.PipeNetworkRenderer;
 import mod.syconn.api.client.loader.PipeModelLoader;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
@@ -82,10 +84,16 @@ public class ClientHandler {
     public static void entityRender(EntityRenderersEvent.RegisterRenderers event){
         event.registerBlockEntityRenderer(Registration.TANK.get(), TankBER::new);
         event.registerBlockEntityRenderer(Registration.FILLER.get(), CanisterBER::new);
+        event.registerBlockEntityRenderer(Registration.PIPE.get(), FluidPipeBER::new);
     }
 
     @SubscribeEvent
     public static void dimensionEffects(RegisterDimensionSpecialEffectsEvent event){
         event.register(Main.loc("moon"), new MoonSpecialEffects());
+    }
+
+    public static void renderBlockOutline(RenderLevelStageEvent event) {
+//      TODO EASY TOGGLE
+//        PipeNetworkRenderer.renderBlockOutline(event);
     }
 }

@@ -1,6 +1,5 @@
 package mod.syconn.api.blockEntity;
 
-import mod.syconn.swe.blockentities.TankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -19,8 +18,6 @@ public abstract class AbstractPipeBE extends SyncedBE {
         super(pType, pos, state);
     }
 
-    public abstract void tickServer(Level level, BlockPos pos, BlockState state, TankBE e);
-
     public void setNetworkID(UUID uuid) {
         this.networkID = uuid;
         markDirty();
@@ -30,9 +27,7 @@ public abstract class AbstractPipeBE extends SyncedBE {
         return networkID;
     }
 
-    public boolean canConnect(Level level, BlockPos pos, Direction conDir) {
-        return true;
-    }
+    public abstract boolean canConnectToPipe(Level level, BlockPos pos, Direction conDir);
 
     protected void saveClientData(CompoundTag tag, HolderLookup.Provider pRegistries) {
         if(networkID != null) tag.putUUID("uuid", networkID);

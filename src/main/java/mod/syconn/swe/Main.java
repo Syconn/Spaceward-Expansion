@@ -1,5 +1,6 @@
 package mod.syconn.swe;
 
+import mod.syconn.api.world.data.savedData.PipeNetworks;
 import mod.syconn.swe.client.ClientHandler;
 import mod.syconn.swe.client.datagen.*;
 import mod.syconn.swe.network.Channel;
@@ -38,12 +39,17 @@ public class Main {
         if (FMLEnvironment.dist.isClient()) {
             modEventBus.addListener(ClientHandler::init);
             NeoForge.EVENT_BUS.addListener(ClientHandler::onPlayerRenderScreen);
+            NeoForge.EVENT_BUS.addListener(ClientHandler::renderBlockOutline);
         } else if (FMLEnvironment.dist.isDedicatedServer()) {
             NeoForge.EVENT_BUS.addListener(this::syncServerDataEvent);
         }
 
         NeoForge.EVENT_BUS.addListener(this::loadData);
+        NeoForge.EVENT_BUS.addListener(CommonHandler::playerJoined);
+        NeoForge.EVENT_BUS.addListener(CommonHandler::playerLeft);
+        NeoForge.EVENT_BUS.addListener(CommonHandler::playerChangedDimension);
         NeoForge.EVENT_BUS.addListener(CommonHandler::playerTickEvent);
+        NeoForge.EVENT_BUS.addListener(PipeNetworks::onTick);
 
         Registration.ARMOR_MATERIALS.register(modEventBus);
         Registration.BLOCKS.register(modEventBus);

@@ -6,6 +6,7 @@ import mod.syconn.swe.blockentities.TankBE;
 import mod.syconn.swe.fluids.FluidStorageBlock;
 import mod.syconn.swe.util.FluidHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -30,11 +31,9 @@ public class FluidTank extends FluidBaseBlock implements FluidStorageBlock {
     }
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-        if (pLevel.isClientSide) {
-            return InteractionResult.SUCCESS;
-        } else if (blockentity instanceof TankBE) {
-            pPlayer.openMenu((MenuProvider) blockentity, pPos);
+        if (pLevel.isClientSide) return InteractionResult.SUCCESS;
+        if (pLevel.getBlockEntity(pPos) instanceof TankBE tankBE) {
+            pPlayer.openMenu(tankBE, pPos);
             return InteractionResult.CONSUME;
         }
         return InteractionResult.FAIL;

@@ -1,9 +1,7 @@
 package mod.syconn.api.blocks;
 
-import mod.syconn.swe.Registration;
 import mod.syconn.api.blockEntity.AbstractPipeBE;
 import mod.syconn.api.util.PipeConnectionTypes;
-import mod.syconn.swe.blockentities.TankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,9 +14,6 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -106,17 +101,18 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
 
     private VoxelShape combineShape(VoxelShape shape, PipeConnectionTypes ConnectionType, VoxelShape cableShape, VoxelShape blockShape) {
         if (ConnectionType == CABLE) return Shapes.join(shape, cableShape, BooleanOp.OR);
-        else if (ConnectionType == INPUT || ConnectionType == OUTPUT) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
+//        else if (ConnectionType == INPUT || ConnectionType == OUTPUT) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
+        else if (ConnectionType == BLOCK) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
         else return shape;
     }
 
     public VoxelShape getShape(@Nonnull BlockState state, @Nonnull BlockGetter world, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
-        PipeConnectionTypes north = getConnectorType(state, world, pos, Direction.NORTH);
-        PipeConnectionTypes south = getConnectorType(state, world, pos, Direction.SOUTH);
-        PipeConnectionTypes west = getConnectorType(state, world, pos, Direction.WEST);
-        PipeConnectionTypes east = getConnectorType(state, world, pos, Direction.EAST);
-        PipeConnectionTypes up = getConnectorType(state, world, pos, Direction.UP);
-        PipeConnectionTypes down = getConnectorType(state, world, pos, Direction.DOWN);
+        PipeConnectionTypes north = getConnectorType(world, pos, Direction.NORTH);
+        PipeConnectionTypes south = getConnectorType(world, pos, Direction.SOUTH);
+        PipeConnectionTypes west = getConnectorType(world, pos, Direction.WEST);
+        PipeConnectionTypes east = getConnectorType(world, pos, Direction.EAST);
+        PipeConnectionTypes up = getConnectorType(world, pos, Direction.UP);
+        PipeConnectionTypes down = getConnectorType(world, pos, Direction.DOWN);
         int index = calculateShapeIndex(north, south, west, east, up, down);
         return shapeCache[index];
     }
@@ -124,7 +120,7 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
     public BlockState updateShape(BlockState state, @Nonnull Direction direction, @Nonnull BlockState neighbourState, @Nonnull LevelAccessor world, @Nonnull BlockPos current, @Nonnull BlockPos offset) {
         if (state.getValue(BlockStateProperties.WATERLOGGED))
             world.getFluidTicks().schedule(new ScheduledTick<>(Fluids.WATER, current, Fluids.WATER.getTickDelay(world), 0L));
-        return calculateState(world, current, state);
+        return updateState(world, current, state, direction);
     }
 
     public void setPlacedBy(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nullable LivingEntity placer, @Nonnull ItemStack stack) {
@@ -134,23 +130,11 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         if (state != blockState) level.setBlockAndUpdate(pos, blockState);
     }
 
-    protected PipeConnectionTypes getConnectorType(BlockState state, BlockGetter world, BlockPos connectorPos, Direction facing) {
-//        BlockPos pos = connectorPos.relative(facing);
-//        if (world.getBlockEntity(pos) instanceof AbstractPipeBE be && be.canConnect((Level) world, pos, facing)) return CABLE; TODO USE THIS TOO
-//        else if (isConnectable(world, connectorPos, facing)) return OUTPUT;
-//        else return PipeConnectionTypes.NONE;
+    protected PipeConnectionTypes getConnectorType(BlockGetter world, BlockPos connectorPos, Direction facing) {
         return getConnectorType(world, connectorPos, connectorPos.relative(facing), facing);
     }
 
     protected abstract PipeConnectionTypes getConnectorType(BlockGetter level, BlockPos thisPos, BlockPos connectionPos, Direction facing);
-
-//    public static boolean isConnectable(BlockGetter world, BlockPos connectorPos, Direction facing) { TODO HANDLE INDIVIDUALLY EXAMPLE
-//        BlockPos pos = connectorPos.relative(facing);
-//        BlockState state = world.getBlockState(pos);
-//        if (world.getBlockEntity(pos) instanceof  AbstractPipeBE  be && !be.canConnect(pos, facing)) return false;
-//        else if (state.is(Registration.PIPE_CONNECTIVE)) return true;
-//        return state.is(Registration.DIRECTIONAL_PIPE_CONNECTIVE) && state.getValue(InterfaceBlock.FACING) == facing;
-//    }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
@@ -164,13 +148,17 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
     }
 
     protected BlockState calculateState(LevelAccessor world, BlockPos pos, BlockState state) {
-        PipeConnectionTypes north = getConnectorType(state, world, pos, Direction.NORTH);
-        PipeConnectionTypes south = getConnectorType(state, world, pos, Direction.SOUTH);
-        PipeConnectionTypes west = getConnectorType(state, world, pos, Direction.WEST);
-        PipeConnectionTypes east = getConnectorType(state, world, pos, Direction.EAST);
-        PipeConnectionTypes up = getConnectorType(state, world, pos, Direction.UP);
-        PipeConnectionTypes down = getConnectorType(state, world, pos, Direction.DOWN);
+        PipeConnectionTypes north = getConnectorType(world, pos, Direction.NORTH);
+        PipeConnectionTypes south = getConnectorType(world, pos, Direction.SOUTH);
+        PipeConnectionTypes west = getConnectorType(world, pos, Direction.WEST);
+        PipeConnectionTypes east = getConnectorType(world, pos, Direction.EAST);
+        PipeConnectionTypes up = getConnectorType(world, pos, Direction.UP);
+        PipeConnectionTypes down = getConnectorType(world, pos, Direction.DOWN);
         return state.setValue(NORTH, north).setValue(SOUTH, south).setValue(WEST, west).setValue(EAST, east).setValue(UP, up).setValue(DOWN, down);
+    }
+
+    protected BlockState updateState(LevelAccessor world, BlockPos pos, BlockState state, Direction direction) {
+        return state.setValue(fromDirection(direction), getConnectorType(world, pos, direction));
     }
 
     public FluidState getFluidState(BlockState state) {
@@ -181,19 +169,15 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         return RenderShape.MODEL;
     }
 
-//  TODO IMPLEMENT NETWORK SYSTEM
-//
-//    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-//        if (!pLevel.isClientSide() && !(pNewState.getBlock() instanceof AbstractPipeBlock)) PipeNetworks.get((ServerLevel) pLevel).removePipe(pLevel, pPos);
-//        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
-//    }
-//
-//    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pMovedByPiston) {
-//        if (!pLevel.isClientSide() && pLevel.getBlockEntity(pPos) instanceof  AbstractPipeBE be) be.setUUID(PipeNetworks.get((ServerLevel) pLevel).addPipe(pLevel, pPos));
-//    }
-
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return createTickerHelper(type, Registration.TANK.get(), TankBE::serverTick);
+    public static EnumProperty<PipeConnectionTypes> fromDirection(Direction direction) {
+        return switch (direction) {
+            case DOWN -> DOWN;
+            case UP -> UP;
+            case NORTH -> NORTH;
+            case SOUTH -> SOUTH;
+            case WEST -> WEST;
+            case EAST -> EAST;
+        };
     }
 }
 
