@@ -62,7 +62,7 @@ public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu>
 
     private void openButton(AbstractButton button) {
         sideMenuActive = !sideMenuActive;
-        setSpriteButton(openMenuButton, interactables[6] = interactables[6].rotate()); // TODO MAY NEED TO MOVE IT
+        setSpriteButton(openMenuButton, interactables[6] = interactables[6].rotate());
     }
 
     private void setSpriteButton(SpriteButton button, Interactables interaction) {

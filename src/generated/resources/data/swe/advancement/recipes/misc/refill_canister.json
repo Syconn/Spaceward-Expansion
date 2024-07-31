@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "swe:refill_canister"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "requirement": {
+      "conditions": {
+        "items": [
+          {
+            "items": "swe:canister"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "requirement"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "swe:refill_canister"
+    ]
+  }
+}

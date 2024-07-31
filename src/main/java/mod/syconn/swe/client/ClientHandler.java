@@ -2,18 +2,22 @@ package mod.syconn.swe.client;
 
 import mod.syconn.api.client.RenderUtil;
 import mod.syconn.api.client.ber.FluidPipeBER;
+import mod.syconn.api.client.debug.PipeNetworkRenderer;
 import mod.syconn.api.client.loader.PipeModelLoader;
+import mod.syconn.swe.Config;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.client.model.*;
+import mod.syconn.swe.client.model.ChuteModel;
+import mod.syconn.swe.client.model.ParachuteModel;
+import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.client.renders.ber.CanisterBER;
 import mod.syconn.swe.client.renders.ber.TankBER;
+import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
 import mod.syconn.swe.client.screen.CollectorScreen;
 import mod.syconn.swe.client.screen.DisperserScreen;
 import mod.syconn.swe.client.screen.TankScreen;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.items.Canister;
-import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -36,8 +40,8 @@ public class ClientHandler {
     public static void init(final FMLClientSetupEvent event) {
         ItemProperties.register(Registration.CANISTER.get(), Main.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
         ItemProperties.register(Registration.AUTO_REFILL_CANISTER.get(), Main.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
-        ItemBlockRenderTypes.setRenderLayer(Registration.O2.get(), RenderType.translucent()); // TODO REPLACE IN JSON
-        ItemBlockRenderTypes.setRenderLayer(Registration.O2_FLOWING.get(), RenderType.translucent()); // TODO REPLACE IN JSON
+        ItemBlockRenderTypes.setRenderLayer(Registration.O2.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(Registration.O2_FLOWING.get(), RenderType.translucent());
     }
 
     @SubscribeEvent
@@ -93,7 +97,6 @@ public class ClientHandler {
     }
 
     public static void renderBlockOutline(RenderLevelStageEvent event) {
-//      TODO EASY TOGGLE
-//        PipeNetworkRenderer.renderBlockOutline(event);
+        if (Config.showPipeNetworks.get()) PipeNetworkRenderer.renderBlockOutline(event);
     }
 }

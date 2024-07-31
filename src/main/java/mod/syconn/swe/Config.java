@@ -5,8 +5,10 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public class Config {
 
     public static final ModConfigSpec CLIENT_CONFIG;
-    public static final ModConfigSpec COMMON_CONFIG;
     public static ModConfigSpec.BooleanValue showOxygen;
+    public static ModConfigSpec.BooleanValue showPipeNetworks;
+
+    public static final ModConfigSpec COMMON_CONFIG;
     public static ModConfigSpec.IntValue spaceHeight;
 
     static {
@@ -21,6 +23,7 @@ public class Config {
     private static void setupClient(ModConfigSpec.Builder builder) {
         builder.push("Dev Config Options");
         showOxygen = builder.define("Render Oxygen Block", false);
+        showPipeNetworks = builder.define("Render Debug for Fluid Pipes", false);
         builder.pop();
     }
 

@@ -1,6 +1,6 @@
-// 1.21	2024-07-08T17:16:44.0834445	vanilla/Loot Tables
+// 1.21	2024-07-30T23:53:12.612864	vanilla/Loot Tables
 ca9a97cfed2b22a6a86a448fe9084bae8b202a31 data/swe/loot_table/blocks/canister_filler.json
-f3193eb0f1a36a9e05c46c20024a7ef39fec8836 data/swe/loot_table/blocks/fluid_pipe.json
+31280e4405e2cc3482a8c2cff1cbca291ca29f8d data/swe/loot_table/blocks/fluid_pipe.json
 236e62e423676068420da90c1016812bdaa801dd data/swe/loot_table/blocks/fluid_tank.json
 ce4ed5e448d1b3ea7be64f222b9fcdb144c8dd71 data/swe/loot_table/blocks/oxygen_collector.json
 876c2c405d27d84744533d32040cc460c662a296 data/swe/loot_table/blocks/oxygen_disperser.json

@@ -40,7 +40,7 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
     public static final EnumProperty<PipeConnectionTypes> UP = EnumProperty.create("up", PipeConnectionTypes.class);
     public static final EnumProperty<PipeConnectionTypes> DOWN = EnumProperty.create("down", PipeConnectionTypes.class);
 
-    private static VoxelShape[] shapeCache = null; // TODO COULD MOVE TO A BASIC SIZE SYSTEM
+    private static VoxelShape[] shapeCache = null;
     private static final VoxelShape SHAPE_CABLE_NORTH = Shapes.box(.3, .3, 0, .7, .7, .3);
     private static final VoxelShape SHAPE_CABLE_SOUTH = Shapes.box(.3, .3, .7, .7, .7, 1);
     private static final VoxelShape SHAPE_CABLE_WEST = Shapes.box(0, .3, .3, .3, .7, .7);

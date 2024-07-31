@@ -23,7 +23,6 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH ALL FLUID ITEM HANDLERS
 
-    // TODO O2 tanks work when no space suit + render (Shouldnt)
     private final int fillSpeed = 10;
     private NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
 

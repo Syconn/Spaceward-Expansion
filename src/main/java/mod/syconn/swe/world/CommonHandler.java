@@ -48,7 +48,7 @@ public class CommonHandler {
     public static void playerTickEvent(PlayerTickEvent.Pre event) {
         Player player = event.getEntity();
         if (player instanceof ServerPlayer p){
-            if (p.level() instanceof ServerLevel serverlevel && p.getY() >= Config.spaceHeight.get()) { // TODO REDO
+            if (p.level() instanceof ServerLevel serverlevel && p.getY() >= Config.spaceHeight.get()) {
                 DimensionTransition dimensiontransition = PlanetTraveler.changePlanet(serverlevel, p); // SPAWING IN AIR
                 if (dimensiontransition != null) {
                     ServerLevel serverlevel1 = dimensiontransition.newLevel();
@@ -73,7 +73,6 @@ public class CommonHandler {
             p.setData(Registration.SPACE_SUIT, suit);
         }
 
-        // TODO MAY BE OK ON BOTH SIDES
         if (player.getInventory() instanceof ExtendedPlayerInventory i && SpaceArmor.hasFullKit(player)) i.getSpaceUtil().forEach(stack -> { if (stack.getItem() instanceof EquipmentItem eq) eq.onEquipmentTick(stack, player.level(), player); });
     }
 
