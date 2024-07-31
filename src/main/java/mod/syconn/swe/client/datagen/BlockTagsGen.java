@@ -19,8 +19,8 @@ public class BlockTagsGen extends BlockTagsProvider {
     }
 
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(BlockTags.NEEDS_IRON_TOOL).add(Registration.FLUID_TANK.get(), Registration.OXYGEN_DISPERSER.get(), Registration.CANISTER_FILLER.get(), Registration.OXYGEN_COLLECTOR.get());
-        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(Registration.FLUID_TANK.get(), Registration.OXYGEN_DISPERSER.get(), Registration.CANISTER_FILLER.get(), Registration.OXYGEN_COLLECTOR.get());
+        this.tag(BlockTags.NEEDS_IRON_TOOL).add(Registration.FLUID_PIPE.get(), Registration.FLUID_TANK.get(), Registration.OXYGEN_DISPERSER.get(), Registration.CANISTER_FILLER.get(), Registration.OXYGEN_COLLECTOR.get());
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(Registration.FLUID_PIPE.get(), Registration.FLUID_TANK.get(), Registration.OXYGEN_DISPERSER.get(), Registration.CANISTER_FILLER.get(), Registration.OXYGEN_COLLECTOR.get());
         this.tag(Registration.O2_PRODUCING).add(Blocks.GRASS_BLOCK, Blocks.FERN, Blocks.VINE, Blocks.GLOW_LICHEN, Blocks.SUNFLOWER, Blocks.LILAC, Blocks.ROSE_BUSH, Blocks.PEONY, Blocks.TALL_GRASS, Blocks.LARGE_FERN, Blocks.HANGING_ROOTS).addTags(BlockTags.LEAVES).addTag(BlockTags.CROPS);
         this.tag(Registration.INFINBURN_MOON).replace(false);
     }

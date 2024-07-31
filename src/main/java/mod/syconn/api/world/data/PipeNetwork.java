@@ -162,7 +162,7 @@ public class PipeNetwork {
                 for (Map.Entry<BlockPos, List<Direction>> importEntry : imports.entrySet()) {
                     for (Direction importDirection : importEntry.getValue()) {
                         if (pos.equals(importEntry.getKey()) && direction.equals(importDirection)) continue;
-                        tasks.add(new Task(pos, direction, importEntry.getKey(), importDirection, network.pipes)); // TODO SPECIFIC PATH MAYBE????
+                        tasks.add(new Task(pos, direction, importEntry.getKey(), importDirection, network.pipes));
                     }
                 }
             }
@@ -170,7 +170,7 @@ public class PipeNetwork {
                 for (Map.Entry<BlockPos, List<Direction>> exportEntry : exports.entrySet()) {
                     for (Direction exportDirection : exportEntry.getValue()) {
                         if (pos.equals(exportEntry.getKey()) && direction.equals(exportDirection)) continue;
-                        tasks.add(new Task(exportEntry.getKey(), exportDirection, pos, direction, network.pipes)); // TODO SPECIFIC PATH MAYBE????
+                        tasks.add(new Task(exportEntry.getKey(), exportDirection, pos, direction, network.pipes));
                     }
                 }
             }
@@ -190,7 +190,7 @@ public class PipeNetwork {
             }
         }
 
-        private Task generateSpecificTask(BlockPos startPosition, Direction startDirection, BlockPos stopPosition, Direction stopDirection) { // TODO SPECIFIC PATH MAYBE????
+        private Task generateSpecificTask(BlockPos startPosition, Direction startDirection, BlockPos stopPosition, Direction stopDirection) {
             return new Task(startPosition, startDirection, stopPosition, stopDirection, network.pipes);
         }
 

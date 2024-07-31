@@ -46,12 +46,12 @@ public class RenderUtil {
         return FastColor.ARGB32.color(FastColor.ARGB32.alpha(color), r, g, b);
     }
 
-    private static TextureAtlasSprite getSprite(ResourceLocation texture) { // TODO if works cache colors
+    private static TextureAtlasSprite getSprite(ResourceLocation texture) {
         Map<ResourceLocation, TextureAtlasSprite> atlas = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getTextures();
         return atlas.getOrDefault(texture, atlas.get(MissingTextureAtlasSprite.getLocation()));
     }
 
-    public static TextureAtlasSprite getSprite(FluidStack fluidStack) { // TODO if works cache colors
+    public static TextureAtlasSprite getSprite(FluidStack fluidStack) {
         if (fluidStack.isEmpty()) return getSprite(MissingTextureAtlasSprite.getLocation());
         IClientFluidTypeExtensions props = IClientFluidTypeExtensions.of(fluidStack.getFluidType());
         return getSprite(props.getStillTexture(fluidStack));

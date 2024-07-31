@@ -24,7 +24,7 @@ import java.util.*;
 
 public class PipeNetworks extends SavedData {
 
-    private final Map<UUID, PipeNetwork> networks = new HashMap<>(); // TODO Breaking Network Resets BlockState
+    private final Map<UUID, PipeNetwork> networks = new HashMap<>();
     private int tick = 0;
     private final ServerLevel level;
 

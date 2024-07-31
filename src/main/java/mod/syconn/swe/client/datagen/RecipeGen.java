@@ -1,5 +1,6 @@
 package mod.syconn.swe.client.datagen;
 
+import mod.syconn.api.world.data.recipes.CustomRecipeBuilder;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
@@ -8,6 +9,7 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 
@@ -20,8 +22,8 @@ public class RecipeGen extends RecipeProvider {
     }
 
     protected void buildRecipes(RecipeOutput pRecipeOutput) {
-        SpecialRecipeBuilder.special(DyedParachuteRecipe::new).save(pRecipeOutput, Main.loc("dyed_parachute"));
-        SpecialRecipeBuilder.special(RefillingCanisterRecipe::new).save(pRecipeOutput, Main.loc("refill_canister"));
+        CustomRecipeBuilder.special(DyedParachuteRecipe::new).save(pRecipeOutput, Main.loc("dyed_parachute"), has(ItemTags.WOOL));
+        CustomRecipeBuilder.special(RefillingCanisterRecipe::new).save(pRecipeOutput, Main.loc("refill_canister"), has(Registration.CANISTER));
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, Registration.CANISTER_FILLER.get())
                 .pattern("ggg")
                 .pattern("gig")
@@ -70,14 +72,14 @@ public class RecipeGen extends RecipeProvider {
                 .define('r', Items.REDSTONE)
                 .unlockedBy("has_ingot", inventoryTrigger(ItemPredicate.Builder.item().of(Items.IRON_INGOT).build()))
                 .save(pRecipeOutput);
-//        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Registration.FLUID_PIPE.get(), 16)
-//                .pattern("nnn")
-//                .pattern("nrn")
-//                .pattern("nnn")
-//                .define('n', Tags.Items.GLASS_PANES)
-//                .define('r', Items.BUCKET)
-//                .unlockedBy("has_bucket", inventoryTrigger(ItemPredicate.Builder.item().of(Items.BUCKET).build()))
-//                .save(pRecipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Registration.FLUID_PIPE.get(), 4)
+                .pattern("nnn")
+                .pattern("nrn")
+                .pattern("nnn")
+                .define('n', Tags.Items.GLASS_PANES)
+                .define('r', Items.BUCKET)
+                .unlockedBy("has_bucket", inventoryTrigger(ItemPredicate.Builder.item().of(Items.BUCKET).build()))
+                .save(pRecipeOutput);
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, Registration.FLUID_TANK.get())
                 .pattern("bbb")
                 .pattern("nrn")

@@ -111,7 +111,7 @@ public class Registration {
     public static final DeferredBlock<CanisterFiller> CANISTER_FILLER = registerBlockAndItem("canister_filler", () -> new CanisterFiller(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final DeferredBlock<OxygenDisperser> OXYGEN_DISPERSER = registerBlockAndItem("oxygen_disperser", () -> new OxygenDisperser(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final DeferredBlock<Block> FLUID_TANK = registerBlockAndItem("fluid_tank", () -> new FluidTank(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
-    public static final DeferredBlock<BaseFluidPipe> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new BaseFluidPipe(Blocks.GLASS.properties()));
+    public static final DeferredBlock<BaseFluidPipe> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new BaseFluidPipe(Blocks.GLASS_PANE.properties()));
     public static final DeferredBlock<LiquidBlock> O2_FLUID_BLOCK = BLOCKS.register("oxygen", () -> new LiquidBlock(O2.get(), Blocks.LAVA.properties().lightLevel(blockstate -> 0)));
 
     public static final DeferredHolder<MapCodec<? extends Block>, MapCodec<CanisterFiller>> CANISTER_FILLER_CODEC = BLOCK_TYPES.register("canister_filler", () -> simpleCodec(CanisterFiller::new));

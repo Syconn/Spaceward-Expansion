@@ -1,20 +1,14 @@
 package mod.syconn.api.blocks;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.api.blockEntity.AbstractPipeBE;
 import mod.syconn.api.blockEntity.BaseFluidPipeBE;
 import mod.syconn.api.client.ClientHooks;
-import mod.syconn.api.client.screen.FluidPipeScreen;
 import mod.syconn.api.util.PipeConnectionTypes;
 import mod.syconn.api.world.data.savedData.PipeNetworks;
 import mod.syconn.swe.Registration;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +18,6 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.extensions.ILevelExtension;
 

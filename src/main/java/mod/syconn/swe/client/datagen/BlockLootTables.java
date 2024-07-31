@@ -16,8 +16,6 @@ import java.util.stream.Stream;
 
 public class BlockLootTables extends BlockLootSubProvider {
 
-    private static final Set<Item> EXPLOSION_RESISTANT = Collections.emptySet();
-
     public BlockLootTables(HolderLookup.Provider pRegistries) {
         super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags(), pRegistries);
     }
@@ -27,7 +25,7 @@ public class BlockLootTables extends BlockLootSubProvider {
         dropSelf(Registration.OXYGEN_DISPERSER.get());
         dropSelf(Registration.CANISTER_FILLER.get());
         dropSelf(Registration.OXYGEN_COLLECTOR.get());
-        dropSelf(Registration.FLUID_PIPE.get());
+        dropWhenSilkTouch(Registration.FLUID_PIPE.get());
     }
 
     protected Iterable<Block> getKnownBlocks() {
