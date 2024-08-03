@@ -1,22 +1,22 @@
-package mod.syconn.swe;
+package mod.syconn.swe2;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.swe.api.blocks.BaseFluidPipe;
-import mod.syconn.swe.api.world.data.capability.APICapabilities;
-import mod.syconn.swe.blockentities.*;
-import mod.syconn.swe.blocks.*;
-import mod.syconn.swe.fluids.BaseFluidType;
-import mod.syconn.swe.fluids.O2Fluid;
-import mod.syconn.swe.items.*;
-import mod.syconn.swe.world.container.CollectorMenu;
-import mod.syconn.swe.world.container.DisperserMenu;
-import mod.syconn.swe.world.container.TankMenu;
-import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
-import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
-import mod.syconn.swe.world.data.attachments.SpaceSuit;
-import mod.syconn.swe.world.data.capabilities.ItemFluidWrapper;
+import mod.syconn.swe2.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.swe2.api.blocks.BaseFluidPipe;
+import mod.syconn.swe2.api.world.data.capability.APICapabilities;
+import mod.syconn.swe2.blockentities.*;
+import mod.syconn.swe2.blocks.*;
+import mod.syconn.swe2.fluids.BaseFluidType;
+import mod.syconn.swe2.fluids.O2Fluid;
+import mod.syconn.swe2.items.*;
+import mod.syconn.swe2.world.container.CollectorMenu;
+import mod.syconn.swe2.world.container.DisperserMenu;
+import mod.syconn.swe2.world.container.TankMenu;
+import mod.syconn.swe2.world.crafting.DyedParachuteRecipe;
+import mod.syconn.swe2.world.crafting.RefillingCanisterRecipe;
+import mod.syconn.swe2.world.data.attachments.SpaceSuit;
+import mod.syconn.swe2.world.data.capabilities.ItemFluidWrapper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -65,8 +65,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static mod.syconn.swe.Main.MODID;
-import static mod.syconn.swe.fluids.BaseFluidType.*;
+import static mod.syconn.swe2.Main.MODID;
+import static mod.syconn.swe2.fluids.BaseFluidType.*;
 import static net.minecraft.world.level.block.state.BlockBehaviour.simpleCodec;
 
 public class Registration {

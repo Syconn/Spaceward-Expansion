@@ -1,8 +1,8 @@
-package mod.syconn.swe.client;
+package mod.syconn.swe2.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
-import mod.syconn.swe.items.SpaceArmor;
+import mod.syconn.swe2.client.renders.entity.layer.SpaceSuitLayer;
+import mod.syconn.swe2.items.SpaceArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

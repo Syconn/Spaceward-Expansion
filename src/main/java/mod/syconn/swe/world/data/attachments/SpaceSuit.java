@@ -1,14 +1,14 @@
-package mod.syconn.swe.world.data.attachments;
+package mod.syconn.swe2.world.data.attachments;
 
-import mod.syconn.swe.items.Canister;
-import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.network.Channel;
-import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
-import mod.syconn.swe.util.Animator;
-import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
-import mod.syconn.swe.world.dimensions.PlanetManager;
-import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
+import mod.syconn.swe2.items.Canister;
+import mod.syconn.swe2.items.SpaceArmor;
+import mod.syconn.swe2.items.extras.EquipmentItem;
+import mod.syconn.swe2.network.Channel;
+import mod.syconn.swe2.network.messages.BiBoundUpdateSpaceSuit;
+import mod.syconn.swe2.util.Animator;
+import mod.syconn.swe2.world.data.savedData.AirBubblesSavedData;
+import mod.syconn.swe2.world.dimensions.PlanetManager;
+import mod.syconn.swe2.world.inventory.ExtendedPlayerInventory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;

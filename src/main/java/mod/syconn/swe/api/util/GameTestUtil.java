@@ -1,4 +1,4 @@
-package mod.syconn.swe.api.util;
+package mod.syconn.swe2.api.util;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.multiplayer.ClientLevel;

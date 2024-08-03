@@ -1,6 +1,6 @@
-package mod.syconn.swe.client.datagen;
+package mod.syconn.swe2.client.datagen;
 
-import mod.syconn.swe.Registration;
+import mod.syconn.swe2.Registration;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;

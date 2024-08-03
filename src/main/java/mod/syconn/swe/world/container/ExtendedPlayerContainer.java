@@ -1,8 +1,8 @@
-package mod.syconn.swe.world.container;
+package mod.syconn.swe2.world.container;
 
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
-import mod.syconn.swe.world.data.attachments.SpaceSuit;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.world.container.slot.EquipmentItemSlot;
+import mod.syconn.swe2.world.data.attachments.SpaceSuit;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;

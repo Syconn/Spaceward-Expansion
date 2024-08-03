@@ -1,9 +1,9 @@
-package mod.syconn.swe.client.renders.effects;
+package mod.syconn.swe2.client.renders.effects;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

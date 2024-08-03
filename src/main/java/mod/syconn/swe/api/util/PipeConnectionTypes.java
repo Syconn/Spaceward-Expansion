@@ -1,7 +1,7 @@
-package mod.syconn.swe.api.util;
+package mod.syconn.swe2.api.util;
 
 import io.netty.buffer.ByteBuf;
-import mod.syconn.swe.api.blocks.AbstractPipeBlock;
+import mod.syconn.swe2.api.blocks.AbstractPipeBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

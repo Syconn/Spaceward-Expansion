@@ -1,7 +1,7 @@
-package mod.syconn.swe.world.container;
+package mod.syconn.swe2.world.container;
 
-import mod.syconn.swe.api.containers.slots.SpecifiedSlotHandler;
-import mod.syconn.swe.Registration;
+import mod.syconn.swe2.api.containers.slots.SpecifiedSlotHandler;
+import mod.syconn.swe2.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import mod.syconn.swe.blockentities.TankBE;
+import mod.syconn.swe2.blockentities.TankBE;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;

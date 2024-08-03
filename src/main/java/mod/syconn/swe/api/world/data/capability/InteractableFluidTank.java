@@ -1,4 +1,4 @@
-package mod.syconn.swe.api.world.data.capability;
+package mod.syconn.swe2.api.world.data.capability;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

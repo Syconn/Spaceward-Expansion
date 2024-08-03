@@ -1,8 +1,8 @@
-package mod.syconn.swe.client.model;
+package mod.syconn.swe2.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mod.syconn.swe.api.client.RenderUtil;
+import mod.syconn.swe2.api.client.RenderUtil;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 import net.minecraft.util.FastColor;
 import net.neoforged.neoforge.fluids.FluidUtil;
 

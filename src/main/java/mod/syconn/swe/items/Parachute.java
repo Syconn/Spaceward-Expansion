@@ -1,7 +1,7 @@
-package mod.syconn.swe.items;
+package mod.syconn.swe2.items;
 
-import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
+import mod.syconn.swe2.items.extras.EquipmentItem;
+import mod.syconn.swe2.world.container.slot.EquipmentItemSlot;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;

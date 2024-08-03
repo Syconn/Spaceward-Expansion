@@ -1,4 +1,4 @@
-package mod.syconn.swe.world.dimensions;
+package mod.syconn.swe2.world.dimensions;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,7 +10,7 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 
 import java.util.Collection;
 import java.util.HashMap;

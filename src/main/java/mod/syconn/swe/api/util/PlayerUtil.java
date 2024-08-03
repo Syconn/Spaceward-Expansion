@@ -1,4 +1,4 @@
-package mod.syconn.swe.api.util;
+package mod.syconn.swe2.api.util;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

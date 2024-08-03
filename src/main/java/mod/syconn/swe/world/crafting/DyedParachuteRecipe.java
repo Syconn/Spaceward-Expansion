@@ -1,7 +1,7 @@
-package mod.syconn.swe.world.crafting;
+package mod.syconn.swe2.world.crafting;
 
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.util.ColorUtil;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.util.ColorUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;

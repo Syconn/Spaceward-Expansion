@@ -1,4 +1,4 @@
-package mod.syconn.swe.fluids;
+package mod.syconn.swe2.fluids;
 
 public interface FluidStorageBlock {
 }

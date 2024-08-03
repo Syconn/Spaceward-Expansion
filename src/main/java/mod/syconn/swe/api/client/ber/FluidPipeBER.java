@@ -1,8 +1,8 @@
-package mod.syconn.swe.api.client.ber;
+package mod.syconn.swe2.api.client.ber;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mod.syconn.swe.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.swe.api.client.RenderUtil;
+import mod.syconn.swe2.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.swe2.api.client.RenderUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;

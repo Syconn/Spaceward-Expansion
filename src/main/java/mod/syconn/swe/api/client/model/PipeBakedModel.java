@@ -1,9 +1,9 @@
-package mod.syconn.swe.api.client.model;
+package mod.syconn.swe2.api.client.model;
 
-import mod.syconn.swe.api.blocks.AbstractPipeBlock;
-import mod.syconn.swe.api.util.PipeConnectionTypes;
-import mod.syconn.swe.api.util.PipePatterns;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.api.blocks.AbstractPipeBlock;
+import mod.syconn.swe2.api.util.PipeConnectionTypes;
+import mod.syconn.swe2.api.util.PipePatterns;
+import mod.syconn.swe2.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -27,9 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static mod.syconn.swe.api.util.PipeConnectionTypes.*;
-import static mod.syconn.swe.api.util.PipePatterns.SpriteIdx.*;
-import static mod.syconn.swe.api.util.BakedModelHelper.*;
+import static mod.syconn.swe2.api.util.PipeConnectionTypes.*;
+import static mod.syconn.swe2.api.util.PipePatterns.SpriteIdx.*;
+import static mod.syconn.swe2.api.util.BakedModelHelper.*;
 
 // Origional Code Credits: https://www.mcjty.eu/docs/1.20/ep5
 public class PipeBakedModel implements IDynamicBakedModel {

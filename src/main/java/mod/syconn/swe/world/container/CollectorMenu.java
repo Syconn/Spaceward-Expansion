@@ -1,7 +1,7 @@
-package mod.syconn.swe.world.container;
+package mod.syconn.swe2.world.container;
 
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.CollectorBE;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.blockentities.CollectorBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

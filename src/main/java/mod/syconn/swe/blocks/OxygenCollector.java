@@ -1,9 +1,9 @@
-package mod.syconn.swe.blocks;
+package mod.syconn.swe2.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.CollectorBE;
-import mod.syconn.swe.util.FluidHelper;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.blockentities.CollectorBE;
+import mod.syconn.swe2.util.FluidHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

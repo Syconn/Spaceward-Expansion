@@ -1,8 +1,8 @@
-package mod.syconn.swe.api.client.packets;
+package mod.syconn.swe2.api.client.packets;
 
 import io.netty.buffer.ByteBuf;
-import mod.syconn.swe.api.Constants;
-import mod.syconn.swe.api.client.debug.PipeNetworkRenderer;
+import mod.syconn.swe2.api.Constants;
+import mod.syconn.swe2.api.client.debug.PipeNetworkRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.codec.ByteBufCodecs;

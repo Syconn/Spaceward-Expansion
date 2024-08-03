@@ -1,8 +1,8 @@
-package mod.syconn.swe.blocks;
+package mod.syconn.swe2.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.CanisterFillerBlockEntity;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.blockentities.CanisterFillerBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;

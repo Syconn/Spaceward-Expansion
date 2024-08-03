@@ -1,10 +1,10 @@
-package mod.syconn.swe.client.datagen;
+package mod.syconn.swe2.client.datagen;
 
-import mod.syconn.swe.api.world.data.recipes.CustomRecipeBuilder;
-import mod.syconn.swe.Main;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
-import mod.syconn.swe.world.crafting.RefillingCanisterRecipe;
+import mod.syconn.swe2.api.world.data.recipes.CustomRecipeBuilder;
+import mod.syconn.swe2.Main;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.world.crafting.DyedParachuteRecipe;
+import mod.syconn.swe2.world.crafting.RefillingCanisterRecipe;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

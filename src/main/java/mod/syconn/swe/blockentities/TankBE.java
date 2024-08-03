@@ -1,9 +1,9 @@
-package mod.syconn.swe.blockentities;
+package mod.syconn.swe2.blockentities;
 
-import mod.syconn.swe.api.blockEntity.AbstractTankBE;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.util.FluidHelper;
-import mod.syconn.swe.world.container.TankMenu;
+import mod.syconn.swe2.api.blockEntity.AbstractTankBE;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.util.FluidHelper;
+import mod.syconn.swe2.world.container.TankMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

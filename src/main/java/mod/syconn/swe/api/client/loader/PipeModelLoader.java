@@ -1,10 +1,10 @@
-package mod.syconn.swe.api.client.loader;
+package mod.syconn.swe2.api.client.loader;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import mod.syconn.swe.api.client.model.PipeBakedModel;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.api.client.model.PipeBakedModel;
+import mod.syconn.swe2.Main;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;

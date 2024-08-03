@@ -1,8 +1,8 @@
-package mod.syconn.swe.fluids;
+package mod.syconn.swe2.fluids;
 
 import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.FogRenderer;

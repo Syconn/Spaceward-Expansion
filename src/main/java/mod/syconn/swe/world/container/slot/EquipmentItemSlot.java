@@ -1,9 +1,9 @@
-package mod.syconn.swe.world.container.slot;
+package mod.syconn.swe2.world.container.slot;
 
 import com.mojang.datafixers.util.Pair;
-import mod.syconn.swe.Main;
-import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.items.extras.EquipmentItem;
+import mod.syconn.swe2.Main;
+import mod.syconn.swe2.items.SpaceArmor;
+import mod.syconn.swe2.items.extras.EquipmentItem;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;

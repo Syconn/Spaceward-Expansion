@@ -1,11 +1,11 @@
-package mod.syconn.swe.world.inventory;
+package mod.syconn.swe2.world.inventory;
 
 import com.google.common.collect.ImmutableList;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
-import mod.syconn.swe.world.data.attachments.SpaceSuit;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.items.SpaceArmor;
+import mod.syconn.swe2.items.extras.EquipmentItem;
+import mod.syconn.swe2.world.container.slot.EquipmentItemSlot;
+import mod.syconn.swe2.world.data.attachments.SpaceSuit;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

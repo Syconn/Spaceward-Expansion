@@ -1,6 +1,6 @@
-package mod.syconn.swe.api;
+package mod.syconn.swe2.api;
 
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 
 public class Constants {
 

@@ -1,4 +1,4 @@
-package mod.syconn.swe.api.world.data.recipes;
+package mod.syconn.swe2.api.world.data.recipes;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;

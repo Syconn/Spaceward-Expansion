@@ -1,4 +1,4 @@
-package mod.syconn.swe.api.client.screen.widget;
+package mod.syconn.swe2.api.client.screen.widget;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

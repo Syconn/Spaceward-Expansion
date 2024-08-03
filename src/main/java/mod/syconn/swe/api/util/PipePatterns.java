@@ -1,9 +1,9 @@
-package mod.syconn.swe.api.util;
+package mod.syconn.swe2.api.util;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static mod.syconn.swe.api.util.PipeConnectionTypes.*;
+import static mod.syconn.swe2.api.util.PipeConnectionTypes.*;
 
 public class PipePatterns {
 

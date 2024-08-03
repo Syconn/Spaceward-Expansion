@@ -1,9 +1,9 @@
-package mod.syconn.swe.util;
+package mod.syconn.swe2.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
-import mod.syconn.swe.world.inventory.ExtendedPlayerInventory;
+import mod.syconn.swe2.world.inventory.ExtendedPlayerInventory;
 
 import java.util.List;
 

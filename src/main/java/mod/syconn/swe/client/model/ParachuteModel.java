@@ -1,4 +1,4 @@
-package mod.syconn.swe.client.model;
+package mod.syconn.swe2.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -9,7 +9,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 import net.minecraft.util.FastColor;
 
 import java.util.function.Function;

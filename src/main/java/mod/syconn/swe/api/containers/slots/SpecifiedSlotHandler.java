@@ -1,4 +1,4 @@
-package mod.syconn.swe.api.containers.slots;
+package mod.syconn.swe2.api.containers.slots;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;

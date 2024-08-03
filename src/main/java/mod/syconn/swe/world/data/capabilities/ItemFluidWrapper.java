@@ -1,4 +1,4 @@
-package mod.syconn.swe.world.data.capabilities;
+package mod.syconn.swe2.world.data.capabilities;
 
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.item.ItemStack;

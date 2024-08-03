@@ -1,6 +1,6 @@
-package mod.syconn.swe.api.world.data.capability;
+package mod.syconn.swe2.api.world.data.capability;
 
-import mod.syconn.swe.api.Constants;
+import mod.syconn.swe2.api.Constants;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.capabilities.BlockCapability;

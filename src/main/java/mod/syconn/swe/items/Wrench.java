@@ -1,6 +1,6 @@
-package mod.syconn.swe.items;
+package mod.syconn.swe2.items;
 
-import mod.syconn.swe.Registration;
+import mod.syconn.swe2.Registration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;

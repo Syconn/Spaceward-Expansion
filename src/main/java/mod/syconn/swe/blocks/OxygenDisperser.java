@@ -1,8 +1,8 @@
-package mod.syconn.swe.blocks;
+package mod.syconn.swe2.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.DisperserBE;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.blockentities.DisperserBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -25,8 +25,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import mod.syconn.swe.util.FluidHelper;
-import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
+import mod.syconn.swe2.util.FluidHelper;
+import mod.syconn.swe2.world.data.savedData.AirBubblesSavedData;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
 import java.util.UUID;

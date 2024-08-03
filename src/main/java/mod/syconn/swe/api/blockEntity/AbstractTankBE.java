@@ -1,7 +1,7 @@
-package mod.syconn.swe.api.blockEntity;
+package mod.syconn.swe2.api.blockEntity;
 
-import mod.syconn.swe.api.world.data.capability.IFluidHandlerInteractable;
-import mod.syconn.swe.api.world.data.capability.InteractableFluidTank;
+import mod.syconn.swe2.api.world.data.capability.IFluidHandlerInteractable;
+import mod.syconn.swe2.api.world.data.capability.InteractableFluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

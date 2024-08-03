@@ -1,7 +1,7 @@
-package mod.syconn.swe.api.blocks;
+package mod.syconn.swe2.api.blocks;
 
-import mod.syconn.swe.api.blockEntity.AbstractPipeBE;
-import mod.syconn.swe.api.util.PipeConnectionTypes;
+import mod.syconn.swe2.api.blockEntity.AbstractPipeBE;
+import mod.syconn.swe2.api.util.PipeConnectionTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 
-import static mod.syconn.swe.api.util.PipeConnectionTypes.*;
+import static mod.syconn.swe2.api.util.PipeConnectionTypes.*;
 
 public abstract class AbstractPipeBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
 

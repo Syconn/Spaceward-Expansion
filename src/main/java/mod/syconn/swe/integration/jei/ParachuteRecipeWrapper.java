@@ -1,4 +1,4 @@
-package mod.syconn.swe.integration.jei;
+package mod.syconn.swe2.integration.jei;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
@@ -6,8 +6,8 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.world.crafting.DyedParachuteRecipe;
 import net.minecraft.Util;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
@@ -24,7 +24,7 @@ import net.neoforged.neoforge.common.Tags;
 
 import java.util.*;
 
-import static mod.syconn.swe.util.ColorUtil.DYE_BY_WOOL;
+import static mod.syconn.swe2.util.ColorUtil.DYE_BY_WOOL;
 
 public class ParachuteRecipeWrapper implements ICraftingCategoryExtension<DyedParachuteRecipe> {
 

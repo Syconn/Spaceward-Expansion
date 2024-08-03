@@ -1,4 +1,4 @@
-package mod.syconn.swe.util;
+package mod.syconn.swe2.util;
 
 import com.google.common.collect.Maps;
 import net.minecraft.Util;

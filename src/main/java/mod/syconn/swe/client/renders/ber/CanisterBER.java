@@ -1,4 +1,4 @@
-package mod.syconn.swe.client.renders.ber;
+package mod.syconn.swe2.client.renders.ber;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import mod.syconn.swe.blockentities.CanisterFillerBlockEntity;
+import mod.syconn.swe2.blockentities.CanisterFillerBlockEntity;
 
 public class CanisterBER implements BlockEntityRenderer<CanisterFillerBlockEntity> {
 

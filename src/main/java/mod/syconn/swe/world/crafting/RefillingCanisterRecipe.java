@@ -1,7 +1,7 @@
-package mod.syconn.swe.world.crafting;
+package mod.syconn.swe2.world.crafting;
 
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.items.Canister;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.items.Canister;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

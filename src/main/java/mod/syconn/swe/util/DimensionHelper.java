@@ -1,10 +1,10 @@
-package mod.syconn.swe.util;
+package mod.syconn.swe2.util;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 
-import static mod.syconn.swe.Registration.MOON;
+import static mod.syconn.swe2.Registration.MOON;
 
 public class DimensionHelper {
 

@@ -1,6 +1,6 @@
-package mod.syconn.swe.client.datagen;
+package mod.syconn.swe2.client.datagen;
 
-import mod.syconn.swe.Registration;
+import mod.syconn.swe2.Registration;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 
 import java.util.concurrent.CompletableFuture;
 

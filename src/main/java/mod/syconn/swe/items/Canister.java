@@ -1,10 +1,10 @@
-package mod.syconn.swe.items;
+package mod.syconn.swe2.items;
 
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.api.client.RenderUtil;
-import mod.syconn.swe.items.extras.EquipmentItem;
-import mod.syconn.swe.world.container.slot.EquipmentItemSlot;
-import mod.syconn.swe.world.dimensions.PlanetManager;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.api.client.RenderUtil;
+import mod.syconn.swe2.items.extras.EquipmentItem;
+import mod.syconn.swe2.world.container.slot.EquipmentItemSlot;
+import mod.syconn.swe2.world.dimensions.PlanetManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FastColor;

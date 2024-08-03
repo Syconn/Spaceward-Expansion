@@ -1,9 +1,9 @@
-package mod.syconn.swe.client.datagen;
+package mod.syconn.swe2.client.datagen;
 
-import mod.syconn.swe.api.util.DataGenHelper;
-import mod.syconn.swe.Main;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.blocks.CanisterFiller;
+import mod.syconn.swe2.api.util.DataGenHelper;
+import mod.syconn.swe2.Main;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.blocks.CanisterFiller;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;

@@ -1,7 +1,7 @@
-package mod.syconn.swe.blockentities;
+package mod.syconn.swe2.blockentities;
 
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.api.blockEntity.AbstractTankBE;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.api.blockEntity.AbstractTankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -13,11 +13,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import mod.syconn.swe.blocks.DispersibleAirBlock;
-import mod.syconn.swe.world.container.DisperserMenu;
-import mod.syconn.swe.util.BlockInfo;
-import mod.syconn.swe.api.util.NbtHelper;
-import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
+import mod.syconn.swe2.blocks.DispersibleAirBlock;
+import mod.syconn.swe2.world.container.DisperserMenu;
+import mod.syconn.swe2.util.BlockInfo;
+import mod.syconn.swe2.api.util.NbtHelper;
+import mod.syconn.swe2.world.data.savedData.AirBubblesSavedData;
 import net.minecraft.world.ticks.TickPriority;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static mod.syconn.swe.blocks.OxygenDisperser.addBlock;
+import static mod.syconn.swe2.blocks.OxygenDisperser.addBlock;
 
 public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockInfo {
 

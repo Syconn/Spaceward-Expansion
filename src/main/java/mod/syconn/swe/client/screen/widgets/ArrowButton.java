@@ -1,7 +1,7 @@
-package mod.syconn.swe.client.screen.widgets;
+package mod.syconn.swe2.client.screen.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;

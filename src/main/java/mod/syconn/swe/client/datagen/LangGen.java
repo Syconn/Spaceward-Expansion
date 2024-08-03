@@ -1,8 +1,8 @@
-package mod.syconn.swe.client.datagen;
+package mod.syconn.swe2.client.datagen;
 
-import mod.syconn.swe.Registration;
+import mod.syconn.swe2.Registration;
 import net.minecraft.data.PackOutput;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class LangGen extends LanguageProvider {

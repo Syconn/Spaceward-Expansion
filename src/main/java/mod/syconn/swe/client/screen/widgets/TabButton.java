@@ -1,4 +1,4 @@
-package mod.syconn.swe.client.screen.widgets;
+package mod.syconn.swe2.client.screen.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 import org.apache.commons.lang3.StringUtils;
-import mod.syconn.swe.Main;
+import mod.syconn.swe2.Main;
 
 public class TabButton extends ExtendedButton {
 

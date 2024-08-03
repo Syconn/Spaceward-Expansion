@@ -1,8 +1,8 @@
-package mod.syconn.swe.api.client;
+package mod.syconn.swe2.api.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mod.syconn.swe.api.util.PipeConnectionTypes;
+import mod.syconn.swe2.api.util.PipeConnectionTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

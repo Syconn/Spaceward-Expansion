@@ -1,8 +1,8 @@
-package mod.syconn.swe.api.util;
+package mod.syconn.swe2.api.util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import mod.syconn.swe.api.client.loader.PipeModelLoader;
+import mod.syconn.swe2.api.client.loader.PipeModelLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;

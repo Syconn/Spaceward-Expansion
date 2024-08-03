@@ -1,7 +1,7 @@
-package mod.syconn.swe.mixins;
+package mod.syconn.swe2.mixins;
 
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.world.data.attachments.SpaceSuit;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.world.data.attachments.SpaceSuit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;

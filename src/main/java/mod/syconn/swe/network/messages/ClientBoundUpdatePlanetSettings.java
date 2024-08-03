@@ -1,8 +1,8 @@
-package mod.syconn.swe.network.messages;
+package mod.syconn.swe2.network.messages;
 
-import mod.syconn.swe.Main;
-import mod.syconn.swe.world.dimensions.PlanetManager;
-import mod.syconn.swe.world.dimensions.PlanetSettings;
+import mod.syconn.swe2.Main;
+import mod.syconn.swe2.world.dimensions.PlanetManager;
+import mod.syconn.swe2.world.dimensions.PlanetSettings;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

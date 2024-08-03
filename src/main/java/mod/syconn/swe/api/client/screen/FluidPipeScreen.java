@@ -1,11 +1,11 @@
-package mod.syconn.swe.api.client.screen;
+package mod.syconn.swe2.api.client.screen;
 
-import mod.syconn.swe.api.Constants;
-import mod.syconn.swe.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.swe.api.client.screen.widget.SpriteButton;
-import mod.syconn.swe.api.util.PipeConnectionTypes;
-import mod.syconn.swe.api.world.packets.ServerBoundUpdatePipeState;
-import mod.syconn.swe.network.Channel;
+import mod.syconn.swe2.api.Constants;
+import mod.syconn.swe2.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.swe2.api.client.screen.widget.SpriteButton;
+import mod.syconn.swe2.api.util.PipeConnectionTypes;
+import mod.syconn.swe2.api.world.packets.ServerBoundUpdatePipeState;
+import mod.syconn.swe2.network.Channel;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Direction;

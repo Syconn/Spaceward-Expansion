@@ -1,9 +1,9 @@
-package mod.syconn.swe.api.client.screen;
+package mod.syconn.swe2.api.client.screen;
 
-import mod.syconn.swe.api.Constants;
-import mod.syconn.swe.api.client.screen.widget.SpriteButton;
-import mod.syconn.swe.api.world.data.capability.IFluidHandlerInteractable;
-import mod.syconn.swe.api.world.data.capability.InteractableFluidTank;
+import mod.syconn.swe2.api.Constants;
+import mod.syconn.swe2.api.client.screen.widget.SpriteButton;
+import mod.syconn.swe2.api.world.data.capability.IFluidHandlerInteractable;
+import mod.syconn.swe2.api.world.data.capability.InteractableFluidTank;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

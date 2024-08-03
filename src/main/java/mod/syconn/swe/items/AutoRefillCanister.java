@@ -1,7 +1,7 @@
-package mod.syconn.swe.items;
+package mod.syconn.swe2.items;
 
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.world.dimensions.PlanetManager;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.world.dimensions.PlanetManager;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;

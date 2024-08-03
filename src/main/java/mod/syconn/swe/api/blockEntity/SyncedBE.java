@@ -1,4 +1,4 @@
-package mod.syconn.swe.api.blockEntity;
+package mod.syconn.swe2.api.blockEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

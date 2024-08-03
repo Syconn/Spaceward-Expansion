@@ -1,6 +1,6 @@
-package mod.syconn.swe.fluids;
+package mod.syconn.swe2.fluids;
 
-import mod.syconn.swe.Registration;
+import mod.syconn.swe2.Registration;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;

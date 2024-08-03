@@ -1,4 +1,4 @@
-package mod.syconn.swe.util;
+package mod.syconn.swe2.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

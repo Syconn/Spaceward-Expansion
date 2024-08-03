@@ -1,6 +1,6 @@
-package mod.syconn.swe.world.dimensions;
+package mod.syconn.swe2.world.dimensions;
 
-import mod.syconn.swe.Registration;
+import mod.syconn.swe2.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;

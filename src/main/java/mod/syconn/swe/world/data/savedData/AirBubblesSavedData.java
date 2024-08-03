@@ -1,6 +1,6 @@
-package mod.syconn.swe.world.data.savedData;
+package mod.syconn.swe2.world.data.savedData;
 
-import mod.syconn.swe.world.dimensions.PlanetManager;
+import mod.syconn.swe2.world.dimensions.PlanetManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import mod.syconn.swe.api.util.NbtHelper;
+import mod.syconn.swe2.api.util.NbtHelper;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.HashMap;

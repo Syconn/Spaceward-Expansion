@@ -1,23 +1,23 @@
-package mod.syconn.swe.client;
+package mod.syconn.swe2.client;
 
-import mod.syconn.swe.api.client.RenderUtil;
-import mod.syconn.swe.api.client.ber.FluidPipeBER;
-import mod.syconn.swe.api.client.debug.PipeNetworkRenderer;
-import mod.syconn.swe.api.client.loader.PipeModelLoader;
-import mod.syconn.swe.Config;
-import mod.syconn.swe.Main;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.client.model.ChuteModel;
-import mod.syconn.swe.client.model.ParachuteModel;
-import mod.syconn.swe.client.model.TankModel;
-import mod.syconn.swe.client.renders.ber.CanisterBER;
-import mod.syconn.swe.client.renders.ber.TankBER;
-import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
-import mod.syconn.swe.client.screen.CollectorScreen;
-import mod.syconn.swe.client.screen.DisperserScreen;
-import mod.syconn.swe.client.screen.TankScreen;
-import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
-import mod.syconn.swe.items.Canister;
+import mod.syconn.swe2.api.client.RenderUtil;
+import mod.syconn.swe2.api.client.ber.FluidPipeBER;
+import mod.syconn.swe2.api.client.debug.PipeNetworkRenderer;
+import mod.syconn.swe2.api.client.loader.PipeModelLoader;
+import mod.syconn.swe2.Config;
+import mod.syconn.swe2.Main;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.client.model.ChuteModel;
+import mod.syconn.swe2.client.model.ParachuteModel;
+import mod.syconn.swe2.client.model.TankModel;
+import mod.syconn.swe2.client.renders.ber.CanisterBER;
+import mod.syconn.swe2.client.renders.ber.TankBER;
+import mod.syconn.swe2.client.renders.effects.MoonSpecialEffects;
+import mod.syconn.swe2.client.screen.CollectorScreen;
+import mod.syconn.swe2.client.screen.DisperserScreen;
+import mod.syconn.swe2.client.screen.TankScreen;
+import mod.syconn.swe2.client.screen.gui.SpaceSuitOverlay;
+import mod.syconn.swe2.items.Canister;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -31,7 +31,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
-import static mod.syconn.swe.client.ClientHooks.addPlayerLayers;
+import static mod.syconn.swe2.client.ClientHooks.addPlayerLayers;
 
 @EventBusSubscriber(modid = Main.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientHandler {

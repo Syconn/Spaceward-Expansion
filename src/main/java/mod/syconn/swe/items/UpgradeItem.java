@@ -1,4 +1,4 @@
-package mod.syconn.swe.items;
+package mod.syconn.swe2.items;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;

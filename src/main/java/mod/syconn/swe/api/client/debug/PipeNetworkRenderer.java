@@ -1,9 +1,9 @@
-package mod.syconn.swe.api.client.debug;
+package mod.syconn.swe2.api.client.debug;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import mod.syconn.swe.api.client.packets.ClientBoundUpdatePipeCache;
-import mod.syconn.swe.api.world.data.savedData.PipeNetworks;
+import mod.syconn.swe2.api.client.packets.ClientBoundUpdatePipeCache;
+import mod.syconn.swe2.api.world.data.savedData.PipeNetworks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;

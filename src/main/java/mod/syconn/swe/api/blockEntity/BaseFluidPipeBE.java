@@ -1,11 +1,11 @@
-package mod.syconn.swe.api.blockEntity;
+package mod.syconn.swe2.api.blockEntity;
 
-import mod.syconn.swe.api.blocks.AbstractPipeBlock;
-import mod.syconn.swe.api.blocks.BaseFluidPipe;
-import mod.syconn.swe.api.util.PipeConnectionTypes;
-import mod.syconn.swe.api.world.data.savedData.PipeNetworks;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.TankBE;
+import mod.syconn.swe2.api.blocks.AbstractPipeBlock;
+import mod.syconn.swe2.api.blocks.BaseFluidPipe;
+import mod.syconn.swe2.api.util.PipeConnectionTypes;
+import mod.syconn.swe2.api.world.data.savedData.PipeNetworks;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.blockentities.TankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

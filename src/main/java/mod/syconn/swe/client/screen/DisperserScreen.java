@@ -1,7 +1,7 @@
-package mod.syconn.swe.client.screen;
+package mod.syconn.swe2.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.swe.network.Channel;
+import mod.syconn.swe2.network.Channel;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -10,10 +10,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluids;
-import mod.syconn.swe.Main;
-import mod.syconn.swe.client.screen.widgets.InfoWidget;
-import mod.syconn.swe.world.container.DisperserMenu;
-import mod.syconn.swe.network.messages.ServerBoundToggleDisperser;
+import mod.syconn.swe2.Main;
+import mod.syconn.swe2.client.screen.widgets.InfoWidget;
+import mod.syconn.swe2.world.container.DisperserMenu;
+import mod.syconn.swe2.network.messages.ServerBoundToggleDisperser;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 import net.neoforged.neoforge.fluids.FluidStack;

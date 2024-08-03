@@ -1,12 +1,12 @@
-package mod.syconn.swe.api.blocks;
+package mod.syconn.swe2.api.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.api.blockEntity.AbstractPipeBE;
-import mod.syconn.swe.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.swe.api.client.ClientHooks;
-import mod.syconn.swe.api.util.PipeConnectionTypes;
-import mod.syconn.swe.api.world.data.savedData.PipeNetworks;
-import mod.syconn.swe.Registration;
+import mod.syconn.swe2.api.blockEntity.AbstractPipeBE;
+import mod.syconn.swe2.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.swe2.api.client.ClientHooks;
+import mod.syconn.swe2.api.util.PipeConnectionTypes;
+import mod.syconn.swe2.api.world.data.savedData.PipeNetworks;
+import mod.syconn.swe2.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

@@ -1,9 +1,9 @@
-package mod.syconn.swe.api.world.packets;
+package mod.syconn.swe2.api.world.packets;
 
 import io.netty.buffer.ByteBuf;
-import mod.syconn.swe.api.Constants;
-import mod.syconn.swe.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.swe.api.util.PipeConnectionTypes;
+import mod.syconn.swe2.api.Constants;
+import mod.syconn.swe2.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.swe2.api.util.PipeConnectionTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.codec.StreamCodec;

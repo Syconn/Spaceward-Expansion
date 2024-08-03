@@ -1,9 +1,9 @@
-package mod.syconn.swe.network.messages;
+package mod.syconn.swe2.network.messages;
 
 import io.netty.buffer.ByteBuf;
-import mod.syconn.swe.Main;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.world.data.attachments.SpaceSuit;
+import mod.syconn.swe2.Main;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.world.data.attachments.SpaceSuit;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;

@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "mod.syconn.swe.mixins",
+  "package": "mod.syconn.swe2.mixins",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "PlayerMixin"

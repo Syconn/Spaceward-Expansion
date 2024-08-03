@@ -1,11 +1,11 @@
-package mod.syconn.swe.api.world.data.savedData;
+package mod.syconn.swe2.api.world.data.savedData;
 
 import com.google.common.collect.Sets;
-import mod.syconn.swe.api.blockEntity.AbstractPipeBE;
-import mod.syconn.swe.api.client.packets.ClientBoundUpdatePipeCache;
-import mod.syconn.swe.api.util.ListTools;
-import mod.syconn.swe.api.world.data.PipeNetwork;
-import mod.syconn.swe.network.Channel;
+import mod.syconn.swe2.api.blockEntity.AbstractPipeBE;
+import mod.syconn.swe2.api.client.packets.ClientBoundUpdatePipeCache;
+import mod.syconn.swe2.api.util.ListTools;
+import mod.syconn.swe2.api.world.data.PipeNetwork;
+import mod.syconn.swe2.network.Channel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

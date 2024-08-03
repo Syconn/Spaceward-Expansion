@@ -1,10 +1,10 @@
-package mod.syconn.swe.blocks;
+package mod.syconn.swe2.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.TankBE;
-import mod.syconn.swe.fluids.FluidStorageBlock;
-import mod.syconn.swe.util.FluidHelper;
+import mod.syconn.swe2.Registration;
+import mod.syconn.swe2.blockentities.TankBE;
+import mod.syconn.swe2.fluids.FluidStorageBlock;
+import mod.syconn.swe2.util.FluidHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;

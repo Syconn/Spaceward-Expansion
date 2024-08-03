@@ -1,4 +1,4 @@
-package mod.syconn.swe.blocks;
+package mod.syconn.swe2.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
-import mod.syconn.swe.fluids.FluidStorageBlock;
+import mod.syconn.swe2.fluids.FluidStorageBlock;
 
 public abstract class FluidBaseTopperBlock extends BaseEntityBlock {
 

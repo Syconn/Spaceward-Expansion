@@ -1,13 +1,13 @@
-package mod.syconn.swe;
+package mod.syconn.swe2;
 
-import mod.syconn.swe.api.world.data.savedData.PipeNetworks;
-import mod.syconn.swe.client.ClientHandler;
-import mod.syconn.swe.client.datagen.*;
-import mod.syconn.swe.network.Channel;
-import mod.syconn.swe.network.messages.ClientBoundUpdatePlanetSettings;
-import mod.syconn.swe.world.CommonHandler;
-import mod.syconn.swe.world.dimensions.PlanetManager;
-import mod.syconn.swe.world.dimensions.OxygenProductionManager;
+import mod.syconn.swe2.api.world.data.savedData.PipeNetworks;
+import mod.syconn.swe2.client.ClientHandler;
+import mod.syconn.swe2.client.datagen.*;
+import mod.syconn.swe2.network.Channel;
+import mod.syconn.swe2.network.messages.ClientBoundUpdatePlanetSettings;
+import mod.syconn.swe2.world.CommonHandler;
+import mod.syconn.swe2.world.dimensions.PlanetManager;
+import mod.syconn.swe2.world.dimensions.OxygenProductionManager;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;

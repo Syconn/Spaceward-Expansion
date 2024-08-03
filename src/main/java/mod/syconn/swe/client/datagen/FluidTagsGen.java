@@ -1,7 +1,7 @@
-package mod.syconn.swe.client.datagen;
+package mod.syconn.swe2.client.datagen;
 
-import mod.syconn.swe.Main;
-import mod.syconn.swe.Registration;
+import mod.syconn.swe2.Main;
+import mod.syconn.swe2.Registration;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.FluidTagsProvider;

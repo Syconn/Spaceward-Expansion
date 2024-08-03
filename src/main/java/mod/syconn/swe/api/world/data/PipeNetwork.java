@@ -1,9 +1,9 @@
-package mod.syconn.swe.api.world.data;
+package mod.syconn.swe2.api.world.data;
 
-import mod.syconn.swe.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.swe.api.blocks.AbstractPipeBlock;
-import mod.syconn.swe.api.util.NbtHelper;
-import mod.syconn.swe.api.util.PipeConnectionTypes;
+import mod.syconn.swe2.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.swe2.api.blocks.AbstractPipeBlock;
+import mod.syconn.swe2.api.util.NbtHelper;
+import mod.syconn.swe2.api.util.PipeConnectionTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

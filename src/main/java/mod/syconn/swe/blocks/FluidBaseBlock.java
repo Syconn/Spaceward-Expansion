@@ -1,4 +1,4 @@
-package mod.syconn.swe.blocks;
+package mod.syconn.swe2.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

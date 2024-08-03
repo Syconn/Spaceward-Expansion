@@ -1,4 +1,4 @@
-package mod.syconn.swe;
+package mod.syconn.swe2;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
