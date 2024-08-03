@@ -4,10 +4,11 @@
     "0.1.0": "1.21 Port",
     "0.1.1": "Bug Fixes",
     "1.2": "Fluid Pipes & Rendering Improvements",
-    "1.2.1": "Config Extension + Pipe Recipes and Drop Changes"
+    "1.2.1": "Config Extension + Pipe Recipes and Drop Changes",
+    "1.2.2": "multiloader port"
   },
   "promos": {
-    "1.21-latest": "1.2.1",
+    "1.21-latest": "1.2.2",
     "1.21-recommended": "1.2.1"
   }
 }
