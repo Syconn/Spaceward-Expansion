@@ -1,6 +1,6 @@
 package mod.syconn.swe;
 
-import mod.syconn.api.world.data.savedData.PipeNetworks;
+import mod.syconn.swe.api.world.data.savedData.PipeNetworks;
 import mod.syconn.swe.client.ClientHandler;
 import mod.syconn.swe.client.datagen.*;
 import mod.syconn.swe.network.Channel;

@@ -1,6 +1,6 @@
 package mod.syconn.swe.world.container;
 
-import mod.syconn.api.containers.slots.SpecifiedSlotHandler;
+import mod.syconn.swe.api.containers.slots.SpecifiedSlotHandler;
 import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

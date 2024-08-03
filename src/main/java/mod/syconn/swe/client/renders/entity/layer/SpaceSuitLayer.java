@@ -3,7 +3,7 @@ package mod.syconn.swe.client.renders.entity.layer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import mod.syconn.api.client.RenderUtil;
+import mod.syconn.swe.api.client.RenderUtil;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.client.model.ChuteModel;

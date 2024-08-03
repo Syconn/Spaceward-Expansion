@@ -1,6 +1,6 @@
 package mod.syconn.swe.client.datagen;
 
-import mod.syconn.api.util.DataGenHelper;
+import mod.syconn.swe.api.util.DataGenHelper;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.blocks.CanisterFiller;

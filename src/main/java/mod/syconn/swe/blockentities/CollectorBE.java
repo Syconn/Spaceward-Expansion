@@ -1,7 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.api.blockEntity.AbstractTankBE;
+import mod.syconn.swe.api.blockEntity.AbstractTankBE;
 import mod.syconn.swe.util.BlockInfo;
 import mod.syconn.swe.world.container.CollectorMenu;
 import mod.syconn.swe.world.dimensions.PlanetManager;

@@ -1,9 +1,9 @@
 package mod.syconn.swe.client;
 
-import mod.syconn.api.client.RenderUtil;
-import mod.syconn.api.client.ber.FluidPipeBER;
-import mod.syconn.api.client.debug.PipeNetworkRenderer;
-import mod.syconn.api.client.loader.PipeModelLoader;
+import mod.syconn.swe.api.client.RenderUtil;
+import mod.syconn.swe.api.client.ber.FluidPipeBER;
+import mod.syconn.swe.api.client.debug.PipeNetworkRenderer;
+import mod.syconn.swe.api.client.loader.PipeModelLoader;
 import mod.syconn.swe.Config;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;

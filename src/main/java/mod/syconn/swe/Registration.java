@@ -2,9 +2,9 @@ package mod.syconn.swe;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import mod.syconn.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.api.blocks.BaseFluidPipe;
-import mod.syconn.api.world.data.capability.APICapabilities;
+import mod.syconn.swe.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.swe.api.blocks.BaseFluidPipe;
+import mod.syconn.swe.api.world.data.capability.APICapabilities;
 import mod.syconn.swe.blockentities.*;
 import mod.syconn.swe.blocks.*;
 import mod.syconn.swe.fluids.BaseFluidType;

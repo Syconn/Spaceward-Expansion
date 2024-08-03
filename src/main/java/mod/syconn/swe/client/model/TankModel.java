@@ -2,7 +2,7 @@ package mod.syconn.swe.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mod.syconn.api.client.RenderUtil;
+import mod.syconn.swe.api.client.RenderUtil;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

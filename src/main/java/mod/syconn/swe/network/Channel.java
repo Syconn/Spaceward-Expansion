@@ -1,8 +1,8 @@
 package mod.syconn.swe.network;
 
-import mod.syconn.api.client.packets.ClientBoundUpdatePipeCache;
-import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
-import mod.syconn.api.world.packets.ServerBoundUpdatePipeState;
+import mod.syconn.swe.api.client.packets.ClientBoundUpdatePipeCache;
+import mod.syconn.swe.api.world.packets.ServerBoundInteractableButtonPress;
+import mod.syconn.swe.api.world.packets.ServerBoundUpdatePipeState;
 import mod.syconn.swe.network.messages.*;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;

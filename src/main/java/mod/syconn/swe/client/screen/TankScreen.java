@@ -1,9 +1,9 @@
 package mod.syconn.swe.client.screen;
 
-import mod.syconn.api.client.screen.InteractionSelectorScreen;
-import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
+import mod.syconn.swe.api.client.screen.InteractionSelectorScreen;
+import mod.syconn.swe.api.world.packets.ServerBoundInteractableButtonPress;
 import mod.syconn.swe.Main;
-import mod.syconn.api.client.RenderUtil;
+import mod.syconn.swe.api.client.RenderUtil;
 import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.world.container.TankMenu;
 import net.minecraft.ChatFormatting;

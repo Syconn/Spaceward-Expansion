@@ -1,7 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.Registration;
-import mod.syconn.api.blockEntity.AbstractTankBE;
+import mod.syconn.swe.api.blockEntity.AbstractTankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import mod.syconn.swe.blocks.DispersibleAirBlock;
 import mod.syconn.swe.world.container.DisperserMenu;
 import mod.syconn.swe.util.BlockInfo;
-import mod.syconn.api.util.NbtHelper;
+import mod.syconn.swe.api.util.NbtHelper;
 import mod.syconn.swe.world.data.savedData.AirBubblesSavedData;
 import net.minecraft.world.ticks.TickPriority;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;

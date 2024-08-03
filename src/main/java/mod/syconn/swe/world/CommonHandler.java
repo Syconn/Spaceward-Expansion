@@ -1,6 +1,6 @@
 package mod.syconn.swe.world;
 
-import mod.syconn.api.client.debug.PipeNetworkRenderer;
+import mod.syconn.swe.api.client.debug.PipeNetworkRenderer;
 import mod.syconn.swe.Config;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.items.Parachute;

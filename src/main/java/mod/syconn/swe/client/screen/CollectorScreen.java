@@ -1,9 +1,9 @@
 package mod.syconn.swe.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.api.client.screen.InteractionSelectorScreen;
-import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
-import mod.syconn.api.client.RenderUtil;
+import mod.syconn.swe.api.client.screen.InteractionSelectorScreen;
+import mod.syconn.swe.api.world.packets.ServerBoundInteractableButtonPress;
+import mod.syconn.swe.api.client.RenderUtil;
 import mod.syconn.swe.network.Channel;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;

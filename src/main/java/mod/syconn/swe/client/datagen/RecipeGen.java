@@ -1,6 +1,6 @@
 package mod.syconn.swe.client.datagen;
 
-import mod.syconn.api.world.data.recipes.CustomRecipeBuilder;
+import mod.syconn.swe.api.world.data.recipes.CustomRecipeBuilder;
 import mod.syconn.swe.Main;
 import mod.syconn.swe.Registration;
 import mod.syconn.swe.world.crafting.DyedParachuteRecipe;
