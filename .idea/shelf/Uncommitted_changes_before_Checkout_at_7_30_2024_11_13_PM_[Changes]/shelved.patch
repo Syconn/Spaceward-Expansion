@@ -1,0 +1,21 @@
+Index: updates.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"homepage\": \"https://authors.curseforge.com/#/projects/1060262/files\",\r\n  \"1.21\": {\r\n    \"0.1.0\": \"1.21 Port\",\r\n    \"0.1.1\": \"Bug Fixes\",\r\n    \"1.2\": \"Optimizations & Integrations\"\r\n  },\r\n  \"promos\": {\r\n    \"1.21-latest\": \"1.2\",\r\n    \"1.21-recommended\": \"0.2\"\r\n  }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/updates.json b/updates.json
+--- a/updates.json	(revision 7c2fb25418accae70bd12fda1326c3753daeb27c)
++++ b/updates.json	(date 1722395596117)
+@@ -6,7 +6,7 @@
+     "1.2": "Optimizations & Integrations"
+   },
+   "promos": {
+-    "1.21-latest": "1.2",
+-    "1.21-recommended": "0.2"
++    "1.21-latest": "1.2.1",
++    "1.21-recommended": "1.2"
+   }
+ }
+\ No newline at end of file
