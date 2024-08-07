@@ -1,8 +1,6 @@
 package mod.syconn.swe.services;
 
 import mod.syconn.swe.platform.services.ISingleFluidHandler;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -10,14 +8,16 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class NeoSingleFluidHandler implements ISingleFluidHandler {
 
-    private final IFluidHandler handler;
+    private IFluidHandler handler;
+
+    public NeoSingleFluidHandler() {}
 
     public NeoSingleFluidHandler(IFluidHandler handler) {
         this.handler = handler;
     }
 
-    public ISingleFluidHandler get(Player player, InteractionHand hand) {
-        return new NeoSingleFluidHandler(player.getItemInHand(hand).getCapability(Capabilities.FluidHandler.ITEM));
+    public ISingleFluidHandler get(ItemStack stack) {
+        return new NeoSingleFluidHandler(stack.getCapability(Capabilities.FluidHandler.ITEM));
     }
 
     public FluidHolder getFluidInTank() {

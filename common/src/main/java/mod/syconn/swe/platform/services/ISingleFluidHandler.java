@@ -1,12 +1,11 @@
 package mod.syconn.swe.platform.services;
 
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 
 public interface ISingleFluidHandler {
 
-    ISingleFluidHandler get(Player player, InteractionHand hand);
+    ISingleFluidHandler get(ItemStack stack);
     FluidHolder getFluidInTank();
     int getTankCapacity();
     int fill(FluidHolder resource, FluidAction action);
@@ -16,6 +15,10 @@ public interface ISingleFluidHandler {
     record FluidHolder(Fluid fluid, int amount) {
         public boolean is(Fluid fluid) {
             return this.fluid.isSame(fluid);
+        }
+
+        public FluidHolder shrink(int drainAmount) {
+            return new FluidHolder(fluid, Math.min(0, amount - drainAmount));
         }
     }
     enum FluidAction {

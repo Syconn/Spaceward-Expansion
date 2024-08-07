@@ -1,56 +1,44 @@
 package mod.syconn.swe.services;
 
 import mod.syconn.swe.platform.services.ISingleFluidHandler;
+import mod.syconn.swe.wrappers.ComponentFluidWrapper;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
-import net.fabricmc.fabric.api.transfer.v1.fluid.base.FullItemFluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.world.item.ItemStack;
 
 public class FabricSingleFluidHandler implements ISingleFluidHandler {
 
-    private final FullItemFluidStorage handler;
+    private ComponentFluidWrapper handler;
 
-    public FabricSingleFluidHandler(FullItemFluidStorage handler) {
+    public FabricSingleFluidHandler() {}
+
+    public FabricSingleFluidHandler(ComponentFluidWrapper handler) {
         this.handler = handler;
     }
 
-    public ISingleFluidHandler get(ItemStack stack, ) {
-        ContainerItemContext.ofPlayerHand()
-
-        return new FabricSingleFluidHandler();
+    public ISingleFluidHandler get(ItemStack stack) {
+        return new FabricSingleFluidHandler((ComponentFluidWrapper) ContainerItemContext.withConstant(stack).find(FluidStorage.ITEM));
     }
 
     public FluidHolder getFluidInTank() {
-        return of(handler.getFluidInTank(0));
+        return handler.getFluid();
     }
 
     public int getTankCapacity() {
-        return handler.getTankCapacity(0);
+        return (int) handler.getCapacity();
     }
 
     public int fill(FluidHolder resource, FluidAction action) {
-        return handler.fill(of(resource), of(action));
+        return (int) handler.insert(FluidVariant.of(resource.fluid()), resource.amount(), Transaction.openOuter());
     }
 
     public FluidHolder drain(FluidHolder resource, FluidAction action) {
-        return of(handler.drain(of(resource), of(action)));
+        return new FluidHolder(resource.fluid(), (int) handler.extract(FluidVariant.of(resource.fluid()), resource.amount(), Transaction.openOuter()));
     }
 
     public FluidHolder drain(int drain, FluidAction action) {
-        return of(handler.drain(drain, of(action)));
-    }
-
-    private FluidHolder of(FluidStack stack) {
-        return new FluidHolder(stack.getFluid(), stack.getAmount());
-    }
-
-    private FluidStack of(FluidHolder holder) {
-        return new FluidStack(holder.fluid(), holder.amount());
-    }
-
-    private IFluidHandler.FluidAction of(FluidAction action) {
-        return switch (action) {
-            case EXECUTE -> IFluidHandler.FluidAction.EXECUTE;
-            case SIMULATE -> IFluidHandler.FluidAction.SIMULATE;
-        };
+        return new FluidHolder(handler.getFluid().fluid(), (int) handler.extract(FluidVariant.of(handler.getFluid().fluid()), drain, Transaction.openOuter()));
     }
 }

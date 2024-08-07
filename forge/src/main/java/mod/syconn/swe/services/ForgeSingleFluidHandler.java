@@ -11,14 +11,16 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class ForgeSingleFluidHandler implements ISingleFluidHandler {
 
-    private final ItemFluidHandlerWrapper wrapper;
+    private ItemFluidHandlerWrapper wrapper;
+
+    public ForgeSingleFluidHandler() {}
 
     public ForgeSingleFluidHandler(ItemFluidHandlerWrapper wrapper) {
         this.wrapper = wrapper;
     }
 
-    public ISingleFluidHandler get(Player player, InteractionHand hand) {
-        return new ForgeSingleFluidHandler(new ItemFluidHandlerWrapper(ComponentRegister.FLUID_COMPONENT, player.getItemInHand(hand), 8000));
+    public ISingleFluidHandler get(ItemStack stack) {
+        return new ForgeSingleFluidHandler(new ItemFluidHandlerWrapper(ComponentRegister.FLUID_COMPONENT, stack, 8000));
     }
 
     public FluidHolder getFluidInTank() {

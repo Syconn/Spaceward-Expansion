@@ -23,6 +23,7 @@ public record FluidComponent(ResourceLocation fluidSrc, int amount, int capacity
     ).apply(builder, FluidComponent::new));
 
     public static FluidComponent of(Fluid fluid, int amount, int capacity) {
+        if (amount <= 0) new FluidComponent(BuiltInRegistries.FLUID.getKey(Fluids.EMPTY), 0, capacity);
         return new FluidComponent(BuiltInRegistries.FLUID.getKey(fluid), amount, capacity);
     }
 

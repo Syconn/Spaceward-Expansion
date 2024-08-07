@@ -122,12 +122,8 @@ public class ItemFluidHandlerWrapper implements IFluidHandlerItem {
         return true;
     }
 
-    /**
-     * Override this method for special handling.
-     * Can be used to swap out or destroy the container.
-     */
     protected void setContainerToEmpty() {
-        container.remove(componentType);
+        container.set(componentType, FluidComponent.EMPTY);
     }
 
     /**

@@ -7,10 +7,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Gradle Fixes">
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/wrappers/ComponentFluidWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_30_2024_11_12_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_30_2024_11_12_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_30_2024_11_13_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_7_30_2024_11_13_PM__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/components/FluidComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/components/FluidComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/ISingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/ISingleFluidHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeSingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeSingleFluidHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoSingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoSingleFluidHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.ISingleFluidHandler" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.ISingleFluidHandler" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +49,7 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="MultiLoader-Template" type="f1a62948:ProjectNode" />
+                <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
               </path>
             </expand>
             <select />
@@ -106,34 +119,35 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Spaceward-Expansion: Client.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.Spaceward-Expansion: Data.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.Spaceward-Expansion: Server.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Build Spaceward-Expansion.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion [build].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Spaceward-Expansion [clientIdeBeforeRun].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion [dataIdeBeforeRun].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion [serverIdeBeforeRun].executor&quot;: &quot;Run&quot;,
-    &quot;JavaClassFindUsagesOptions.isDerivedClasses&quot;: &quot;true&quot;,
-    &quot;JavaClassFindUsagesOptions.isImplementingClasses&quot;: &quot;true&quot;,
-    &quot;JavaClassFindUsagesOptions.isSearchForTextOccurrences&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;multiloader/V1.2.1&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aidan/IdeaProjects/Spaceward-Expansion/forge/src/main/java/mod/syconn/swe&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.NeoForge Client (:neoforge).executor": "Debug",
+    "Application.Spaceward-Expansion: Client.executor": "Debug",
+    "Application.Spaceward-Expansion: Data.executor": "Debug",
+    "Application.Spaceward-Expansion: Server.executor": "Run",
+    "Gradle.Build Spaceward-Expansion.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
+    "Gradle.Spaceward-Expansion [build].executor": "Debug",
+    "Gradle.Spaceward-Expansion [clientIdeBeforeRun].executor": "Run",
+    "Gradle.Spaceward-Expansion [dataIdeBeforeRun].executor": "Run",
+    "Gradle.Spaceward-Expansion [serverIdeBeforeRun].executor": "Run",
+    "JavaClassFindUsagesOptions.isDerivedClasses": "true",
+    "JavaClassFindUsagesOptions.isImplementingClasses": "true",
+    "JavaClassFindUsagesOptions.isSearchForTextOccurrences": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "multiloader/V1.2.1",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Aidan/IdeaProjects/Spaceward-Expansion",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="Push.Settings">
     <force-push-targets>
       <force-push-target remote-path="origin" branch="New-Pipe-System" />
@@ -157,7 +171,7 @@
       <recent name="mod.syconn.api.client.loader" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Spaceward-Expansion: Client">
+  <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="Spaceward-Expansion.neoforge.main" />
@@ -186,68 +200,6 @@
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
       <method v="2">
         <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Spaceward-Expansion: Client" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="temurin-21" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
-      <envs>
-        <env name="MOD_CLASSES" value="Spaceward-Expansion%%C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\build\resources\main;Spaceward-Expansion%%C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\build\classes\java\main" />
-      </envs>
-      <option name="MAIN_CLASS_NAME" value="cpw.mods.bootstraplauncher.BootstrapLauncher" />
-      <module name="Spaceward-Expansion.main" />
-      <option name="PROGRAM_PARAMETERS" value="--launchTarget forgeclientuserdev --version 21.0.146 --assetIndex asset-index --assetsDir C:\Users\Aidan\.gradle\caches\minecraft\assets\1.21 --gameDir . --fml.neoForgeVersion 21.0.146 --fml.fmlVersion 4.0.21 --fml.mcVersion 1.21 --fml.neoFormVersion 20240613.152323" />
-      <shortenClasspath name="ARGS_FILE" />
-      <option name="VM_PARAMETERS" value="-p C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\cpw.mods\bootstraplauncher\2.0.2\1a2d076cbc33b0520cbacd591224427b2a20047d\bootstraplauncher-2.0.2.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\cpw.mods\securejarhandler\3.0.8\c0ef95cecd8699a0449053ac7d9c160748d902cd\securejarhandler-3.0.8.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-commons\9.5\19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0\asm-commons-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-util\9.5\64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe\asm-util-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-analysis\9.5\490bacc77de7cbc0be1a30bb3471072d705be4a4\asm-analysis-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-tree\9.5\fd33c8b6373abaa675be407082fdfda35021254a\asm-tree-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm\9.5\dc6ea1875f4d64fbc85e1691c95b96a3d8569c90\asm-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\net.neoforged\JarJarFileSystems\0.4.1\78f59f89defcd032ed788b151ca6a0d40ace796a\JarJarFileSystems-0.4.1.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-opens java.base/java.lang.invoke=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump -Dforge.logging.console.level=debug -Dneoforge.enableGameTest=true -Dforge.logging.markers=REGISTRIES -DlegacyClassPath.file=C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\.gradle\configuration\neoForm\neoFormJoined1.21-20240613.152323\steps\writeMinecraftClasspathClient\classpath.txt -DignoreList=securejarhandler-3.0.8.jar,asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar,bootstraplauncher-2.0.2.jar,JarJarFileSystems-0.4.1.jar,mixinextras-neoforge-0.3.5.jar,client-extra,neoforge- -Dfml.gameLayerLibraries -DmergeModules=jna-5.10.0.jar,jna-platform-5.10.0.jar -Dforge.enabledGameTestNamespaces=swe -Djava.net.preferIPv6Addresses=system -Dfml.pluginLayerLibraries" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/runs/client" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-        <option name="Gradle.BeforeRunTask" enabled="true" tasks="clientIdeBeforeRun" externalProjectPath="$PROJECT_DIR$" />
-      </method>
-    </configuration>
-    <configuration name="Spaceward-Expansion: Data" type="Application" factoryName="Application">
-      <envs>
-        <env name="MOD_CLASSES" value="Spaceward-Expansion%%C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\build\resources\main;Spaceward-Expansion%%C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\build\classes\java\main" />
-      </envs>
-      <option name="MAIN_CLASS_NAME" value="cpw.mods.bootstraplauncher.BootstrapLauncher" />
-      <module name="Spaceward-Expansion.main" />
-      <option name="PROGRAM_PARAMETERS" value="--mod swe --all --output C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\src\generated\resources --existing C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\src\main\resources --launchTarget forgedatauserdev --assetIndex asset-index --assetsDir C:\Users\Aidan\.gradle\caches\minecraft\assets\1.21 --gameDir . --fml.neoForgeVersion 21.0.146 --fml.fmlVersion 4.0.21 --fml.mcVersion 1.21 --fml.neoFormVersion 20240613.152323" />
-      <shortenClasspath name="ARGS_FILE" />
-      <option name="VM_PARAMETERS" value="-p C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\cpw.mods\bootstraplauncher\2.0.2\1a2d076cbc33b0520cbacd591224427b2a20047d\bootstraplauncher-2.0.2.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\cpw.mods\securejarhandler\3.0.8\c0ef95cecd8699a0449053ac7d9c160748d902cd\securejarhandler-3.0.8.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-commons\9.5\19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0\asm-commons-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-util\9.5\64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe\asm-util-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-analysis\9.5\490bacc77de7cbc0be1a30bb3471072d705be4a4\asm-analysis-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-tree\9.5\fd33c8b6373abaa675be407082fdfda35021254a\asm-tree-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm\9.5\dc6ea1875f4d64fbc85e1691c95b96a3d8569c90\asm-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\net.neoforged\JarJarFileSystems\0.4.1\78f59f89defcd032ed788b151ca6a0d40ace796a\JarJarFileSystems-0.4.1.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-opens java.base/java.lang.invoke=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -Dforge.logging.console.level=debug -Dforge.logging.markers=REGISTRIES -DlegacyClassPath.file=C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\.gradle\configuration\neoForm\neoFormJoined1.21-20240613.152323\steps\writeMinecraftClasspathData\classpath.txt -DignoreList=securejarhandler-3.0.8.jar,asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar,bootstraplauncher-2.0.2.jar,JarJarFileSystems-0.4.1.jar,mixinextras-neoforge-0.3.5.jar,client-extra,neoforge- -Dfml.gameLayerLibraries -DmergeModules=jna-5.10.0.jar,jna-platform-5.10.0.jar -Djava.net.preferIPv6Addresses=system -Dfml.pluginLayerLibraries" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/runs/data" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-        <option name="Gradle.BeforeRunTask" enabled="true" tasks="dataIdeBeforeRun" externalProjectPath="$PROJECT_DIR$" />
-      </method>
-    </configuration>
-    <configuration name="Spaceward-Expansion: GameTestServer" type="Application" factoryName="Application">
-      <envs>
-        <env name="MOD_CLASSES" value="Spaceward-Expansion%%C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\build\resources\main;Spaceward-Expansion%%C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\build\classes\java\main" />
-      </envs>
-      <option name="MAIN_CLASS_NAME" value="cpw.mods.bootstraplauncher.BootstrapLauncher" />
-      <module name="Spaceward-Expansion.main" />
-      <option name="PROGRAM_PARAMETERS" value="--launchTarget forgeserveruserdev --gameDir . --fml.neoForgeVersion 21.0.146 --fml.fmlVersion 4.0.21 --fml.mcVersion 1.21 --fml.neoFormVersion 20240613.152323" />
-      <shortenClasspath name="ARGS_FILE" />
-      <option name="VM_PARAMETERS" value="-p C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\cpw.mods\bootstraplauncher\2.0.2\1a2d076cbc33b0520cbacd591224427b2a20047d\bootstraplauncher-2.0.2.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\cpw.mods\securejarhandler\3.0.8\c0ef95cecd8699a0449053ac7d9c160748d902cd\securejarhandler-3.0.8.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-commons\9.5\19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0\asm-commons-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-util\9.5\64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe\asm-util-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-analysis\9.5\490bacc77de7cbc0be1a30bb3471072d705be4a4\asm-analysis-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-tree\9.5\fd33c8b6373abaa675be407082fdfda35021254a\asm-tree-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm\9.5\dc6ea1875f4d64fbc85e1691c95b96a3d8569c90\asm-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\net.neoforged\JarJarFileSystems\0.4.1\78f59f89defcd032ed788b151ca6a0d40ace796a\JarJarFileSystems-0.4.1.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-opens java.base/java.lang.invoke=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -Dforge.logging.console.level=debug -Dneoforge.enableGameTest=true -Dneoforge.gameTestServer=true -Dforge.logging.markers=REGISTRIES -DlegacyClassPath.file=C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\.gradle\configuration\neoForm\neoFormJoined1.21-20240613.152323\steps\writeMinecraftClasspathGameTestServer\classpath.txt -DignoreList=securejarhandler-3.0.8.jar,asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar,bootstraplauncher-2.0.2.jar,JarJarFileSystems-0.4.1.jar,mixinextras-neoforge-0.3.5.jar,client-extra,neoforge- -Dfml.gameLayerLibraries -DmergeModules=jna-5.10.0.jar,jna-platform-5.10.0.jar -Dforge.enabledGameTestNamespaces=swe -Djava.net.preferIPv6Addresses=system -Dfml.pluginLayerLibraries" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/runs/gameTestServer" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-        <option name="Gradle.BeforeRunTask" enabled="true" tasks="gameTestServerIdeBeforeRun" externalProjectPath="$PROJECT_DIR$" />
-      </method>
-    </configuration>
-    <configuration name="Spaceward-Expansion: Server" type="Application" factoryName="Application">
-      <envs>
-        <env name="MOD_CLASSES" value="Spaceward-Expansion%%C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\build\resources\main;Spaceward-Expansion%%C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\build\classes\java\main" />
-      </envs>
-      <option name="MAIN_CLASS_NAME" value="cpw.mods.bootstraplauncher.BootstrapLauncher" />
-      <module name="Spaceward-Expansion.main" />
-      <option name="PROGRAM_PARAMETERS" value="--nogui --launchTarget forgeserveruserdev --gameDir . --fml.neoForgeVersion 21.0.146 --fml.fmlVersion 4.0.21 --fml.mcVersion 1.21 --fml.neoFormVersion 20240613.152323" />
-      <shortenClasspath name="ARGS_FILE" />
-      <option name="VM_PARAMETERS" value="-p C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\cpw.mods\bootstraplauncher\2.0.2\1a2d076cbc33b0520cbacd591224427b2a20047d\bootstraplauncher-2.0.2.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\cpw.mods\securejarhandler\3.0.8\c0ef95cecd8699a0449053ac7d9c160748d902cd\securejarhandler-3.0.8.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-commons\9.5\19ab5b5800a3910d30d3a3e64fdb00fd0cb42de0\asm-commons-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-util\9.5\64b5a1fc8c1b15ed2efd6a063e976bc8d3dc5ffe\asm-util-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-analysis\9.5\490bacc77de7cbc0be1a30bb3471072d705be4a4\asm-analysis-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-tree\9.5\fd33c8b6373abaa675be407082fdfda35021254a\asm-tree-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm\9.5\dc6ea1875f4d64fbc85e1691c95b96a3d8569c90\asm-9.5.jar;C:\Users\Aidan\.gradle\caches\modules-2\files-2.1\net.neoforged\JarJarFileSystems\0.4.1\78f59f89defcd032ed788b151ca6a0d40ace796a\JarJarFileSystems-0.4.1.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-opens java.base/java.lang.invoke=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -Dforge.logging.console.level=debug -Dforge.logging.markers=REGISTRIES -DlegacyClassPath.file=C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\.gradle\configuration\neoForm\neoFormJoined1.21-20240613.152323\steps\writeMinecraftClasspathServer\classpath.txt -DignoreList=securejarhandler-3.0.8.jar,asm-9.5.jar,asm-commons-9.5.jar,asm-tree-9.5.jar,asm-util-9.5.jar,asm-analysis-9.5.jar,bootstraplauncher-2.0.2.jar,JarJarFileSystems-0.4.1.jar,mixinextras-neoforge-0.3.5.jar,client-extra,neoforge- -Dfml.gameLayerLibraries -DmergeModules=jna-5.10.0.jar,jna-platform-5.10.0.jar -Dforge.enabledGameTestNamespaces=swe -Djava.net.preferIPv6Addresses=system -Dfml.pluginLayerLibraries" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/runs/server" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-        <option name="Gradle.BeforeRunTask" enabled="true" tasks="serverIdeBeforeRun" externalProjectPath="$PROJECT_DIR$" />
       </method>
     </configuration>
     <configuration name="Spaceward-Expansion [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -281,10 +233,6 @@
       <item itemvalue="Application.forge Client" />
       <item itemvalue="Application.forge Data" />
       <item itemvalue="Application.forge Server" />
-      <item itemvalue="Application.Spaceward-Expansion: Client" />
-      <item itemvalue="Application.Spaceward-Expansion: Data" />
-      <item itemvalue="Application.Spaceward-Expansion: GameTestServer" />
-      <item itemvalue="Application.Spaceward-Expansion: Server" />
       <item itemvalue="Gradle.Spaceward-Expansion [build]" />
     </list>
     <recent_temporary>
@@ -626,7 +574,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722995130274</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="Gradle Fixes">
+      <option name="closed" value="true" />
+      <created>1722995354437</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1722995354437</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -654,7 +610,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Canister Rework using IFluidHandlerItem capability, Made Blocks Communicate Better with FluidHandler Capabilities" />
     <MESSAGE value="Merge pull request #7 from Syconn/Item-Fluid-Handler-Rework&#10;&#10;Item fluid handler rework" />
     <MESSAGE value="Merge pull request #7 from Syconn/Item-Fluid-Handler-Rework" />
     <MESSAGE value="API Fix" />
@@ -679,6 +634,7 @@
     <MESSAGE value="Updated Neoforge / Parchment Version" />
     <MESSAGE value="Gradle Reset" />
     <MESSAGE value="Changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes" />
+    <MESSAGE value="Gradle Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Gradle Fixes" />
   </component>
 </project>
