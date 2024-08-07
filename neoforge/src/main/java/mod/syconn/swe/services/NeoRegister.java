@@ -2,6 +2,7 @@ package mod.syconn.swe.services;
 
 import mod.syconn.swe.NeoMod;
 import mod.syconn.swe.platform.services.IRegistrar;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -32,8 +33,8 @@ public class NeoRegister implements IRegistrar {
         return NeoMod.ITEMS.register(id, item);
     }
 
-    public <T extends ArmorMaterial> Supplier<T> registerArmorMaterial(String id, Supplier<T> armorMaterial) {
-        return NeoMod.ARMOR_MATERIALS.register(id, armorMaterial);
+    public <T extends ArmorMaterial> Holder<T> registerArmorMaterial(String id, Supplier<T> armorMaterial) {
+        return (Holder<T>) NeoMod.ARMOR_MATERIALS.register(id, armorMaterial);
     }
 
     public <T extends CreativeModeTab> Supplier<T> registerCreativeModeTab(String id, Supplier<T> tab) {

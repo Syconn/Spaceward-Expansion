@@ -2,6 +2,7 @@ package mod.syconn.swe.init;
 
 import mod.syconn.swe.data.components.FluidComponent;
 import mod.syconn.swe.platform.Services;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.component.DataComponentType;
 
 import java.util.function.Supplier;

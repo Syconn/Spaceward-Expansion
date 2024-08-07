@@ -2,6 +2,7 @@ package mod.syconn.swe.services;
 
 import mod.syconn.swe.ForgeMod;
 import mod.syconn.swe.platform.services.IRegistrar;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
@@ -36,8 +37,8 @@ public class ForgeRegister implements IRegistrar {
         return ForgeMod.ITEMS.register(id, item);
     }
 
-    public <T extends ArmorMaterial> Supplier<T> registerArmorMaterial(String id, Supplier<T> armorMaterial) {
-        return ForgeMod.ARMOR_MATERIALS.register(id, armorMaterial);
+    public <T extends ArmorMaterial> Holder<T> registerArmorMaterial(String id, Supplier<T> armorMaterial) {
+        return ForgeMod.ARMOR_MATERIALS.register(id, armorMaterial).getHolder().orElseThrow();
     }
 
     public <T extends CreativeModeTab> Supplier<T> registerCreativeModeTab(String id, Supplier<T> tab) {

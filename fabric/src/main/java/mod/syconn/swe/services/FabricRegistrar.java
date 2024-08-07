@@ -3,6 +3,7 @@ package mod.syconn.swe.services;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.platform.services.IRegistrar;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -39,8 +40,8 @@ public class FabricRegistrar implements IRegistrar {
         return registerSupplier(BuiltInRegistries.ITEM, id, item);
     }
 
-    public <T extends ArmorMaterial> Supplier<T> registerArmorMaterial(String id, Supplier<T> armorMaterial) {
-        return registerSupplier(BuiltInRegistries.ARMOR_MATERIAL, id, armorMaterial);
+    public <T extends ArmorMaterial> Holder<T> registerArmorMaterial(String id, Supplier<T> armorMaterial) {
+        return registerHolder(BuiltInRegistries.ARMOR_MATERIAL, id, armorMaterial);
     }
 
     public <T extends SoundEvent> Supplier<T> registerSound(String id, Supplier<T> sound) {
@@ -66,5 +67,9 @@ public class FabricRegistrar implements IRegistrar {
     private static <T, R extends Registry<? super T>> Supplier<T> registerSupplier(R registry, String id, Supplier<T> object) {
         final T registeredObject = Registry.register((Registry<T>)registry,  ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id), object.get());
         return () -> registeredObject;
+    }
+
+    private static <T, R extends Registry<? super T>> Holder<T> registerHolder(R registry, String id, Supplier<T> object) {
+        return Registry.registerForHolder((Registry<T>) registry,  ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id), object.get());
     }
 }
