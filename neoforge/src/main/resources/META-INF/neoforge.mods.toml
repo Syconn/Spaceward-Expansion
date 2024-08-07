@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "${neoforge_loader_version_range}"
+license = "${license}"
+issueTrackerURL="https://github.com/Syconn/Spaceward-Expansion/issues/new"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${version}"
+displayName = "${mod_name}"
+updateJSONURL="https://raw.githubusercontent.com/Syconn/Syconn-Mod-Updates/main/Spaceward-Expansion.json"
+#displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional (displayed in the mod UI)
+logoFile="${mod_id}.png"
+credits="${credits}"
+authors = "${mod_author}"
+description = "${description}"
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
+[[mixins]]
+config = "${mod_id}.neoforge.mixins.json"
+
+[[accessTransformers]]
+file = "accesstransformer.cfg"
+
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type="required"
+versionRange = "[${neoforge_version},)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type="required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
