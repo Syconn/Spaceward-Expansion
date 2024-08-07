@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "mod.syconn.swe.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerMixin"
+  ],
+  "client": [
+    "PlayerRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

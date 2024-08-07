@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "swe:block/canister_filler"
+    },
+    "facing=east": {
+      "model": "swe:block/canister_filler",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "swe:block/canister_filler"
+    },
+    "facing=south": {
+      "model": "swe:block/canister_filler"
+    },
+    "facing=up": {
+      "model": "swe:block/canister_filler"
+    },
+    "facing=west": {
+      "model": "swe:block/canister_filler",
+      "y": 90
+    }
+  }
+}
