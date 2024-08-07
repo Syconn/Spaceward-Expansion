@@ -7,34 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Updated Neoforge / Parchment Version">
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricFluidExtension.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.ISingleFluidHandler" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeFluidExtension.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeSingleFluidHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.ISingleFluidHandler" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoCommon.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoFluidExtension.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoSingleFluidHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.ISingleFluidHandler" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Spaceward-Expansion.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Spaceward-Expansion.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Spaceward-Expansion.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Spaceward-Expansion.test.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/client/RenderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/client/RenderUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IFluidExtensions.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IFluidExtensions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/ISingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/ISingleFluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" afterDir="false" />
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Changes">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,6 +114,7 @@
     &quot;Application.Spaceward-Expansion: Server.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Build Spaceward-Expansion.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Spaceward-Expansion [build].executor&quot;: &quot;Debug&quot;,
     &quot;Gradle.Spaceward-Expansion [clientIdeBeforeRun].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Spaceward-Expansion [dataIdeBeforeRun].executor&quot;: &quot;Run&quot;,
@@ -183,7 +160,7 @@
   <component name="RunManager" selected="Application.Spaceward-Expansion: Client">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="MultiLoader-Template.neoforge.main" />
+      <module name="Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -193,7 +170,7 @@
     </configuration>
     <configuration name="NeoForge Data (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="MultiLoader-Template.neoforge.main" />
+      <module name="Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -203,7 +180,7 @@
     </configuration>
     <configuration name="NeoForge Server (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="MultiLoader-Template.neoforge.main" />
+      <module name="Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -641,7 +618,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722399314905</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Changes">
+      <option name="closed" value="true" />
+      <created>1722995130274</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1722995130274</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -669,7 +654,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Canister Rework using IFluidHandlerItem capability" />
     <MESSAGE value="Canister Rework using IFluidHandlerItem capability, Made Blocks Communicate Better with FluidHandler Capabilities" />
     <MESSAGE value="Merge pull request #7 from Syconn/Item-Fluid-Handler-Rework&#10;&#10;Item fluid handler rework" />
     <MESSAGE value="Merge pull request #7 from Syconn/Item-Fluid-Handler-Rework" />
@@ -694,6 +678,7 @@
     <MESSAGE value="Datagen Tweaks for Pipes and Recipes" />
     <MESSAGE value="Updated Neoforge / Parchment Version" />
     <MESSAGE value="Gradle Reset" />
-    <option name="LAST_COMMIT_MESSAGE" value="Gradle Reset" />
+    <MESSAGE value="Changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes" />
   </component>
 </project>
