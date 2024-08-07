@@ -23,6 +23,8 @@ public class NeoMod {
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
 
     public NeoMod(IEventBus eventBus) {
+        eventBus.addListener(NeoCommon::registerCapabilities);
+
         BLOCKS.register(eventBus);
         BLOCK_ENTITIES.register(eventBus);
         ENTITIES.register(eventBus);

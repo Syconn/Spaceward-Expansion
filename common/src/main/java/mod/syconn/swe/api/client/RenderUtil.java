@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
@@ -52,20 +53,14 @@ public class RenderUtil {
     }
 
     public static TextureAtlasSprite getSprite(Fluid fluid) {
-        if (fluid.isSame(Fluids.EMPTY)) return getSprite(MissingTextureAtlasSprite.getLocation());
-        return getSprite(Services.FLUID_EXTENSIONS.getStillTexture(fluid));
-    }
-
-    private static TextureAtlasSprite getSprite(ResourceLocation texture) {
-        Map<ResourceLocation, TextureAtlasSprite> atlas = Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).texturesByName;
-        return atlas.getOrDefault(texture, atlas.get(MissingTextureAtlasSprite.getLocation()));
+        if (fluid.isSame(Fluids.EMPTY) || !Services.FLUID_EXTENSIONS.getStillTexture(fluid).isPresent()) return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
+        return Services.FLUID_EXTENSIONS.getStillTexture(fluid).get();
     }
 
     public static void renderLiquid(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, Direction... directions) {
         if (!fluid.isSame(Fluids.EMPTY)) {
-            ResourceLocation fluidStill = Services.FLUID_EXTENSIONS.getStillTexture(fluid);
             int tint = Services.FLUID_EXTENSIONS.getTintColor(fluid);
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(fluidStill);
+            TextureAtlasSprite sprite = getSprite(fluid);
             VertexConsumer builder = pBufferSource.getBuffer(RenderType.translucent());
             for (Direction faceDirection : directions) {
                 createSquaredFace(builder, pPoseStack, 0f, 1f, 0f, 1f, sprite, tint, faceDirection);

@@ -25,6 +25,7 @@ public class ForgeMod {
 
     public ForgeMod() {
         final IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
         BLOCKS.register(eventBus);
         BLOCK_ENTITIES.register(eventBus);
         ENTITIES.register(eventBus);

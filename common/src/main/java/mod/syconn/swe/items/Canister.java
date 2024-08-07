@@ -70,7 +70,7 @@ public class Canister extends Item
 //    }
 
     public Component getName(ItemStack stack) {
-        if (!getHandler(stack).getFluidInTank().is(Fluids.EMPTY)) return Component.literal(getHandler(stack).getFluidInTank().getHoverName()).append(" ").append(super.getName(stack));
+        if (!getHandler(stack).getFluidInTank().is(Fluids.EMPTY)) return Services.FLUID_EXTENSIONS.getTooltip(getHandler(stack).getFluidInTank().fluid()).get(0).copy().append(super.getName(stack));
         return Component.literal("Empty ").append(super.getName(stack));
     }
 
@@ -85,7 +85,6 @@ public class Canister extends Item
     }
 
     public static ISingleFluidHandler getHandler(ItemStack stack) {
-//        return stack.getCapability(Capabilities.FluidHandler.ITEM); TODO OLD WAY
         return Services.FLUID_HANDLER.get(stack);
     }
 }
