@@ -3,7 +3,7 @@ package mod.syconn.swe.client.renders.effects;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import mod.syconn.swe.Main;
+import mod.syconn.swe.Constants;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -16,8 +16,8 @@ import org.joml.Matrix4f;
 public class MoonSpecialEffects extends DimensionSpecialEffects {
 
     private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
-    private static final ResourceLocation EARTH_LOCATION = Main.loc("textures/environment/earth.png");
-    private static final ResourceLocation SKY_LOCATION = Main.loc("textures/environment/sky.png");
+    private static final ResourceLocation EARTH_LOCATION = Constants.loc("textures/environment/earth.png");
+    private static final ResourceLocation SKY_LOCATION = Constants.loc("textures/environment/sky.png");
 
     private final Minecraft minecraft = Minecraft.getInstance();
 

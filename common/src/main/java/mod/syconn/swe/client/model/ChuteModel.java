@@ -2,6 +2,7 @@ package mod.syconn.swe.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import mod.syconn.swe.Constants;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -9,12 +10,11 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import mod.syconn.swe.Main;
 
 import java.util.function.Function;
 
 public class ChuteModel extends Model {
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Main.loc("chute"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(Constants.loc("chute"), "main");
 	private final ModelPart test;
 	private final ModelPart test2;
 	private final ModelPart brella;

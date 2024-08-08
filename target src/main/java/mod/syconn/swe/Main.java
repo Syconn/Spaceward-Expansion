@@ -67,20 +67,6 @@ public class Main {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG, "swe/swe-common.toml");
     }
 
-    public void gatherData(GatherDataEvent event) {
-        var fileHelper = event.getExistingFileHelper();
-        var pack = event.getGenerator().getVanillaPack(true);
-        BlockTagsGen blockTags = new BlockTagsGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), fileHelper);
-        pack.addProvider(LangGen::new);
-        pack.addProvider(pOutput -> new RecipeGen(pOutput, event.getLookupProvider()));
-        pack.addProvider(pOutput -> new ItemModelGen(pOutput, fileHelper));
-        pack.addProvider(pOutput -> new BlockModelGen(pOutput, fileHelper));
-        pack.addProvider(pOutput -> blockTags);
-        pack.addProvider(pOutput -> new ItemTagsGen(pOutput, event.getLookupProvider(), blockTags.contentsGetter(), fileHelper));
-        pack.addProvider(pOutput -> new FluidTagsGen(pOutput, event.getLookupProvider(), fileHelper));
-        pack.addProvider(pOutput -> new LootTableProvider(pOutput, Collections.emptySet(), List.of(new LootTableProvider.SubProviderEntry(BlockLootTables::new, LootContextParamSets.BLOCK)), event.getLookupProvider()));
-    }
-
     public void loadData(AddReloadListenerEvent e){
         e.addListener(new PlanetManager());
         e.addListener(new OxygenProductionManager());

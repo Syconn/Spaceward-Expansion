@@ -18,8 +18,8 @@
         "main": [
           "mod.syconn.swe.FabricMod"
         ],
-        "fabric-datagen": [
-          "mod.syconn.swe.FabricData"
+        "client": [
+            "mod.syconn.swe.FabricClient"
         ]
     },
     "mixins": [

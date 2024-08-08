@@ -1,6 +1,7 @@
 package mod.syconn.swe.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.VertexBuffer;
 import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
 import mod.syconn.swe.items.SpaceArmor;
 import net.minecraft.client.Minecraft;
@@ -19,17 +20,13 @@ public class ClientHooks {
         if(screen instanceof InventoryScreen inventory) {
             Player p = Minecraft.getInstance().player;
             if (p != null && SpaceArmor.hasFullKit(p)) {
-                int left = inventory.getGuiLeft();
-                int top = inventory.getGuiTop();
+                int left = inventory.leftPos;
+                int top = inventory.topPos;
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 guiGraphics.blit(AbstractContainerScreen.INVENTORY_LOCATION, left + 76, top + 43, 7, 7, 18, 18, 256, 256);
                 guiGraphics.blit(AbstractContainerScreen.INVENTORY_LOCATION, left + 76, top + 25, 7, 7, 18, 18, 256, 256);
             }
         }
-    }
-
-    public static void addPlayerLayers(EntityRenderer<? extends Player> renderer, EntityModelSet s) {
-        if(renderer instanceof PlayerRenderer playerRenderer) playerRenderer.addLayer(new SpaceSuitLayer<>(playerRenderer, s));
     }
 }
