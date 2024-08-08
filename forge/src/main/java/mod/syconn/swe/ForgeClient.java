@@ -54,11 +54,6 @@ public class ForgeClient {
         addPlayerLayers(event.getPlayerSkin(PlayerSkin.Model.SLIM), event.getEntityModels());
     }
 
-    @SubscribeEvent
-    public static void renderOverlay(RegisterG event){
-        event.registerAbove(VanillaGuiLayers.AIR_LEVEL, Constants.loc("o2"), SpaceSuitOverlay.O2_OVERLAY);
-    }
-
     public static void addPlayerLayers(EntityRenderer<? extends Player> renderer, EntityModelSet s) {
         if(renderer instanceof PlayerRenderer playerRenderer) playerRenderer.addLayer(new SpaceSuitLayer<>(playerRenderer, s));
     }

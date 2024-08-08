@@ -3,7 +3,6 @@ package mod.syconn.swe.client;
 import mod.syconn.swe.client.model.ChuteModel;
 import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
-import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 
 public class ClientHandler {
 
@@ -24,11 +23,6 @@ public class ClientHandler {
         event.registerLayerDefinition(ParachuteModel.LAYER_LOCATION, ParachuteModel::createBodyLayer);
         event.registerLayerDefinition(ChuteModel.LAYER_LOCATION, ChuteModel::createBodyLayer);
         event.registerLayerDefinition(TankModel.LAYER_LOCATION, TankModel::createBodyLayer);
-    }
-
-    @SubscribeEvent
-    public static void renderOverlay(RegisterGuiLayersEvent event){
-        event.registerAbove(VanillaGuiLayers.AIR_LEVEL, Main.loc("o2"), SpaceSuitOverlay.O2_OVERLAY);
     }
 
 // TODO   public static void onPlayerRenderScreen(ContainerScreenEvent.Render.Background event) {
