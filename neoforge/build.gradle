@@ -3,9 +3,15 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+repositories {
+    maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
+}
+
 neoForge {
     version = neoforge_version
-    // Automatically enable neoforge AccessTransformers if the file exists
     def at = project(':common').file('src/main/resources/accesstransformer.cfg')
     if (at.exists()) {
         accessTransformers.add(at.absolutePath)
@@ -34,6 +40,12 @@ neoForge {
             sourceSet sourceSets.main
         }
     }
+}
+
+dependencies {
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }

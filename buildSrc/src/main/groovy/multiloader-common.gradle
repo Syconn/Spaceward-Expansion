@@ -87,6 +87,7 @@ processResources {
             'group'                        : project.group,
             'minecraft_version'            : minecraft_version,
             'minecraft_version_range'      : minecraft_version_range,
+            'jei_version'                  : jei_version,
             'fabric_version'               : fabric_version,
             'fabric_loader_version'        : fabric_loader_version,
             "forge_version": forge_version,

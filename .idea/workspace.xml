@@ -7,24 +7,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="EntityEvents for Fabric">
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/PlayerEvents.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/PlayerListMixin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/reloaders/FabricOxygenProductionManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/reloaders/FabricPlanetManager.java" afterDir="false" />
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Event Parody">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/world/data/savedData/PipeNetworks.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/world/data/savedData/PipeNetworks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/dimensions/PlanetManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/dimensions/PlanetManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/messages/ClientBoundUpdatePlanetSettings.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/util/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/util/Events.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/EntityEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/EntityEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/resources/swe.fabric.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/resources/swe.fabric.mixins.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/multiloader-common.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/multiloader-common.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/forge/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,14 +250,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720302138832</updated>
-    </task>
-    <task id="LOCAL-00001" summary="New Dye System">
-      <option name="closed" value="true" />
-      <created>1720325433741</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1720325433741</updated>
     </task>
     <task id="LOCAL-00002" summary="New Dye System">
       <option name="closed" value="true" />
@@ -654,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723177625447</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Event Parody">
+      <option name="closed" value="true" />
+      <created>1723234512072</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1723234512072</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -682,7 +671,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Combination Development in Progress lots of Issues and random bugs | Block Debug Render is work though" />
     <MESSAGE value="Pipe now Network, Split, Combine, and Render" />
     <MESSAGE value="Pipe Model Render Changes for Different Pipe Connection Types, GUI Interface to edit Pipe Connections, Pipe Debug Render Graphical Error Fixes" />
     <MESSAGE value="Pipe Network Code Cleanup" />
@@ -707,6 +695,7 @@
     <MESSAGE value="Fabric Fix" />
     <MESSAGE value="Neo/Forge Event System" />
     <MESSAGE value="EntityEvents for Fabric" />
-    <option name="LAST_COMMIT_MESSAGE" value="EntityEvents for Fabric" />
+    <MESSAGE value="Event Parody" />
+    <option name="LAST_COMMIT_MESSAGE" value="Event Parody" />
   </component>
 </project>
