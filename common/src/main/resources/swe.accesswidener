@@ -1,6 +1,6 @@
 accessWidener v2 named
-accessible field net/minecraft/client/renderer/texture/SpriteContents originalImage Lcom/mojang/blaze3d/platform/NativeImage
-accessible field net/minecraft/client/renderer/texture/TextureAtlas texturesByName Ljava/util/Map
-accessible field net/minecraft/client/renderer/LevelRenderer starBuffer Lcom/mojang/blaze3d/vertex/VertexBuffer
-accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen leftPos Ljava/lang/Integer
-accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen topPos Ljava/lang/Integer
+accessible field net/minecraft/client/renderer/texture/SpriteContents originalImage Lcom/mojang/blaze3d/platform/NativeImage;
+accessible field net/minecraft/client/renderer/texture/TextureAtlas texturesByName Ljava/util/Map;
+accessible field net/minecraft/client/renderer/LevelRenderer starBuffer Lcom/mojang/blaze3d/vertex/VertexBuffer;
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen leftPos I
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen topPos I

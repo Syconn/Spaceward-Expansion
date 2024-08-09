@@ -22,15 +22,16 @@ import net.minecraft.world.level.portal.DimensionTransition;
 
 public class CommonHandler {
 
-    public static void entityTickEvent(Events.LivingEntityEvent event){
+    public static boolean entityTickEvent(Events.LivingEntityEvent event){
         LivingEntity livingEntity = event.livingEntity();
         AttributeInstance gravity = livingEntity.getAttribute(Attributes.GRAVITY);
         double g = PlanetManager.getSettings(livingEntity.level().dimension()).gravity();
         if (gravity.getValue() != g) gravity.setBaseValue(g);
         if (livingEntity.getData(Registration.SPACE_SUIT).parachute()) gravity.setBaseValue(g / 12.0);
+        return true;
     }
 
-    public static void playerTickEvent(Events.PlayerEvent event) {
+    public static boolean playerTickEvent(Events.PlayerEvent event) {
         Player player = event.player();
         if (player instanceof ServerPlayer p){
             if (p.level() instanceof ServerLevel serverlevel && p.getY() >= Config.spaceHeight.get()) {
@@ -56,6 +57,7 @@ public class CommonHandler {
                 }
             }
             p.setData(Registration.SPACE_SUIT, suit);
+            return true;
         }
 
         if (player.getInventory() instanceof ExtendedPlayerInventory i && SpaceArmor.hasFullKit(player)) i.getSpaceUtil().forEach(stack -> { if (stack.getItem() instanceof EquipmentItem eq) eq.onEquipmentTick(stack, player.level(), player); });

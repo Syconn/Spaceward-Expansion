@@ -1,6 +1,6 @@
 package mod.syconn.swe.mixin;
 
-import mod.syconn.swe.events.LivingEntityEvents;
+import mod.syconn.swe.events.EntityEvents;
 import mod.syconn.swe.util.Events;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
@@ -17,7 +17,7 @@ public class LivingEntityMixin {
     @Inject(at = @At(value = "HEAD"), method = "calculateFallDamage", cancellable = true)
     private void onFall(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Integer> cir) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
-        Events.LivingFallEvent result = LivingEntityEvents.FALL_EVENT.invoker().fall(livingEntity, fallDistance, damageMultiplier, false);
+        Events.LivingFallEvent result = EntityEvents.FALL_EVENT.invoker().fall(livingEntity, fallDistance, damageMultiplier, false);
         if (livingEntity.getType().is(EntityTypeTags.FALL_DAMAGE_IMMUNE) || result.cancel()) cir.setReturnValue(0);
         else {
             float f = (float)livingEntity.getAttributeValue(Attributes.SAFE_FALL_DISTANCE);

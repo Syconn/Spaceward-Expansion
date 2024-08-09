@@ -1,7 +1,7 @@
 package mod.syconn.swe;
 
 import mod.syconn.swe.common.CommonHandler;
-import mod.syconn.swe.events.LivingEntityEvents;
+import mod.syconn.swe.events.EntityEvents;
 import mod.syconn.swe.init.ComponentRegister;
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.network.Network;
@@ -20,8 +20,9 @@ public class FabricMod implements ModInitializer {
             return null;
         });
         // TODO FIGURE OUT CONFIG
-        LivingEntityEvents.FALL_EVENT.register(((livingEntity, distance, damageMultiplier, cancelled) -> CommonHandler.livingFallEvent(new Events.LivingFallEvent(livingEntity, distance, damageMultiplier, cancelled))));
-
+        EntityEvents.FALL_EVENT.register(((livingEntity, distance, damageMultiplier, cancelled) -> CommonHandler.livingFallEvent(new Events.LivingFallEvent(livingEntity, distance, damageMultiplier, cancelled))));
+        EntityEvents.ENTITY_TICK.register((entity -> CommonHandler.entityTickEvent(new Events.LivingEntityEvent(entity))));
+        EntityEvents.PLAYER_TICK.register((player -> CommonHandler.playerTickEvent(new Events.PlayerEvent(player))));
         SpaceMod.init();
         Network.S2CPayloads();
     }

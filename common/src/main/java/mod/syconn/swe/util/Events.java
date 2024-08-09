@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 
 public class Events {
 
-    public record LivingEntityEvent (LivingEntity livingEntity) {}
+    public record LivingEntityEvent(LivingEntity livingEntity) {}
 
     public record PlayerEvent (Player player) {}
 
