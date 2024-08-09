@@ -1,13 +1,9 @@
 package mod.syconn.swe.client.renders.ber;
 
 import com.mojang.blaze3d.vertex.*;
-import mod.syconn.swe.blockentities.TankBE;
-import mod.syconn.api.client.RenderUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.neoforged.neoforge.fluids.FluidStack;
 
 public class TankBER implements BlockEntityRenderer<TankBE> {
 

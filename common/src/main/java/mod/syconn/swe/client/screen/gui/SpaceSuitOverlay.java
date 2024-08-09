@@ -2,8 +2,8 @@ package mod.syconn.swe.client.screen.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.syconn.swe.Registration;
-import mod.syconn.swe.world.data.attachments.SpaceSuit;
-import mod.syconn.swe.world.dimensions.PlanetManager;
+import mod.syconn.swe.common.data.attachments.SpaceSuit;
+import mod.syconn.swe.common.dimensions.PlanetManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;

@@ -1,5 +1,6 @@
 package mod.syconn.swe.services;
 
+import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.platform.services.IRegistrar;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -12,13 +13,20 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.pathfinder.PathType;
+import org.joml.Vector3f;
 
 import java.util.function.Supplier;
 
@@ -30,10 +38,6 @@ public class FabricRegistrar implements IRegistrar {
 
     public <T extends Block> Supplier<T> registerBlock(String id, Supplier<T> block) {
         return registerSupplier(BuiltInRegistries.BLOCK, id, block);
-    }
-
-    public <T extends Entity> Supplier<EntityType<T>> registerEntity(String id, Supplier<EntityType<T>> entity) {
-        return registerSupplier(BuiltInRegistries.ENTITY_TYPE, id, entity);
     }
 
     public <T extends Item> Supplier<T> registerItem(String id, Supplier<T> item) {
@@ -52,17 +56,31 @@ public class FabricRegistrar implements IRegistrar {
         return registerSupplier(BuiltInRegistries.CREATIVE_MODE_TAB, id, tab);
     }
 
-    public <E extends Mob> Supplier<SpawnEggItem> makeSpawnEggFor(Supplier<EntityType<E>> entityType, int primaryEggColour, int secondaryEggColour, Item.Properties itemProperties) {
-        return () -> new SpawnEggItem(entityType.get(), primaryEggColour, secondaryEggColour, itemProperties);
-    }
-
     public <T> Supplier<DataComponentType<T>> registerDataComponent(String id, Supplier<DataComponentType<T>> component) {
         return registerSupplier(BuiltInRegistries.DATA_COMPONENT_TYPE, id, component);
+    }
+
+    public <T extends Fluid> Supplier<T> registerFluid(String id, Supplier<T> fluid) {
+        return registerSupplier(BuiltInRegistries.FLUID, id, fluid);
+    }
+
+    public <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenuType(String id, Supplier<MenuType<T>> menuType) {
+        return registerSupplier(BuiltInRegistries.MENU, id, menuType);
+    }
+
+    public <T extends Recipe<?>> Supplier<RecipeSerializer<T>> registerRecipeSerializer(String id, Supplier<RecipeSerializer<T>> recipeSerializer) {
+        return registerSupplier(BuiltInRegistries.RECIPE_SERIALIZER, id, recipeSerializer);
+    }
+
+    public <T extends MapCodec<? extends Block>> Supplier<T> registerBlockCodec(String id, Supplier<T> blockCodec) {
+        return registerSupplier(BuiltInRegistries.BLOCK_TYPE, id, blockCodec);
     }
 
     public CreativeModeTab.Builder newCreativeTabBuilder() {
         return FabricItemGroup.builder();
     }
+
+    public void registerFluidType(String id, ResourceLocation still, ResourceLocation flowing, ResourceLocation overlay, int tint, Vector3f fog, String desc, boolean swim, boolean extinguish, boolean drown, PathType type, int lightLevel, int density, int viscosity, SoundEvent fill, SoundEvent empty, SoundEvent vaporize) {}
 
     private static <T, R extends Registry<? super T>> Supplier<T> registerSupplier(R registry, String id, Supplier<T> object) {
         final T registeredObject = Registry.register((Registry<T>)registry,  ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id), object.get());

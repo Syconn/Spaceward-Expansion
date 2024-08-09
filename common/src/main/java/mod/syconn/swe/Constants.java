@@ -10,6 +10,8 @@ public class Constants {
 	public static final String MOD_NAME = "Spaceward Expansion";
 	public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
+	public static final ResourceLocation MOON = Constants.loc("moon");
+
 	public static ResourceLocation loc(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}

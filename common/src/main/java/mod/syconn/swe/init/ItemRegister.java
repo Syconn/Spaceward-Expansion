@@ -30,7 +30,7 @@ public class ItemRegister {
     public static final Supplier<UpgradeItem> DIAMOND_UPGRADE = register("diamond_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1), 10));
     public static final Supplier<UpgradeItem> EMERALD_UPGRADE = register("emerald_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1), 15));
     public static final Supplier<UpgradeItem> NETHERITE_UPGRADE = register("netherite_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1).fireResistant(), 25));
-//    public static final Supplier<BucketItem> O2_BUCKET = register("o2_fluid_bucket", () -> new BucketItem(O2.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+    public static final Supplier<BucketItem> O2_BUCKET = register("o2_fluid_bucket", () -> new BucketItem(FluidRegister.O2.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
 
     public static final Holder<ArmorMaterial> SPACE_SUIT_MATERIAL = registerArmor("space_suit", () -> new ArmorMaterial(SpaceArmor.DEFENSE, 20,
             SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.of(Items.IRON_INGOT), List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "space_suit"))),0,0));

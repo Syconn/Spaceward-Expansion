@@ -7,6 +7,7 @@ import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
 import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
+import mod.syconn.swe.helper.FluidTypes;
 import mod.syconn.swe.init.ItemRegister;
 import mod.syconn.swe.items.Canister;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -24,7 +25,10 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import static mod.syconn.swe.items.Canister.getHandler;
 
@@ -43,6 +47,11 @@ public class NeoClient {
     public static void coloredItems(RegisterColorHandlersEvent.Item event) {
         event.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, ItemRegister.PARACHUTE.get());
         event.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluidInTank().fluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
+    }
+
+    @SubscribeEvent
+    public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+        for (DeferredHolder<FluidType, ? extends FluidType> type : NeoMod.FLUID_TYPES.getEntries()) if (type.get() instanceof FluidTypes ext) event.registerFluidType(ext.getExtension(), type.get());
     }
 
     @SubscribeEvent

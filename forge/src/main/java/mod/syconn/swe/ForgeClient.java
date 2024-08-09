@@ -6,7 +6,6 @@ import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
 import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
-import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.init.ItemRegister;
 import mod.syconn.swe.items.Canister;
 import net.minecraft.client.model.geom.EntityModelSet;
