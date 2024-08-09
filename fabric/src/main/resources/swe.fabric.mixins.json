@@ -7,6 +7,7 @@
   "mixins": [
     "EntityMixin",
     "LivingEntityMixin",
+    "PlayerListMixin",
     "PlayerMixin",
     "ServerLevelMixin"
   ],

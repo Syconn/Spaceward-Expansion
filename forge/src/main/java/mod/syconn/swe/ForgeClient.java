@@ -6,6 +6,7 @@ import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
 import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
+import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.init.ItemRegister;
 import mod.syconn.swe.items.Canister;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,6 +50,16 @@ public class ForgeClient {
     }
 
     @SubscribeEvent
+    public static void registerClientLoaders(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(new PlanetManager());
+    }
+
+    @SubscribeEvent
+    public static void dimensionEffects(RegisterDimensionSpecialEffectsEvent event){
+        event.register(Constants.loc("moon"), new MoonSpecialEffects());
+    }
+
+    @SubscribeEvent
     public static void addRenderLayers(EntityRenderersEvent.AddLayers event) {
         addPlayerLayers(event.getPlayerSkin(PlayerSkin.Model.WIDE), event.getEntityModels());
         addPlayerLayers(event.getPlayerSkin(PlayerSkin.Model.SLIM), event.getEntityModels());
@@ -55,10 +67,5 @@ public class ForgeClient {
 
     public static void addPlayerLayers(EntityRenderer<? extends Player> renderer, EntityModelSet s) {
         if(renderer instanceof PlayerRenderer playerRenderer) playerRenderer.addLayer(new SpaceSuitLayer<>(playerRenderer, s));
-    }
-
-    @SubscribeEvent
-    public static void dimensionEffects(RegisterDimensionSpecialEffectsEvent event){
-        event.register(Constants.loc("moon"), new MoonSpecialEffects());
     }
 }

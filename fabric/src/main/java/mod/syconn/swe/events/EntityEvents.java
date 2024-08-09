@@ -4,7 +4,6 @@ import mod.syconn.swe.util.Events;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
 public class EntityEvents {
 
@@ -14,19 +13,15 @@ public class EntityEvents {
             return new Events.LivingFallEvent(livingEntity, distance, damageMultiplier, cancelled);
     });
 
-    public static Event<EntityTickCallback> ENTITY_TICK = EventFactory.createArrayBacked(EntityTickCallback.class, listener -> entity -> true);
-
-    public static Event<PlayerTickCallback> PLAYER_TICK = EventFactory.createArrayBacked(PlayerTickCallback.class, listener -> entity -> true);
+    public static Event<EntityTickCallback> ENTITY_TICK = EventFactory.createArrayBacked(EntityTickCallback.class, listeners -> (entity) -> {
+        for (EntityTickCallback callback : listeners) callback.tick(entity);
+    });
 
     public interface LivingEntityFallCallback {
         Events.LivingFallEvent fall(LivingEntity livingEntity, float distance, float damageMultiplier, boolean cancelled);
     }
 
     public interface EntityTickCallback {
-        boolean tick(LivingEntity entity);
-    }
-
-    public interface PlayerTickCallback {
-        boolean tick(Player player);
+        void tick(LivingEntity entity);
     }
 }

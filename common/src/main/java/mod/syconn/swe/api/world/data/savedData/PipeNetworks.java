@@ -1,11 +1,12 @@
 package mod.syconn.swe.api.world.data.savedData;
 
 import com.google.common.collect.Sets;
-import mod.syconn.api.blockEntity.AbstractPipeBE;
-import mod.syconn.api.client.packets.ClientBoundUpdatePipeCache;
-import mod.syconn.api.util.ListTools;
-import mod.syconn.api.world.data.PipeNetwork;
+import mod.syconn.swe.api.blockEntity.AbstractPipeBE;
+import mod.syconn.swe.api.client.packets.ClientBoundUpdatePipeCache;
+import mod.syconn.swe.api.util.ListTools;
+import mod.syconn.swe.api.world.data.PipeNetwork;
 import mod.syconn.swe.network.Channel;
+import mod.syconn.swe.util.Events;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -13,10 +14,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -170,10 +171,10 @@ public class PipeNetworks extends SavedData {
     }
 
     public static PipeNetworks get(ServerLevel server) {
-        return server.getDataStorage().computeIfAbsent(new Factory<>(() -> create(server), (t, p) -> load(server, t, p)), "pipe_network");
+        return server.getDataStorage().computeIfAbsent(new Factory<>(() -> create(server), (t, p) -> load(server, t, p), DataFixTypes.LEVEL), "pipe_network");
     }
 
-    public static void onTick(LevelTickEvent.Post event) {
-        if (event.getLevel() instanceof ServerLevel sl) get(sl).tick();
+    public static void tickNetworks(Events.LevelTick event) {
+        if (event.level() instanceof ServerLevel sl) get(sl).tick();
     }
 }

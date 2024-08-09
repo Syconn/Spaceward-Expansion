@@ -3,6 +3,7 @@ package mod.syconn.swe.common.dimensions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import mod.syconn.swe.Constants;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -39,11 +40,11 @@ public class PlanetManager extends SimpleJsonResourceReloadListener {
 
     public static PlanetSettings getSettings(ResourceKey<Level> k){
         if (SETTINGS.containsKey(k.location())) return SETTINGS.get(k.location());
-        return SETTINGS.get(Main.loc("default"));
+        return SETTINGS.get(Constants.loc("default"));
     }
 
     public static PlanetSettings getSettings(Player p){
         if (SETTINGS.containsKey(p.level().dimension().location())) return SETTINGS.get(p.level().dimension().location());
-        return SETTINGS.get(Main.loc("default"));
+        return SETTINGS.get(Constants.loc("default"));
     }
 }

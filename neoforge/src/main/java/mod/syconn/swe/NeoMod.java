@@ -2,23 +2,16 @@ package mod.syconn.swe;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.api.world.data.savedData.PipeNetworks;
-import mod.syconn.swe.client.ClientHandler;
-import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.common.dimensions.OxygenProductionManager;
 import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.datagen.*;
-import mod.syconn.swe.network.Channel;
-import mod.syconn.swe.network.messages.ClientBoundUpdatePlanetSettings;
 import mod.syconn.swe.services.NeoNetwork;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -33,7 +26,6 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
-import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -77,8 +69,6 @@ public class NeoMod {
         if (FMLEnvironment.dist.isClient()) {
             NeoForge.EVENT_BUS.addListener(NeoClient::onPlayerRenderScreen);
             NeoForge.EVENT_BUS.addListener(NeoClient::renderBlockOutline);
-        } else if (FMLEnvironment.dist.isDedicatedServer()) {
-            NeoForge.EVENT_BUS.addListener(this::syncServerDataEvent);
         }
 
         NeoForge.EVENT_BUS.addListener(this::loadData);
@@ -86,7 +76,7 @@ public class NeoMod {
         NeoForge.EVENT_BUS.addListener(NeoCommon::playerLeft);
         NeoForge.EVENT_BUS.addListener(NeoCommon::playerChangedDimension);
         NeoForge.EVENT_BUS.addListener(NeoCommon::playerTickEvent);
-        NeoForge.EVENT_BUS.addListener(PipeNetworks::onTick);
+        NeoForge.EVENT_BUS.addListener(PipeNetworks::tickNetworks);
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, NeoConfig.CLIENT_CONFIG, "swe/swe-client.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, NeoConfig.COMMON_CONFIG, "swe/swe-common.toml");
@@ -96,10 +86,6 @@ public class NeoMod {
     public void loadData(AddReloadListenerEvent e){
         e.addListener(new PlanetManager());
         e.addListener(new OxygenProductionManager());
-    }
-
-    public void syncServerDataEvent(OnDatapackSyncEvent event) {
-        event.getRelevantPlayers().forEach(serverPlayer -> Channel.sendToPlayer(new ClientBoundUpdatePlanetSettings(List.copyOf(PlanetManager.getSettings())), serverPlayer));
     }
 
     public void gatherData(GatherDataEvent event) {

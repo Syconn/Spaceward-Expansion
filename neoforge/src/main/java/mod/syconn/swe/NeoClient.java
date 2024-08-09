@@ -7,10 +7,14 @@ import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
 import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
+import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.helper.FluidTypes;
+import mod.syconn.swe.init.FluidRegister;
 import mod.syconn.swe.init.ItemRegister;
 import mod.syconn.swe.items.Canister;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -21,10 +25,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
-import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -39,8 +40,8 @@ public class NeoClient {
     public static void init(final FMLClientSetupEvent event) {
         ItemProperties.register(ItemRegister.CANISTER.get(), Constants.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
         ItemProperties.register(ItemRegister.AUTO_REFILL_CANISTER.get(), Constants.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
-//        ItemBlockRenderTypes.setRenderLayer(ItemRegister.O2.get(), RenderType.translucent()); TODO
-//        ItemBlockRenderTypes.setRenderLayer(ItemRegister.O2_FLOWING.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(FluidRegister.O2.get(), RenderType.translucent());
+        ItemBlockRenderTypes.setRenderLayer(FluidRegister.O2_FLOWING.get(), RenderType.translucent());
     }
 
     @SubscribeEvent
@@ -62,9 +63,13 @@ public class NeoClient {
     }
 
     @SubscribeEvent
-    public static void addRenderLayers(EntityRenderersEvent.AddLayers event) {
-        addPlayerLayers(event.getSkin(PlayerSkin.Model.WIDE), event.getEntityModels());
-        addPlayerLayers(event.getSkin(PlayerSkin.Model.SLIM), event.getEntityModels());
+    public static void dimensionEffects(RegisterDimensionSpecialEffectsEvent event){
+        event.register(Constants.loc("moon"), new MoonSpecialEffects());
+    }
+
+    @SubscribeEvent
+    public static void registerClientLoaders(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener(new PlanetManager());
     }
 
     @SubscribeEvent
@@ -72,12 +77,13 @@ public class NeoClient {
         event.registerAbove(VanillaGuiLayers.AIR_LEVEL, Constants.loc("o2"), SpaceSuitOverlay.O2_OVERLAY);
     }
 
-    public static void addPlayerLayers(EntityRenderer<? extends Player> renderer, EntityModelSet s) {
-        if(renderer instanceof PlayerRenderer playerRenderer) playerRenderer.addLayer(new SpaceSuitLayer<>(playerRenderer, s));
+    @SubscribeEvent
+    public static void addRenderLayers(EntityRenderersEvent.AddLayers event) {
+        addPlayerLayers(event.getSkin(PlayerSkin.Model.WIDE), event.getEntityModels());
+        addPlayerLayers(event.getSkin(PlayerSkin.Model.SLIM), event.getEntityModels());
     }
 
-    @SubscribeEvent
-    public static void dimensionEffects(RegisterDimensionSpecialEffectsEvent event){
-        event.register(Constants.loc("moon"), new MoonSpecialEffects());
+    public static void addPlayerLayers(EntityRenderer<? extends Player> renderer, EntityModelSet s) {
+        if(renderer instanceof PlayerRenderer playerRenderer) playerRenderer.addLayer(new SpaceSuitLayer<>(playerRenderer, s));
     }
 }

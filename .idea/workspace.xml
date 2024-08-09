@@ -7,21 +7,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Neo/Forge Event System">
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/EntityMixin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/PlayerMixin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/ServerLevelMixin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/client/ClientLevelMixin.java" afterDir="false" />
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="EntityEvents for Fabric">
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/PlayerEvents.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/PlayerListMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/reloaders/FabricOxygenProductionManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/reloaders/FabricPlanetManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/CommonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/CommonHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/world/data/savedData/PipeNetworks.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/world/data/savedData/PipeNetworks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/dimensions/PlanetManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/dimensions/PlanetManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/messages/ClientBoundUpdatePlanetSettings.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/util/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/util/Events.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/swe.accesswidener" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/resources/swe.accesswidener" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/LivingEntityEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/EntityEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/LivingEntityMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/LivingEntityMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/EntityEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/EntityEvents.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/src/main/resources/swe.fabric.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/resources/swe.fabric.mixins.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeCommon.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeCommon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoCommon.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoCommon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,37 +123,37 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.NeoForge Client (:neoforge).executor": "Debug",
-    "Application.Spaceward-Expansion: Client.executor": "Debug",
-    "Application.Spaceward-Expansion: Data.executor": "Debug",
-    "Application.Spaceward-Expansion: Server.executor": "Run",
-    "Gradle.Build Spaceward-Expansion.executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
-    "Gradle.Spaceward-Expansion [build].executor": "Debug",
-    "Gradle.Spaceward-Expansion [clientIdeBeforeRun].executor": "Run",
-    "Gradle.Spaceward-Expansion [dataIdeBeforeRun].executor": "Run",
-    "Gradle.Spaceward-Expansion [genSourcesWithCfr].executor": "Run",
-    "Gradle.Spaceward-Expansion [genSourcesWithVineflower].executor": "Run",
-    "Gradle.Spaceward-Expansion [serverIdeBeforeRun].executor": "Run",
-    "JavaClassFindUsagesOptions.isDerivedClasses": "true",
-    "JavaClassFindUsagesOptions.isImplementingClasses": "true",
-    "JavaClassFindUsagesOptions.isSearchForTextOccurrences": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "multiloader/V1.2.1",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Aidan/IdeaProjects/Spaceward-Expansion/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-2de5d12ed2/1.21-loom.mappings.1_21.layered+hash.2198-v2/minecraft-merged-2de5d12ed2-1.21-loom.mappings.1_21.layered+hash.2198-v2.jar",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.NeoForge Client (:neoforge).executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Spaceward-Expansion: Client.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Spaceward-Expansion: Data.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Spaceward-Expansion: Server.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build Spaceward-Expansion.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [build].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Spaceward-Expansion [clientIdeBeforeRun].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [dataIdeBeforeRun].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [genSourcesWithCfr].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [genSourcesWithVineflower].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [serverIdeBeforeRun].executor&quot;: &quot;Run&quot;,
+    &quot;JavaClassFindUsagesOptions.isDerivedClasses&quot;: &quot;true&quot;,
+    &quot;JavaClassFindUsagesOptions.isImplementingClasses&quot;: &quot;true&quot;,
+    &quot;JavaClassFindUsagesOptions.isSearchForTextOccurrences&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;multiloader/V1.2.1&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aidan/IdeaProjects/Spaceward-Expansion/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-2de5d12ed2/1.21-loom.mappings.1_21.layered+hash.2198-v2/minecraft-merged-2de5d12ed2-1.21-loom.mappings.1_21.layered+hash.2198-v2.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="Push.Settings">
     <force-push-targets>
       <force-push-target remote-path="origin" branch="New-Pipe-System" />
@@ -643,7 +646,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723174060663</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="EntityEvents for Fabric">
+      <option name="closed" value="true" />
+      <created>1723177625447</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1723177625447</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,7 +682,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Beginnings of PipeNetwork System" />
     <MESSAGE value="Combination Development in Progress lots of Issues and random bugs | Block Debug Render is work though" />
     <MESSAGE value="Pipe now Network, Split, Combine, and Render" />
     <MESSAGE value="Pipe Model Render Changes for Different Pipe Connection Types, GUI Interface to edit Pipe Connections, Pipe Debug Render Graphical Error Fixes" />
@@ -696,6 +706,7 @@
     <MESSAGE value="Forge Fix for Gui Overlay" />
     <MESSAGE value="Fabric Fix" />
     <MESSAGE value="Neo/Forge Event System" />
-    <option name="LAST_COMMIT_MESSAGE" value="Neo/Forge Event System" />
+    <MESSAGE value="EntityEvents for Fabric" />
+    <option name="LAST_COMMIT_MESSAGE" value="EntityEvents for Fabric" />
   </component>
 </project>
