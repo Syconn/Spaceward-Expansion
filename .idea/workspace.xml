@@ -7,13 +7,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Event Parody">
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Jei Integration Patch">
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/menu/PositionMenuData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/Menus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/RecipeSerializers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/util/IMenuData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/src/main/groovy/multiloader-common.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/src/main/groovy/multiloader-common.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/forge/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/Registration.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/Registration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/SpaceMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/SpaceMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/CollectorMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/CollectorMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/DisperserMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/DisperserMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/crafting/DyedParachuteRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/crafting/DyedParachuteRecipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/crafting/RefillingCanisterRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/crafting/RefillingCanisterRecipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/MenuRegister.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/extras/EquipmentItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/extras/EquipmentItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IRegistrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IRegistrar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricRegistrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricRegistrar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoRegister.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +64,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="package-info" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -250,14 +263,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720302138832</updated>
-    </task>
-    <task id="LOCAL-00002" summary="New Dye System">
-      <option name="closed" value="true" />
-      <created>1720326576163</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1720326576163</updated>
     </task>
     <task id="LOCAL-00003" summary="New Color System and Sprite Grabber">
       <option name="closed" value="true" />
@@ -643,7 +648,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723234512072</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Jei Integration Patch">
+      <option name="closed" value="true" />
+      <created>1723242013856</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1723242013856</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,7 +684,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Pipe now Network, Split, Combine, and Render" />
     <MESSAGE value="Pipe Model Render Changes for Different Pipe Connection Types, GUI Interface to edit Pipe Connections, Pipe Debug Render Graphical Error Fixes" />
     <MESSAGE value="Pipe Network Code Cleanup" />
     <MESSAGE value="Fluid Tank not showing Fluid on Fluid Transfer" />
@@ -696,6 +708,7 @@
     <MESSAGE value="Neo/Forge Event System" />
     <MESSAGE value="EntityEvents for Fabric" />
     <MESSAGE value="Event Parody" />
-    <option name="LAST_COMMIT_MESSAGE" value="Event Parody" />
+    <MESSAGE value="Jei Integration Patch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Jei Integration Patch" />
   </component>
 </project>

@@ -10,8 +10,9 @@ public class SpaceMod {
         ComponentRegister.init();
         BlockRegister.init();
         BlockEntityRegister.init();
-        MenuRegister.init();
+        Menus.init();
         FluidRegister.init();
         ItemRegister.init();
+        RecipeSerializers.init();
     }
 }

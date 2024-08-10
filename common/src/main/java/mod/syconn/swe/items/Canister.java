@@ -1,8 +1,10 @@
 package mod.syconn.swe.items;
 
 import mod.syconn.swe.api.client.RenderUtil;
+import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.data.components.FluidComponent;
 import mod.syconn.swe.init.ComponentRegister;
+import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.platform.Services;
 import mod.syconn.swe.platform.services.ISingleFluidHandler;
 import net.minecraft.ChatFormatting;
@@ -18,9 +20,7 @@ import net.minecraft.world.level.material.Fluids;
 import java.util.List;
 
 /** USED FOR LIQUIDS ONLY */
-public class Canister extends Item
-//        implements EquipmentItem TODO LATER
-{
+public class Canister extends Item implements EquipmentItem {
 
     public Canister(Rarity rarity) {
         super(new Properties().stacksTo(1).rarity(rarity).component(ComponentRegister.FLUID_COMPONENT.get(), FluidComponent.EMPTY));
@@ -74,13 +74,19 @@ public class Canister extends Item
         return Component.literal("Empty ").append(super.getName(stack));
     }
 
-//    public EquipmentItemSlot.SpaceSlot getSlot() {
-//        return EquipmentItemSlot.SpaceSlot.TANK;TODO LATER
-//    }
+    public EquipmentItemSlot.SpaceSlot getSlot() {
+        return EquipmentItemSlot.SpaceSlot.TANK;
+    }
 
-    public static ItemStack create(int volume, int max, Fluid fluid, Item item){
+    public static ItemStack create(int volume, int max, Fluid fluid, Item item) {
         ItemStack itemStack = new ItemStack(item);
         itemStack.set(ComponentRegister.FLUID_COMPONENT.get(), FluidComponent.of(fluid, volume, max));
+        return itemStack;
+    }
+
+    public static ItemStack createEmpty(Item item) {
+        ItemStack itemStack = new ItemStack(item);
+        itemStack.set(ComponentRegister.FLUID_COMPONENT.get(), FluidComponent.of(Fluids.EMPTY, 0, 800));
         return itemStack;
     }
 

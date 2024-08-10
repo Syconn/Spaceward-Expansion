@@ -1,17 +1,19 @@
 package mod.syconn.swe.common.crafting;
 
-import mod.syconn.swe.Registration;
+import mod.syconn.swe.init.ItemRegister;
+import mod.syconn.swe.init.RecipeSerializers;
 import mod.syconn.swe.util.ColorUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.Tags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +42,14 @@ public class DyedParachuteRecipe extends CustomRecipe {
             if (pInput.getItem(3).getItem() == Items.STRING && pInput.getItem(5).getItem() == Items.STRING && pInput.getItem(7).getItem() == Items.STRING) {
                 List<DyeItem> colors = new ArrayList<>();
                 for (int i = 0; i < 3; i++) colors.add(ColorUtil.DYE_BY_WOOL.get(pInput.getItem(i).getItem()));
-                return DyedItemColor.applyDyes(new ItemStack(Registration.PARACHUTE.get()), colors);
+                return DyedItemColor.applyDyes(new ItemStack(ItemRegister.PARACHUTE.get()), colors);
             }
         }
         return ItemStack.EMPTY;
     }
 
     public ItemStack getResultItem(HolderLookup.Provider pRegistries) {
-        return Registration.PARACHUTE.get().getDefaultInstance();
+        return ItemRegister.PARACHUTE.get().getDefaultInstance();
     }
 
     public boolean canCraftInDimensions(int width, int height)
@@ -57,6 +59,6 @@ public class DyedParachuteRecipe extends CustomRecipe {
 
     public RecipeSerializer<?> getSerializer()
     {
-        return Registration.PARACHUTE_RECIPE.get();
+        return RecipeSerializers.PARACHUTE_RECIPE.get();
     }
 }

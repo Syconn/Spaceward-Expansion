@@ -3,22 +3,23 @@ package mod.syconn.swe.services;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.platform.services.IRegistrar;
+import mod.syconn.swe.util.IMenuData;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.PathType;
+import org.apache.commons.lang3.function.TriFunction;
 import org.joml.Vector3f;
 
 import java.util.function.Supplier;
@@ -64,8 +66,8 @@ public class FabricRegistrar implements IRegistrar {
         return registerSupplier(BuiltInRegistries.FLUID, id, fluid);
     }
 
-    public <T extends AbstractContainerMenu> Supplier<MenuType<T>> registerMenuType(String id, Supplier<MenuType<T>> menuType) {
-        return registerSupplier(BuiltInRegistries.MENU, id, menuType);
+    public <T extends AbstractContainerMenu, D extends IMenuData<D>> Supplier<MenuType<T>> registerMenuTypeWithData(String id, StreamCodec<RegistryFriendlyByteBuf, D> codec, TriFunction<Integer, Inventory, D, T> function) {
+        return registerSupplier(BuiltInRegistries.MENU, id, () -> new ExtendedScreenHandlerType<>(function::apply, codec));
     }
 
     public <T extends Recipe<?>> Supplier<RecipeSerializer<T>> registerRecipeSerializer(String id, Supplier<RecipeSerializer<T>> recipeSerializer) {

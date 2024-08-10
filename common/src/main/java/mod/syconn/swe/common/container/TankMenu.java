@@ -1,26 +1,24 @@
 package mod.syconn.swe.common.container;
 
-import mod.syconn.api.containers.slots.SpecifiedSlotHandler;
 import mod.syconn.swe.Registration;
-import net.minecraft.core.BlockPos;
+import mod.syconn.swe.blockentities.TankBE;
+import mod.syconn.swe.data.menu.PositionMenuData;
+import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.init.Menus;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import mod.syconn.swe.blockentities.TankBE;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class TankMenu extends AbstractContainerMenu {
 
     private final TankBE be;
 
-    public TankMenu(int id, Inventory inventory, BlockPos pos) {
-        super(Registration.TANK_MENU.get(), id);
-        this.be = inventory.player.level().getBlockEntity(pos, Registration.TANK.get()).orElseThrow();
+    public TankMenu(int id, Inventory inventory, PositionMenuData data) {
+        super(Menus.TANK_MENU.get(), id);
+        this.be = inventory.player.level().getBlockEntity(pos, BlockEntityRegister.TANK.get()).orElseThrow();
         IItemHandler handler = inventory.player.level().getCapability(Capabilities.ItemHandler.BLOCK, pos, Direction.NORTH);
         if (handler != null) {
             this.addSlot(new SlotItemHandler(handler, 0, 14, 9));
