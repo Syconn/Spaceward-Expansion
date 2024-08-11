@@ -1,7 +1,6 @@
 package mod.syconn.swe.network.messages;
 
 import io.netty.buffer.ByteBuf;
-import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

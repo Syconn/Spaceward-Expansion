@@ -1,6 +1,5 @@
 package mod.syconn.swe.common;
 
-import mod.syconn.swe.Registration;
 import mod.syconn.swe.api.client.debug.PipeNetworkRenderer;
 import mod.syconn.swe.common.data.attachments.SpaceSuit;
 import mod.syconn.swe.common.dimensions.PlanetManager;

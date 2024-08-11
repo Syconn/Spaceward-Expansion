@@ -1,6 +1,5 @@
 package mod.syconn.swe.common.container;
 
-import mod.syconn.swe.Registration;
 import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.common.data.attachments.SpaceSuit;
 import net.minecraft.world.entity.player.Inventory;

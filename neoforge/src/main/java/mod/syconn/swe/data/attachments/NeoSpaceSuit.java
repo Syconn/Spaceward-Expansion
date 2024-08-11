@@ -1,12 +1,12 @@
-package mod.syconn.swe.common.data.attachments;
+package mod.syconn.swe.data.attachments;
 
+import mod.syconn.swe.common.dimensions.PlanetManager;
+import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
 import mod.syconn.swe.util.Animator;
-import mod.syconn.swe.common.dimensions.PlanetManager;
-import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +15,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
@@ -24,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class SpaceSuit implements IItemHandlerModifiable, INBTSerializable<CompoundTag> {
+public class NeoSpaceSuit implements IItemHandlerModifiable, INBTSerializable<CompoundTag> {
 
     private boolean parachute;
     private Animator chute = new Animator(20);
@@ -183,7 +182,7 @@ public class SpaceSuit implements IItemHandlerModifiable, INBTSerializable<Compo
         return t;
     }
 
-    public SpaceSuit readSyncedData(SpaceSuit suit, CompoundTag nbt) {
+    public NeoSpaceSuit readSyncedData(NeoSpaceSuit suit, CompoundTag nbt) {
         suit.parachute = nbt.getBoolean("parachute");
         suit.chute = new Animator(nbt.getCompound("animchute"));
         suit.oxygen = nbt.getInt("oxygen");

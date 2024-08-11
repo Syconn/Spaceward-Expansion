@@ -12,6 +12,7 @@ import mod.syconn.swe.reloaders.FabricPlanetManager;
 import mod.syconn.swe.util.Events;
 import mod.syconn.swe.wrappers.ComponentFluidWrapper;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -36,6 +37,8 @@ public class FabricMod implements ModInitializer {
 
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricPlanetManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricOxygenProductionManager());
+
+        AttachmentRegistry.builder().persistent().copyOnDeath().buildAndRegister();
 
         SpaceMod.init();
         Network.S2CPayloads();

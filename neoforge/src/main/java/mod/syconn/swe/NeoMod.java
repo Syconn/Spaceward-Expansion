@@ -1,9 +1,9 @@
 package mod.syconn.swe;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.api.world.data.savedData.PipeNetworks;
 import mod.syconn.swe.common.dimensions.OxygenProductionManager;
 import mod.syconn.swe.common.dimensions.PlanetManager;
+import mod.syconn.swe.data.attachments.NeoSpaceSuit;
 import mod.syconn.swe.datagen.*;
 import mod.syconn.swe.services.NeoNetwork;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -32,6 +32,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Mod(Constants.MOD_ID)
 public class NeoMod {
@@ -49,7 +50,6 @@ public class NeoMod {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Constants.MOD_ID);
     public static final DeferredRegister<MapCodec<? extends Block>> BLOCK_TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, Constants.MOD_ID);
 
-
     public NeoMod(IEventBus eventBus, ModContainer modContainer) {
         eventBus.register(NeoCommon.class);
         eventBus.addListener(NeoNetwork::onRegisterPayloadHandler);
@@ -65,6 +65,7 @@ public class NeoMod {
         FLUID_TYPES.register(eventBus);
         FLUIDS.register(eventBus);
         BLOCK_TYPES.register(eventBus);
+        ATTACHMENT_TYPES.register(eventBus);
 
         if (FMLEnvironment.dist.isClient()) {
             NeoForge.EVENT_BUS.addListener(NeoClient::onPlayerRenderScreen);
@@ -76,7 +77,7 @@ public class NeoMod {
         NeoForge.EVENT_BUS.addListener(NeoCommon::playerLeft);
         NeoForge.EVENT_BUS.addListener(NeoCommon::playerChangedDimension);
         NeoForge.EVENT_BUS.addListener(NeoCommon::playerTickEvent);
-        NeoForge.EVENT_BUS.addListener(PipeNetworks::tickNetworks);
+        NeoForge.EVENT_BUS.addListener(NeoCommon::levelTickEvent);
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, NeoConfig.CLIENT_CONFIG, "swe/swe-client.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, NeoConfig.COMMON_CONFIG, "swe/swe-common.toml");

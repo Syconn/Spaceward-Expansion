@@ -67,6 +67,7 @@ public class ForgeMod {
         MinecraftForge.EVENT_BUS.addListener(ForgeCommon::playerLeft);
         MinecraftForge.EVENT_BUS.addListener(ForgeCommon::playerChangedDimension);
         MinecraftForge.EVENT_BUS.addListener(ForgeCommon::playerTickEvent);
+        MinecraftForge.EVENT_BUS.addListener(ForgeCommon::levelTickEvent);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.COMMON_CONFIG, "swe/swe-client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.CLIENT_CONFIG, "swe/swe-common.toml");

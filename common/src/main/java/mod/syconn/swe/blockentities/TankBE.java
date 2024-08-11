@@ -1,7 +1,6 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.api.blockEntity.AbstractTankBE;
-import mod.syconn.swe.Registration;
 import mod.syconn.swe.util.FluidHelper;
 import mod.syconn.swe.common.container.TankMenu;
 import net.minecraft.core.BlockPos;

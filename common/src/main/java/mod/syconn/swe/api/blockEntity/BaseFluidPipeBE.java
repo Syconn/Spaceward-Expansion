@@ -4,25 +4,16 @@ import mod.syconn.api.blocks.AbstractPipeBlock;
 import mod.syconn.api.blocks.BaseFluidPipe;
 import mod.syconn.api.util.PipeConnectionTypes;
 import mod.syconn.api.world.data.savedData.PipeNetworks;
-import mod.syconn.swe.Registration;
-import mod.syconn.swe.blockentities.TankBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class BaseFluidPipeBE extends AbstractPipeBE {

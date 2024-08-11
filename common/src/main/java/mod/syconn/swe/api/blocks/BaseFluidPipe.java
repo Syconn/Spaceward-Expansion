@@ -6,7 +6,6 @@ import mod.syconn.api.blockEntity.BaseFluidPipeBE;
 import mod.syconn.api.client.ClientHooks;
 import mod.syconn.api.util.PipeConnectionTypes;
 import mod.syconn.api.world.data.savedData.PipeNetworks;
-import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

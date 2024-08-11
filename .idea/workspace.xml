@@ -7,26 +7,50 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Jei Integration Patch">
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/menu/PositionMenuData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/Menus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/RecipeSerializers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/util/IMenuData.java" afterDir="false" />
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Added MenuType Registration">
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/attachment/IAttachmentType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/attachment/SpaceSuit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/DataAttachments.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IAttachedData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/data/FabricSpaceSuit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricAttachedData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IAttachedData" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/data/capability/SpaceSuitProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeAttachedData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IAttachedData" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoAttachedData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IAttachedData" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/Registration.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/Registration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/Registration.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/SpaceMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/SpaceMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/CollectorMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/CollectorMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/DisperserMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/DisperserMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/blockEntity/BaseFluidPipeBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/blockEntity/BaseFluidPipeBE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/blocks/BaseFluidPipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/api/blocks/BaseFluidPipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/AirBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/AirBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/CanisterFillerBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/CanisterFillerBlockEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/CollectorBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/CollectorBE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/DisperserBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/DisperserBE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/CanisterFiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/CanisterFiller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/DispersibleAirBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/DispersibleAirBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenDisperser.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenDisperser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/gui/SpaceSuitOverlay.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/gui/SpaceSuitOverlay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/CommonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/CommonHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/ExtendedPlayerContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/ExtendedPlayerContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/crafting/DyedParachuteRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/crafting/DyedParachuteRecipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/crafting/RefillingCanisterRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/crafting/RefillingCanisterRecipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/MenuRegister.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/extras/EquipmentItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/extras/EquipmentItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IRegistrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IRegistrar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricRegistrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricRegistrar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/data/attachments/SpaceSuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/data/attachments/NeoSpaceSuit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/dimensions/PlanetTraveler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/dimensions/PlanetTraveler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/inventory/ExtendedPlayerInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/inventory/ExtendedPlayerInventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/components/FluidComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/messages/BiBoundUpdateSpaceSuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/messages/BiBoundUpdateSpaceSuit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/messages/ServerBoundToggleDisperser.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/messages/ServerBoundToggleDisperser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/Services.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/Services.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeCommon.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeCommon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoCommon.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoCommon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +172,7 @@
     &quot;git-widget-placeholder&quot;: &quot;multiloader/V1.2.1&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aidan/IdeaProjects/Spaceward-Expansion/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-2de5d12ed2/1.21-loom.mappings.1_21.layered+hash.2198-v2/minecraft-merged-2de5d12ed2-1.21-loom.mappings.1_21.layered+hash.2198-v2.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Aidan/IdeaProjects/Spaceward-Expansion/neoforge/src/main/java/mod/syconn/swe/data&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
@@ -164,11 +188,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\neoforge\src\main\java\mod\syconn\swe\data" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\fabric\src\main\java\mod\syconn\swe" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\forge\src\main\java\mod\syconn\swe" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\fabric\src\main\resources\META-INF\services" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\forge\src\main\resources\META-INF\services" />
-      <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\src\main\resources\assets\swe\textures\block\loader\fluid_pipe" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\common\src\main\java\mod\syconn\swe" />
@@ -263,14 +287,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720302138832</updated>
-    </task>
-    <task id="LOCAL-00003" summary="New Color System and Sprite Grabber">
-      <option name="closed" value="true" />
-      <created>1720727281983</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1720727281983</updated>
     </task>
     <task id="LOCAL-00004" summary="Damage Type changes, Fluid Changes,&#10;Lang Fixes, Canister Rework">
       <option name="closed" value="true" />
@@ -656,7 +672,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723242013856</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Added MenuType Registration">
+      <option name="closed" value="true" />
+      <created>1723257596757</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1723257596758</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -684,7 +708,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Pipe Model Render Changes for Different Pipe Connection Types, GUI Interface to edit Pipe Connections, Pipe Debug Render Graphical Error Fixes" />
     <MESSAGE value="Pipe Network Code Cleanup" />
     <MESSAGE value="Fluid Tank not showing Fluid on Fluid Transfer" />
     <MESSAGE value="Fix Task creation for Network one source one output works; Changed Screen to update blockstate on close instead of on click" />
@@ -709,6 +732,7 @@
     <MESSAGE value="EntityEvents for Fabric" />
     <MESSAGE value="Event Parody" />
     <MESSAGE value="Jei Integration Patch" />
-    <option name="LAST_COMMIT_MESSAGE" value="Jei Integration Patch" />
+    <MESSAGE value="Added MenuType Registration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added MenuType Registration" />
   </component>
 </project>

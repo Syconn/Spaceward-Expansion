@@ -1,6 +1,5 @@
 package mod.syconn.swe.blockentities;
 
-import mod.syconn.swe.Registration;
 import mod.syconn.swe.items.Canister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

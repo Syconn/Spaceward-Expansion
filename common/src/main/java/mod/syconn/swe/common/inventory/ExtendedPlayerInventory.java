@@ -1,7 +1,6 @@
 package mod.syconn.swe.common.inventory;
 
 import com.google.common.collect.ImmutableList;
-import mod.syconn.swe.Registration;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.items.extras.EquipmentItem;
 import mod.syconn.swe.common.container.slot.EquipmentItemSlot;

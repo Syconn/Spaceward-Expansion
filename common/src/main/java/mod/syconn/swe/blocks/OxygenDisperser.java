@@ -1,7 +1,6 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.Registration;
 import mod.syconn.swe.blockentities.DisperserBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

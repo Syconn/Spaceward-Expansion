@@ -1,6 +1,5 @@
 package mod.syconn.swe.common.dimensions;
 
-import mod.syconn.swe.Registration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;

@@ -1,7 +1,6 @@
 package mod.syconn.swe.network.messages;
 
 import io.netty.buffer.ByteBuf;
-import mod.syconn.swe.Registration;
 import mod.syconn.swe.common.data.attachments.SpaceSuit;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.codec.ByteBufCodecs;
