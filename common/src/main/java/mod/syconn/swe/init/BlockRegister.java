@@ -1,9 +1,9 @@
 package mod.syconn.swe.init;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.api.blocks.BaseFluidPipe;
+import mod.syconn.swe.blocks.blockentities.base.blocks.BaseFluidPipe;
 import mod.syconn.swe.blocks.*;
-import mod.syconn.swe.fluids.LiquidBlock;
+import mod.syconn.swe.blocks.fluids.LiquidBlock;
 import mod.syconn.swe.platform.Services;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

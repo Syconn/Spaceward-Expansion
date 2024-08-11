@@ -1,16 +1,16 @@
 package mod.syconn.swe.common;
 
-import mod.syconn.swe.api.client.debug.PipeNetworkRenderer;
+import mod.syconn.swe.client.renders.debug.PipeNetworkRenderer;
 import mod.syconn.swe.common.data.attachments.SpaceSuit;
 import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.common.dimensions.PlanetTraveler;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.items.Parachute;
 import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.items.extras.EquipmentItem;
+import mod.syconn.swe.extra.EquipmentItem;
 import mod.syconn.swe.network.Channel;
-import mod.syconn.swe.util.Events;
-import mod.syconn.swe.util.DimensionHelper;
+import mod.syconn.swe.extra.Events;
+import mod.syconn.swe.extra.helpers.DimensionHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;

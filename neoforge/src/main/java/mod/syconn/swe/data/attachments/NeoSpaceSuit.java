@@ -3,10 +3,10 @@ package mod.syconn.swe.data.attachments;
 import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.items.extras.EquipmentItem;
+import mod.syconn.swe.extra.EquipmentItem;
 import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
-import mod.syconn.swe.util.Animator;
+import mod.syconn.swe.extra.helpers.AnimatorHelper;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +26,7 @@ import java.util.Random;
 public class NeoSpaceSuit implements IItemHandlerModifiable, INBTSerializable<CompoundTag> {
 
     private boolean parachute;
-    private Animator chute = new Animator(20);
+    private AnimatorHelper chute = new AnimatorHelper(20);
     private int oxygen = maxO2();
     private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
 
@@ -34,7 +34,7 @@ public class NeoSpaceSuit implements IItemHandlerModifiable, INBTSerializable<Co
         return parachute;
     }
 
-    public Animator chuteAnim() {
+    public AnimatorHelper chuteAnim() {
         return chute;
     }
 
@@ -91,7 +91,7 @@ public class NeoSpaceSuit implements IItemHandlerModifiable, INBTSerializable<Co
 
     public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
         parachute = nbt.getBoolean("parachute");
-        chute = new Animator(nbt.getCompound("animchute"));
+        chute = new AnimatorHelper(nbt.getCompound("animchute"));
         oxygen = nbt.getInt("oxygen");
         setSize(nbt.contains("Size", Tag.TAG_INT) ? nbt.getInt("Size") : stacks.size());
         ListTag tagList = nbt.getList("Items", Tag.TAG_COMPOUND);
@@ -184,7 +184,7 @@ public class NeoSpaceSuit implements IItemHandlerModifiable, INBTSerializable<Co
 
     public NeoSpaceSuit readSyncedData(NeoSpaceSuit suit, CompoundTag nbt) {
         suit.parachute = nbt.getBoolean("parachute");
-        suit.chute = new Animator(nbt.getCompound("animchute"));
+        suit.chute = new AnimatorHelper(nbt.getCompound("animchute"));
         suit.oxygen = nbt.getInt("oxygen");
         return suit;
     }

@@ -1,10 +1,10 @@
 package mod.syconn.swe.items;
 
-import mod.syconn.swe.api.client.RenderUtil;
+import mod.syconn.swe.extra.util.RenderUtil;
 import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.data.components.FluidComponent;
 import mod.syconn.swe.init.ComponentRegister;
-import mod.syconn.swe.items.extras.EquipmentItem;
+import mod.syconn.swe.extra.EquipmentItem;
 import mod.syconn.swe.platform.Services;
 import mod.syconn.swe.platform.services.ISingleFluidHandler;
 import net.minecraft.ChatFormatting;
@@ -57,17 +57,17 @@ public class Canister extends Item implements EquipmentItem {
         }
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
-//
-//    public void onEquipmentTick(ItemStack stack, Level level, Player player) { TODO REDO
-//        if (!level.isClientSide){
-//            if (getHandler(stack).getFluidInTank(0).is(Fluids.LAVA)) {
-//                if (!player.fireImmune()) player.igniteForSeconds(3.0F);
-//                player.hurt(level.damageSources().inFire(), 2f);
-//            } else if (getHandler(stack).getFluidInTank(0).is(Registration.O2_FLUID_TYPE.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
-//                getHandler(stack).drain(1, IFluidHandler.FluidAction.EXECUTE);
-//            }
-//        }
-//    }
+
+    public void onEquipmentTick(ItemStack stack, Level level, Player player) { TODO REDO
+        if (!level.isClientSide){
+            if (getHandler(stack).getFluidInTank(0).is(Fluids.LAVA)) {
+                if (!player.fireImmune()) player.igniteForSeconds(3.0F);
+                player.hurt(level.damageSources().inFire(), 2f);
+            } else if (getHandler(stack).getFluidInTank(0).is(Registration.O2_FLUID_TYPE.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
+                getHandler(stack).drain(1, IFluidHandler.FluidAction.EXECUTE);
+            }
+        }
+    }
 
     public Component getName(ItemStack stack) {
         if (!getHandler(stack).getFluidInTank().is(Fluids.EMPTY)) return Services.FLUID_EXTENSIONS.getTooltip(getHandler(stack).getFluidInTank().fluid()).get(0).copy().append(" " + super.getName(stack));

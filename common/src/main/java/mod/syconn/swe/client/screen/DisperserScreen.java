@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluids;
 import mod.syconn.swe.client.screen.widgets.InfoWidget;
 import mod.syconn.swe.common.container.DisperserMenu;
-import mod.syconn.swe.network.messages.ServerBoundToggleDisperser;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 import net.neoforged.neoforge.fluids.FluidStack;

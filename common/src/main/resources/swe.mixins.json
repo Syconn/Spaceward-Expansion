@@ -4,7 +4,9 @@
   "package": "mod.syconn.swe.mixin",
   "refmap": "${mod_id}.refmap.json",
   "compatibilityLevel": "JAVA_18",
-  "mixins": [],
+  "mixins": [
+    "PlayerMixin"
+  ],
   "client": [
     "PlayerRenderer"
   ],

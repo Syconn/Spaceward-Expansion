@@ -1,7 +1,7 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blockentities.DisperserBE;
+import mod.syconn.swe.blocks.blockentities.DisperserBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import mod.syconn.swe.common.data.savedData.AirBubblesSavedData;
+import mod.syconn.swe.data.savedData.AirBubblesSavedData;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
 import java.util.UUID;

@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import mod.syconn.swe.blockentities.AirBlockEntity;
+import mod.syconn.swe.blocks.blockentities.AirBlockEntity;
 import mod.syconn.swe.Config;
 
 public class DispersibleAirBlock extends BaseEntityBlock {

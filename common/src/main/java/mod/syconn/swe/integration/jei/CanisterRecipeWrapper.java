@@ -5,7 +5,7 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
-import mod.syconn.swe.common.crafting.RefillingCanisterRecipe;
+import mod.syconn.swe.data.recipes.RefillingCanisterRecipe;
 import mod.syconn.swe.init.ItemRegister;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;

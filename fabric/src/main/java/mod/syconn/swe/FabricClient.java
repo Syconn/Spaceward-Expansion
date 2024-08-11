@@ -1,13 +1,13 @@
 package mod.syconn.swe;
 
-import mod.syconn.swe.api.client.RenderUtil;
+import mod.syconn.swe.extra.util.RenderUtil;
 import mod.syconn.swe.client.model.ChuteModel;
 import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
 import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
-import mod.syconn.swe.fluids.OxygenFlowingFluid;
+import mod.syconn.swe.blocks.fluids.OxygenFlowingFluid;
 import mod.syconn.swe.init.FluidRegister;
 import mod.syconn.swe.init.ItemRegister;
 import mod.syconn.swe.items.Canister;

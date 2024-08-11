@@ -1,6 +1,6 @@
 package mod.syconn.swe;
 
-import mod.syconn.swe.api.client.RenderUtil;
+import mod.syconn.swe.extra.util.RenderUtil;
 import mod.syconn.swe.client.model.ChuteModel;
 import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;

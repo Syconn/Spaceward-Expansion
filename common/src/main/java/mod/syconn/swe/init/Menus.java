@@ -5,7 +5,7 @@ import mod.syconn.swe.common.container.DisperserMenu;
 import mod.syconn.swe.common.container.TankMenu;
 import mod.syconn.swe.data.menu.PositionMenuData;
 import mod.syconn.swe.platform.Services;
-import mod.syconn.swe.util.IMenuData;
+import mod.syconn.swe.extra.IMenuData;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.player.Inventory;

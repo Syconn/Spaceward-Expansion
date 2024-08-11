@@ -1,17 +1,14 @@
 package mod.syconn.swe.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.VertexBuffer;
-import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
+import mod.syconn.swe.blocks.blockentities.base.BaseFluidPipeBE;
+import mod.syconn.swe.client.screen.FluidPipeScreen;
 import mod.syconn.swe.items.SpaceArmor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.player.Player;
 
 public class ClientHooks {
@@ -28,5 +25,9 @@ public class ClientHooks {
                 guiGraphics.blit(AbstractContainerScreen.INVENTORY_LOCATION, left + 76, top + 25, 7, 7, 18, 18, 256, 256);
             }
         }
+    }
+
+    public static void openPipeScreen(BaseFluidPipeBE pipeBE) {
+        Minecraft.getInstance().setScreen(new FluidPipeScreen(pipeBE));
     }
 }

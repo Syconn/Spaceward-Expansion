@@ -1,7 +1,7 @@
 package mod.syconn.swe.client.screen.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.swe.util.BlockInfo;
+import mod.syconn.swe.extra.BlockInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;

@@ -9,7 +9,6 @@ import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.items.Parachute;
 import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.util.Helper;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;

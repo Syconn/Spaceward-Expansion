@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import mod.syconn.swe.blockentities.CanisterFillerBlockEntity;
+import mod.syconn.swe.blocks.blockentities.CanisterFillerBlockEntity;
 
 public class CanisterBER implements BlockEntityRenderer<CanisterFillerBlockEntity> {
 

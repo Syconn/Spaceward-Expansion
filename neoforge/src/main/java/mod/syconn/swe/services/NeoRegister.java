@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.NeoMod;
 import mod.syconn.swe.helper.FluidTypes;
 import mod.syconn.swe.platform.services.IRegistrar;
-import mod.syconn.swe.util.IMenuData;
+import mod.syconn.swe.extra.IMenuData;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;

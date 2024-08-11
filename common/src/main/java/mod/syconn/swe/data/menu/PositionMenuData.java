@@ -1,6 +1,6 @@
 package mod.syconn.swe.data.menu;
 
-import mod.syconn.swe.util.IMenuData;
+import mod.syconn.swe.extra.IMenuData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;

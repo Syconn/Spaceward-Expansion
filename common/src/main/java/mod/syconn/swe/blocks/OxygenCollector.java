@@ -1,7 +1,7 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blockentities.CollectorBE;
+import mod.syconn.swe.blocks.blockentities.CollectorBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

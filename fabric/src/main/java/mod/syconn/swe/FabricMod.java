@@ -1,6 +1,6 @@
 package mod.syconn.swe;
 
-import mod.syconn.swe.api.world.data.savedData.PipeNetworks;
+import mod.syconn.swe.data.savedData.PipeNetworks;
 import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.events.EntityEvents;
 import mod.syconn.swe.events.PlayerEvents;
@@ -9,7 +9,7 @@ import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.reloaders.FabricOxygenProductionManager;
 import mod.syconn.swe.reloaders.FabricPlanetManager;
-import mod.syconn.swe.util.Events;
+import mod.syconn.swe.extra.Events;
 import mod.syconn.swe.wrappers.ComponentFluidWrapper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;

@@ -1,6 +1,7 @@
 package mod.syconn.swe.init;
 
-import mod.syconn.swe.api.blockEntity.BaseFluidPipeBE;
+import mod.syconn.swe.blocks.blockentities.*;
+import mod.syconn.swe.blocks.blockentities.base.BaseFluidPipeBE;
 import mod.syconn.swe.blockentities.*;
 import mod.syconn.swe.platform.Services;
 import net.minecraft.world.level.block.entity.BlockEntity;

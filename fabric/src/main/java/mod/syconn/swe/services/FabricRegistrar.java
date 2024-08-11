@@ -3,7 +3,7 @@ package mod.syconn.swe.services;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.platform.services.IRegistrar;
-import mod.syconn.swe.util.IMenuData;
+import mod.syconn.swe.extra.IMenuData;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.core.Holder;

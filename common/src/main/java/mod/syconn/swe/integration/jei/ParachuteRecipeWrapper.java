@@ -5,7 +5,7 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
-import mod.syconn.swe.common.crafting.DyedParachuteRecipe;
+import mod.syconn.swe.data.recipes.DyedParachuteRecipe;
 import mod.syconn.swe.init.ItemRegister;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.ItemTags;
@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static mod.syconn.swe.util.ColorUtil.DYE_BY_WOOL;
+import static mod.syconn.swe.extra.util.ColorUtil.DYE_BY_WOOL;
 
 public class ParachuteRecipeWrapper implements ICraftingCategoryExtension<DyedParachuteRecipe> {
 

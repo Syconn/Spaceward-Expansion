@@ -1,8 +1,8 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blockentities.TankBE;
-import mod.syconn.swe.util.FluidHelper;
+import mod.syconn.swe.blocks.blockentities.TankBE;
+import mod.syconn.swe.extra.helpers.FluidHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
