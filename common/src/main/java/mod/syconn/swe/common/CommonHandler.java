@@ -8,7 +8,6 @@ import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.items.Parachute;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.extra.EquipmentItem;
-import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.extra.Events;
 import mod.syconn.swe.extra.helpers.DimensionHelper;
 import net.minecraft.server.level.ServerLevel;

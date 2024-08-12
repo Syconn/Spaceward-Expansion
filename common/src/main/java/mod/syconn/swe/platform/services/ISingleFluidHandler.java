@@ -1,11 +1,16 @@
 package mod.syconn.swe.platform.services;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 
 public interface ISingleFluidHandler {
 
     ISingleFluidHandler get(ItemStack stack);
+    ISingleFluidHandler get(Level level, BlockPos pos, Direction direction);
+    boolean has(Level level, BlockPos pos, Direction direction);
     FluidHolder getFluidInTank();
     int getTankCapacity();
     int fill(FluidHolder resource, FluidAction action);
@@ -13,14 +18,10 @@ public interface ISingleFluidHandler {
     FluidHolder drain(int drain, FluidAction action);
 
     record FluidHolder(Fluid fluid, int amount) {
-        public boolean is(Fluid fluid) {
-            return this.fluid.isSame(fluid);
-        }
-
-        public FluidHolder shrink(int drainAmount) {
-            return new FluidHolder(fluid, Math.min(0, amount - drainAmount));
-        }
+        public boolean is(Fluid fluid) { return this.fluid.isSame(fluid); }
+        public FluidHolder shrink(int drainAmount) { return new FluidHolder(fluid, Math.min(0, amount - drainAmount)); }
     }
+
     enum FluidAction {
         EXECUTE,
         SIMULATE

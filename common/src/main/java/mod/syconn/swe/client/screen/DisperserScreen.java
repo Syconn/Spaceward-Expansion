@@ -1,7 +1,6 @@
 package mod.syconn.swe.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.swe.network.Channel;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;

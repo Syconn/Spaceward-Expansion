@@ -68,7 +68,7 @@ public abstract class OxygenFlowingFluid extends FlowingFluid {
     }
 
     protected BlockState createLegacyBlock(FluidState pState) {
-        return BlockRegister.O2.get().defaultBlockState().setValue(LiquidBlock.LEVEL, Integer.valueOf(getLegacyLevel(pState)));
+        return BlockRegister.O2.get().defaultBlockState().setValue(FluidBlock.LEVEL, Integer.valueOf(getLegacyLevel(pState)));
     }
 
     public static class Flowing extends OxygenFlowingFluid {

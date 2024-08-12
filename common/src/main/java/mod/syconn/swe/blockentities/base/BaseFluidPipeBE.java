@@ -1,4 +1,4 @@
-package mod.syconn.swe.blocks.blockentities.base;
+package mod.syconn.swe.blockentities.base;
 
 import mod.syconn.api.blocks.AbstractPipeBlock;
 import mod.syconn.api.blocks.BaseFluidPipe;

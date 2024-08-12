@@ -1,12 +1,15 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blocks.blockentities.CollectorBE;
+import mod.syconn.swe.blockentities.CollectorBE;
+import mod.syconn.swe.blocks.base.FluidBaseBlock;
+import mod.syconn.swe.extra.helpers.FluidHelper;
+import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.init.BlockRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -16,7 +19,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.fluids.FluidUtil;
 
 public class OxygenCollector extends FluidBaseBlock {
 
@@ -25,29 +27,29 @@ public class OxygenCollector extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection())) return ItemInteractionResult.CONSUME;
+        if (!pLevel.isClientSide && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack).isSuccess()) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-        if (blockentity instanceof CollectorBE) {
-            pPlayer.openMenu((MenuProvider) blockentity, pPos);
+        if (blockentity instanceof CollectorBE be) {
+            pPlayer.openMenu(be);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.COLLECTOR.get(), CollectorBE::tick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, BlockEntityRegister.COLLECTOR.get(), CollectorBE::tick) : null;
     }
 
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new CollectorBE(p_153215_, p_153216_);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new CollectorBE(pos, state);
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return Registration.OXYGEN_COLLECTOR_CODEC.value();
+        return BlockRegister.OXYGEN_COLLECTOR_CODEC.get();
     }
 }

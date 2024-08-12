@@ -1,6 +1,8 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
+import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.init.BlockRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -15,12 +17,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import mod.syconn.swe.blocks.blockentities.AirBlockEntity;
-import mod.syconn.swe.Config;
+import mod.syconn.swe.blockentities.AirBlockEntity;
 
-public class DispersibleAirBlock extends BaseEntityBlock {
+public class DispersedAirBlock extends BaseEntityBlock {
 
-    public DispersibleAirBlock(Properties properties) {
+    public DispersedAirBlock(Properties properties) {
         super(properties);
     }
 
@@ -45,17 +46,17 @@ public class DispersibleAirBlock extends BaseEntityBlock {
     }
 
     public BlockState updateShape(BlockState p_60541_, Direction p_60542_, BlockState p_60543_, LevelAccessor level, BlockPos p_60545_, BlockPos p_60546_) {
-        if (!level.isClientSide()) level.getBlockEntity(p_60545_, Registration.AIR.get()).get().blockUpdate();
+        if (!level.isClientSide()) level.getBlockEntity(p_60545_, BlockEntityRegister.AIR.get()).get().blockUpdate();
         return super.updateShape(p_60541_, p_60542_, p_60543_, level, p_60545_, p_60546_);
     }
 
     public RenderShape getRenderShape(BlockState state) {
-        if (Config.CLIENT_CONFIG.isLoaded() && Config.showOxygen.get()) return RenderShape.MODEL;
+//        if (Config.CLIENT_CONFIG.isLoaded() && Config.showOxygen.get()) return RenderShape.MODEL; TODO
         return RenderShape.INVISIBLE;
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.AIR.get(), AirBlockEntity::serverTick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, BlockEntityRegister.AIR.get(), AirBlockEntity::serverTick) : null;
     }
 
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
@@ -63,6 +64,6 @@ public class DispersibleAirBlock extends BaseEntityBlock {
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return Registration.OXYGEN_CODEC.value();
+        return BlockRegister.OXYGEN_CODEC.get();
     }
 }

@@ -1,14 +1,18 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blocks.blockentities.DisperserBE;
+import mod.syconn.swe.blockentities.DisperserBE;
+import mod.syconn.swe.blocks.base.FluidBaseBlock;
+import mod.syconn.swe.data.savedData.AirBubblesSavedData;
+import mod.syconn.swe.extra.helpers.FluidHelper;
+import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.init.BlockRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,8 +28,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import mod.syconn.swe.data.savedData.AirBubblesSavedData;
-import net.neoforged.neoforge.fluids.FluidUtil;
 
 import java.util.UUID;
 
@@ -40,15 +42,15 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && FluidUtil.interactWithFluidHandler(pPlayer, pHand, pLevel, pPos, pHitResult.getDirection())) return ItemInteractionResult.CONSUME;
+        if (!pLevel.isClientSide && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack).isSuccess()) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
         BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-        if (blockentity instanceof DisperserBE) {
-            pPlayer.openMenu((MenuProvider) blockentity, pPos);
+        if (blockentity instanceof DisperserBE be) {
+            pPlayer.openMenu(be);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
@@ -75,7 +77,7 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.DISPERSER.get(), DisperserBE::serverTick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, BlockEntityRegister.DISPERSER.get(), DisperserBE::serverTick) : null;
     }
 
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
@@ -83,19 +85,19 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return Registration.OXYGEN_DISPERSER_CODEC.value();
+        return BlockRegister.OXYGEN_DISPERSER_CODEC.get();
     }
 
     public static void addBlock(Level l, BlockPos target, BlockPos source, int distance){
-        if (l.getBlockState(target).isAir() && !(l.getBlockState(target).getBlock() instanceof DispersibleAirBlock) && l.getBlockEntity(source, Registration.DISPERSER.get()).isPresent()) {
-            l.setBlock(target, Registration.OXYGEN_DISPERSIBLE.get().defaultBlockState(), 2);
-            l.getBlockEntity(source, Registration.DISPERSER.get()).get().list.add(target);
-            if (l.getBlockEntity(target, Registration.AIR.get()).isPresent()) l.getBlockEntity(target, Registration.AIR.get()).get().setup(distance, source);
+        if (l.getBlockState(target).isAir() && !(l.getBlockState(target).getBlock() instanceof DispersedAirBlock) && l.getBlockEntity(source, BlockEntityRegister.DISPERSER.get()).isPresent()) {
+            l.setBlock(target, BlockRegister.DISPERSED_OXYGEN.get().defaultBlockState(), 2);
+            l.getBlockEntity(source, BlockEntityRegister.DISPERSER.get()).get().list.add(target);
+            if (l.getBlockEntity(target, BlockEntityRegister.AIR.get()).isPresent()) l.getBlockEntity(target, BlockEntityRegister.AIR.get()).get().setup(distance, source);
         }
     }
 
     public static int maxFill(Level l, BlockPos pos) {
-        if (l.getBlockEntity(pos, Registration.DISPERSER.get()).isPresent()) return l.getBlockEntity(pos, Registration.DISPERSER.get()).get().maxFill;
+        if (l.getBlockEntity(pos, BlockEntityRegister.DISPERSER.get()).isPresent()) return l.getBlockEntity(pos, BlockEntityRegister.DISPERSER.get()).get().maxFill;
         else return 20;
     }
 }

@@ -1,7 +1,9 @@
 package mod.syconn.swe.network;
 
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.network.messages.Payload;
+import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
+import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
+import mod.syconn.swe.extra.Payload;
 import mod.syconn.swe.platform.Services;
 import mod.syconn.swe.platform.services.INetwork;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -19,7 +21,11 @@ public class Network {
     private static final INetwork network = Services.NETWORK;
     public static final ArrayList<PlayMessage<?>> register = new ArrayList<>();
 
-    public static void registerMessages() {}
+    public static void registerMessages() {
+        register.add(PlayMessage.of("update_space_suit", BiBoundUpdateSpaceSuit.class, BiBoundUpdateSpaceSuit.STREAM_CODEC, BiBoundUpdateSpaceSuit::handle, null));
+        register.add(PlayMessage.of("update_pipe_cache", ClientBoundUpdatePipeCache.class, ClientBoundUpdatePipeCache.STREAM_CODEC, ClientBoundUpdatePipeCache::handle, PacketFlow.CLIENTBOUND));
+
+    }
 
     public static void sendToServer(Object message) {
         network.sendToServer(message);
@@ -46,11 +52,8 @@ public class Network {
             return new PlayMessage<>(payloadType, msgClass, Payload.codec(payloadType, forgeCodec), forgeCodec, handler, flow);
         }
 
-        public Payload<T> getPayload(T msg) {
-            return new Payload<>(this.type, msg);
-        }
-
-        public boolean clientBound() { return this.flow == PacketFlow.CLIENTBOUND; }
-        public boolean serverBound() { return this.flow == PacketFlow.SERVERBOUND; }
+        public Payload<T> getPayload(T msg) { return new Payload<>(this.type, msg); }
+        public boolean clientBound() { return this.flow == PacketFlow.CLIENTBOUND || this.flow == null; }
+        public boolean serverBound() { return this.flow == PacketFlow.SERVERBOUND || this.flow == null; }
     }
 }

@@ -5,11 +5,14 @@ import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.extra.EquipmentItem;
 import mod.syconn.swe.extra.helpers.AnimatorHelper;
+import mod.syconn.swe.network.Network;
+import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -152,26 +155,26 @@ public class SpaceSuit implements IAttachmentType<SpaceSuit> {
         stacks.set(slot, stack);
     }
 
-//    private CompoundTag writeSyncedData() { TODO
-//        CompoundTag t = new CompoundTag();
-//        t.putBoolean("parachute", parachute);
-//        t.put("animchute", chute.serializeNBT());
-//        t.putInt("oxygen", oxygen);
-//        return t;
-//    }
-//
-//    public NeoSpaceSuit readSyncedData(NeoSpaceSuit suit, CompoundTag nbt) {
-//        suit.parachute = nbt.getBoolean("parachute");
-//        suit.chute = new Animator(nbt.getCompound("animchute"));
-//        suit.oxygen = nbt.getInt("oxygen");
-//        return suit;
-//    }
-//
-//    private void sync(Player player) {
-//        BiBoundUpdateSpaceSuit packet = new BiBoundUpdateSpaceSuit(writeSyncedData());
-//        if (player instanceof ServerPlayer serverPlayer) Channel.sendToPlayer(packet, serverPlayer);
-//        else Channel.sendToServer(packet);
-//    }
+    private CompoundTag writeSyncedData() {
+        CompoundTag t = new CompoundTag();
+        t.putBoolean("parachute", parachute);
+        t.put("animchute", chute.serializeNBT());
+        t.putInt("oxygen", oxygen);
+        return t;
+    }
+
+    public SpaceSuit readSyncedData(SpaceSuit suit, CompoundTag nbt) {
+        suit.parachute = nbt.getBoolean("parachute");
+        suit.chute = new AnimatorHelper(nbt.getCompound("animchute"));
+        suit.oxygen = nbt.getInt("oxygen");
+        return suit;
+    }
+
+    private void sync(Player player) {
+        BiBoundUpdateSpaceSuit packet = new BiBoundUpdateSpaceSuit(writeSyncedData());
+        if (player instanceof ServerPlayer serverPlayer) Network.sendToPlayer(packet, serverPlayer);
+        else Network.sendToServer(packet);
+    }
 }
 
 

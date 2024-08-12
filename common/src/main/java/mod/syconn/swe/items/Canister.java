@@ -1,19 +1,23 @@
 package mod.syconn.swe.items;
 
-import mod.syconn.swe.extra.util.RenderUtil;
 import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
+import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.data.components.FluidComponent;
-import mod.syconn.swe.init.ComponentRegister;
 import mod.syconn.swe.extra.EquipmentItem;
+import mod.syconn.swe.extra.util.RenderUtil;
+import mod.syconn.swe.init.ComponentRegister;
+import mod.syconn.swe.init.FluidRegister;
 import mod.syconn.swe.platform.Services;
 import mod.syconn.swe.platform.services.ISingleFluidHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FastColor;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
@@ -58,13 +62,13 @@ public class Canister extends Item implements EquipmentItem {
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 
-    public void onEquipmentTick(ItemStack stack, Level level, Player player) { TODO REDO
+    public void onEquipmentTick(ItemStack stack, Level level, Player player) {
         if (!level.isClientSide){
-            if (getHandler(stack).getFluidInTank(0).is(Fluids.LAVA)) {
+            if (getHandler(stack).getFluidInTank().is(Fluids.LAVA)) {
                 if (!player.fireImmune()) player.igniteForSeconds(3.0F);
                 player.hurt(level.damageSources().inFire(), 2f);
-            } else if (getHandler(stack).getFluidInTank(0).is(Registration.O2_FLUID_TYPE.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
-                getHandler(stack).drain(1, IFluidHandler.FluidAction.EXECUTE);
+            } else if (getHandler(stack).getFluidInTank().is(FluidRegister.O2.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
+                getHandler(stack).drain(1, ISingleFluidHandler.FluidAction.EXECUTE);
             }
         }
     }

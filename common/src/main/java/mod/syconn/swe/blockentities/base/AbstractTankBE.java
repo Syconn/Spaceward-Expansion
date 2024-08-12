@@ -1,4 +1,4 @@
-package mod.syconn.swe.blocks.blockentities.base;
+package mod.syconn.swe.blockentities.base;
 
 import mod.syconn.api.world.data.capability.IFluidHandlerInteractable;
 import mod.syconn.api.world.data.capability.InteractableFluidTank;

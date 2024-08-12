@@ -1,7 +1,8 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blocks.blockentities.TankBE;
+import mod.syconn.swe.blockentities.TankBE;
+import mod.syconn.swe.blocks.base.FluidBaseBlock;
 import mod.syconn.swe.extra.helpers.FluidHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -16,9 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.fluids.FluidUtil;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 public class FluidTank extends FluidBaseBlock {
 
@@ -29,7 +27,7 @@ public class FluidTank extends FluidBaseBlock {
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
         if (pLevel.getBlockEntity(pPos) instanceof TankBE tankBE) {
-            pPlayer.openMenu(tankBE, pPos);
+            pPlayer.openMenu(tankBE);
             return InteractionResult.CONSUME;
         }
         return InteractionResult.FAIL;

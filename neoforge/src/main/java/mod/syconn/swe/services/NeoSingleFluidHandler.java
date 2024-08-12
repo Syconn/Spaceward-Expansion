@@ -1,7 +1,10 @@
 package mod.syconn.swe.services;
 
 import mod.syconn.swe.platform.services.ISingleFluidHandler;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -18,6 +21,14 @@ public class NeoSingleFluidHandler implements ISingleFluidHandler {
 
     public ISingleFluidHandler get(ItemStack stack) {
         return new NeoSingleFluidHandler(stack.getCapability(Capabilities.FluidHandler.ITEM));
+    }
+
+    public ISingleFluidHandler get(Level level, BlockPos pos, Direction direction) {
+        return new NeoSingleFluidHandler(level.getCapability(Capabilities.FluidHandler.BLOCK, pos, direction));
+    }
+
+    public boolean has(Level level, BlockPos pos, Direction direction) {
+        return level.getCapability(Capabilities.FluidHandler.BLOCK, pos, direction) != null;
     }
 
     public FluidHolder getFluidInTank() {

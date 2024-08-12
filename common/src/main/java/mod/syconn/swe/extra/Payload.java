@@ -1,4 +1,4 @@
-package mod.syconn.swe.network.messages;
+package mod.syconn.swe.extra;
 
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

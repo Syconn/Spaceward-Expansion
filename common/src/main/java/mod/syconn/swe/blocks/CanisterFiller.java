@@ -1,7 +1,10 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blocks.blockentities.CanisterFillerBlockEntity;
+import mod.syconn.swe.blockentities.CanisterFillerBlockEntity;
+import mod.syconn.swe.blocks.base.FluidBaseTopperBlock;
+import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.init.BlockRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -48,7 +51,7 @@ public class CanisterFiller extends FluidBaseTopperBlock {
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, Registration.FILLER.get(), CanisterFillerBlockEntity::serverTick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, BlockEntityRegister.FILLER.get(), CanisterFillerBlockEntity::serverTick) : null;
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext p_49820_) {
@@ -65,7 +68,7 @@ public class CanisterFiller extends FluidBaseTopperBlock {
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return Registration.CANISTER_FILLER_CODEC.value();
+        return BlockRegister.CANISTER_FILLER_CODEC.get();
     }
 
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {

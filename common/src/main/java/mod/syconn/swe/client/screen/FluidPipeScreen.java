@@ -5,7 +5,6 @@ import mod.syconn.api.blockEntity.BaseFluidPipeBE;
 import mod.syconn.api.client.screen.widget.SpriteButton;
 import mod.syconn.api.util.PipeConnectionTypes;
 import mod.syconn.api.world.packets.ServerBoundUpdatePipeState;
-import mod.syconn.swe.network.Channel;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Direction;

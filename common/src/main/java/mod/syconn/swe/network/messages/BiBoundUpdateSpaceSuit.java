@@ -1,28 +1,18 @@
 package mod.syconn.swe.network.messages;
 
-import io.netty.buffer.ByteBuf;
-import mod.syconn.swe.common.data.attachments.SpaceSuit;
+import mod.syconn.swe.init.DataAttachments;
+import mod.syconn.swe.platform.Services;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public record BiBoundUpdateSpaceSuit(CompoundTag tag) implements CustomPacketPayload {
+public record BiBoundUpdateSpaceSuit(CompoundTag tag) {
 
-    public static final CustomPacketPayload.Type<BiBoundUpdateSpaceSuit> TYPE = new CustomPacketPayload.Type<>(Main.loc("update_space_siot"));
-    public static final StreamCodec<ByteBuf, BiBoundUpdateSpaceSuit> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG, BiBoundUpdateSpaceSuit::tag,BiBoundUpdateSpaceSuit::new);
+    public static final StreamCodec<RegistryFriendlyByteBuf, BiBoundUpdateSpaceSuit> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG, BiBoundUpdateSpaceSuit::tag,BiBoundUpdateSpaceSuit::new);
 
-    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
-        return TYPE;
-    }
-
-    public static void handle(BiBoundUpdateSpaceSuit message, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            Player player = context.player();
-            SpaceSuit spaceSuit = player.getData(Registration.SPACE_SUIT);
-            player.setData(Registration.SPACE_SUIT, spaceSuit.readSyncedData(spaceSuit, message.tag));
-        });
+    public static void handle(BiBoundUpdateSpaceSuit message, Player player) {
+        Services.ATTACHED_DATA.updatePlayer(DataAttachments.SPACE_SUIT, suit -> suit.readSyncedData(suit, message.tag), player);
     }
 }

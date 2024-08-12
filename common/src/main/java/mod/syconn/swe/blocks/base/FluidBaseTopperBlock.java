@@ -1,4 +1,4 @@
-package mod.syconn.swe.blocks;
+package mod.syconn.swe.blocks.base;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,7 +16,7 @@ public abstract class FluidBaseTopperBlock extends BaseEntityBlock {
     }
 
     public boolean canSurvive(BlockState p_60525_, LevelReader p_60526_, BlockPos p_60527_) {
-        return p_60526_.getBlockState(p_60527_.below()).getBlock() instanceof FluidStorageBlock;
+        return p_60526_.getBlockState(p_60527_.below()).getBlock() instanceof FluidStorageBlock; // TODO CHANGE
     }
 
     public RenderShape getRenderShape(BlockState p_49232_) {

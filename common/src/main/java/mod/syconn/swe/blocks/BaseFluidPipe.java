@@ -1,11 +1,13 @@
-package mod.syconn.swe.blocks.blockentities.base.blocks;
+package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.api.blockEntity.AbstractPipeBE;
-import mod.syconn.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.api.client.ClientHooks;
-import mod.syconn.api.util.PipeConnectionTypes;
-import mod.syconn.api.world.data.savedData.PipeNetworks;
+import mod.syconn.swe.blockentities.base.AbstractPipeBE;
+import mod.syconn.swe.blockentities.base.BaseFluidPipeBE;
+import mod.syconn.swe.blocks.base.AbstractPipeBlock;
+import mod.syconn.swe.client.ClientHooks;
+import mod.syconn.swe.data.savedData.PipeNetworks;
+import mod.syconn.swe.init.BlockRegister;
+import mod.syconn.swe.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -17,8 +19,8 @@ import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.common.extensions.ILevelExtension;
+
+import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes;
 
 public class BaseFluidPipe extends AbstractPipeBlock {
 
@@ -27,7 +29,7 @@ public class BaseFluidPipe extends AbstractPipeBlock {
     }
 
     protected PipeConnectionTypes getConnectorType(BlockGetter level, BlockPos thisPos, BlockPos connectionPos, Direction facing) {
-        if (level instanceof ILevelExtension ext && ext.getCapability(Capabilities.FluidHandler.BLOCK, connectionPos, facing.getOpposite()) != null) return PipeConnectionTypes.BLOCK;
+        if (Services.FLUID_HANDLER.has((Level) level, connectionPos, facing.getOpposite())) return PipeConnectionTypes.BLOCK;
         return level.getBlockEntity(connectionPos) instanceof AbstractPipeBE ? PipeConnectionTypes.CABLE : PipeConnectionTypes.NONE;
     }
 
@@ -54,7 +56,7 @@ public class BaseFluidPipe extends AbstractPipeBlock {
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return Registration.FLUID_TANK_CODEC.value();
+        return BlockRegister.FLUID_TANK_CODEC.get();
     }
 
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {

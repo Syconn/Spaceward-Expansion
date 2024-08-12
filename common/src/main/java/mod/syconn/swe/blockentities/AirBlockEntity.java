@@ -1,4 +1,4 @@
-package mod.syconn.swe.blocks.blockentities;
+package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.blocks.OxygenDisperser;
 import net.minecraft.core.BlockPos;

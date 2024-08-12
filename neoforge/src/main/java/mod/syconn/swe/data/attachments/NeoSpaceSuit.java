@@ -4,7 +4,6 @@ import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.extra.EquipmentItem;
-import mod.syconn.swe.network.Channel;
 import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
 import mod.syconn.swe.extra.helpers.AnimatorHelper;
 import net.minecraft.core.HolderLookup;

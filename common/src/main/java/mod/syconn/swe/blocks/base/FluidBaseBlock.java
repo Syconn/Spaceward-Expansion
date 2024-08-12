@@ -1,4 +1,4 @@
-package mod.syconn.swe.blocks;
+package mod.syconn.swe.blocks.base;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 public abstract class FluidBaseBlock extends BaseEntityBlock {
-    public static BooleanProperty FLUID_TYPE = BooleanProperty.create("fluid_type");
     public static BooleanProperty ENABLED = BooleanProperty.create("enabled");
 
     protected FluidBaseBlock(Properties p_49224_) {

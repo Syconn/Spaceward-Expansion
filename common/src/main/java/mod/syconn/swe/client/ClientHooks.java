@@ -1,7 +1,7 @@
 package mod.syconn.swe.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.swe.blocks.blockentities.base.BaseFluidPipeBE;
+import mod.syconn.swe.blockentities.base.BaseFluidPipeBE;
 import mod.syconn.swe.client.screen.FluidPipeScreen;
 import mod.syconn.swe.items.SpaceArmor;
 import net.minecraft.client.Minecraft;

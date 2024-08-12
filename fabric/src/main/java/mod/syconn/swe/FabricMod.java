@@ -4,6 +4,7 @@ import mod.syconn.swe.data.savedData.PipeNetworks;
 import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.events.EntityEvents;
 import mod.syconn.swe.events.PlayerEvents;
+import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.init.ComponentRegister;
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.network.Network;
@@ -26,6 +27,8 @@ public class FabricMod implements ModInitializer {
             if (context.getItemVariant().getItem() instanceof Canister) return new ComponentFluidWrapper(ComponentRegister.FLUID_COMPONENT, context, 8000);
             return null;
         });
+        FluidStorage.SIDED.registerForBlockEntities((block, context) -> , BlockEntityRegister.TANK, BlockEntityRegister.COLLECTOR, BlockEntityRegister.DISPERSER);
+
         // TODO FIGURE OUT CONFIG
         EntityEvents.FALL_EVENT.register(((livingEntity, distance, damageMultiplier, cancelled) -> CommonHandler.livingFallEvent(new Events.LivingFallEvent(livingEntity, distance, damageMultiplier, cancelled))));
         EntityEvents.ENTITY_TICK.register(entity -> CommonHandler.entityTickEvent(new Events.LivingEntityEvent(entity)));
@@ -37,8 +40,6 @@ public class FabricMod implements ModInitializer {
 
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricPlanetManager());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricOxygenProductionManager());
-
-        AttachmentRegistry.builder().persistent().copyOnDeath().buildAndRegister();
 
         SpaceMod.init();
         Network.S2CPayloads();

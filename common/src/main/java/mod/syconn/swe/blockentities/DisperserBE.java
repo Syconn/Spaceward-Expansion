@@ -1,4 +1,4 @@
-package mod.syconn.swe.blocks.blockentities;
+package mod.syconn.swe.blockentities;
 
 import mod.syconn.api.blockEntity.AbstractTankBE;
 import net.minecraft.core.BlockPos;
@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import mod.syconn.swe.blocks.DispersibleAirBlock;
+import mod.syconn.swe.blocks.DispersedAirBlock;
 import mod.syconn.swe.common.container.DisperserMenu;
 import mod.syconn.swe.extra.BlockInfo;
 import mod.syconn.api.util.NbtHelper;
@@ -84,12 +84,12 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     public static void remove(Level level, BlockPos defPos) {
         if (level.getBlockEntity(defPos, Registration.DISPERSER.get()).isPresent()) {
             List<BlockPos> list = level.getBlockEntity(defPos, Registration.DISPERSER.get()).get().list;
-            for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
+            for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersedAirBlock) level.removeBlock(pos, false);
         }
     }
 
     public void failed(boolean t) {
-        for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersibleAirBlock) level.removeBlock(pos, false);
+        for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersedAirBlock) level.removeBlock(pos, false);
         if (t) {
             active = false;
             list.clear();

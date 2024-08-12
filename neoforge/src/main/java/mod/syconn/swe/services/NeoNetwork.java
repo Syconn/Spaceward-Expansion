@@ -3,7 +3,7 @@ package mod.syconn.swe.services;
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import mod.syconn.swe.network.Network;
-import mod.syconn.swe.network.messages.Payload;
+import mod.syconn.swe.extra.Payload;
 import mod.syconn.swe.platform.services.INetwork;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
