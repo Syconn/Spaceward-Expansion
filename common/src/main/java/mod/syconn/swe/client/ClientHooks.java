@@ -1,7 +1,7 @@
 package mod.syconn.swe.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.swe.blockentities.base.BaseFluidPipeBE;
+import mod.syconn.swe.blockentities.FluidPipeBE;
 import mod.syconn.swe.client.screen.FluidPipeScreen;
 import mod.syconn.swe.items.SpaceArmor;
 import net.minecraft.client.Minecraft;
@@ -27,7 +27,7 @@ public class ClientHooks {
         }
     }
 
-    public static void openPipeScreen(BaseFluidPipeBE pipeBE) {
+    public static void openPipeScreen(FluidPipeBE pipeBE) {
         Minecraft.getInstance().setScreen(new FluidPipeScreen(pipeBE));
     }
 }

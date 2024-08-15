@@ -2,10 +2,11 @@ package mod.syconn.swe.services;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.extra.platform.services.IRegistrar;
 import mod.syconn.swe.extra.core.IMenuData;
+import mod.syconn.swe.extra.platform.services.IRegistrar;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -25,18 +26,16 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.PathType;
 import org.apache.commons.lang3.function.TriFunction;
 import org.joml.Vector3f;
 
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class FabricRegistrar implements IRegistrar {
-
-    public <T extends BlockEntity> Supplier<BlockEntityType<T>> registerBlockEntity(String id, Supplier<BlockEntityType<T>> blockEntityType) {
-        return registerSupplier(BuiltInRegistries.BLOCK_ENTITY_TYPE, id, blockEntityType);
-    }
 
     public <T extends Block> Supplier<T> registerBlock(String id, Supplier<T> block) {
         return registerSupplier(BuiltInRegistries.BLOCK, id, block);
@@ -66,6 +65,16 @@ public class FabricRegistrar implements IRegistrar {
         return registerSupplier(BuiltInRegistries.FLUID, id, fluid);
     }
 
+    public void registerFluidType(String id, ResourceLocation still, ResourceLocation flowing, ResourceLocation overlay, int tint, Vector3f fog, String desc, boolean swim, boolean extinguish, boolean drown, PathType type, int lightLevel, int density, int viscosity, SoundEvent fill, SoundEvent empty, SoundEvent vaporize) {}
+
+    public <T extends BlockEntity> Supplier<BlockEntityType<T>> registerBlockEntity(String id, BiFunction<BlockPos, BlockState, T> function, Supplier<Block[]> blockSupplier) {
+        return registerSupplier(BuiltInRegistries.BLOCK_ENTITY_TYPE, id, () -> BlockEntityType.Builder.of(function::apply, blockSupplier.get()).build(null));
+    }
+
+    public <T extends BlockEntity> BiFunction<BlockPos, BlockState, T> createBEType(BiFunction<BlockPos, BlockState, T> function) {
+        return function;
+    }
+
     public <T extends AbstractContainerMenu, D extends IMenuData<D>> Supplier<MenuType<T>> registerMenuTypeWithData(String id, StreamCodec<RegistryFriendlyByteBuf, D> codec, TriFunction<Integer, Inventory, D, T> function) {
         return registerSupplier(BuiltInRegistries.MENU, id, () -> new ExtendedScreenHandlerType<>(function::apply, codec));
     }
@@ -82,13 +91,13 @@ public class FabricRegistrar implements IRegistrar {
         return FabricItemGroup.builder();
     }
 
-    public void registerFluidType(String id, ResourceLocation still, ResourceLocation flowing, ResourceLocation overlay, int tint, Vector3f fog, String desc, boolean swim, boolean extinguish, boolean drown, PathType type, int lightLevel, int density, int viscosity, SoundEvent fill, SoundEvent empty, SoundEvent vaporize) {}
-
+    @SuppressWarnings("unchecked")
     private static <T, R extends Registry<? super T>> Supplier<T> registerSupplier(R registry, String id, Supplier<T> object) {
         final T registeredObject = Registry.register((Registry<T>)registry,  ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id), object.get());
         return () -> registeredObject;
     }
 
+    @SuppressWarnings("unchecked")
     private static <T, R extends Registry<? super T>> Holder<T> registerHolder(R registry, String id, Supplier<T> object) {
         return Registry.registerForHolder((Registry<T>) registry,  ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id), object.get());
     }

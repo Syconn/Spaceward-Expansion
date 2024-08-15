@@ -31,9 +31,6 @@ import static mod.syconn.swe.blocks.OxygenDisperser.addBlock;
 
 public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockInfo {
 
-    //TODO change to blocks and look for blockUpdates
-    //  - Pipe dont show fluid
-
     public List<BlockPos> list = new ArrayList<>();
     public int maxFill = 20; // TODO CONFIG THIS SHIT ALSO REDO
     private int testRate = 0;
@@ -61,9 +58,7 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
                     addBlock(level, pos.relative(Direction.UP), pos, 1);
                     level.scheduleTick(pos, BlockRegister.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
                 }
-            } else { // TODO OPTIMISE
-                AirBubblesSavedData.get().remove(level.dimension(), e.uuid);
-            }
+            } else AirBubblesSavedData.get().remove(level.dimension(), e.uuid);
 
             if (e.active) {
                 if (e.list.size() / e.rate > e.tank.getCapacity()) {
@@ -75,9 +70,7 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
                         e.lowerRate = 10;
                         e.tank.drain(e.list.size() / e.rate, FluidAction.EXECUTE);
                         e.o2Usage = e.list.size() / e.rate;
-                    } else {
-                        e.lowerRate--;
-                    }
+                    } else e.lowerRate--;
                 }
             } else e.o2Usage = 0;
         } else e.o2Usage = 0;

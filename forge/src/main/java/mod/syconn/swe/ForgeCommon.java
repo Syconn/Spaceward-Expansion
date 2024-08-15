@@ -1,6 +1,8 @@
 package mod.syconn.swe;
 
 import mod.syconn.swe.capability.APICapabilities;
+import mod.syconn.swe.extra.core.InteractionalFluidHandler;
+import mod.syconn.swe.extra.data.attachment.SpaceSuit;
 import mod.syconn.swe.extra.data.savedData.PipeNetworks;
 import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.data.capability.SpaceSuitProvider;
@@ -10,6 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -34,8 +37,6 @@ public class ForgeCommon {
 
     @SubscribeEvent
     public static void attachBlockEntityCapability(AttachCapabilitiesEvent<BlockEntity> event) {
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> o.getFluidHandler());
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getFluidHandler());
         event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getFluidHandler());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getItemHandler());
@@ -48,14 +49,15 @@ public class ForgeCommon {
     }
 
     @SubscribeEvent
+    public static void registerCapability(RegisterCapabilitiesEvent event) {
+        event.register(SpaceSuit.class);
+        event.register(InteractionalFluidHandler.class);
+    }
+
+    @SubscribeEvent
     public static void clonePlayer(PlayerEvent.Clone event) { // TODO FIGURE OUT
 //        if (event.isWasDeath()) event.getEntity().getCapability(SpaceSuitProvider.SPACE_SUIT).ifPresent(); = event.getOriginal().getCapability(SpaceSuitProvider.SPACE_SUIT);
     }
-
-//    @SubscribeEvent
-//    public static void registerCapability(RegisterCapabilitiesEvent event) { // TODO Figure out a better work around
-//        event.register(SpaceSuit.class);
-//    }
 
     public static void levelTickEvent(TickEvent.LevelTickEvent.Pre event) {
         PipeNetworks.tickNetworks(new Events.LevelTick(event.level));

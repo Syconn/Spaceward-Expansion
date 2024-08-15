@@ -1,6 +1,7 @@
 package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.extra.core.FluidAction;
+import mod.syconn.swe.extra.core.FluidHandler;
 import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.core.FluidTank;
 import mod.syconn.swe.extra.platform.Services;
@@ -34,10 +35,10 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
         for (int i = 0; i < 4; i++) {
             if (!e.items.get(i).isEmpty()) {
                 ItemStack itemStack = e.items.get(i);
-                ISingleFluidHandler handler = Services.FLUID_HANDLER.get(itemStack);
+                FluidHandler handler = Services.FLUID_HANDLER.get(itemStack);
                 if (handler != null) {
-                    FluidHolder fluidHolder = handler.getFluidInTank();
-                    if (handler.getTankCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(e.getFluidTank().getFluid())) {
+                    FluidHolder fluidHolder = handler.getFluid();
+                    if (handler.getCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(e.getFluidTank().getFluid())) {
                         FluidHolder resource = e.getFluidTank().drain(e.fillSpeed, FluidAction.EXECUTE);
                         e.getFluidTank().fill(resource.copyWith(resource.getAmount() - handler.fill(resource, FluidAction.EXECUTE)), FluidAction.EXECUTE);
                         e.update();
@@ -48,8 +49,8 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
     }
 
     public boolean addCanister(ItemStack stack) {
-        ISingleFluidHandler handler = Services.FLUID_HANDLER.get(stack);
-        if (handler != null && stack.getItem() instanceof Canister && handler.getFluidInTank().is(Fluids.EMPTY) || handler.getFluidInTank().is(getFluidTank().getFluid())) {
+        FluidHandler handler = Services.FLUID_HANDLER.get(stack);
+        if (handler != null && stack.getItem() instanceof Canister && handler.getFluid().is(Fluids.EMPTY) || handler.getFluid().is(getFluidTank().getFluid())) {
             for (int i = 0; i < 4; i++) {
                 if (items.get(i).isEmpty()) {
                     items.set(i, stack.copy());

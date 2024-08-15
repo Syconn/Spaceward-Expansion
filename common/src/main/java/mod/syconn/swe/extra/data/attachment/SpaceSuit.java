@@ -2,20 +2,18 @@ package mod.syconn.swe.extra.data.attachment;
 
 import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
-import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.extra.EquipmentItem;
+import mod.syconn.swe.extra.core.FluidHandlerItem;
 import mod.syconn.swe.extra.helpers.AnimatorHelper;
+import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -24,7 +22,7 @@ public class SpaceSuit implements IAttachmentType<SpaceSuit> {
     private boolean parachute;
     private AnimatorHelper chute = new AnimatorHelper(20);
     private int oxygen = maxO2();
-    private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
+    private SimpleContainer container = new SimpleContainer(2);
 
     public boolean parachute() {
         return parachute;
@@ -40,18 +38,14 @@ public class SpaceSuit implements IAttachmentType<SpaceSuit> {
         sync(player);
     }
 
-    public NonNullList<ItemStack> getInv() {
-        return stacks;
-    }
-
     public int O2() {
         return oxygen;
     }
 
     public void decreaseO2(Player p) {
-        if (p.getInventory() instanceof ExtendedPlayerInventory ext) {
-            IFluidHandlerItem handler = ext.getSpaceUtil().get(0).getCapability(Capabilities.FluidHandler.ITEM);
-            if ((SpaceArmor.hasFullKit(p) && handler != null && !handler.getFluidInTank(0).isEmpty() || PlanetManager.getSettings(p).breathable())) {
+        if (p.getInventory() instanceof ExtendedPlayerInventory ext && Services.FLUID_HANDLER.has(ext.getSpaceUtil().getFirst())) {
+            FluidHandlerItem handler = Services.FLUID_HANDLER.get(ext.getSpaceUtil().getFirst());
+            if ((SpaceArmor.hasFullKit(p) && handler != null && !handler.getFluid().isEmpty() || PlanetManager.getSettings(p).breathable())) {
                 if (oxygen < maxO2()) setO2(oxygen + 1, p);
             } else setO2(new Random().nextInt(2) > 0 ? O2() : O2() - 1, p);
         }
@@ -71,17 +65,7 @@ public class SpaceSuit implements IAttachmentType<SpaceSuit> {
         t.putBoolean("parachute", parachute);
         t.put("animchute", chute.serializeNBT());
         t.putInt("oxygen", oxygen);
-
-        ListTag nbtTagList = new ListTag();
-        for (int i = 0; i < stacks.size(); i++) {
-            if (!stacks.get(i).isEmpty()) {
-                CompoundTag itemTag = new CompoundTag();
-                itemTag.putInt("Slot", i);
-                nbtTagList.add(stacks.get(i).save(provider, itemTag));
-            }
-        }
-        t.put("Items", nbtTagList);
-        t.putInt("Size", stacks.size());
+        ContainerHelper.saveAllItems(t, container.getItems(), provider);
         return t;
     }
 
@@ -89,71 +73,65 @@ public class SpaceSuit implements IAttachmentType<SpaceSuit> {
         parachute = nbt.getBoolean("parachute");
         chute = new AnimatorHelper(nbt.getCompound("animchute"));
         oxygen = nbt.getInt("oxygen");
-        setSize(nbt.contains("Size", Tag.TAG_INT) ? nbt.getInt("Size") : stacks.size());
-        ListTag tagList = nbt.getList("Items", Tag.TAG_COMPOUND);
-        for (int i = 0; i < tagList.size(); i++) {
-            CompoundTag itemTags = tagList.getCompound(i);
-            int slot = itemTags.getInt("Slot");
-            if (slot >= 0 && slot < stacks.size()) ItemStack.parse(provider, itemTags).ifPresent(stack -> stacks.set(slot, stack));
-        }
+        ContainerHelper.loadAllItems(nbt, container.getItems(), provider);
     }
 
-    public int getSlots() {
-        return stacks.size();
-    }
-
-    public ItemStack getStackInSlot(int slot) {
-        return this.stacks.get(slot);
-    }
-
-    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-        if (stack.isEmpty()) return ItemStack.EMPTY;
-        if (!isItemValid(slot, stack)) return stack;
-        ItemStack existing = this.stacks.get(slot);
-        int limit = 64;
-        if (!existing.isEmpty()) {
-            if (!ItemStack.isSameItemSameComponents(stack, existing)) return stack;
-            limit -= existing.getCount();
-        }
-        if (limit <= 0) return stack;
-
-        boolean reachedLimit = stack.getCount() > limit;
-        if (!simulate) {
-            if (existing.isEmpty()) this.stacks.set(slot, reachedLimit ? stack.copyWithCount(limit) : stack);
-            else existing.grow(reachedLimit ? limit : stack.getCount());
-        }
-        return reachedLimit ? stack.copyWithCount(stack.getCount() - limit) : ItemStack.EMPTY;
-    }
-
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        if (amount == 0) return ItemStack.EMPTY;
-        ItemStack existing = this.stacks.get(slot);
-        if (existing.isEmpty()) return ItemStack.EMPTY;
-        int toExtract = Math.min(amount, existing.getMaxStackSize());
-        if (existing.getCount() <= toExtract) {
-            if (!simulate) {
-                this.stacks.set(slot, ItemStack.EMPTY);
-                return existing;
-            }
-            else return existing.copy();
-        }
-        else {
-            if (!simulate) this.stacks.set(slot, existing.copyWithCount(existing.getCount() - toExtract));
-            return existing.copyWithCount(toExtract);
-        }
-    }
-
-    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        return stack.getItem() instanceof EquipmentItem;
-    }
-
-    public void setSize(int size) {
-        stacks = NonNullList.withSize(size, ItemStack.EMPTY);
-    }
-
-    public void setStackInSlot(int slot, @NotNull ItemStack stack) {
-        stacks.set(slot, stack);
-    }
+//    public int getSlots() { TODO UNUSED REMOVE
+//        return stacks.size();
+//    }
+//
+//    public ItemStack getStackInSlot(int slot) {
+//        return this.stacks.get(slot);
+//    }
+//
+//    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+//        if (stack.isEmpty()) return ItemStack.EMPTY;
+//        if (!isItemValid(slot, stack)) return stack;
+//        ItemStack existing = this.stacks.get(slot);
+//        int limit = 64;
+//        if (!existing.isEmpty()) {
+//            if (!ItemStack.isSameItemSameComponents(stack, existing)) return stack;
+//            limit -= existing.getCount();
+//        }
+//        if (limit <= 0) return stack;
+//
+//        boolean reachedLimit = stack.getCount() > limit;
+//        if (!simulate) {
+//            if (existing.isEmpty()) this.stacks.set(slot, reachedLimit ? stack.copyWithCount(limit) : stack);
+//            else existing.grow(reachedLimit ? limit : stack.getCount());
+//        }
+//        return reachedLimit ? stack.copyWithCount(stack.getCount() - limit) : ItemStack.EMPTY;
+//    }
+//
+//    public ItemStack extractItem(int slot, int amount, boolean simulate) {
+//        if (amount == 0) return ItemStack.EMPTY;
+//        ItemStack existing = this.stacks.get(slot);
+//        if (existing.isEmpty()) return ItemStack.EMPTY;
+//        int toExtract = Math.min(amount, existing.getMaxStackSize());
+//        if (existing.getCount() <= toExtract) {
+//            if (!simulate) {
+//                this.stacks.set(slot, ItemStack.EMPTY);
+//                return existing;
+//            }
+//            else return existing.copy();
+//        }
+//        else {
+//            if (!simulate) this.stacks.set(slot, existing.copyWithCount(existing.getCount() - toExtract));
+//            return existing.copyWithCount(toExtract);
+//        }
+//    }
+//
+//    public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+//        return stack.getItem() instanceof EquipmentItem;
+//    }
+//
+//    public void setSize(int size) {
+//        stacks = NonNullList.withSize(size, ItemStack.EMPTY);
+//    }
+//
+//    public void setStackInSlot(int slot, @NotNull ItemStack stack) {
+//        stacks.set(slot, stack);
+//    }
 
     private CompoundTag writeSyncedData() {
         CompoundTag t = new CompoundTag();

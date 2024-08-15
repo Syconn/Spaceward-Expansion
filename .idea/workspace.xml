@@ -7,114 +7,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="More Restructuring and code fixes">
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandlerItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHolder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidTank.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/ISingleFluidHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/helper/NeoFluidHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/wrapper/BlockFluidWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Common Fluid Handler V2">
+      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/data/capability/APICapabilities.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/data/capability/ForgeCollectorBE.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/data/capability/ForgeTankBE.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/helper/ForgeFluidHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/wrapper/BlockFluidWrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/AirBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/AirBlockEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/CanisterFillerBlockEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/CanisterFillerBlockEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/CollectorBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/CollectorBE.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/DisperserBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/DisperserBE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/base/AbstractTankBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/base/AbstractTankBE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/base/BaseFluidPipeBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/base/BaseFluidPipeBE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/base/SyncedBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/base/SyncedBE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/base/BaseFluidPipeBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/FluidPipeBE.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/BaseFluidPipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/BaseFluidPipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenDisperser.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenDisperser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/renders/debug/PipeNetworkRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/renders/debug/PipeNetworkRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/CommonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/CommonHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/CollectorMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/CollectorMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/DisperserMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/DisperserMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/PipeNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/PipeNetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/attachment/IAttachmentType.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/attachment/IAttachmentType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/attachment/SpaceSuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/attachment/SpaceSuit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/components/FluidComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/components/FluidComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/menu/PositionMenuData.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/menu/PositionMenuData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/recipes/CustomRecipeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/recipes/CustomRecipeBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/recipes/DyedParachuteRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/recipes/DyedParachuteRecipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/recipes/RefillingCanisterRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/recipes/RefillingCanisterRecipe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/savedData/AirBubblesSavedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/savedData/AirBubblesSavedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/data/savedData/PipeNetworks.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/savedData/PipeNetworks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/Events.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/IMenuData.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/IMenuData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/Payload.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/Payload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/PipePatterns.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/PipePatterns.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/FluidHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/FluidHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/util/RenderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/util/RenderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/ClientHooks.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/ClientHooks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/attachment/SpaceSuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/attachment/SpaceSuit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/IRegistrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/IRegistrar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/BlockEntityRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/BlockEntityRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/BlockRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/BlockRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ComponentRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ComponentRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/DataAttachments.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/DataAttachments.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/FluidRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/FluidRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/Menus.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/Menus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/RecipeSerializers.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/RecipeSerializers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/integration/jei/CanisterRecipeWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/jei/CanisterRecipeWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/integration/jei/ParachuteRecipeWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/jei/ParachuteRecipeWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/integration/jei/SpaceJEI.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/jei/SpaceJEI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/AutoRefillCanister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/AutoRefillCanister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/SpaceArmor.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/SpaceArmor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/mixin/PlayerRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/mixin/PlayerRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/Network.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/messages/BiBoundUpdateSpaceSuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/messages/BiBoundUpdateSpaceSuit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/Services.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/Services.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IAttachedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/IAttachedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IFluidExtensions.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/IFluidExtensions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/INetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/INetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/IRegistrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/IRegistrar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/platform/services/ISingleFluidHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/EntityEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/events/EntityEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/LivingEntityMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/LivingEntityMixin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricAttachedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricAttachedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricFluidExtension.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricFluidExtension.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricRegistrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricRegistrar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/wrappers/BlockFluidWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/wrappers/BlockFluidWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/wrappers/ComponentFluidWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/wrappers/ComponentFluidWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IAttachedData" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.IAttachedData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.IFluidExtensions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IRegistrar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.IRegistrar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.ISingleFluidHandler" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.ISingleFluidHandler" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeCommon.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeCommon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/data/capability/SpaceSuitProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/data/capability/SpaceSuitProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeAttachedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeAttachedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeFluidExtension.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeFluidExtension.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeNetwork.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeSingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeSingleFluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IAttachedData" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.IAttachedData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.IFluidExtensions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IRegistrar" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.IRegistrar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.ISingleFluidHandler" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.ISingleFluidHandler" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoCommon.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoCommon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/capability/APICapabilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/data/capability/APICapabilities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/capability/IFluidHandlerInteractable.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/InteractionalFluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/capability/InteractableFluidTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/InteractableFluidTank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoAttachedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoAttachedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoFluidExtension.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoFluidExtension.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoSingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoSingleFluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IAttachedData" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.IAttachedData" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IFluidExtensions" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.IFluidExtensions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.IRegistrar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.IRegistrar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.platform.services.ISingleFluidHandler" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.ISingleFluidHandler" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,8 +66,8 @@
       <list>
         <option value="package-info" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -267,11 +179,11 @@
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\src\main\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="mod.syconn.swe.data.capability" />
+      <recent name="mod.syconn.swe.helper" />
+      <recent name="mod.syconn.swe.wrapper" />
       <recent name="mod.syconn.swe.extra" />
       <recent name="mod.syconn.swe.mixin" />
-      <recent name="mod.syconn.swe.util" />
-      <recent name="mod.syconn.swe" />
-      <recent name="mod.syconn.swe.services" />
     </key>
   </component>
   <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
@@ -353,14 +265,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720302138832</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Remapping of Class Names, Synced SpaceSuit between Client and Server,&#10;Data Structure Changes">
-      <option name="closed" value="true" />
-      <created>1720841487352</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1720841487352</updated>
     </task>
     <task id="LOCAL-00008" summary="Break For VACAY Server Client Compatibility in WORK">
       <option name="closed" value="true" />
@@ -746,7 +650,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723433343011</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="Common Fluid Handler V2">
+      <option name="closed" value="true" />
+      <created>1723699259206</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1723699259206</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -774,7 +686,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Begging FluidRender Setup" />
     <MESSAGE value="Rendering Fluid in Pipes &amp; Rendering in Pipe" />
     <MESSAGE value="Code Cleanup" />
     <MESSAGE value="Improved Tank Fluid Rendering" />
@@ -799,6 +710,7 @@
     <MESSAGE value="Space Suit Implementation for All Versions. Forge Wont work Most likely" />
     <MESSAGE value="Common Directory Rework" />
     <MESSAGE value="More Restructuring and code fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="More Restructuring and code fixes" />
+    <MESSAGE value="Common Fluid Handler V2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Common Fluid Handler V2" />
   </component>
 </project>

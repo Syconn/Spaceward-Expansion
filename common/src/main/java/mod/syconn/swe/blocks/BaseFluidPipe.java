@@ -2,7 +2,7 @@ package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.base.AbstractPipeBE;
-import mod.syconn.swe.blockentities.base.BaseFluidPipeBE;
+import mod.syconn.swe.blockentities.FluidPipeBE;
 import mod.syconn.swe.blocks.base.AbstractPipeBlock;
 import mod.syconn.swe.client.ClientHooks;
 import mod.syconn.swe.extra.data.savedData.PipeNetworks;
@@ -34,7 +34,7 @@ public class BaseFluidPipe extends AbstractPipeBlock {
     }
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (pLevel.getBlockEntity(pPos) instanceof BaseFluidPipeBE pipeBE && pipeBE.hasMenu()) {
+        if (pLevel.getBlockEntity(pPos) instanceof FluidPipeBE pipeBE && pipeBE.hasMenu()) {
             if (pLevel.isClientSide()) ClientHooks.openPipeScreen(pipeBE);
             return InteractionResult.SUCCESS;
         }
@@ -60,6 +60,6 @@ public class BaseFluidPipe extends AbstractPipeBlock {
     }
 
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new BaseFluidPipeBE(pPos, pState);
+        return new FluidPipeBE(pPos, pState);
     }
 }

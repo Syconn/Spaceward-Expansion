@@ -2,9 +2,10 @@ package mod.syconn.swe.services;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.NeoMod;
-import mod.syconn.swe.helper.FluidTypes;
-import mod.syconn.swe.extra.platform.services.IRegistrar;
 import mod.syconn.swe.extra.core.IMenuData;
+import mod.syconn.swe.extra.platform.services.IRegistrar;
+import mod.syconn.swe.helper.FluidTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.neoforge.common.SoundActions;
@@ -30,13 +32,10 @@ import net.neoforged.neoforge.fluids.FluidType;
 import org.apache.commons.lang3.function.TriFunction;
 import org.joml.Vector3f;
 
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class NeoRegister implements IRegistrar {
-
-    public <T extends BlockEntity> Supplier<BlockEntityType<T>> registerBlockEntity(String id, Supplier<BlockEntityType<T>> blockEntityType) {
-        return NeoMod.BLOCK_ENTITIES.register(id, blockEntityType);
-    }
 
     public <T extends Block> Supplier<T> registerBlock(String id, Supplier<T> block) {
         return NeoMod.BLOCKS.register(id, block);
@@ -46,6 +45,7 @@ public class NeoRegister implements IRegistrar {
         return NeoMod.ITEMS.register(id, item);
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends ArmorMaterial> Holder<T> registerArmorMaterial(String id, Supplier<T> armorMaterial) {
         return (Holder<T>) NeoMod.ARMOR_MATERIALS.register(id, armorMaterial);
     }
@@ -64,6 +64,14 @@ public class NeoRegister implements IRegistrar {
 
     public void registerFluidType(String id, ResourceLocation still, ResourceLocation flowing, ResourceLocation overlay, int tint, Vector3f fog, String desc, boolean swim, boolean extinguish, boolean drown, PathType type, int lightLevel, int density, int viscosity, SoundEvent fill, SoundEvent empty, SoundEvent vaporize) {
         NeoMod.FLUID_TYPES.register(id, () -> new FluidTypes(still, flowing, overlay, tint, fog, FluidType.Properties.create().descriptionId(desc).canSwim(swim).canExtinguish(extinguish).canDrown(drown).pathType(type).sound(SoundActions.BUCKET_FILL, fill).sound(SoundActions.BUCKET_EMPTY, empty).sound(SoundActions.FLUID_VAPORIZE, vaporize).lightLevel(lightLevel).density(density).viscosity(viscosity)));
+    }
+
+    public <T extends BlockEntity> Supplier<BlockEntityType<T>> registerBlockEntity(String id, BiFunction<BlockPos, BlockState, T> function, Supplier<Block[]> blockSupplier) {
+        return NeoMod.BLOCK_ENTITIES.register(id, () -> BlockEntityType.Builder.of(function::apply, blockSupplier.get()).build(null));
+    }
+
+    public <T extends BlockEntity> BiFunction<BlockPos, BlockState, T> createBEType(BiFunction<BlockPos, BlockState, T> function) {
+        return function;
     }
 
     public <T extends AbstractContainerMenu, D extends IMenuData<D>> Supplier<MenuType<T>> registerMenuTypeWithData(String id, StreamCodec<RegistryFriendlyByteBuf, D> codec, TriFunction<Integer, Inventory, D, T> function) {

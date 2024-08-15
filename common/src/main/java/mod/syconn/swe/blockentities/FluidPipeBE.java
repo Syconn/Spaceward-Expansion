@@ -1,5 +1,6 @@
-package mod.syconn.swe.blockentities.base;
+package mod.syconn.swe.blockentities;
 
+import mod.syconn.swe.blockentities.base.AbstractPipeBE;
 import mod.syconn.swe.blocks.BaseFluidPipe;
 import mod.syconn.swe.blocks.base.AbstractPipeBlock;
 import mod.syconn.swe.extra.PipePatterns;
@@ -16,11 +17,11 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
 
-public class BaseFluidPipeBE extends AbstractPipeBE {
+public class FluidPipeBE extends AbstractPipeBE {
 
     private Fluid fluid = null;
 
-    public BaseFluidPipeBE(BlockPos pos, BlockState state) {
+    public FluidPipeBE(BlockPos pos, BlockState state) {
         super(BlockEntityRegister.PIPE.get(), pos, state);
     }
 

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class SpaceSuitProvider implements ICapabilitySerializable<CompoundTag> {
 
-    public static Capability<SpaceSuit> SPACE_SUIT = CapabilityManager.get(new CapabilityToken<SpaceSuit>() {});
+    public static Capability<SpaceSuit> SPACE_SUIT = CapabilityManager.get(new CapabilityToken<>() {});
     private SpaceSuit spaceSuit = null;
     private final LazyOptional<SpaceSuit> holder = LazyOptional.of(this::createSpaceSuit);
 
