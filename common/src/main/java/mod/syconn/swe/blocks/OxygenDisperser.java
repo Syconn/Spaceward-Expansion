@@ -3,7 +3,7 @@ package mod.syconn.swe.blocks;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.DisperserBE;
 import mod.syconn.swe.blocks.base.FluidBaseBlock;
-import mod.syconn.swe.data.savedData.AirBubblesSavedData;
+import mod.syconn.swe.extra.data.savedData.AirBubblesSavedData;
 import mod.syconn.swe.extra.helpers.FluidHelper;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.init.BlockRegister;

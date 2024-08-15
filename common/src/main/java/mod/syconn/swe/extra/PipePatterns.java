@@ -47,7 +47,7 @@ public class PipePatterns {
         BLOCK(4),
         NONE(5);
 
-        public static final StreamCodec<ByteBuf, mod.syconn.swe.extra.PipeConnectionTypes> STREAM_CODEC = ByteBufCodecs.idMapper(ByIdMap.continuous(mod.syconn.swe.extra.PipeConnectionTypes::getID, values(), ByIdMap.OutOfBoundsStrategy.WRAP), mod.syconn.swe.extra.PipeConnectionTypes::getID);
+        public static final StreamCodec<ByteBuf, PipeConnectionTypes> STREAM_CODEC = ByteBufCodecs.idMapper(ByIdMap.continuous(PipeConnectionTypes::getID, values(), ByIdMap.OutOfBoundsStrategy.WRAP), PipeConnectionTypes::getID);
 
         final int id;
 

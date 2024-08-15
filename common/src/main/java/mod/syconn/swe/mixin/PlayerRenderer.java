@@ -1,8 +1,8 @@
 package mod.syconn.swe.mixin;
 
-import mod.syconn.swe.data.attachment.SpaceSuit;
+import mod.syconn.swe.extra.data.attachment.SpaceSuit;
 import mod.syconn.swe.init.DataAttachments;
-import mod.syconn.swe.platform.Services;
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -24,7 +24,7 @@ public class PlayerRenderer<T extends LivingEntity> {
 
         PlayerModel<T> model = (PlayerModel<T>) (Object) this;
         if (!Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
-            SpaceSuit spaceSuit = Services.ATTACHED_DATA.getPlayer(DataAttachments.SPACE_SUIT, player);
+            SpaceSuit spaceSuit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, player);
             if (spaceSuit.chuteAnim().chuteAnimation() && spaceSuit.parachute()) {
                 double seg = 160.0 / spaceSuit.chuteAnim().maxAnimLen();
                 model.rightArm.zRot = (float) Math.toRadians(seg * spaceSuit.chuteAnim().animLen());

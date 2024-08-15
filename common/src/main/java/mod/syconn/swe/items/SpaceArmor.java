@@ -1,11 +1,13 @@
 package mod.syconn.swe.items;
 
+import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
+import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.init.ItemRegister;
 import net.minecraft.Util;
-import net.minecraft.core.Holder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -29,13 +31,13 @@ public class SpaceArmor extends ArmorItem {
                 && p.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof ArmorItem && p.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof ArmorItem;
     }
 
-//    public static boolean hasParachute(Player p){ TODO LATER
-//        return p.getInventory() instanceof ExtendedPlayerInventory i && i.getItemBySlot(EquipmentItemSlot.SpaceSlot.PARACHUTE).getItem() instanceof Parachute && hasFullKit(p);
-//    }
-//
-//    public static ItemStack getGear(EquipmentItemSlot.SpaceSlot slot, Player p){
-//        if (p.getInventory() instanceof ExtendedPlayerInventory i){
-//            return i.getItemBySlot(slot);
-//        } return null;
-//    }
+    public static boolean hasParachute(Player p) {
+        return p.getInventory() instanceof ExtendedPlayerInventory i && i.getItemBySlot(EquipmentItemSlot.SpaceSlot.PARACHUTE).getItem() instanceof Parachute && hasFullKit(p);
+    }
+
+    public static ItemStack getGear(EquipmentItemSlot.SpaceSlot slot, Player p){
+        if (p.getInventory() instanceof ExtendedPlayerInventory i){
+            return i.getItemBySlot(slot);
+        } return null;
+    }
 }

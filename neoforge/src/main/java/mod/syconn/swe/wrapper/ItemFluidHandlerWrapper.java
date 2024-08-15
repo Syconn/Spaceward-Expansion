@@ -1,6 +1,6 @@
 package mod.syconn.swe.wrapper;
 
-import mod.syconn.swe.data.components.FluidComponent;
+import mod.syconn.swe.extra.data.components.FluidComponent;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -9,6 +9,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import java.util.function.Supplier;
 
 public class ItemFluidHandlerWrapper implements IFluidHandlerItem {
+
     protected final Supplier<DataComponentType<FluidComponent>> componentType;
     protected ItemStack container;
     protected int capacity;
@@ -124,38 +125,5 @@ public class ItemFluidHandlerWrapper implements IFluidHandlerItem {
 
     protected void setContainerToEmpty() {
         container.set(componentType, FluidComponent.EMPTY);
-    }
-
-    /**
-     * Destroys the container item when it's emptied.
-     */
-    public static class Consumable extends ItemFluidHandlerWrapper {
-        public Consumable(Supplier<DataComponentType<FluidComponent>> componentType, ItemStack container, int capacity) {
-            super(componentType, container, capacity);
-        }
-
-        
-        protected void setContainerToEmpty() {
-            super.setContainerToEmpty();
-            container.shrink(1);
-        }
-    }
-
-    /**
-     * Swaps the container item for a different one when it's emptied.
-     */
-    public static class SwapEmpty extends ItemFluidHandlerWrapper {
-        protected final ItemStack emptyContainer;
-
-        public SwapEmpty(Supplier<DataComponentType<FluidComponent>> componentType, ItemStack container, ItemStack emptyContainer, int capacity) {
-            super(componentType, container, capacity);
-            this.emptyContainer = emptyContainer;
-        }
-
-        
-        protected void setContainerToEmpty() {
-            super.setContainerToEmpty();
-            container = emptyContainer;
-        }
     }
 }

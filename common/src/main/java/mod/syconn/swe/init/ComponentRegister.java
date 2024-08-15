@@ -1,7 +1,7 @@
 package mod.syconn.swe.init;
 
-import mod.syconn.swe.data.components.FluidComponent;
-import mod.syconn.swe.platform.Services;
+import mod.syconn.swe.extra.data.components.FluidComponent;
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.core.component.DataComponentType;
 
 import java.util.function.Supplier;

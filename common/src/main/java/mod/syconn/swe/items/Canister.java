@@ -2,13 +2,13 @@ package mod.syconn.swe.items;
 
 import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.common.dimensions.PlanetManager;
-import mod.syconn.swe.data.components.FluidComponent;
+import mod.syconn.swe.extra.data.components.FluidComponent;
 import mod.syconn.swe.extra.EquipmentItem;
 import mod.syconn.swe.extra.util.RenderUtil;
 import mod.syconn.swe.init.ComponentRegister;
 import mod.syconn.swe.init.FluidRegister;
-import mod.syconn.swe.platform.Services;
-import mod.syconn.swe.platform.services.ISingleFluidHandler;
+import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FastColor;

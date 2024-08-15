@@ -2,13 +2,13 @@ package mod.syconn.swe.client.renders.debug;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import mod.syconn.swe.extra.core.Payload;
 import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
-import mod.syconn.swe.data.savedData.PipeNetworks;
-import mod.syconn.swe.extra.Events;
+import mod.syconn.swe.extra.data.savedData.PipeNetworks;
+import mod.syconn.swe.extra.core.Events;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.phys.Vec3;
@@ -29,17 +29,17 @@ public class PipeNetworkRenderer {
     private static VertexBuffer vertexBuffer;
     private static final int color = 0;
 
-    public static @Nullable CustomPacketPayload playerJoined(Events.PlayerEvent event) {
+    public static @Nullable ClientBoundUpdatePipeCache playerJoined(Events.PlayerEvent event) {
         if (event.player().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(PipeNetworks.get(sl).getDataMap());
         return null;
     }
 
-    public static @Nullable CustomPacketPayload playerLeft(Events.PlayerEvent event) {
+    public static ClientBoundUpdatePipeCache playerLeft(Events.PlayerEvent event) {
         if (event.player().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(new HashMap<>());
         return null;
     }
 
-    public static @Nullable CustomPacketPayload playerChangedDimension(Events.PlayerEvent event) {
+    public static @Nullable ClientBoundUpdatePipeCache playerChangedDimension(Events.PlayerEvent event) {
         if (event.player().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(PipeNetworks.get(sl).getDataMap());
         return null;
     }

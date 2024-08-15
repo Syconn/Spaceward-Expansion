@@ -1,10 +1,10 @@
 package mod.syconn.swe.wrappers;
 
-import mod.syconn.swe.data.components.FluidComponent;
-import mod.syconn.swe.platform.services.ISingleFluidHandler;
+import mod.syconn.swe.extra.data.components.FluidComponent;
+import mod.syconn.swe.extra.core.FluidHandler;
+import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.item.ItemStack;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.material.Fluids;
 
 import java.util.function.Supplier;
 
-public class ComponentFluidWrapper implements SingleSlotStorage<FluidVariant> {
+public class ComponentFluidWrapper implements FluidHandler {
     protected final DataComponentType<FluidComponent> componentType;
     protected final ItemStack container;
     protected int capacity;
@@ -72,7 +72,7 @@ public class ComponentFluidWrapper implements SingleSlotStorage<FluidVariant> {
         return new ISingleFluidHandler.FluidHolder(getResource().getFluid(), (int) getAmount());
     }
 
-    protected void setFluid(ISingleFluidHandler.FluidHolder fluid) {
+    public void setFluid(ISingleFluidHandler.FluidHolder fluid) {
         FluidComponent component = container.getOrDefault(componentType, FluidComponent.EMPTY);
         container.set(componentType, FluidComponent.of(fluid.fluid(), fluid.amount(), component.capacity()));
     }
@@ -88,5 +88,9 @@ public class ComponentFluidWrapper implements SingleSlotStorage<FluidVariant> {
 
     public String toString() {
         return "FluidContainer[context=%s, fluid=%s, amount=%d]".formatted(container, getResource(), getAmount());
+    }
+
+    public boolean preCondition() {
+        return container.getCount() > 1;
     }
 }

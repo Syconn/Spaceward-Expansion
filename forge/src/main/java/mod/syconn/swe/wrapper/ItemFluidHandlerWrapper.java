@@ -1,17 +1,10 @@
 package mod.syconn.swe.wrapper;
 
-import mod.syconn.swe.data.components.FluidComponent;
-import net.minecraft.core.Direction;
+import mod.syconn.swe.extra.data.components.FluidComponent;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 

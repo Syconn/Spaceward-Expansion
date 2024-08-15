@@ -1,6 +1,6 @@
 package mod.syconn.swe.data.capability;
 
-import mod.syconn.swe.data.attachment.SpaceSuit;
+import mod.syconn.swe.extra.data.attachment.SpaceSuit;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

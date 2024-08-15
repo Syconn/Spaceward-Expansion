@@ -1,6 +1,6 @@
 package mod.syconn.swe.services;
 
-import mod.syconn.swe.platform.services.IFluidExtensions;
+import mod.syconn.swe.extra.platform.services.IFluidExtensions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

@@ -1,6 +1,15 @@
 package mod.syconn.swe.blockentities;
 
-import mod.syconn.api.blockEntity.AbstractTankBE;
+import mod.syconn.swe.blockentities.base.AbstractTankBE;
+import mod.syconn.swe.blocks.DispersedAirBlock;
+import mod.syconn.swe.common.container.DisperserMenu;
+import mod.syconn.swe.extra.BlockInfo;
+import mod.syconn.swe.extra.core.FluidAction;
+import mod.syconn.swe.extra.data.menu.PositionMenuData;
+import mod.syconn.swe.extra.data.savedData.AirBubblesSavedData;
+import mod.syconn.swe.extra.helpers.NbtHelper;
+import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.init.BlockRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -12,13 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import mod.syconn.swe.blocks.DispersedAirBlock;
-import mod.syconn.swe.common.container.DisperserMenu;
-import mod.syconn.swe.extra.BlockInfo;
-import mod.syconn.api.util.NbtHelper;
-import mod.syconn.swe.data.savedData.AirBubblesSavedData;
 import net.minecraft.world.ticks.TickPriority;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +45,7 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     private boolean enabled = true;
 
     public DisperserBE(BlockPos p_155229_, BlockState p_155230_) {
-        super(Registration.DISPERSER.get(), p_155229_, p_155230_, 1000, 15);
+        super(BlockEntityRegister.DISPERSER.get(), p_155229_, p_155230_, 1000, 15);
 //        this.tank = new C(1000, ){
 //            public void onContentsChanged() { markDirty(); }
 //            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2.get(); }
@@ -51,26 +54,26 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, DisperserBE e) {
         if (e.enabled) {
-            if (e.tank.getFluidInTank(0).getAmount() > 0) {
+            if (e.tank.getFluid().getAmount() > 0) {
                 e.testRate--;
                 if (e.testRate <= 0) {
                     e.testRate = 100;
                     addBlock(level, pos.relative(Direction.UP), pos, 1);
-                    level.scheduleTick(pos, Registration.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
+                    level.scheduleTick(pos, BlockRegister.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
                 }
             } else { // TODO OPTIMISE
                 AirBubblesSavedData.get().remove(level.dimension(), e.uuid);
             }
 
             if (e.active) {
-                if (e.list.size() / e.rate > e.tank.getFluidAmount()) {
+                if (e.list.size() / e.rate > e.tank.getCapacity()) {
                     e.active = false;
                     e.list.clear();
                     AirBubblesSavedData.get().remove(level.dimension(), e.uuid);
                 } else {
                     if (e.lowerRate <= 0) {
                         e.lowerRate = 10;
-                        e.tank.drain(e.list.size() / e.rate, IFluidHandler.FluidAction.EXECUTE);
+                        e.tank.drain(e.list.size() / e.rate, FluidAction.EXECUTE);
                         e.o2Usage = e.list.size() / e.rate;
                     } else {
                         e.lowerRate--;
@@ -82,8 +85,8 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     }
 
     public static void remove(Level level, BlockPos defPos) {
-        if (level.getBlockEntity(defPos, Registration.DISPERSER.get()).isPresent()) {
-            List<BlockPos> list = level.getBlockEntity(defPos, Registration.DISPERSER.get()).get().list;
+        if (level.getBlockEntity(defPos, BlockEntityRegister.DISPERSER.get()).isPresent()) {
+            List<BlockPos> list = level.getBlockEntity(defPos, BlockEntityRegister.DISPERSER.get()).get().list;
             for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersedAirBlock) level.removeBlock(pos, false);
         }
     }
@@ -95,13 +98,13 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
             list.clear();
             AirBubblesSavedData.get().remove(level.dimension(), uuid);
         } else {
-            if (list.size() / rate > tank.getFluidAmount()) {
+            if (list.size() / rate > tank.getFluid().getAmount()) {
                 active = false;
                 list.clear();
                 AirBubblesSavedData.get().remove(level.dimension(), uuid);
             } else {
                 active = true;
-                tank.drain(list.size() / rate, IFluidHandler.FluidAction.EXECUTE);
+                tank.drain(list.size() / rate, FluidAction.EXECUTE);
                 AirBubblesSavedData.get().set(level.dimension(), uuid, list);
             }
         }
@@ -110,10 +113,10 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
 
     public void toggleEnabled() {
         this.enabled = !this.enabled;
-        if (this.enabled && tank.getFluidInTank(0).getAmount() > 0) {
+        if (this.enabled && tank.getFluid().getAmount() > 0) {
             testRate = 100;
             addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
-            level.scheduleTick(worldPosition, Registration.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
+            level.scheduleTick(worldPosition, BlockRegister.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
         }
         markDirty();
     }
@@ -169,7 +172,7 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     }
 
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new DisperserMenu(pContainerId, pPlayerInventory, worldPosition);
+        return new DisperserMenu(pContainerId, pPlayerInventory, new PositionMenuData(worldPosition));
     }
 
     public int getFluidRate() {

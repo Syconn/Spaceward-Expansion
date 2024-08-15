@@ -4,6 +4,9 @@ import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.TankBE;
 import mod.syconn.swe.blocks.base.FluidBaseBlock;
 import mod.syconn.swe.extra.helpers.FluidHelper;
+import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.init.BlockRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,12 +37,12 @@ public class FluidTank extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pStack.getCapability(Capabilities.FluidHandler.ITEM) != null && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack).isSuccess()) return ItemInteractionResult.CONSUME;
+        if (Services.FLUID_HANDLER.has(pStack) && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack)) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return createTickerHelper(p_153214_, Registration.TANK.get(), TankBE::serverTick);
+        return createTickerHelper(p_153214_, BlockEntityRegister.TANK.get(), TankBE::serverTick);
     }
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -47,7 +50,7 @@ public class FluidTank extends FluidBaseBlock {
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return Registration.FLUID_TANK_CODEC.value();
+        return BlockRegister.FLUID_TANK_CODEC.get();
     }
 
     public boolean hasAnalogOutputSignal(BlockState state) {
@@ -56,7 +59,7 @@ public class FluidTank extends FluidBaseBlock {
 
     public int getAnalogOutputSignal(BlockState state, Level l, BlockPos pos) {
         if (l.getBlockEntity(pos) instanceof TankBE te) {
-            double o = (double) (te.getFluidTank().getFluidAmount()) / te.getFluidTank().getCapacity();
+            double o = (double) (te.getFluidTank().getFluid().getAmount()) / te.getFluidTank().getCapacity();
             return (int) (o * 15);
         }
         return 0;

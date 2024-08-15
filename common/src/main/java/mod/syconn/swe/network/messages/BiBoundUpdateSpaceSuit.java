@@ -1,7 +1,7 @@
 package mod.syconn.swe.network.messages;
 
 import mod.syconn.swe.init.DataAttachments;
-import mod.syconn.swe.platform.Services;
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -13,6 +13,6 @@ public record BiBoundUpdateSpaceSuit(CompoundTag tag) {
     public static final StreamCodec<RegistryFriendlyByteBuf, BiBoundUpdateSpaceSuit> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.COMPOUND_TAG, BiBoundUpdateSpaceSuit::tag,BiBoundUpdateSpaceSuit::new);
 
     public static void handle(BiBoundUpdateSpaceSuit message, Player player) {
-        Services.ATTACHED_DATA.updatePlayer(DataAttachments.SPACE_SUIT, suit -> suit.readSyncedData(suit, message.tag), player);
+        Services.ATTACHED_DATA.update(DataAttachments.SPACE_SUIT, suit -> suit.readSyncedData(suit, message.tag), player);
     }
 }

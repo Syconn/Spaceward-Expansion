@@ -1,9 +1,10 @@
 package mod.syconn.swe.blockentities.base;
 
-import mod.syconn.api.blocks.AbstractPipeBlock;
-import mod.syconn.api.blocks.BaseFluidPipe;
-import mod.syconn.api.util.PipeConnectionTypes;
-import mod.syconn.api.world.data.savedData.PipeNetworks;
+import mod.syconn.swe.blocks.BaseFluidPipe;
+import mod.syconn.swe.blocks.base.AbstractPipeBlock;
+import mod.syconn.swe.extra.PipePatterns;
+import mod.syconn.swe.extra.core.FluidHolder;
+import mod.syconn.swe.init.BlockEntityRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -13,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
 public class BaseFluidPipeBE extends AbstractPipeBE {
@@ -21,7 +21,7 @@ public class BaseFluidPipeBE extends AbstractPipeBE {
     private Fluid fluid = null;
 
     public BaseFluidPipeBE(BlockPos pos, BlockState state) {
-        super(Registration.PIPE.get(), pos, state);
+        super(BlockEntityRegister.PIPE.get(), pos, state);
     }
 
     public boolean canConnectToPipe(Level level, BlockPos pos, Direction conDir) {
@@ -33,11 +33,11 @@ public class BaseFluidPipeBE extends AbstractPipeBE {
         return false;
     }
 
-    public PipeConnectionTypes getConnectionType(Direction direction) {
+    public PipePatterns.PipeConnectionTypes getConnectionType(Direction direction) {
         return getBlockState().getValue(AbstractPipeBlock.fromDirection(direction));
     }
 
-    public void setConnectionType(Direction direction, PipeConnectionTypes type) {
+    public void setConnectionType(Direction direction, PipePatterns.PipeConnectionTypes type) {
         level.setBlock(worldPosition, getBlockState().setValue(AbstractPipeBlock.fromDirection(direction), type), 2);
     }
 
@@ -60,7 +60,7 @@ public class BaseFluidPipeBE extends AbstractPipeBE {
         return fluid != null && !fluid.isSame(Fluids.EMPTY);
     }
 
-    public FluidStack getFluid() {
-        return new FluidStack(fluid, 1000);
+    public FluidHolder getFluid() {
+        return new FluidHolder(fluid, 1000);
     }
 }

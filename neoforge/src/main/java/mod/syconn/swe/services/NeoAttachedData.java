@@ -1,8 +1,9 @@
 package mod.syconn.swe.services;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import mod.syconn.swe.data.attachment.IAttachmentType;
-import mod.syconn.swe.platform.services.IAttachedData;
+import mod.syconn.swe.extra.data.attachment.IAttachmentType;
+import mod.syconn.swe.extra.platform.services.IAttachedData;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.attachment.AttachmentType;
 import java.util.function.Function;
@@ -21,16 +22,20 @@ public class NeoAttachedData implements IAttachedData {
         return typeClass;
     }
 
-    public <T extends IAttachmentType<T>> T getPlayer(Class<T> typeClass, Player player) {
-        return player.getData(getType(typeClass));
+    public <T extends IAttachmentType<T>> T get(Class<T> typeClass, Player entity) {
+        return entity.getData(getType(typeClass));
     }
 
-    public <T extends IAttachmentType<T>> void setPlayer(Class<T> typeClass, T data, Player player) {
-        player.setData(getType(typeClass), data);
+    public <T extends IAttachmentType<T>> void set(Class<T> typeClass, T data, Player entity) {
+        entity.setData(getType(typeClass), data);
     }
 
-    public <T extends IAttachmentType<T>> void updatePlayer(Class<T> typeClass, Function<T, T> action, Player player) {
-        player.setData(getType(typeClass), action.apply(getPlayer(typeClass, player)));
+    public <T extends IAttachmentType<T>> void update(Class<T> typeClass, Function<T, T> action, Player entity) {
+        entity.setData(getType(typeClass), action.apply(get(typeClass, entity)));
+    }
+
+    public <T extends IAttachmentType<T>> boolean has(Class<T> typeClass, Player player) {
+        return player.hasData(getType(typeClass));
     }
 
     @SuppressWarnings("unchecked")

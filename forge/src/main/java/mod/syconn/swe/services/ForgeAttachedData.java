@@ -1,10 +1,10 @@
 package mod.syconn.swe.services;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
-import mod.syconn.swe.data.attachment.IAttachmentType;
-import mod.syconn.swe.data.attachment.SpaceSuit;
+import mod.syconn.swe.extra.data.attachment.IAttachmentType;
+import mod.syconn.swe.extra.data.attachment.SpaceSuit;
 import mod.syconn.swe.data.capability.SpaceSuitProvider;
-import mod.syconn.swe.platform.services.IAttachedData;
+import mod.syconn.swe.extra.platform.services.IAttachedData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 
@@ -20,16 +20,20 @@ public class ForgeAttachedData implements IAttachedData { // TODO HARD CODED CUR
         return typeClass;
     }
 
-    public <T extends IAttachmentType<T>> T getPlayer(Class<T> typeClass, Player player) {
+    public <T extends IAttachmentType<T>> T get(Class<T> typeClass, Player player) {
         return player.getCapability(getCapability(typeClass)).orElse(null);
     }
 
-    public <T extends IAttachmentType<T>> void setPlayer(Class<T> typeClass, T data, Player player) {
+    public <T extends IAttachmentType<T>> void set(Class<T> typeClass, T data, Player player) {
         player.getCapability(getCapability(typeClass)).map(cap -> data);
     }
 
-    public <T extends IAttachmentType<T>> void updatePlayer(Class<T> typeClass, Function<T, T> action, Player player) {
+    public <T extends IAttachmentType<T>> void update(Class<T> typeClass, Function<T, T> action, Player player) {
         player.getCapability(getCapability(typeClass)).map(action::apply);
+    }
+
+    public <T extends IAttachmentType<T>> boolean has(Class<T> typeClass, Player player) {
+        return player.getCapability(getCapability(typeClass)).isPresent();
     }
 
     @SuppressWarnings("unchecked")

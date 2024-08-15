@@ -1,8 +1,8 @@
 package mod.syconn.swe.init;
 
-import mod.syconn.swe.data.attachment.IAttachmentType;
-import mod.syconn.swe.data.attachment.SpaceSuit;
-import mod.syconn.swe.platform.Services;
+import mod.syconn.swe.extra.data.attachment.IAttachmentType;
+import mod.syconn.swe.extra.data.attachment.SpaceSuit;
+import mod.syconn.swe.extra.platform.Services;
 
 import java.util.function.Supplier;
 

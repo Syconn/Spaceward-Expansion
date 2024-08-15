@@ -3,7 +3,6 @@ package mod.syconn.swe;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.common.dimensions.OxygenProductionManager;
 import mod.syconn.swe.common.dimensions.PlanetManager;
-import mod.syconn.swe.data.attachments.NeoSpaceSuit;
 import mod.syconn.swe.datagen.*;
 import mod.syconn.swe.services.NeoNetwork;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -32,7 +31,6 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 
 @Mod(Constants.MOD_ID)
 public class NeoMod {

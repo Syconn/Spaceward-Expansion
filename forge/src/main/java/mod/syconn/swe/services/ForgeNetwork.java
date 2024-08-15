@@ -2,7 +2,7 @@ package mod.syconn.swe.services;
 
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.network.Network;
-import mod.syconn.swe.platform.services.INetwork;
+import mod.syconn.swe.extra.platform.services.INetwork;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;

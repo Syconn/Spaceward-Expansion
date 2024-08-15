@@ -1,15 +1,18 @@
 package mod.syconn.swe.common;
 
 import mod.syconn.swe.client.renders.debug.PipeNetworkRenderer;
-import mod.syconn.swe.common.data.attachments.SpaceSuit;
 import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.common.dimensions.PlanetTraveler;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
+import mod.syconn.swe.extra.data.attachment.SpaceSuit;
+import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.init.DataAttachments;
 import mod.syconn.swe.items.Parachute;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.extra.EquipmentItem;
-import mod.syconn.swe.extra.Events;
+import mod.syconn.swe.extra.core.Events;
 import mod.syconn.swe.extra.helpers.DimensionHelper;
+import mod.syconn.swe.network.Network;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,19 +23,18 @@ import net.minecraft.world.level.portal.DimensionTransition;
 
 public class CommonHandler {
 
-    public static boolean entityTickEvent(Events.LivingEntityEvent event){
+    public static void entityTickEvent(Events.LivingEntityEvent event){
         LivingEntity livingEntity = event.livingEntity();
         AttributeInstance gravity = livingEntity.getAttribute(Attributes.GRAVITY);
         double g = PlanetManager.getSettings(livingEntity.level().dimension()).gravity();
         if (gravity.getValue() != g) gravity.setBaseValue(g);
-        if (livingEntity.getData(Registration.SPACE_SUIT).parachute()) gravity.setBaseValue(g / 12.0);
-        return true;
+        if (event.livingEntity() instanceof Player p && Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, p).parachute()) gravity.setBaseValue(g / 12.0);
     }
 
-    public static boolean playerTickEvent(Events.PlayerEvent event) {
+    public static void playerTickEvent(Events.PlayerEvent event) {
         Player player = event.player();
         if (player instanceof ServerPlayer p){
-            if (p.level() instanceof ServerLevel serverlevel && p.getY() >= Config.spaceHeight.get()) {
+            if (p.level() instanceof ServerLevel serverlevel && p.getY() >= 400) { // TODO Config.spaceHeight.get()
                 DimensionTransition dimensiontransition = PlanetTraveler.changePlanet(serverlevel, p); // SPAWING IN AIR
                 if (dimensiontransition != null) {
                     ServerLevel serverlevel1 = dimensiontransition.newLevel();
@@ -42,7 +44,7 @@ public class CommonHandler {
                 }
             }
 
-            SpaceSuit suit = p.getData(Registration.SPACE_SUIT);
+            SpaceSuit suit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, p);
             if (p.getInventory().armor.get(2).getItem() instanceof Parachute || SpaceArmor.hasParachute(p)){
                 if (p.fallDistance > 2 && !suit.parachute()) suit.parachute(true, p);
                 else if (p.fallDistance == 0) suit.parachute(false, p);
@@ -54,15 +56,14 @@ public class CommonHandler {
                     p.hurt(p.level().damageSources().campfire(), 4.0F);
                 }
             }
-            p.setData(Registration.SPACE_SUIT, suit);
-            return true;
+            Services.ATTACHED_DATA.set(DataAttachments.SPACE_SUIT, suit, p);
         }
 
         if (player.getInventory() instanceof ExtendedPlayerInventory i && SpaceArmor.hasFullKit(player)) i.getSpaceUtil().forEach(stack -> { if (stack.getItem() instanceof EquipmentItem eq) eq.onEquipmentTick(stack, player.level(), player); });
     }
 
     public static Events.LivingFallEvent livingFallEvent(Events.LivingFallEvent event) {
-        if (event.entity().hasData(Registration.SPACE_SUIT) && event.entity().getData(Registration.SPACE_SUIT).parachute()) return new Events.LivingFallEvent(event.entity(), 0, 0, true);
+        if (event.entity() instanceof Player p && Services.ATTACHED_DATA.has(DataAttachments.SPACE_SUIT, p) && Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, p).parachute()) return new Events.LivingFallEvent(event.entity(), 0, 0, true);
         if (DimensionHelper.onMoon(event.entity())) {
             if (event.distance() < 6.5D) return new Events.LivingFallEvent(event.entity(), 0, 0, true);;
             return new Events.LivingFallEvent(event.entity(), event.distance() - 4.0f, 0.16f, true);
@@ -71,14 +72,14 @@ public class CommonHandler {
     }
 
     public static void playerJoined(Events.PlayerEvent event) {
-        if (event.player() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerJoined(event), sp);
+        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeNetworkRenderer.playerJoined(event), sp);
     }
 
     public static void playerLeft(Events.PlayerEvent event) {
-        if (event.player() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerLeft(event), sp);
+        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeNetworkRenderer.playerLeft(event), sp);
     }
 
     public static void playerChangedDimension(Events.PlayerEvent event) {
-        if (event.player() instanceof ServerPlayer sp) Channel.sendToPlayer(PipeNetworkRenderer.playerChangedDimension(event), sp);
+        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeNetworkRenderer.playerChangedDimension(event), sp);
     }
 }

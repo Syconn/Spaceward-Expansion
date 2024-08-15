@@ -1,6 +1,6 @@
 package mod.syconn.swe.services;
 
-import mod.syconn.swe.platform.services.IFluidExtensions;
+import mod.syconn.swe.extra.platform.services.IFluidExtensions;
 import net.fabricmc.fabric.api.transfer.v1.client.fluid.FluidVariantRendering;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;

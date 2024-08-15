@@ -1,10 +1,16 @@
 package mod.syconn.swe.blockentities;
 
-import mod.syconn.api.blockEntity.AbstractTankBE;
-import mod.syconn.swe.extra.BlockInfo;
+import mod.syconn.swe.blockentities.base.AbstractTankBE;
 import mod.syconn.swe.common.container.CollectorMenu;
-import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.common.dimensions.OxygenProductionManager;
+import mod.syconn.swe.common.dimensions.PlanetManager;
+import mod.syconn.swe.extra.BlockInfo;
+import mod.syconn.swe.extra.core.FluidAction;
+import mod.syconn.swe.extra.core.FluidHolder;
+import mod.syconn.swe.extra.data.menu.PositionMenuData;
+import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.init.CommonTags;
+import mod.syconn.swe.init.FluidRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -15,8 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +31,7 @@ public class CollectorBE extends AbstractTankBE implements MenuProvider, BlockIn
     private int rate = 0;
 
     public CollectorBE(BlockPos pos, BlockState state) {
-        super(Registration.COLLECTOR.get(), pos, state, 8000, 250);
+        super(BlockEntityRegister.COLLECTOR.get(), pos, state, 8000, 250);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, CollectorBE e) {
@@ -36,14 +40,14 @@ public class CollectorBE extends AbstractTankBE implements MenuProvider, BlockIn
             e.ticks = 0;
             double total = 0;
             for (BlockPos blockPos : BlockPos.betweenClosed(pos.offset(11, 0, 11), pos.offset(-11, 11, -11))) {
-                if (level.getBlockState(blockPos).is(Registration.O2_PRODUCING)) {
+                if (level.getBlockState(blockPos).is(CommonTags.O2_PRODUCING)) {
                     total += OxygenProductionManager.getValue(level.getBlockState(blockPos));
                 }
             }
             if (PlanetManager.getSettings(level.dimension()).breathable()) {
                 total += 186;
             }
-            e.tank.fill(new FluidStack(Registration.O2.get(), (int) total), IFluidHandler.FluidAction.EXECUTE);
+            e.tank.fill(new FluidHolder(FluidRegister.O2.get(), (int) total), FluidAction.EXECUTE);
             e.rate = (int) total;
         }
         e.tank.handlePull(level, pos);
@@ -70,7 +74,7 @@ public class CollectorBE extends AbstractTankBE implements MenuProvider, BlockIn
     }
 
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new CollectorMenu(pContainerId, pPlayerInventory, worldPosition);
+        return new CollectorMenu(pContainerId, pPlayerInventory, new PositionMenuData(worldPosition));
     }
 
     public int getFluidRate() {

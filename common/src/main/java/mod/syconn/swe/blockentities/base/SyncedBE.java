@@ -38,14 +38,9 @@ public abstract class SyncedBE extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
-        CompoundTag tag = pkt.getTag();
-        handleUpdateTag(tag, lookupProvider);
-    }
-
-    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-        loadClientData(tag, lookupProvider);
-    }
+//    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) { TODO DONT NEED MAYBE?
+//        loadClientData(tag, lookupProvider);
+//    }
 
     public void markDirty() {
         setChanged();

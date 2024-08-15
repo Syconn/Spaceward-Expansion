@@ -1,6 +1,6 @@
 package mod.syconn.swe.events;
 
-import mod.syconn.swe.extra.Events;
+import mod.syconn.swe.extra.core.Events;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.world.entity.LivingEntity;

@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blocks.BaseFluidPipe;
 import mod.syconn.swe.blocks.*;
 import mod.syconn.swe.blocks.fluids.FluidBlock;
-import mod.syconn.swe.platform.Services;
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;

@@ -1,8 +1,8 @@
 package mod.syconn.swe.init;
 
-import mod.syconn.swe.data.recipes.DyedParachuteRecipe;
-import mod.syconn.swe.data.recipes.RefillingCanisterRecipe;
-import mod.syconn.swe.platform.Services;
+import mod.syconn.swe.extra.data.recipes.DyedParachuteRecipe;
+import mod.syconn.swe.extra.data.recipes.RefillingCanisterRecipe;
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;

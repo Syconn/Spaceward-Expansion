@@ -1,5 +1,11 @@
 package mod.syconn.swe.blockentities;
 
+import mod.syconn.swe.extra.core.FluidAction;
+import mod.syconn.swe.extra.core.FluidHolder;
+import mod.syconn.swe.extra.core.FluidTank;
+import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
+import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.items.Canister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -14,11 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH ALL FLUID ITEM HANDLERS
 
@@ -26,19 +27,19 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
     private NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
 
     public CanisterFillerBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(Registration.FILLER.get(), p_155229_, p_155230_);
+        super(BlockEntityRegister.FILLER.get(), p_155229_, p_155230_);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CanisterFillerBlockEntity e) {
         for (int i = 0; i < 4; i++) {
             if (!e.items.get(i).isEmpty()) {
                 ItemStack itemStack = e.items.get(i);
-                IFluidHandlerItem handler = itemStack.getCapability(Capabilities.FluidHandler.ITEM);
+                ISingleFluidHandler handler = Services.FLUID_HANDLER.get(itemStack);
                 if (handler != null) {
-                    FluidStack fluidStack = handler.getFluidInTank(0);
-                    if (handler.getTankCapacity(0) >= fluidStack.getAmount() + e.fillSpeed && fluidStack.is(Fluids.EMPTY) || FluidStack.isSameFluid(fluidStack, e.getFluidTank().getFluid())) {
-                        FluidStack resource = e.getFluidTank().drain(e.fillSpeed, IFluidHandler.FluidAction.EXECUTE);
-                        e.getFluidTank().fill(resource.copyWithAmount(resource.getAmount() - handler.fill(resource, IFluidHandler.FluidAction.EXECUTE)), IFluidHandler.FluidAction.EXECUTE);
+                    FluidHolder fluidHolder = handler.getFluidInTank();
+                    if (handler.getTankCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(e.getFluidTank().getFluid())) {
+                        FluidHolder resource = e.getFluidTank().drain(e.fillSpeed, FluidAction.EXECUTE);
+                        e.getFluidTank().fill(resource.copyWith(resource.getAmount() - handler.fill(resource, FluidAction.EXECUTE)), FluidAction.EXECUTE);
                         e.update();
                     }
                 }
@@ -47,8 +48,8 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
     }
 
     public boolean addCanister(ItemStack stack) {
-        IFluidHandlerItem handler = stack.getCapability(Capabilities.FluidHandler.ITEM);
-        if (handler != null && stack.getItem() instanceof Canister && handler.getFluidInTank(0).is(Fluids.EMPTY) || FluidStack.isSameFluid(handler.getFluidInTank(0), getFluidTank().getFluidInTank(0))) {
+        ISingleFluidHandler handler = Services.FLUID_HANDLER.get(stack);
+        if (handler != null && stack.getItem() instanceof Canister && handler.getFluidInTank().is(Fluids.EMPTY) || handler.getFluidInTank().is(getFluidTank().getFluid())) {
             for (int i = 0; i < 4; i++) {
                 if (items.get(i).isEmpty()) {
                     items.set(i, stack.copy());
@@ -77,7 +78,7 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
     }
 
     public FluidTank getFluidTank() {
-        return level.getBlockEntity(worldPosition.below(), Registration.TANK.get()).get().getFluidTank();
+        return level.getBlockEntity(worldPosition.below(), BlockEntityRegister.TANK.get()).get().getFluidTank();
     }
 
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {

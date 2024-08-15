@@ -2,8 +2,7 @@ package mod.syconn.swe.items;
 
 import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.init.FluidRegister;
-import mod.syconn.swe.init.ItemRegister;
-import mod.syconn.swe.platform.services.ISingleFluidHandler;
+import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -11,8 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluids;
-
-import static net.minecraft.world.level.material.Fluids.EMPTY;
 
 public class AutoRefillCanister extends Canister {
 

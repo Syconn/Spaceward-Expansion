@@ -2,7 +2,7 @@ package mod.syconn.swe.init;
 
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.items.*;
-import mod.syconn.swe.platform.Services;
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

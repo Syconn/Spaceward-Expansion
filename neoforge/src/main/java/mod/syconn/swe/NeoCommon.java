@@ -1,14 +1,14 @@
 package mod.syconn.swe;
 
-import mod.syconn.swe.capability.APICapabilities;
 import mod.syconn.swe.common.CommonHandler;
-import mod.syconn.swe.data.savedData.PipeNetworks;
-import mod.syconn.swe.extra.Events;
+import mod.syconn.swe.data.capability.APICapabilities;
+import mod.syconn.swe.extra.core.Events;
+import mod.syconn.swe.extra.data.savedData.PipeNetworks;
 import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.wrapper.BlockFluidWrapper;
 import mod.syconn.swe.wrapper.ItemFluidHandlerWrapper;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
@@ -16,6 +16,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
 import static mod.syconn.swe.init.ComponentRegister.FLUID_COMPONENT;
 import static mod.syconn.swe.init.ItemRegister.AUTO_REFILL_CANISTER;
@@ -40,11 +41,11 @@ public class NeoCommon {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new ItemFluidHandlerWrapper(FLUID_COMPONENT, stack, 8000), CANISTER.get(), AUTO_REFILL_CANISTER.get());
 
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getItemHandler());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> new BlockFluidWrapper(o.getFluidTank()));
+        event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> o.getFluidTank());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> new BlockFluidWrapper(o.getFluidTank()));
+        event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getFluidTank());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> new InvWrapper(o));
     }
 
     public static void levelTickEvent(LevelTickEvent.Pre event) {

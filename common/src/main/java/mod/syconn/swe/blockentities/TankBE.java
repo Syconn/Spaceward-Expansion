@@ -1,13 +1,20 @@
 package mod.syconn.swe.blockentities;
 
-import mod.syconn.api.blockEntity.AbstractTankBE;
-import mod.syconn.swe.extra.helpers.FluidHelper;
+import mod.syconn.swe.blockentities.base.AbstractTankBE;
 import mod.syconn.swe.common.container.TankMenu;
+import mod.syconn.swe.extra.core.FluidHandlerItem;
+import mod.syconn.swe.extra.data.menu.PositionMenuData;
+import mod.syconn.swe.extra.helpers.FluidHelper;
+import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.init.BlockEntityRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -15,34 +22,23 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TankBE extends AbstractTankBE implements MenuProvider {
+public class TankBE extends AbstractTankBE implements MenuProvider, Container {
 
     private final int fillSpeed = 500;
-    private final ItemStackHandler items = new ItemStackHandler(getContainerSize()) {
-        public void onContentsChanged(int slot) { markDirty(); }
-    };
-    private final Lazy<IItemHandler> holder = Lazy.of(() -> items);
+    private final SimpleContainer container = new SimpleContainer(3);
 
     public TankBE(BlockPos pos, BlockState state) {
-        super(Registration.TANK.get(), pos, state, 16000, 500);
+        super(BlockEntityRegister.TANK.get(), pos, state, 16000, 500);
     }
 
-    public ItemStackHandler getItems() {
-        return items;
+    protected void saveClientData(CompoundTag pTag, HolderLookup.Provider provider) {
+        super.saveClientData(pTag, provider);
+        ContainerHelper.saveAllItems(pTag, container.getItems(), provider);
     }
 
-    protected void saveClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveClientData(pTag, pRegistries);
-        pTag.put("Inventory", items.serializeNBT(pRegistries));
-    }
-
-    protected void loadClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadClientData(pTag, pRegistries);
-        if (pTag.contains("Inventory")) items.deserializeNBT(pRegistries, pTag.getCompound("Inventory"));
-    }
-
-    private int getContainerSize(){
-        return 3;
+    protected void loadClientData(CompoundTag pTag, HolderLookup.Provider provider) {
+        super.loadClientData(pTag, provider);
+        ContainerHelper.loadAllItems(pTag, container.getItems(), provider);
     }
 
     public Component getDisplayName() {
@@ -50,18 +46,18 @@ public class TankBE extends AbstractTankBE implements MenuProvider {
     }
 
     public AbstractContainerMenu createMenu(int id, Inventory p_39955_, Player p_39956_) {
-        return new TankMenu(id, p_39955_, worldPosition);
+        return new TankMenu(id, p_39955_, new PositionMenuData(worldPosition));
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, TankBE e) {
         if (!level.isClientSide) {
-            ItemStack itemStack = e.getItems().getStackInSlot(0);
-            IFluidHandlerItem handler = itemStack.getCapability(Capabilities.FluidHandler.ITEM);
-            if (handler != null) FluidHelper.handleInventoryMaxTransfer(e.tank, handler, e.items, 0, 1);
+            ItemStack itemStack = e.container.getItem(0);
+            FluidHandlerItem handler = Services.FLUID_HANDLER.get(itemStack);
+            if (handler != null) FluidHelper.handleInventoryMaxTransfer(e.tank, handler, e.container, 0, 1);
 
-            itemStack = e.getItems().getStackInSlot(2);
-            handler = itemStack.getCapability(Capabilities.FluidHandler.ITEM);
-            if (handler != null) FluidHelper.fillItemStackFromBlock(e.tank, handler, e.fillSpeed, itemStack);
+            itemStack = e.getItem(2);
+            handler = Services.FLUID_HANDLER.get(itemStack);
+            if (handler != null) FluidHelper.fillItemStackFromBlock(e.tank, handler, e.fillSpeed);
 
             e.tank.handlePush(level, pos);
             e.tank.handlePull(level, pos);
@@ -69,7 +65,35 @@ public class TankBE extends AbstractTankBE implements MenuProvider {
         }
     }
 
-    public IItemHandler getItemHandler() {
-        return holder.get();
+    public int getContainerSize() {
+        return container.getContainerSize();
+    }
+
+    public boolean isEmpty() {
+        return container.isEmpty();
+    }
+
+    public ItemStack getItem(int i) {
+        return container.getItem(i);
+    }
+
+    public ItemStack removeItem(int i, int i2) {
+        return container.removeItem(i, i2);
+    }
+
+    public ItemStack removeItemNoUpdate(int i) {
+        return container.removeItemNoUpdate(i);
+    }
+
+    public void setItem(int i, ItemStack itemStack) {
+        container.setItem(i, itemStack);
+    }
+
+    public boolean stillValid(Player player) {
+        return container.stillValid(player);
+    }
+
+    public void clearContent() {
+        container.clearContent();
     }
 }

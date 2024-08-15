@@ -1,7 +1,7 @@
 package mod.syconn.swe.init;
 
 import mod.syconn.swe.blocks.fluids.OxygenFlowingFluid;
-import mod.syconn.swe.platform.Services;
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;

@@ -2,11 +2,13 @@ package mod.syconn.swe.services;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.data.attachment.IAttachmentType;
-import mod.syconn.swe.platform.services.IAttachedData;
+import mod.syconn.swe.extra.data.attachment.IAttachmentType;
+import mod.syconn.swe.extra.platform.services.IAttachedData;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
 import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -21,16 +23,16 @@ public class FabricAttachedData implements IAttachedData {
         return typeClass;
     }
 
-    public <T extends IAttachmentType<T>> T getPlayer(Class<T> typeClass, Player player) {
-        return player.getAttached(getType(typeClass));
+    public <T extends IAttachmentType<T>> T get(Class<T> typeClass, Player entity) {
+        return entity.getAttached(getType(typeClass));
     }
 
-    public <T extends IAttachmentType<T>> void setPlayer(Class<T> typeClass, T data, Player player) {
-        player.setAttached(getType(typeClass), data);
+    public <T extends IAttachmentType<T>> void set(Class<T> typeClass, T data, Player entity) {
+        entity.setAttached(getType(typeClass), data);
     }
 
-    public <T extends IAttachmentType<T>> void updatePlayer(Class<T> typeClass, Function<T, T> action, Player player) {
-        player.setAttached(getType(typeClass), action.apply(getPlayer(typeClass, player)));
+    public <T extends IAttachmentType<T>> void update(Class<T> typeClass, Function<T, T> action, Player entity) {
+        entity.setAttached(getType(typeClass), action.apply(get(typeClass, entity)));
     }
 
     @SuppressWarnings("unchecked")

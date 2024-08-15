@@ -1,7 +1,7 @@
 package mod.syconn.swe.mixin;
 
 import mod.syconn.swe.events.EntityEvents;
-import mod.syconn.swe.extra.Events;
+import mod.syconn.swe.extra.core.Events;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
