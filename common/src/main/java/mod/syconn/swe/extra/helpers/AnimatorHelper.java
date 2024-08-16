@@ -1,8 +1,16 @@
 package mod.syconn.swe.extra.helpers;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.nbt.CompoundTag;
 
 public class AnimatorHelper {
+
+    public static Codec<AnimatorHelper> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.INT.fieldOf("maxAnim").forGetter(AnimatorHelper::maxAnimLen),
+            Codec.INT.fieldOf("anim").forGetter(AnimatorHelper::getAnim),
+            Codec.INT.fieldOf("inc").forGetter(AnimatorHelper::getInc)
+    ).apply(instance, AnimatorHelper::new));
 
     private int manAnim;
     private int anim = 0;
@@ -14,6 +22,12 @@ public class AnimatorHelper {
 
     public AnimatorHelper(int manAnim) {
         this.manAnim = manAnim;
+    }
+
+    public AnimatorHelper(int manAnim, int anim, int inc) {
+        this.manAnim = manAnim;
+        this.anim = anim;
+        this.inc = inc;
     }
 
     public boolean chuteAnimation() {
@@ -32,6 +46,14 @@ public class AnimatorHelper {
 
     public int animLen() {
         return manAnim - anim;
+    }
+
+    private int getAnim() {
+        return anim;
+    }
+
+    private int getInc() {
+        return inc;
     }
 
     public CompoundTag serializeNBT() {

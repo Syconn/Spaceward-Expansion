@@ -7,7 +7,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Client Package and Method Moved" />
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Model Baking Helper and Fabric Model Loader">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/CollectorMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/CollectorMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/DisperserMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/DisperserMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/ExtendedPlayerContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/ExtendedPlayerContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/slot/EquipmentItemSlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/slot/EquipmentItemSlot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/slot/SpecifiedSlotHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/slot/SpecifiedSlotHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/attachment/SpaceSuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/attachment/SpaceSuit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/AnimatorHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/AnimatorHelper.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -141,7 +153,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
 }</component>
   <component name="Push.Settings">
@@ -159,10 +171,11 @@
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\forge\src\main\resources\META-INF\services" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\common\src\main\resources\assets\swe\blockstates" />
+      <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\common\src\main\resources\assets\swe\models\item" />
+      <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\common\src\main\resources\assets\swe\models\block" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\common\src\main\java\mod\syconn\swe" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\common\src\main\java\mod\syconn\swe\mixin" />
-      <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\target src\main\java\mod\syconn\swe" />
-      <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\src\main\resources" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="mod.syconn.swe.data.capability" />
@@ -174,6 +187,8 @@
   </component>
   <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="temurin-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunProgramArgs.txt" />
@@ -250,22 +265,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720302138832</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Break For VACAY Server Client Compatibility in WORK">
-      <option name="closed" value="true" />
-      <created>1720843071980</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1720843071980</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Reworked Inventory, and made code more Side Friendly for Guis, Renders, and Data Components">
-      <option name="closed" value="true" />
-      <created>1721523742220</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1721523742220</updated>
     </task>
     <task id="LOCAL-00011" summary="Removed Unnecessary Code">
       <option name="closed" value="true" />
@@ -643,7 +642,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723782494310</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Assets Added">
+      <option name="closed" value="true" />
+      <created>1723782821659</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1723782821660</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Model Baking Helper and Fabric Model Loader">
+      <option name="closed" value="true" />
+      <created>1723783575279</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1723783575279</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -671,8 +686,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Code Cleanup" />
-    <MESSAGE value="Improved Tank Fluid Rendering" />
     <MESSAGE value="Fluid Pipe Fluid Rendering Fixes, Pipe Model Texture Changes" />
     <MESSAGE value="Made Fluid in Space Suit Tank Transparent, Api Changes" />
     <MESSAGE value="Update Checker Update" />
@@ -696,6 +709,8 @@
     <MESSAGE value="More Restructuring and code fixes" />
     <MESSAGE value="Common Fluid Handler V2" />
     <MESSAGE value="Client Package and Method Moved" />
-    <option name="LAST_COMMIT_MESSAGE" value="Client Package and Method Moved" />
+    <MESSAGE value="Assets Added" />
+    <MESSAGE value="Model Baking Helper and Fabric Model Loader" />
+    <option name="LAST_COMMIT_MESSAGE" value="Model Baking Helper and Fabric Model Loader" />
   </component>
 </project>

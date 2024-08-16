@@ -21,6 +21,9 @@ import net.minecraft.world.level.material.Fluids;
 
 import java.util.Optional;
 
+/**
+ * A Common Version of Forge/NeoForge's FluidStack class for Common Side Coding
+ */
 public class FluidHolder {
 
     public static FluidHolder EMPTY = new FluidHolder(Fluids.EMPTY);

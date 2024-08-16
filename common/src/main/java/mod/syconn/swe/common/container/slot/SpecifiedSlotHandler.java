@@ -1,18 +1,18 @@
 package mod.syconn.swe.common.container.slot;
 
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class SpecifiedSlotHandler extends SlotItemHandler {
+public class SpecifiedSlotHandler extends Slot {
 
     private final TagKey<Item> onlyType;
 
-    public SpecifiedSlotHandler(IItemHandler itemHandler, int index, int xPosition, int yPosition, TagKey<Item> item) {
-        super(itemHandler, index, xPosition, yPosition);
+    public SpecifiedSlotHandler(Container container, int index, int xPosition, int yPosition, TagKey<Item> item) {
+        super(container, index, xPosition, yPosition);
         this.onlyType = item;
     }
 

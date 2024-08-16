@@ -1,22 +1,23 @@
 package mod.syconn.swe.common.container.slot;
 
 import com.mojang.datafixers.util.Pair;
+import mod.syconn.swe.Constants;
 import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.extra.EquipmentItem;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
 
-public class EquipmentItemSlot extends SlotItemHandler { // TODO SWAP OVER TO API VERSION
+public class EquipmentItemSlot extends Slot { // TODO SWAP OVER TO API VERSION
 
     private final Player player;
     private final SpaceSlot slot;
 
-    public EquipmentItemSlot(Player p, SpaceSlot s, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
-        super(inventoryIn, index, xPosition, yPosition);
+    public EquipmentItemSlot(Player p, SpaceSlot s, Container container, int index, int xPosition, int yPosition) {
+        super(container, index, xPosition, yPosition);
         player = p;
         slot = s;
     }
@@ -27,11 +28,11 @@ public class EquipmentItemSlot extends SlotItemHandler { // TODO SWAP OVER TO AP
     }
 
     public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-        return Pair.of(InventoryMenu.BLOCK_ATLAS, Main.loc("custom/" + slot.getLoc()));
+        return Pair.of(InventoryMenu.BLOCK_ATLAS, Constants.loc("custom/" + slot.getLoc()));
     }
 
     public boolean isActive() {
-        return SpaceArmor.hasFullKit(player) && !player.mayFly();
+        return SpaceArmor.hasFullKit(player) && !player.isCreative();
     }
 
     public boolean mayPlace(ItemStack stack) {

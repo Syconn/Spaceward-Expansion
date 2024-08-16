@@ -14,9 +14,9 @@ public class DisperserMenu extends AbstractContainerMenu {
 
     private final DisperserBE be;
 
-    public DisperserMenu(int id, Inventory inventory, PositionMenuData pos) {
+    public DisperserMenu(int id, Inventory inventory, PositionMenuData data) {
         super(Menus.DISPERSER_MENU.get(), id);
-        this.be = inventory.player.level().getBlockEntity(pos, BlockEntityRegister.DISPERSER.get()).orElseThrow();
+        this.be = inventory.player.level().getBlockEntity(data.pos(), BlockEntityRegister.DISPERSER.get()).orElseThrow();
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {

@@ -1,10 +1,11 @@
 package mod.syconn.swe.common.container;
 
 import mod.syconn.swe.blockentities.TankBE;
+import mod.syconn.swe.common.container.slot.SpecifiedSlotHandler;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
 import mod.syconn.swe.init.BlockEntityRegister;
+import mod.syconn.swe.init.CommonTags;
 import mod.syconn.swe.init.Menus;
-import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -17,13 +18,10 @@ public class TankMenu extends AbstractContainerMenu {
 
     public TankMenu(int id, Inventory inventory, PositionMenuData data) {
         super(Menus.TANK_MENU.get(), id);
-        this.be = inventory.player.level().getBlockEntity(pos, BlockEntityRegister.TANK.get()).orElseThrow();
-        IItemHandler handler = inventory.player.level().getCapability(Capabilities.ItemHandler.BLOCK, pos, Direction.NORTH);
-        if (handler != null) {
-            this.addSlot(new SlotItemHandler(handler, 0, 14, 9));
-            this.addSlot(new SlotItemHandler(handler, 1, 14, 61));
-            this.addSlot(new SpecifiedSlotHandler(handler, 2, 72, 9, Registration.CANISTERS));
-        }
+        this.be = inventory.player.level().getBlockEntity(data.pos(), BlockEntityRegister.TANK.get()).orElseThrow();
+        this.addSlot(new Slot(be, 0, 14, 9));
+        this.addSlot(new Slot(be, 1, 14, 61));
+        this.addSlot(new SpecifiedSlotHandler(be, 2, 72, 9, CommonTags.CANISTERS));
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
