@@ -1,5 +1,6 @@
 package mod.syconn.swe.extra.helpers;
 
+import mod.syconn.swe.extra.core.QuadBakingVertexConsumer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;

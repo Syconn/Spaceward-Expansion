@@ -1,10 +1,6 @@
 package mod.syconn.swe.model.loader;
 
 import mod.syconn.swe.model.PipeBakedModel;
-import net.fabricmc.fabric.api.renderer.v1.Renderer;
-import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
-import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
-import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
 import net.minecraft.resources.ResourceLocation;
@@ -20,14 +16,11 @@ public class PipeModelLoader implements UnbakedModel {
         return Collections.emptySet();
     }
 
-    public void resolveParents(Function<ResourceLocation, UnbakedModel> resolver) {
-
-    }
+    public void resolveParents(Function<ResourceLocation, UnbakedModel> resolver) {}
 
     public @Nullable BakedModel bake(ModelBaker baker, Function<Material, TextureAtlasSprite> spriteGetter, ModelState state) {
-        Renderer renderer = RendererAccess.INSTANCE.getRenderer();
-        MeshBuilder builder = renderer.meshBuilder();
-        QuadEmitter emitter = builder.getEmitter();
-        return new PipeBakedModel(false, );
+        return new PipeBakedModel(false, 0.3, new String[] {"block/loader/fluid_pipe/connector", "block/loader/fluid_pipe/normal", "block/loader/fluid_pipe/none",
+                "block/loader/fluid_pipe/end", "block/loader/fluid_pipe/corner", "block/loader/fluid_pipe/three", "block/loader/fluid_pipe/cross", "block/loader/fluid_pipe/side_block",
+                "block/loader/fluid_pipe/side_import", "block/loader/fluid_pipe/side_export", "block/loader/fluid_pipe/side_both"}); // TODO MAKE IT WORK LIKE OTHERS
     }
 }

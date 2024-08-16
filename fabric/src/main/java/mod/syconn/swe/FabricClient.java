@@ -23,6 +23,7 @@ import mod.syconn.swe.init.FluidRegister;
 import mod.syconn.swe.init.ItemRegister;
 import mod.syconn.swe.init.Menus;
 import mod.syconn.swe.items.Canister;
+import mod.syconn.swe.model.loader.PipeModelLoader;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.reloaders.FabricPlanetManager;
 import net.fabricmc.api.ClientModInitializer;
@@ -79,7 +80,7 @@ public class FabricClient implements ClientModInitializer {
     }
 
     @Environment(EnvType.CLIENT)
-    private class ModelLoader implements ModelLoadingPlugin {
+    private static class ModelLoader implements ModelLoadingPlugin {
 
         public void onInitializeModelLoader(Context pluginContext) {
             pluginContext.modifyModelOnLoad().register((original, context) -> {

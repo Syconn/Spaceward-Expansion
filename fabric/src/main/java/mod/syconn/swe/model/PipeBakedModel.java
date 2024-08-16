@@ -5,7 +5,6 @@ import mod.syconn.swe.blocks.base.AbstractPipeBlock;
 import mod.syconn.swe.extra.PipePatterns;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
@@ -23,7 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes.*;
 import static mod.syconn.swe.extra.PipePatterns.SpriteIdx.*;
+import static mod.syconn.swe.extra.helpers.BakedModelHelper.quad;
+import static mod.syconn.swe.extra.helpers.BakedModelHelper.v;
 
 @Environment(EnvType.CLIENT)
 public class PipeBakedModel implements BakedModel { // TODO CONVERT TO PIPE MODEL
