@@ -1,9 +1,10 @@
-package mod.syconn.swe.client.model.loader;
+package mod.syconn.swe.model.loader;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import mod.syconn.api.client.model.PipeBakedModel;
+import mod.syconn.swe.Constants;
+import mod.syconn.swe.model.PipeBakedModel;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
@@ -20,7 +21,7 @@ import java.util.function.Function;
 
 public class PipeModelLoader implements IGeometryLoader<PipeModelLoader.CableModelGeometry> {
 
-    public static final ResourceLocation GENERATOR_LOADER = Main.loc("pipe");
+    public static final ResourceLocation GENERATOR_LOADER = Constants.loc("pipe");
 
     public static void register(ModelEvent.RegisterGeometryLoaders event) {
         event.register(GENERATOR_LOADER, new PipeModelLoader());

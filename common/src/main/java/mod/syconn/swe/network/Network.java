@@ -1,11 +1,13 @@
 package mod.syconn.swe.network;
 
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
-import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
 import mod.syconn.swe.extra.core.Payload;
 import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.extra.platform.services.INetwork;
+import mod.syconn.swe.network.messages.BiBoundUpdateSpaceSuit;
+import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
+import mod.syconn.swe.network.messages.ServerBoundInteractableButtonPress;
+import mod.syconn.swe.network.messages.ServerBoundUpdatePipeState;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.PacketFlow;
@@ -22,9 +24,15 @@ public class Network {
     public static final ArrayList<PlayMessage<?>> register = new ArrayList<>();
 
     public static void registerMessages() {
-        register.add(PlayMessage.of("update_space_suit", BiBoundUpdateSpaceSuit.class, BiBoundUpdateSpaceSuit.STREAM_CODEC, BiBoundUpdateSpaceSuit::handle, null));
+        //Server Bound
+        register.add(PlayMessage.of("update_interaction", ServerBoundInteractableButtonPress.class, ServerBoundInteractableButtonPress.STREAM_CODEC, ServerBoundInteractableButtonPress::handle, PacketFlow.SERVERBOUND));
+        register.add(PlayMessage.of("update_pipe_state", ServerBoundUpdatePipeState.class, ServerBoundUpdatePipeState.STREAM_CODEC, ServerBoundUpdatePipeState::handle, PacketFlow.SERVERBOUND));
+
+        //Client Bound
         register.add(PlayMessage.of("update_pipe_cache", ClientBoundUpdatePipeCache.class, ClientBoundUpdatePipeCache.STREAM_CODEC, ClientBoundUpdatePipeCache::handle, PacketFlow.CLIENTBOUND));
 
+        // BiDirectional
+        register.add(PlayMessage.of("update_space_suit", BiBoundUpdateSpaceSuit.class, BiBoundUpdateSpaceSuit.STREAM_CODEC, BiBoundUpdateSpaceSuit::handle, null));
     }
 
     public static void sendToServer(Object message) {

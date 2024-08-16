@@ -1,9 +1,15 @@
 package mod.syconn.swe.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.api.client.screen.InteractionSelectorScreen;
-import mod.syconn.api.world.packets.ServerBoundInteractableButtonPress;
-import mod.syconn.api.client.RenderUtil;
+import mod.syconn.swe.Constants;
+import mod.syconn.swe.client.screen.widgets.InfoWidget;
+import mod.syconn.swe.common.container.CollectorMenu;
+import mod.syconn.swe.extra.core.FluidHolder;
+import mod.syconn.swe.extra.core.FluidTank;
+import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.extra.util.RenderUtil;
+import mod.syconn.swe.network.Network;
+import mod.syconn.swe.network.messages.ServerBoundInteractableButtonPress;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -12,17 +18,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluids;
-import mod.syconn.swe.client.screen.widgets.InfoWidget;
-import mod.syconn.swe.common.container.CollectorMenu;
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 
 import java.util.List;
 
 public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
 
-    private static final ResourceLocation BG = Main.loc("textures/gui/disperser.png");
+    private static final ResourceLocation BG = Constants.loc("textures/gui/disperser.png");
 
     public CollectorScreen(CollectorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank());
@@ -45,12 +46,11 @@ public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
         pGuiGraphics.blit(BG, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
 
-        FluidStack fluidStack = tank.getFluidInTank(0);
-        IClientFluidTypeExtensions extension = IClientFluidTypeExtensions.of(fluidStack.getFluid());
-        int u = (int) ((double) (tank.getFluidAmount()) / tank.getCapacity() * 70);
-        if(fluidStack.isEmpty()) return;
-        TextureAtlasSprite sprite = RenderUtil.getSprite(fluidStack);
-        int tintColor = extension.getTintColor(fluidStack);
+        FluidHolder fluidHolder = tank.getFluid();
+        int u = (int) ((double) (fluidHolder.getAmount()) / tank.getCapacity() * 70);
+        if(fluidHolder.isEmpty()) return;
+        TextureAtlasSprite sprite = RenderUtil.getSprite(fluidHolder);
+        int tintColor = Services.FLUID_EXTENSIONS.getTintColor(fluidHolder);
         float alpha = ((tintColor >> 24) & 0xFF) / 255f;
         float red = ((tintColor >> 16) & 0xFF) / 255f;
         float green = ((tintColor >> 8) & 0xFF) / 255f;
@@ -62,9 +62,9 @@ public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
 
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         pGuiGraphics.blit(BG, leftPos + 10, topPos + 8, 176, 0, 6, 70);
-        Component infoComponent = Component.literal(tank.getFluidAmount() + "mb/" + tank.getCapacity() + "mb").withStyle(ChatFormatting.GRAY);
-        if (leftPos + 10 <= pMouseX && pMouseX <= leftPos + 43 && topPos + 8 <= pMouseY && pMouseY <= topPos + 77 && !fluidStack.is(Fluids.EMPTY))
-            pGuiGraphics.renderComponentTooltip(font, List.of(tank.getFluidInTank(0).getHoverName(), infoComponent), pMouseX, pMouseY);
+        Component infoComponent = Component.literal(tank.getFluid().getAmount() + "mb/" + tank.getCapacity() + "mb").withStyle(ChatFormatting.GRAY);
+        if (leftPos + 10 <= pMouseX && pMouseX <= leftPos + 43 && topPos + 8 <= pMouseY && pMouseY <= topPos + 77 && !fluidHolder.is(Fluids.EMPTY))
+            pGuiGraphics.renderComponentTooltip(font, List.of(Services.FLUID_EXTENSIONS.getTooltip(fluidHolder).getFirst(), infoComponent), pMouseX, pMouseY);
     }
 
     protected int getMenuX() {
@@ -84,6 +84,6 @@ public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
     }
 
     protected void sendPacket(Interactables interactable, Direction direction) {
-        Channel.sendToServer(new ServerBoundInteractableButtonPress(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
+        Network.sendToServer(new ServerBoundInteractableButtonPress(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
     }
 }

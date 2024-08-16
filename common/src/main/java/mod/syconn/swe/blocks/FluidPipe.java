@@ -22,9 +22,9 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes;
 
-public class BaseFluidPipe extends AbstractPipeBlock {
+public class FluidPipe extends AbstractPipeBlock {
 
-    public BaseFluidPipe(Properties properties) {
+    public FluidPipe(Properties properties) {
         super(properties);
     }
 

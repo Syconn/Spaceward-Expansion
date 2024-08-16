@@ -1,10 +1,11 @@
 package mod.syconn.swe.client.screen.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import mod.syconn.swe.Constants;
+import mod.syconn.swe.extra.core.ExtendedButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 
 public class ArrowButton extends ExtendedButton {
 
@@ -20,11 +21,11 @@ public class ArrowButton extends ExtendedButton {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         if (!isHovered()) {
-            if (type == Type.DOWN) guiGraphics.blit(Main.loc("textures/gui/fluid_pipe.png"), getX(), getY(), 176, 0, width, height);
-            else guiGraphics.blit(Main.loc("textures/gui/fluid_pipe.png"), getX(), getY(), 187, 0, width, height);
+            if (type == Type.DOWN) guiGraphics.blit(Constants.loc("textures/gui/fluid_pipe.png"), getX(), getY(), 176, 0, width, height);
+            else guiGraphics.blit(Constants.loc("textures/gui/fluid_pipe.png"), getX(), getY(), 187, 0, width, height);
         } else {
-            if (type == Type.DOWN) guiGraphics.blit(Main.loc("textures/gui/fluid_pipe.png"), getX(), getY(), 198, 0, width, height);
-            else guiGraphics.blit(Main.loc("textures/gui/fluid_pipe.png"), getX(), getY(), 209, 0, width, height);
+            if (type == Type.DOWN) guiGraphics.blit(Constants.loc("textures/gui/fluid_pipe.png"), getX(), getY(), 198, 0, width, height);
+            else guiGraphics.blit(Constants.loc("textures/gui/fluid_pipe.png"), getX(), getY(), 209, 0, width, height);
         }
     }
 

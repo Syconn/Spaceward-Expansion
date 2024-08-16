@@ -12,6 +12,8 @@
     "ServerLevelMixin"
   ],
   "client": [
+    "AbstractContainerScreenMixin",
+    "LevelRenderMixin",
     "client.ClientLevelMixin"
   ],
   "server": [],

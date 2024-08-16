@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@SuppressWarnings("MissingUnique")
 @Mixin(PlayerModel.class)
 public class PlayerRenderer<T extends LivingEntity> {
 
@@ -33,16 +34,16 @@ public class PlayerRenderer<T extends LivingEntity> {
                 model.rightArm.zRot = (float) Math.toRadians(160);
                 model.leftArm.zRot = (float) Math.toRadians(-160);
             }
-            copyArmAngles(model);
+            spacewardExpansion$copyArmAngles(model);
         }
     }
 
-    private void copyArmAngles(PlayerModel<T> model){
-        copyModelAngles(model.rightArm, model.rightSleeve);
-        copyModelAngles(model.leftArm, model.leftSleeve);
+    private void spacewardExpansion$copyArmAngles(PlayerModel<T> model){
+        spacewardExpansion$copyModelAngles(model.rightArm, model.rightSleeve);
+        spacewardExpansion$copyModelAngles(model.leftArm, model.leftSleeve);
     }
 
-    private static void copyModelAngles(ModelPart source, ModelPart target) {
+    private static void spacewardExpansion$copyModelAngles(ModelPart source, ModelPart target) {
         target.xRot = source.xRot;
         target.yRot = source.yRot;
         target.zRot = source.zRot;

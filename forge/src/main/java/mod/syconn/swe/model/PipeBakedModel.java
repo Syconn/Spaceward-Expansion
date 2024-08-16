@@ -1,8 +1,8 @@
-package mod.syconn.swe.client.model;
+package mod.syconn.swe.model;
 
-import mod.syconn.api.blocks.AbstractPipeBlock;
-import mod.syconn.api.util.PipeConnectionTypes;
-import mod.syconn.api.util.PipePatterns;
+import mod.syconn.swe.Constants;
+import mod.syconn.swe.blocks.base.AbstractPipeBlock;
+import mod.syconn.swe.extra.PipePatterns;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -14,11 +14,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.ChunkRenderTypeSet;
-import net.neoforged.neoforge.client.model.IDynamicBakedModel;
-import net.neoforged.neoforge.client.model.data.ModelData;
-import net.neoforged.neoforge.client.model.data.ModelProperty;
-import net.neoforged.neoforge.client.model.geometry.IGeometryBakingContext;
+import net.minecraftforge.client.ChunkRenderTypeSet;
+import net.minecraftforge.client.model.IDynamicBakedModel;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,9 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static mod.syconn.api.util.PipeConnectionTypes.*;
-import static mod.syconn.api.util.PipePatterns.SpriteIdx.*;
-import static mod.syconn.api.util.BakedModelHelper.*;
+import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes.*;
+import static mod.syconn.swe.extra.PipePatterns.SpriteIdx.*;
+import static mod.syconn.swe.extra.helpers.BakedModelHelper.quad;
+import static mod.syconn.swe.extra.helpers.BakedModelHelper.v;
 
 // Origional Code Credits: https://www.mcjty.eu/docs/1.20/ep5
 public class PipeBakedModel implements IDynamicBakedModel {
@@ -92,7 +92,7 @@ public class PipeBakedModel implements IDynamicBakedModel {
     }
 
     private TextureAtlasSprite getTexture(int i) {
-        return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(Main.loc(locations[i]));
+        return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(Constants.loc(locations[i]));
     }
 
     private TextureAtlasSprite getSpriteNormal(PipePatterns.SpriteIdx idx) {
@@ -116,7 +116,7 @@ public class PipeBakedModel implements IDynamicBakedModel {
         List<BakedQuad> quads = new ArrayList<>();
 
         if (side == null) {
-            PipeConnectionTypes north, south, west, east, up, down;
+            PipePatterns.PipeConnectionTypes north, south, west, east, up, down;
             if (state != null) {
                 north = state.getValue(AbstractPipeBlock.NORTH);
                 south = state.getValue(AbstractPipeBlock.SOUTH);

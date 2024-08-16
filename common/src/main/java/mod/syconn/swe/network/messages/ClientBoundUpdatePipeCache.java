@@ -1,6 +1,6 @@
 package mod.syconn.swe.network.messages;
 
-import mod.syconn.swe.client.renders.debug.PipeNetworkRenderer;
+import mod.syconn.swe.client.renders.debug.PipeDebugRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -17,7 +17,7 @@ public record ClientBoundUpdatePipeCache(Map<UUID, Set<BlockPos>> data) {
     );
 
     public static void handle(ClientBoundUpdatePipeCache message, Player player) {
-        PipeNetworkRenderer.requestedRefresh = true;
-        PipeNetworkRenderer.PIPE_RENDERS = message.data;
+        PipeDebugRenderer.requestedRefresh = true;
+        PipeDebugRenderer.PIPE_RENDERS = message.data;
     }
 }

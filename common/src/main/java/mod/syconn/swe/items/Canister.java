@@ -2,13 +2,14 @@ package mod.syconn.swe.items;
 
 import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.common.dimensions.PlanetManager;
-import mod.syconn.swe.extra.data.components.FluidComponent;
 import mod.syconn.swe.extra.EquipmentItem;
+import mod.syconn.swe.extra.core.FluidAction;
+import mod.syconn.swe.extra.core.FluidHandlerItem;
+import mod.syconn.swe.extra.data.components.FluidComponent;
+import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.extra.util.RenderUtil;
 import mod.syconn.swe.init.ComponentRegister;
 import mod.syconn.swe.init.FluidRegister;
-import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FastColor;
@@ -31,22 +32,22 @@ public class Canister extends Item implements EquipmentItem {
     }
 
     public boolean isBarVisible(ItemStack stack) {
-        if (getHandler(stack) == null || getHandler(stack).getFluidInTank().is(Fluids.EMPTY)) return false;
+        if (getHandler(stack) == null || getHandler(stack).getFluid().is(Fluids.EMPTY)) return false;
         return getDisplayValue(stack) != 6F;
     }
 
     public int getBarColor(ItemStack stack) {
         if (getHandler(stack) == null) return -1;
-        return RenderUtil.getFluidColor(getHandler(stack).getFluidInTank().fluid());
+        return RenderUtil.getFluidColor(getHandler(stack).getFluid().getFluid());
     }
 
     public int getBarWidth(ItemStack stack) {
-        return 13 * getHandler(stack).getFluidInTank().amount() / getHandler(stack).getTankCapacity();
+        return 13 * getHandler(stack).getFluid().getAmount() / getHandler(stack).getCapacity();
     }
 
     public static float getDisplayValue(ItemStack stack){
         if (getHandler(stack) != null)
-            return (float) (getHandler(stack).getFluidInTank().amount()) / getHandler(stack).getTankCapacity() * 6.0f;
+            return (float) (getHandler(stack).getFluid().getAmount()) / getHandler(stack).getCapacity() * 6.0f;
         return 0;
     }
 
@@ -55,26 +56,26 @@ public class Canister extends Item implements EquipmentItem {
     }
 
     public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        if (getHandler(pStack) != null && !getHandler(pStack).getFluidInTank().is(Fluids.EMPTY)) {
+        if (getHandler(pStack) != null && !getHandler(pStack).getFluid().is(Fluids.EMPTY)) {
             pTooltipComponents.add(Component.empty());
-            pTooltipComponents.add(Component.literal(getHandler(pStack).getFluidInTank().amount() + "mb / " + getHandler(pStack).getTankCapacity() + "mb").withStyle(ChatFormatting.YELLOW));
+            pTooltipComponents.add(Component.literal(getHandler(pStack).getFluid().getAmount() + "mb / " + getHandler(pStack).getCapacity() + "mb").withStyle(ChatFormatting.YELLOW));
         }
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 
     public void onEquipmentTick(ItemStack stack, Level level, Player player) {
         if (!level.isClientSide){
-            if (getHandler(stack).getFluidInTank().is(Fluids.LAVA)) {
+            if (getHandler(stack).getFluid().is(Fluids.LAVA)) {
                 if (!player.fireImmune()) player.igniteForSeconds(3.0F);
                 player.hurt(level.damageSources().inFire(), 2f);
-            } else if (getHandler(stack).getFluidInTank().is(FluidRegister.O2.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
-                getHandler(stack).drain(1, ISingleFluidHandler.FluidAction.EXECUTE);
+            } else if (getHandler(stack).getFluid().is(FluidRegister.O2.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
+                getHandler(stack).drain(1, FluidAction.EXECUTE);
             }
         }
     }
 
     public Component getName(ItemStack stack) {
-        if (!getHandler(stack).getFluidInTank().is(Fluids.EMPTY)) return Services.FLUID_EXTENSIONS.getTooltip(getHandler(stack).getFluidInTank().fluid()).get(0).copy().append(" " + super.getName(stack));
+        if (!getHandler(stack).getFluid().is(Fluids.EMPTY)) return Services.FLUID_EXTENSIONS.getTooltip(getHandler(stack).getFluid().getFluid()).getFirst().copy().append(" " + super.getName(stack));
         return Component.literal("Empty ").append(super.getName(stack));
     }
 
@@ -94,7 +95,7 @@ public class Canister extends Item implements EquipmentItem {
         return itemStack;
     }
 
-    public static ISingleFluidHandler getHandler(ItemStack stack) {
+    public static FluidHandlerItem getHandler(ItemStack stack) {
         return Services.FLUID_HANDLER.get(stack);
     }
 }

@@ -1,27 +1,29 @@
 package mod.syconn.swe.client.screen.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import mod.syconn.swe.Constants;
+import mod.syconn.swe.extra.core.ExtendedButton;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 import org.apache.commons.lang3.StringUtils;
 
 public class TabButton extends ExtendedButton {
 
-    private static final ResourceLocation TEXTURE = Main.loc("textures/gui/tabs.png");
+    private static final ResourceLocation TEXTURE = Constants.loc("textures/gui/tabs.png");
     private final State state;
     private final String name;
     private final Item item;
     private boolean selected;
 
-    public TabButton(int x, int y, State state, String name, Item stack, boolean selected, OnPress onPress) {
+    public TabButton(int x, int y, State state, String name, Item stack, boolean selected, Button.OnPress onPress) {
         super(x, y - 26, 28, 28, Component.literal(name.toUpperCase().substring(0, 1)).withStyle(ChatFormatting.WHITE), onPress);
         this.state = state;
         this.name = name;
@@ -48,7 +50,7 @@ public class TabButton extends ExtendedButton {
             guiGraphics.renderItem(new ItemStack(item),x + 6,y + 6);
             guiGraphics.renderItemDecorations(mc.font, new ItemStack(item), x + 6, y + 6);
         }
-        else guiGraphics.drawCenteredString(mc.font, Language.getInstance().getVisualOrder(mc.font.ellipsize(this.getMessage(), this.width - 6)), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, getFGColor());
+        else guiGraphics.drawCenteredString(mc.font, Language.getInstance().getVisualOrder(ellipsize(this.getMessage(), this.width - 6)), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, getFGColor());
         if (isMouseOver(mouseX, mouseY)) guiGraphics.drawString(mc.font, StringUtils.capitalize(name), x - 10, y - 10, 14737632);
     }
 

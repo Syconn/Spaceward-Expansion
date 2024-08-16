@@ -1,11 +1,11 @@
 package mod.syconn.swe.client.screen.widgets;
 
+import mod.syconn.swe.extra.core.ExtendedButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
-import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
 
 public class SpriteButton extends ExtendedButton {
 

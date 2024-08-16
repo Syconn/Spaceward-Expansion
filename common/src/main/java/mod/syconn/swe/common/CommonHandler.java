@@ -1,6 +1,6 @@
 package mod.syconn.swe.common;
 
-import mod.syconn.swe.client.renders.debug.PipeNetworkRenderer;
+import mod.syconn.swe.client.renders.debug.PipeDebugRenderer;
 import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.common.dimensions.PlanetTraveler;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
@@ -72,14 +72,14 @@ public class CommonHandler {
     }
 
     public static void playerJoined(Events.PlayerEvent event) {
-        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeNetworkRenderer.playerJoined(event), sp);
+        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeDebugRenderer.playerJoined(event), sp);
     }
 
     public static void playerLeft(Events.PlayerEvent event) {
-        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeNetworkRenderer.playerLeft(event), sp);
+        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeDebugRenderer.playerLeft(event), sp);
     }
 
     public static void playerChangedDimension(Events.PlayerEvent event) {
-        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeNetworkRenderer.playerChangedDimension(event), sp);
+        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeDebugRenderer.playerChangedDimension(event), sp);
     }
 }

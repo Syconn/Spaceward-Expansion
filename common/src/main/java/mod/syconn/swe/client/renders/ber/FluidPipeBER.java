@@ -1,23 +1,23 @@
 package mod.syconn.swe.client.renders.ber;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mod.syconn.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.api.client.RenderUtil;
+import mod.syconn.swe.blockentities.FluidPipeBE;
+import mod.syconn.swe.extra.core.FluidHolder;
+import mod.syconn.swe.extra.util.RenderUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
-import net.neoforged.neoforge.fluids.FluidStack;
 
-public class FluidPipeBER implements BlockEntityRenderer<BaseFluidPipeBE> {
+public class FluidPipeBER implements BlockEntityRenderer<FluidPipeBE> {
 
     public FluidPipeBER(BlockEntityRendererProvider.Context ctx) {}
 
-    public void render(BaseFluidPipeBE pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
+    public void render(FluidPipeBE pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
         if (pBlockEntity.hasFluid()) {
-            FluidStack fluidStack = pBlockEntity.getFluid();
+            FluidHolder fluidHolder = pBlockEntity.getFluid();
             for (Direction direction : Direction.values()) {
-                RenderUtil.renderFluidInPipe(pPoseStack, pBufferSource, fluidStack.getFluid(), pBlockEntity.getConnectionType(direction), direction);
+                RenderUtil.renderFluidInPipe(pPoseStack, pBufferSource, fluidHolder.getFluid(), pBlockEntity.getConnectionType(direction), direction);
             }
         }
     }

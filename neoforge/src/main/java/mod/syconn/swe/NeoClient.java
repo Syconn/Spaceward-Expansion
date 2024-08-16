@@ -1,17 +1,29 @@
 package mod.syconn.swe;
 
-import mod.syconn.swe.extra.util.RenderUtil;
+import mod.syconn.swe.client.ClientHooks;
 import mod.syconn.swe.client.model.ChuteModel;
 import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
+import mod.syconn.swe.client.renders.ber.CanisterBER;
+import mod.syconn.swe.client.renders.ber.FluidPipeBER;
+import mod.syconn.swe.client.renders.ber.TankBER;
+import mod.syconn.swe.client.renders.debug.PipeDebugRenderer;
 import mod.syconn.swe.client.renders.effects.MoonSpecialEffects;
 import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
+import mod.syconn.swe.client.screen.CollectorScreen;
+import mod.syconn.swe.client.screen.DisperserScreen;
+import mod.syconn.swe.client.screen.TankScreen;
 import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.common.dimensions.PlanetManager;
+import mod.syconn.swe.extra.core.Events;
+import mod.syconn.swe.extra.util.RenderUtil;
 import mod.syconn.swe.helper.FluidTypes;
+import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.init.FluidRegister;
 import mod.syconn.swe.init.ItemRegister;
+import mod.syconn.swe.init.Menus;
 import mod.syconn.swe.items.Canister;
+import mod.syconn.swe.model.loader.PipeModelLoader;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -47,7 +59,7 @@ public class NeoClient {
     @SubscribeEvent
     public static void coloredItems(RegisterColorHandlersEvent.Item event) {
         event.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, ItemRegister.PARACHUTE.get());
-        event.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluidInTank().fluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
+        event.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluid().getFluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
     }
 
     @SubscribeEvent
@@ -78,6 +90,29 @@ public class NeoClient {
     }
 
     @SubscribeEvent
+    public static void entityRender(EntityRenderersEvent.RegisterRenderers event){
+        event.registerBlockEntityRenderer(BlockEntityRegister.TANK.get(), TankBER::new);
+        event.registerBlockEntityRenderer(BlockEntityRegister.FILLER.get(), CanisterBER::new);
+        event.registerBlockEntityRenderer(BlockEntityRegister.PIPE.get(), FluidPipeBER::new);
+    }
+
+    @SubscribeEvent
+    public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(Menus.TANK_MENU.get(), TankScreen::new);
+        event.register(Menus.DISPERSER_MENU.get(), DisperserScreen::new);
+        event.register(Menus.COLLECTOR_MENU.get(), CollectorScreen::new);
+    }
+
+    @SubscribeEvent
+    public static void registerModelLoaders(ModelEvent.RegisterGeometryLoaders event) {
+        PipeModelLoader.register(event);
+    }
+
+    public static void onPlayerRenderScreen(ContainerScreenEvent.Render.Background event) {
+        ClientHooks.overridePlayerScreen(event.getGuiGraphics(), event.getContainerScreen());
+    }
+
+    @SubscribeEvent
     public static void addRenderLayers(EntityRenderersEvent.AddLayers event) {
         addPlayerLayers(event.getSkin(PlayerSkin.Model.WIDE), event.getEntityModels());
         addPlayerLayers(event.getSkin(PlayerSkin.Model.SLIM), event.getEntityModels());
@@ -85,5 +120,10 @@ public class NeoClient {
 
     public static void addPlayerLayers(EntityRenderer<? extends Player> renderer, EntityModelSet s) {
         if(renderer instanceof PlayerRenderer playerRenderer) playerRenderer.addLayer(new SpaceSuitLayer<>(playerRenderer, s));
+    }
+
+    public static void renderBlockOutline(RenderLevelStageEvent event) {
+        // TODO CONFIG IMPLEMENTATION
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS) PipeDebugRenderer.renderBlockOutline(new Events.LevelRenderStage(event.getPoseStack(), event.getModelViewMatrix(), event.getProjectionMatrix()));
     }
 }

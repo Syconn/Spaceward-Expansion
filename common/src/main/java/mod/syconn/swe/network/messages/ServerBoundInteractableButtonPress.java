@@ -1,19 +1,20 @@
 package mod.syconn.swe.network.messages;
 
-import io.netty.buffer.ByteBuf;
+import mod.syconn.swe.extra.core.InteractionalFluidHandler;
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.player.Player;
 
-public record ServerBoundInteractableButtonPress(BlockPos pos, Direction side, IFluidHandlerInteractable.Interaction interaction) {
+public record ServerBoundInteractableButtonPress(BlockPos pos, Direction side, InteractionalFluidHandler.Interaction interaction) {
 
-    public static final StreamCodec<ByteBuf, ServerBoundInteractableButtonPress> STREAM_CODEC = StreamCodec.composite(
-            BlockPos.STREAM_CODEC, ServerBoundInteractableButtonPress::pos, Direction.STREAM_CODEC, ServerBoundInteractableButtonPress::side, IFluidHandlerInteractable.Interaction.STREAM_CODEC, ServerBoundInteractableButtonPress::interaction, ServerBoundInteractableButtonPress::new);
+    public static final StreamCodec<RegistryFriendlyByteBuf, ServerBoundInteractableButtonPress> STREAM_CODEC = StreamCodec.composite(
+            BlockPos.STREAM_CODEC, ServerBoundInteractableButtonPress::pos, Direction.STREAM_CODEC, ServerBoundInteractableButtonPress::side, InteractionalFluidHandler.Interaction.STREAM_CODEC, ServerBoundInteractableButtonPress::interaction, ServerBoundInteractableButtonPress::new);
 
-    public static void handle(ServerBoundInteractableButtonPress message, IPayloadContext context) {
-        context.enqueueWork(() -> {
-            IFluidHandlerInteractable handler = context.player().level().getCapability(APICapabilities.FluidHandler.BLOCK, message.pos, message.side);
-            if (handler != null) handler.setSideInteraction(message.side, message.interaction);
-        });
+    public static void handle(ServerBoundInteractableButtonPress message, Player player) {
+        InteractionalFluidHandler handler = Services.FLUID_HANDLER.getInteractional(player.level(), message.pos, message.side);
+        if (handler != null) handler.setSideInteraction(message.side, message.interaction);
     }
 }

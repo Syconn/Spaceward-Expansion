@@ -1,8 +1,10 @@
 package mod.syconn.swe.client.screen.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import mod.syconn.swe.common.data.attachments.SpaceSuit;
 import mod.syconn.swe.common.dimensions.PlanetManager;
+import mod.syconn.swe.extra.data.attachment.SpaceSuit;
+import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.init.DataAttachments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;
@@ -20,10 +22,10 @@ public class SpaceSuitOverlay {
 
     public static LayeredDraw.Layer O2_OVERLAY = (pGuiGraphics, partialTicks) -> {
         Player player = (Player) minecraft.getCameraEntity();
-        if (player != null && !minecraft.options.hideGui && minecraft.gameMode.canHurtPlayer() && displayOxygen(player) && player.hasData(Registration.SPACE_SUIT)) {
+        if (player != null && !minecraft.options.hideGui && minecraft.gameMode.canHurtPlayer() && displayOxygen(player) && Services.ATTACHED_DATA.has(DataAttachments.SPACE_SUIT, player)) {
             int left = pGuiGraphics.guiWidth() / 2 + 91;
             minecraft.getProfiler().push("oxygen");
-            SpaceSuit iSpaceSuit = player.getData(Registration.SPACE_SUIT);
+            SpaceSuit iSpaceSuit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, player);
             int max = iSpaceSuit.maxO2();
             int j2 = pGuiGraphics.guiHeight() - 49;
             int full = Mth.ceil((double) (Math.min(iSpaceSuit.O2(), max) - 2) * 10.0D / (double) iSpaceSuit.maxO2());
@@ -39,7 +41,7 @@ public class SpaceSuitOverlay {
     };
 
     public static boolean displayOxygen(Player p){
-        SpaceSuit suit = p.getData(Registration.SPACE_SUIT);
+        SpaceSuit suit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, p);
         if (suit.O2() >= suit.maxO2()) return false;
         return !PlanetManager.getSettings(p).breathable();
     }

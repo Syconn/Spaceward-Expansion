@@ -1,17 +1,14 @@
 package mod.syconn.swe;
 
-import mod.syconn.swe.capability.APICapabilities;
+import mod.syconn.swe.common.CommonHandler;
+import mod.syconn.swe.data.capability.SpaceSuitProvider;
+import mod.syconn.swe.extra.core.Events;
 import mod.syconn.swe.extra.core.InteractionalFluidHandler;
 import mod.syconn.swe.extra.data.attachment.SpaceSuit;
 import mod.syconn.swe.extra.data.savedData.PipeNetworks;
-import mod.syconn.swe.common.CommonHandler;
-import mod.syconn.swe.data.capability.SpaceSuitProvider;
-import mod.syconn.swe.init.BlockEntityRegister;
-import mod.syconn.swe.extra.core.Events;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -33,13 +30,6 @@ public class ForgeCommon {
         event.setDistance(result.distance());
         event.setDamageMultiplier(result.damageMultiplier());
         event.setCanceled(result.cancel());
-    }
-
-    @SubscribeEvent
-    public static void attachBlockEntityCapability(AttachCapabilitiesEvent<BlockEntity> event) {
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getFluidHandler());
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getItemHandler());
     }
 
     @SubscribeEvent

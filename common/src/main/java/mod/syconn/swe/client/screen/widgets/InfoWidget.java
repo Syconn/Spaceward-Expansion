@@ -1,6 +1,7 @@
 package mod.syconn.swe.client.screen.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import mod.syconn.swe.Constants;
 import mod.syconn.swe.extra.BlockInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class InfoWidget extends AbstractWidget {
 
-    private static final ResourceLocation TEXTURE = Main.loc("textures/gui/elements.png");
+    private static final ResourceLocation TEXTURE = Constants.loc("textures/gui/elements.png");
     private final List<Component> text = new ArrayList<>();
     private final BlockEntity be;
 

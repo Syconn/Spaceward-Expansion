@@ -2,7 +2,7 @@ package mod.syconn.swe.datagen;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import mod.syconn.swe.client.model.loader.PipeModelLoader;
+import mod.syconn.swe.model.loader.PipeModelLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;

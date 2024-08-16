@@ -1,7 +1,7 @@
 package mod.syconn.swe.init;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blocks.BaseFluidPipe;
+import mod.syconn.swe.blocks.FluidPipe;
 import mod.syconn.swe.blocks.*;
 import mod.syconn.swe.blocks.fluids.FluidBlock;
 import mod.syconn.swe.extra.platform.Services;
@@ -22,7 +22,7 @@ public class BlockRegister {
     public static final Supplier<CanisterFiller> CANISTER_FILLER = registerBlockAndItem("canister_filler", () -> new CanisterFiller(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final Supplier<OxygenDisperser> OXYGEN_DISPERSER = registerBlockAndItem("oxygen_disperser", () -> new OxygenDisperser(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
     public static final Supplier<Block> FLUID_TANK = registerBlockAndItem("fluid_tank", () -> new FluidTank(Blocks.IRON_BLOCK.properties().requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
-    public static final Supplier<BaseFluidPipe> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new BaseFluidPipe(Blocks.GLASS_PANE.properties()));
+    public static final Supplier<FluidPipe> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new FluidPipe(Blocks.GLASS_PANE.properties()));
     public static final Supplier<FluidBlock> O2 = Services.REGISTRAR.registerBlock("oxygen", () -> new FluidBlock(FluidRegister.O2.get(), Blocks.LAVA.properties().lightLevel(blockstate -> 0)));
 
     public static final Supplier<MapCodec<CanisterFiller>> CANISTER_FILLER_CODEC = registerCodec("canister_filler", () -> simpleCodec(CanisterFiller::new));
@@ -30,7 +30,7 @@ public class BlockRegister {
     public static final Supplier<MapCodec<OxygenCollector>> OXYGEN_COLLECTOR_CODEC = registerCodec("oxygen_collector", () -> simpleCodec(OxygenCollector::new));
     public static final Supplier<MapCodec<OxygenDisperser>> OXYGEN_DISPERSER_CODEC = registerCodec("oxygen_disperser", () -> simpleCodec(OxygenDisperser::new));
     public static final Supplier<MapCodec<DispersedAirBlock>> OXYGEN_CODEC = registerCodec("oxygen_dispersible", () -> simpleCodec(DispersedAirBlock::new));
-    public static final Supplier<MapCodec<BaseFluidPipe>> FlUID_PIPE_CODEC = registerCodec("fluid_pipe", () -> simpleCodec(BaseFluidPipe::new));
+    public static final Supplier<MapCodec<FluidPipe>> FlUID_PIPE_CODEC = registerCodec("fluid_pipe", () -> simpleCodec(FluidPipe::new));
 
     public static void init() {}
 
