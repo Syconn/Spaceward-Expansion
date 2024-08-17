@@ -1,10 +1,12 @@
 package mod.syconn.swe.common.inventory;
 
 import com.google.common.collect.ImmutableList;
-import mod.syconn.swe.items.SpaceArmor;
-import mod.syconn.swe.extra.EquipmentItem;
 import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
-import mod.syconn.swe.common.data.attachments.SpaceSuit;
+import mod.syconn.swe.extra.EquipmentItem;
+import mod.syconn.swe.extra.data.attachment.SpaceSuit;
+import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.init.DataAttachments;
+import mod.syconn.swe.items.SpaceArmor;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -25,8 +27,8 @@ public class ExtendedPlayerInventory extends Inventory {
 
     public ExtendedPlayerInventory(Player p) {
         super(p);
-        suit = p.getData(Registration.SPACE_SUIT);
-        space_utilities = suit.getInv();
+        suit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, p);
+        space_utilities = suit.getStacks();
         allInventories = ImmutableList.of(this.items, this.armor, this.offhand, this.space_utilities);
     }
 
@@ -34,9 +36,8 @@ public class ExtendedPlayerInventory extends Inventory {
         super.setChanged();
     }
 
-    public NonNullList<ItemStack> getSpaceUtil()
-    {
-        return suit.getInv();
+    public NonNullList<ItemStack> getSpaceUtil() {
+        return suit.getStacks();
     }
 
     public ItemStack getItemBySlot(EquipmentItemSlot.SpaceSlot s){

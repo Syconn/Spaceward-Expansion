@@ -1,6 +1,7 @@
 package mod.syconn.swe.extra.data.savedData;
 
 import mod.syconn.swe.common.dimensions.PlanetManager;
+import mod.syconn.swe.extra.helpers.NbtHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -9,10 +10,10 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import mod.syconn.api.util.NbtHelper;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.HashMap;
 import java.util.List;
@@ -86,7 +87,7 @@ public class AirBubblesSavedData extends SavedData {
         return data;
     }
 
-    public static AirBubblesSavedData get() { // TODO SWAP TO SAVED DATA PER DIMENSIN INSTEAD OF ALL ON OVERWORLD
-        return ServerLifecycleHooks.getCurrentServer().overworld().getDataStorage().computeIfAbsent(new Factory<>(AirBubblesSavedData::create, AirBubblesSavedData::load), "air_bubbles");
+    public static AirBubblesSavedData get(ServerLevel server) { // TODO SWAP TO SAVED DATA PER DIMENSIN INSTEAD OF ALL ON OVERWORLD
+        return server.getDataStorage().computeIfAbsent(new Factory<>(AirBubblesSavedData::create, AirBubblesSavedData::load, DataFixTypes.LEVEL), "air_bubbles");
     }
 }

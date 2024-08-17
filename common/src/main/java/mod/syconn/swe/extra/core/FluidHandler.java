@@ -6,11 +6,15 @@ import net.minecraft.world.level.material.Fluids;
 
 public interface FluidHandler {
 
-    FluidHolder getFluid();
-    int getCapacity();
+    FluidHolder getFluidHolder();
+    int getTankCapacity();
     void setFluid(FluidHolder fluidHolder);
     boolean isFluidValid(FluidHolder holder);
     void onContentsChanged();
+
+    default int getFluidAmount() {
+        return getFluidHolder().getAmount();
+    }
 
     default CompoundTag writeNBT(HolderLookup.Provider lookupProvider, CompoundTag tag) {
         return new CompoundTag();
@@ -26,14 +30,14 @@ public interface FluidHandler {
 
     default int fill(FluidHolder resource, FluidAction doFill) {
         if (preCondition() || isFluidValid(resource) || resource.is(Fluids.EMPTY)) return 0;
-        FluidHolder contained = getFluid();
+        FluidHolder contained = getFluidHolder();
         if (contained.is(Fluids.EMPTY)) {
-            int fillAmount = Math.min(getCapacity(), resource.getAmount());
+            int fillAmount = Math.min(getTankCapacity(), resource.getAmount());
             if (doFill == FluidAction.EXECUTE) setFluid(resource.copyWith(fillAmount));
             return fillAmount;
         } else {
             if (contained.is(resource)) {
-                int fillAmount = Math.min(getCapacity() - contained.getAmount(), resource.getAmount());
+                int fillAmount = Math.min(getTankCapacity() - contained.getAmount(), resource.getAmount());
                 if (doFill == FluidAction.EXECUTE && fillAmount > 0) setFluid(contained.fill(fillAmount));
                 return fillAmount;
             }
@@ -42,13 +46,13 @@ public interface FluidHandler {
     }
 
     default FluidHolder drain(FluidHolder resource, FluidAction action) {
-        if (preCondition() || resource.isEmpty() || !resource.is(getFluid())) return FluidHolder.EMPTY;
+        if (preCondition() || resource.isEmpty() || !resource.is(getFluidHolder())) return FluidHolder.EMPTY;
         return drain(resource.getAmount(), action);
     }
 
     default FluidHolder drain(int maxDrain, FluidAction action) {
         if (preCondition() || maxDrain <= 0) return FluidHolder.EMPTY;
-        FluidHolder contained = getFluid();
+        FluidHolder contained = getFluidHolder();
         if (contained.is(Fluids.EMPTY)) return FluidHolder.EMPTY;
         final int drainAmount = Math.min(contained.getAmount(), maxDrain);
         if (action == FluidAction.EXECUTE) setFluid(contained.shrink(drainAmount));

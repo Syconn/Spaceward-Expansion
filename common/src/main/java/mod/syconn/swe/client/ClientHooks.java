@@ -13,12 +13,10 @@ import net.minecraft.world.entity.player.Player;
 
 public class ClientHooks {
 
-    public static void overridePlayerScreen(GuiGraphics guiGraphics, AbstractContainerScreen<?> screen) {
-        if(screen instanceof InventoryScreen inventory) {
+    public static void overrideAbstractScreen(GuiGraphics guiGraphics, AbstractContainerScreen<?> screen, int left, int top) {
+        if(screen instanceof InventoryScreen) {
             Player p = Minecraft.getInstance().player;
             if (p != null && SpaceArmor.hasFullKit(p)) {
-                int left = inventory.leftPos;
-                int top = inventory.topPos;
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 guiGraphics.blit(AbstractContainerScreen.INVENTORY_LOCATION, left + 76, top + 43, 7, 7, 18, 18, 256, 256);

@@ -1,9 +1,12 @@
 package mod.syconn.swe.extra.data;
 
-import mod.syconn.api.blockEntity.BaseFluidPipeBE;
-import mod.syconn.api.blocks.AbstractPipeBlock;
-import mod.syconn.api.util.NbtHelper;
-import mod.syconn.api.util.PipeConnectionTypes;
+import mod.syconn.swe.blockentities.FluidPipeBE;
+import mod.syconn.swe.blocks.base.AbstractPipeBlock;
+import mod.syconn.swe.extra.PipePatterns;
+import mod.syconn.swe.extra.core.FluidAction;
+import mod.syconn.swe.extra.core.FluidHandler;
+import mod.syconn.swe.extra.helpers.NbtHelper;
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -14,8 +17,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -138,7 +139,7 @@ public class PipeNetwork {
             this.activeTask = tag.getInt("active_task");
         }
 
-        public void addInteractionPoint(BlockPos pos, Direction direction, PipeConnectionTypes type) {
+        public void addInteractionPoint(BlockPos pos, Direction direction, PipePatterns.PipeConnectionTypes type) {
             if (network.pipes.contains(pos)) {
                 if (type.isInteractionPoint() && !interactionPoint.contains(pos)) interactionPoint.add(pos);
                 if (type.isImport()) addImport(pos, direction);
@@ -151,10 +152,10 @@ public class PipeNetwork {
             interactionPoint.remove(pos);
             imports.remove(pos);
             exports.remove(pos);
-            removeTasksForPosition(pos, PipeConnectionTypes.BOTH);
+            removeTasksForPosition(pos, PipePatterns.PipeConnectionTypes.BOTH);
         }
 
-        private void generatePositionalTask(BlockPos pos, Direction direction, PipeConnectionTypes type) {
+        private void generatePositionalTask(BlockPos pos, Direction direction, PipePatterns.PipeConnectionTypes type) {
             removeTasksForPosition(pos, type);
             if (type.isExport()) {
                 for (Map.Entry<BlockPos, List<Direction>> importEntry : imports.entrySet()) {
@@ -192,7 +193,7 @@ public class PipeNetwork {
             return new Task(startPosition, startDirection, stopPosition, stopDirection, network.pipes);
         }
 
-        private void removeTasksForPosition(BlockPos pos, PipeConnectionTypes type) {
+        private void removeTasksForPosition(BlockPos pos, PipePatterns.PipeConnectionTypes type) {
             List<Task> removeTask = new ArrayList<>();
             tasks.forEach(task -> { if (task.hasPoint(pos, type)) removeTask.add(task); });
             removeTask.forEach(tasks::remove);
@@ -209,8 +210,8 @@ public class PipeNetwork {
         }
 
         private void resetPipeFluid(Level level, Task currentTask) {
-            if (level.getBlockEntity(currentTask.startPos) instanceof BaseFluidPipeBE pipeBE && pipeBE.hasFluid()) {
-                for (BlockPos pos : currentTask.directions) if (level.getBlockEntity(pos) instanceof BaseFluidPipeBE pipeBE2) pipeBE2.setFluid(Fluids.EMPTY);
+            if (level.getBlockEntity(currentTask.startPos) instanceof FluidPipeBE pipeBE && pipeBE.hasFluid()) {
+                for (BlockPos pos : currentTask.directions) if (level.getBlockEntity(pos) instanceof FluidPipeBE pipeBE2) pipeBE2.setFluid(Fluids.EMPTY);
             }
         }
 
@@ -272,22 +273,22 @@ public class PipeNetwork {
         }
 
         public TaskResult run(Level level, int transferRate) {
-            IFluidHandler startHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, startPos.relative(startDirection), startDirection.getOpposite());
-            IFluidHandler endHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, endPos.relative(endDirection), endDirection.getOpposite());
+            FluidHandler startHandler = Services.FLUID_HANDLER.get(level, startPos.relative(startDirection), startDirection.getOpposite());
+            FluidHandler endHandler = Services.FLUID_HANDLER.get(level, endPos.relative(endDirection), endDirection.getOpposite());
             if (startHandler == null || endHandler == null) return setResultT(TaskResult.FAILED);
-            if (!endHandler.isFluidValid(0, startHandler.getFluidInTank(0)) || startHandler.getFluidInTank(0).isEmpty() || endHandler.getFluidInTank(0).getAmount() >= endHandler.getTankCapacity(0)) return setResultT(TaskResult.SKIP);
-            if (level.getBlockEntity(startPos) instanceof BaseFluidPipeBE pipeBE && !pipeBE.getFluid().is(startHandler.getFluidInTank(0).getFluid())) {
+            if (!endHandler.isFluidValid(startHandler.getFluidHolder()) || startHandler.getFluidHolder().isEmpty() || endHandler.getFluidHolder().getAmount() >= endHandler.getTankCapacity()) return setResultT(TaskResult.SKIP);
+            if (level.getBlockEntity(startPos) instanceof FluidPipeBE pipeBE && !pipeBE.getFluid().is(startHandler.getFluidHolder().getFluid())) {
                 for (BlockPos pos : directions) {
-                    if (level.getBlockEntity(pos) instanceof BaseFluidPipeBE pipeBE2) pipeBE2.setFluid(startHandler.getFluidInTank(0).getFluid());
+                    if (level.getBlockEntity(pos) instanceof FluidPipeBE pipeBE2) pipeBE2.setFluid(startHandler.getFluidHolder().getFluid());
                     else return setResultT(TaskResult.FAILED_LINE);
                 }
             }
-            int fill = endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(Math.min(transferRate, startHandler.getFluidInTank(0).getAmount())), IFluidHandler.FluidAction.SIMULATE);
-            startHandler.drain(endHandler.fill(startHandler.getFluidInTank(0).copyWithAmount(fill), IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
+            int fill = endHandler.fill(startHandler.getFluidHolder().copyWith(Math.min(transferRate, startHandler.getFluidHolder().getAmount())), FluidAction.SIMULATE);
+            startHandler.drain(endHandler.fill(startHandler.getFluidHolder().copyWith(fill), FluidAction.EXECUTE), FluidAction.EXECUTE);
             return fill > 0 ? setResultT(TaskResult.SUCCESS) : setResultT(TaskResult.SKIP);
         }
 
-        public boolean hasPoint(BlockPos pos, PipeConnectionTypes type) {
+        public boolean hasPoint(BlockPos pos, PipePatterns.PipeConnectionTypes type) {
             return startPos.equals(pos) && type.isImport() || endPos.equals(pos) && type.isExport();
         }
 

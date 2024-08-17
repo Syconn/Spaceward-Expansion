@@ -9,11 +9,11 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("MissingUnique")
 @Mixin(PlayerModel.class)
 public class PlayerRenderer<T extends LivingEntity> {
 
@@ -38,11 +38,13 @@ public class PlayerRenderer<T extends LivingEntity> {
         }
     }
 
+    @Unique
     private void spacewardExpansion$copyArmAngles(PlayerModel<T> model){
         spacewardExpansion$copyModelAngles(model.rightArm, model.rightSleeve);
         spacewardExpansion$copyModelAngles(model.leftArm, model.leftSleeve);
     }
 
+    @Unique
     private static void spacewardExpansion$copyModelAngles(ModelPart source, ModelPart target) {
         target.xRot = source.xRot;
         target.yRot = source.yRot;

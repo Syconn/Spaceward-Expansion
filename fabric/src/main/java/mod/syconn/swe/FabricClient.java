@@ -65,7 +65,7 @@ public class FabricClient implements ClientModInitializer {
         EntityModelLayerRegistry.registerModelLayer(TankModel.LAYER_LOCATION, TankModel::createBodyLayer);
         DimensionRenderingRegistry.registerDimensionEffects(Constants.loc("moon"), new MoonSpecialEffects());
         ColorProviderRegistry.ITEM.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, ItemRegister.PARACHUTE.get());
-        ColorProviderRegistry.ITEM.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluid().getFluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
+        ColorProviderRegistry.ITEM.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluidHolder().getFluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
         FluidRenderHandlerRegistry.INSTANCE.register(FluidRegister.O2.get(), FluidRegister.O2_FLOWING.get(), new SimpleFluidRenderHandler(OxygenFlowingFluid.O2_STILL_RL, OxygenFlowingFluid.O2_FLOWING_RL, OxygenFlowingFluid.O2_OVERLAY_RL, -1));
         BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(), FluidRegister.O2.get(), FluidRegister.O2_FLOWING.get());
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricPlanetManager());

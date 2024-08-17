@@ -1,7 +1,6 @@
 package mod.syconn.swe.extra.core;
 
 import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -41,9 +40,9 @@ public class InteractableFluidTank extends FluidTank implements InteractionalFlu
     public void handlePush(Level level, BlockPos blockPos) {
         for (Direction direction : Direction.values()) {
             if (sided_interactions.get(direction).isPush() && Services.FLUID_HANDLER.has(level, blockPos.relative(direction), direction.getOpposite())) {
-                ISingleFluidHandler blockHandler = Services.FLUID_HANDLER.get(level, blockPos.relative(direction), direction.getOpposite());
-                if (!blockHandler.getFluidInTank().isEmpty()) {
-                    int fill = blockHandler.fill(blockHandler.getFluidInTank().copyWith(speed), FluidAction.SIMULATE);
+                FluidHandler blockHandler = Services.FLUID_HANDLER.get(level, blockPos.relative(direction), direction.getOpposite());
+                if (!blockHandler.getFluidHolder().isEmpty()) {
+                    int fill = blockHandler.fill(blockHandler.getFluidHolder().copyWith(speed), FluidAction.SIMULATE);
                     blockHandler.fill(drain(Math.min(speed, fill), FluidAction.EXECUTE), FluidAction.EXECUTE);
                 }
             }
@@ -53,9 +52,9 @@ public class InteractableFluidTank extends FluidTank implements InteractionalFlu
     public void handlePull(Level level, BlockPos blockPos) {
         for (Direction direction : Direction.values()) {
             if (sided_interactions.get(direction).isPull() && Services.FLUID_HANDLER.has(level, blockPos.relative(direction), direction.getOpposite())) {
-                ISingleFluidHandler blockHandler = Services.FLUID_HANDLER.get(level, blockPos.relative(direction), direction.getOpposite());
-                if (!blockHandler.getFluidInTank().isEmpty()) {
-                    int fill = fill(blockHandler.getFluidInTank().copyWith(speed), FluidAction.SIMULATE);
+                FluidHandler blockHandler = Services.FLUID_HANDLER.get(level, blockPos.relative(direction), direction.getOpposite());
+                if (!blockHandler.getFluidHolder().isEmpty()) {
+                    int fill = fill(blockHandler.getFluidHolder().copyWith(speed), FluidAction.SIMULATE);
                     fill(blockHandler.drain(Math.min(speed, fill), FluidAction.EXECUTE), FluidAction.EXECUTE);
                 }
             }

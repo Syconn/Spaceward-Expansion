@@ -20,11 +20,11 @@ public class FluidTank implements FluidHandler {
         this(capacity, entry -> true);
     }
 
-    public FluidHolder getFluid() {
+    public FluidHolder getFluidHolder() {
         return fluid;
     }
 
-    public int getCapacity() {
+    public int getTankCapacity() {
         return capacity;
     }
 

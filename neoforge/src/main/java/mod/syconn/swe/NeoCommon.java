@@ -18,7 +18,6 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 
-import static mod.syconn.swe.init.ComponentRegister.FLUID_COMPONENT;
 import static mod.syconn.swe.init.ItemRegister.AUTO_REFILL_CANISTER;
 import static mod.syconn.swe.init.ItemRegister.CANISTER;
 
@@ -39,7 +38,7 @@ public class NeoCommon {
 
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new ItemFluidHandlerWrapper(FLUID_COMPONENT, stack, 8000), CANISTER.get(), AUTO_REFILL_CANISTER.get());
+        event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new ItemFluidHandlerWrapper(stack, 8000), CANISTER.get(), AUTO_REFILL_CANISTER.get());
 
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> new BlockFluidWrapper(o.getFluidTank()));
         event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> o.getFluidTank());

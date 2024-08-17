@@ -59,7 +59,7 @@ public class NeoClient {
     @SubscribeEvent
     public static void coloredItems(RegisterColorHandlersEvent.Item event) {
         event.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, ItemRegister.PARACHUTE.get());
-        event.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluid().getFluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
+        event.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluidHolder().getFluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
     }
 
     @SubscribeEvent
@@ -109,7 +109,7 @@ public class NeoClient {
     }
 
     public static void onPlayerRenderScreen(ContainerScreenEvent.Render.Background event) {
-        ClientHooks.overridePlayerScreen(event.getGuiGraphics(), event.getContainerScreen());
+        ClientHooks.overrideAbstractScreen(event.getGuiGraphics(), event.getContainerScreen(), event.getContainerScreen().getGuiLeft(), event.getContainerScreen().getGuiTop());
     }
 
     @SubscribeEvent

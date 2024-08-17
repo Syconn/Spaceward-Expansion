@@ -22,11 +22,11 @@ public class FluidHelper {
             boolean success;
             ItemStack movedStack = inventory.getItem(slot1);
             boolean isBucket = movedStack.getItem() instanceof BucketItem;
-            if (blockHandler.getFluid().isEmpty() || itemHandler.getFluid().getAmount() == itemHandler.getCapacity()) {
+            if (blockHandler.getFluidHolder().isEmpty() || itemHandler.getFluidHolder().getAmount() == itemHandler.getTankCapacity()) {
                 success = fillBlockFromItemStack(blockHandler, itemHandler, Integer.MAX_VALUE);
                 movedStack = new ItemStack(Items.BUCKET);
             } else {
-                movedStack = Services.FLUID_HANDLER.getBucket(blockHandler.getFluid());
+                movedStack = Services.FLUID_HANDLER.getBucket(blockHandler.getFluidHolder());
                 success = fillItemStackFromBlock(blockHandler, itemHandler, Integer.MAX_VALUE);
             }
             if (success) {
@@ -43,12 +43,12 @@ public class FluidHelper {
     }
 
     public static boolean maxTransferStackToBlock(FluidHandler blockHandler, FluidHandler itemHandler) {
-        if (blockHandler.getFluid().isEmpty() || itemHandler.getFluid().getAmount() == itemHandler.getCapacity()) return fillBlockFromItemStack(blockHandler, itemHandler, Integer.MAX_VALUE);
+        if (blockHandler.getFluidHolder().isEmpty() || itemHandler.getFluidHolder().getAmount() == itemHandler.getTankCapacity()) return fillBlockFromItemStack(blockHandler, itemHandler, Integer.MAX_VALUE);
         return fillItemStackFromBlock(blockHandler, itemHandler, Integer.MAX_VALUE);
     }
 
     public static boolean fillBlockFromItemStack(FluidHandler block, FluidHandler item, int amount) {
-        if (block.isFluidValid(item.getFluid())) {
+        if (block.isFluidValid(item.getFluidHolder())) {
             FluidHolder fluidHolder = item.drain(amount, FluidAction.SIMULATE);
             int fill = block.fill(fluidHolder, FluidAction.EXECUTE);
             item.drain(fill, FluidAction.EXECUTE);
@@ -58,7 +58,7 @@ public class FluidHelper {
     }
 
     public static boolean fillItemStackFromBlock(FluidHandler block, FluidHandler item, int amount) {
-        if (item.isFluidValid(block.getFluid())){
+        if (item.isFluidValid(block.getFluidHolder())){
             FluidHolder fluidHolder = block.drain(amount, FluidAction.SIMULATE);
             int fill = item.fill(fluidHolder, FluidAction.EXECUTE);
             block.drain(fill, FluidAction.EXECUTE);

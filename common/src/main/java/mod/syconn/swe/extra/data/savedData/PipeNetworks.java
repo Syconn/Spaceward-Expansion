@@ -3,6 +3,7 @@ package mod.syconn.swe.extra.data.savedData;
 import com.google.common.collect.Sets;
 import mod.syconn.swe.blockentities.base.AbstractPipeBE;
 import mod.syconn.swe.extra.data.PipeNetwork;
+import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
 import mod.syconn.swe.extra.helpers.ListHelper;
 import mod.syconn.swe.extra.core.Events;
@@ -124,7 +125,7 @@ public class PipeNetworks extends SavedData {
     }
 
     private void renderPipes(Level level) {
-        if (render() && level instanceof ServerLevel sl) sl.getPlayers(LivingEntity::isAlive).forEach(serverPlayer -> Channel.sendToPlayer(new ClientBoundUpdatePipeCache(getDataMap()), serverPlayer));
+        if (render() && level instanceof ServerLevel sl) sl.getPlayers(LivingEntity::isAlive).forEach(serverPlayer -> Network.sendToPlayer(new ClientBoundUpdatePipeCache(getDataMap()), serverPlayer));
     }
 
     protected boolean render() {

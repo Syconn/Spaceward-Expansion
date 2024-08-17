@@ -1,5 +1,6 @@
 package mod.syconn.swe.common.dimensions;
 
+import mod.syconn.swe.init.CommonTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.portal.DimensionTransition;
 public class PlanetTraveler {
 
     public static DimensionTransition changePlanet(ServerLevel pLevel, Entity pEntity) {
-        ResourceKey<Level> resourcekey = pLevel.dimension() == Level.OVERWORLD ? Registration.MOON_KEY : Level.OVERWORLD;
+        ResourceKey<Level> resourcekey = pLevel.dimension() == Level.OVERWORLD ? CommonTags.MOON_KEY : Level.OVERWORLD;
         ServerLevel serverlevel = pLevel.getServer().getLevel(resourcekey);
         if (serverlevel == null) return null;
         BlockPos blockpos = serverlevel.getSharedSpawnPos().offset(0, 30, 0);

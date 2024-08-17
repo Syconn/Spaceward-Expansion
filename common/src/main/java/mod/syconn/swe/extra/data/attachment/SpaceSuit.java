@@ -74,7 +74,7 @@ public class SpaceSuit implements IAttachmentType<SpaceSuit>, Container {
     public void decreaseO2(Player p) {
         if (p.getInventory() instanceof ExtendedPlayerInventory ext && Services.FLUID_HANDLER.has(ext.getSpaceUtil().getFirst())) {
             FluidHandlerItem handler = Services.FLUID_HANDLER.get(ext.getSpaceUtil().getFirst());
-            if ((SpaceArmor.hasFullKit(p) && handler != null && !handler.getFluid().isEmpty() || PlanetManager.getSettings(p).breathable())) {
+            if ((SpaceArmor.hasFullKit(p) && handler != null && !handler.getFluidHolder().isEmpty() || PlanetManager.getSettings(p).breathable())) {
                 if (oxygen < maxO2()) setO2(oxygen + 1, p);
             } else setO2(new Random().nextInt(2) > 0 ? O2() : O2() - 1, p);
         }
@@ -141,7 +141,7 @@ public class SpaceSuit implements IAttachmentType<SpaceSuit>, Container {
         container.clearContent();
     }
 
-    private NonNullList<ItemStack> getStacks() {
+    public NonNullList<ItemStack> getStacks() {
         return container.getItems();
     }
 

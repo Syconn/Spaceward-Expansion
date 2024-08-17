@@ -10,10 +10,7 @@ import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class SpaceSuitOverlay {
 
     private static final Minecraft minecraft = Minecraft.getInstance();
@@ -22,7 +19,7 @@ public class SpaceSuitOverlay {
 
     public static LayeredDraw.Layer O2_OVERLAY = (pGuiGraphics, partialTicks) -> {
         Player player = (Player) minecraft.getCameraEntity();
-        if (player != null && !minecraft.options.hideGui && minecraft.gameMode.canHurtPlayer() && displayOxygen(player) && Services.ATTACHED_DATA.has(DataAttachments.SPACE_SUIT, player)) {
+        if (player != null && !minecraft.options.hideGui && !player.isCreative() && displayOxygen(player) && Services.ATTACHED_DATA.has(DataAttachments.SPACE_SUIT, player)) {
             int left = pGuiGraphics.guiWidth() / 2 + 91;
             minecraft.getProfiler().push("oxygen");
             SpaceSuit iSpaceSuit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, player);

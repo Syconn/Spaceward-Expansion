@@ -73,7 +73,7 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
                 pPoseStack.translate(0F, -0.80F, 0.3F);
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(180F));
                 VertexConsumer v2 = pBufferSource.getBuffer(RenderType.entityTranslucentCull(Constants.loc("textures/entity/layers/tank.png")));
-                tm.fluidScaling((float) handler.getFluid().getAmount() / handler.getCapacity());
+                tm.fluidScaling((float) handler.getFluidHolder().getAmount() / handler.getTankCapacity());
                 tm.render(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, new int[]{i, i2});
                 pPoseStack.popPose();
             }

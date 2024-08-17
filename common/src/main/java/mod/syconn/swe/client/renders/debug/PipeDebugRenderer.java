@@ -11,8 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 
@@ -45,7 +43,6 @@ public class PipeDebugRenderer {
         return null;
     }
 
-    @OnlyIn(Dist.CLIENT)
     public static void renderBlockOutline(Events.LevelRenderStage event) {
         if (vertexBuffer == null || requestedRefresh) {
             requestedRefresh = false;

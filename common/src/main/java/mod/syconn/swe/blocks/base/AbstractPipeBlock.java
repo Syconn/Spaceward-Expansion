@@ -26,8 +26,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.ticks.ScheduledTick;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-
 import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes;
 import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes.BLOCK;
 import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes.CABLE;
@@ -107,7 +105,7 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         else return shape;
     }
 
-    public VoxelShape getShape(@Nonnull BlockState state, @Nonnull BlockGetter world, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         PipeConnectionTypes north = getConnectorType(world, pos, Direction.NORTH);
         PipeConnectionTypes south = getConnectorType(world, pos, Direction.SOUTH);
         PipeConnectionTypes west = getConnectorType(world, pos, Direction.WEST);
@@ -118,13 +116,13 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         return shapeCache[index];
     }
 
-    public BlockState updateShape(BlockState state, @Nonnull Direction direction, @Nonnull BlockState neighbourState, @Nonnull LevelAccessor world, @Nonnull BlockPos current, @Nonnull BlockPos offset) {
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighbourState, LevelAccessor world, BlockPos current, BlockPos offset) {
         if (state.getValue(BlockStateProperties.WATERLOGGED))
             world.getFluidTicks().schedule(new ScheduledTick<>(Fluids.WATER, current, Fluids.WATER.getTickDelay(world), 0L));
         return updateState(world, current, state, direction);
     }
 
-    public void setPlacedBy(@Nonnull Level level, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nullable LivingEntity placer, @Nonnull ItemStack stack) {
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof AbstractPipeBE cable) cable.markDirty();
         BlockState blockState = calculateState(level, pos, state);

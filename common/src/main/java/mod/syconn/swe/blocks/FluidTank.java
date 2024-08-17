@@ -59,7 +59,7 @@ public class FluidTank extends FluidBaseBlock {
 
     public int getAnalogOutputSignal(BlockState state, Level l, BlockPos pos) {
         if (l.getBlockEntity(pos) instanceof TankBE te) {
-            double o = (double) (te.getFluidTank().getFluid().getAmount()) / te.getFluidTank().getCapacity();
+            double o = (double) (te.getFluidTank().getFluidHolder().getAmount()) / te.getFluidTank().getTankCapacity();
             return (int) (o * 15);
         }
         return 0;

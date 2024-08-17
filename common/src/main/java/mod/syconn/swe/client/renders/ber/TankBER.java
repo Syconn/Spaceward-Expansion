@@ -14,10 +14,10 @@ public class TankBER implements BlockEntityRenderer<TankBE> {
     public TankBER(BlockEntityRendererProvider.Context ctx) { }
 
     public void render(TankBE pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
-        if (!pBlockEntity.getFluidTank().getFluid().isEmpty()) {
-            FluidHolder fluidHolder = pBlockEntity.getFluidTank().getFluid();
+        if (!pBlockEntity.getFluidTank().getFluidHolder().isEmpty()) {
+            FluidHolder fluidHolder = pBlockEntity.getFluidTank().getFluidHolder();
             Direction[] directions;
-            float height = (float) (pBlockEntity.getFluidTank().getFluid().getAmount()) / pBlockEntity.getFluidTank().getCapacity();
+            float height = (float) (pBlockEntity.getFluidTank().getFluidHolder().getAmount()) / pBlockEntity.getFluidTank().getTankCapacity();
             if (height < 0.9) directions = new Direction[] {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, Direction.UP};
             else directions = new Direction[] {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
             pPoseStack.pushPose();

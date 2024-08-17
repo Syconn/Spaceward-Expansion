@@ -38,8 +38,8 @@ public class TankScreen extends InteractionSelectorScreen<TankMenu> {
         pGuiGraphics.blit(BG, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
 
-        FluidHolder fluidHolder = tank.getFluid();
-        int u = (int) ((double) (fluidHolder.getAmount()) / tank.getCapacity() * 70);
+        FluidHolder fluidHolder = tank.getFluidHolder();
+        int u = (int) ((double) (fluidHolder.getAmount()) / tank.getTankCapacity() * 70);
         if(fluidHolder.isEmpty()) return;
         TextureAtlasSprite sprite = RenderUtil.getSprite(fluidHolder);
         int tintColor = Services.FLUID_EXTENSIONS.getTintColor(fluidHolder);
@@ -51,7 +51,7 @@ public class TankScreen extends InteractionSelectorScreen<TankMenu> {
         pGuiGraphics.blit(this.leftPos + 34, topPos + 8 + (70 - u), 0, 34, u, sprite);
         pGuiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        Component infoComponent = Component.literal(fluidHolder.getAmount() + "mb/" + tank.getCapacity() + "mb").withStyle(ChatFormatting.GRAY);
+        Component infoComponent = Component.literal(fluidHolder.getAmount() + "mb/" + tank.getTankCapacity() + "mb").withStyle(ChatFormatting.GRAY);
         if (leftPos + 34 <= pMouseX && pMouseX <= leftPos + 67 && topPos + 8 <= pMouseY && pMouseY <= topPos + 77)
             pGuiGraphics.renderComponentTooltip(font, List.of(Services.FLUID_EXTENSIONS.getTooltip(fluidHolder).getFirst(), infoComponent), pMouseX, pMouseY);
     }

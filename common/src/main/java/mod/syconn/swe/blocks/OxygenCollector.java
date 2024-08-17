@@ -27,7 +27,7 @@ public class OxygenCollector extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack).isSuccess()) return ItemInteractionResult.CONSUME;
+        if (!pLevel.isClientSide && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack)) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 

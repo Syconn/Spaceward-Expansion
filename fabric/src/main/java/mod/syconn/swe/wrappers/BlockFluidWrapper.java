@@ -1,42 +1,49 @@
 package mod.syconn.swe.wrappers;
 
+import mod.syconn.swe.extra.core.FluidAction;
 import mod.syconn.swe.extra.core.FluidHandler;
-import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
+import mod.syconn.swe.extra.core.FluidHolder;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleVariantStorage;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 
-public class BlockFluidWrapper extends SingleVariantStorage<FluidVariant> implements FluidHandler {
+public class BlockFluidWrapper implements SingleSlotStorage<FluidVariant> {
 
-    protected FluidVariant getBlankVariant() {
-        return FluidVariant.blank();
+    private final FluidHandler handler;
+
+    public BlockFluidWrapper(FluidHandler handler) {
+        this.handler = handler;
     }
 
-    protected long getCapacity(FluidVariant variant) {
-        return 16000; // TODO MAY NEED TO BE CONVERTED TO FABRIC NUMBERS
+    public FluidVariant getResource() {
+        return FluidVariant.of(handler.getFluidHolder().getFluid());
     }
 
-    protected void onFinalCommit() {
-        // TODO FOR UPDATE CLIENT
+    public long getAmount() {
+        return handler.getFluidAmount();
     }
 
-    public ISingleFluidHandler.FluidHolder getFluid() {
-        return new ISingleFluidHandler.FluidHolder(variant.getFluid(), (int) amount);
+    public long getCapacity() {
+        return handler.getTankCapacity();
     }
 
-    public void setFluid(ISingleFluidHandler.FluidHolder fluidHolder) {
-        variant = FluidVariant.of(fluidHolder.fluid());
-        amount = fluidHolder.amount();
+    public FluidHandler getHandler() {
+        return handler;
     }
 
-    public void readNBT(CompoundTag nbt, HolderLookup.Provider wrapperLookup) {
-        SingleVariantStorage.readNbt(this, FluidVariant.CODEC, FluidVariant::blank, nbt, wrapperLookup);
+    public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
+        return handler.fill(new FluidHolder(resource.getFluid(), (int) maxAmount), FluidAction.EXECUTE);
     }
 
-    public CompoundTag writeNBT(HolderLookup.Provider wrapperLookup) {
-        CompoundTag tag = new CompoundTag();
-        SingleVariantStorage.writeNbt(this, FluidVariant.CODEC, tag, wrapperLookup);
-        return tag;
+    public long extract(FluidVariant resource, long maxAmount, TransactionContext transaction) {
+        return handler.drain(new FluidHolder(resource.getFluid(), (int) maxAmount), FluidAction.EXECUTE).getAmount();
+    }
+
+    public boolean isResourceBlank() {
+        return handler.getFluidHolder().isEmpty();
+    }
+
+    public String toString() {
+        return "BlockFluidWrapper[%d %s]".formatted(handler.getFluidAmount(), handler.getFluidHolder().getFluid());
     }
 }

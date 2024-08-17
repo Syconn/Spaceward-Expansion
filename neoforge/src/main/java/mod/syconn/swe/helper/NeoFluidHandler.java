@@ -19,11 +19,11 @@ public class NeoFluidHandler {
             this.handler = handler;
         }
 
-        public FluidHolder getFluid() {
+        public FluidHolder getFluidHolder() {
             return of(handler.getFluidInTank(0));
         }
 
-        public int getCapacity() {
+        public int getTankCapacity() {
             return handler.getTankCapacity(0);
         }
 
@@ -52,17 +52,17 @@ public class NeoFluidHandler {
 
     public static class ItemFluidHandler implements FluidHandlerItem {
 
-        private IFluidHandlerItem handler;
+        private final IFluidHandlerItem handler;
 
         public ItemFluidHandler(IFluidHandlerItem handler) {
             this.handler = handler;
         }
 
-        public FluidHolder getFluid() {
+        public FluidHolder getFluidHolder() {
             return null;
         }
 
-        public int getCapacity() {
+        public int getTankCapacity() {
             return 0;
         }
 

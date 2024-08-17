@@ -19,11 +19,11 @@ public class ForgeFluidHandler {
             this.handler = handler;
         }
 
-        public FluidHolder getFluid() {
+        public FluidHolder getFluidHolder() {
             return of(handler.getFluidInTank(0));
         }
 
-        public int getCapacity() {
+        public int getTankCapacity() {
             return handler.getTankCapacity(0);
         }
 
@@ -58,11 +58,11 @@ public class ForgeFluidHandler {
             this.handler = handler;
         }
 
-        public FluidHolder getFluid() {
+        public FluidHolder getFluidHolder() {
             return null;
         }
 
-        public int getCapacity() {
+        public int getTankCapacity() {
             return 0;
         }
 

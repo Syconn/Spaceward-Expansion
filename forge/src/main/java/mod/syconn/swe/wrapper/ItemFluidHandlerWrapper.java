@@ -1,20 +1,16 @@
 package mod.syconn.swe.wrapper;
 
-import mod.syconn.swe.extra.data.components.FluidComponent;
-import net.minecraft.core.component.DataComponentType;
+import mod.syconn.swe.extra.data.components.FluidHolderComponent;
+import mod.syconn.swe.init.ComponentRegister;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
-import java.util.function.Supplier;
-
 public class ItemFluidHandlerWrapper implements IFluidHandlerItem {
-    protected final Supplier<DataComponentType<FluidComponent>> componentType;
     protected ItemStack container;
     protected int capacity;
 
-    public ItemFluidHandlerWrapper(Supplier<DataComponentType<FluidComponent>> componentType, ItemStack container, int capacity) {
-        this.componentType = componentType;
+    public ItemFluidHandlerWrapper(ItemStack container, int capacity) {
         this.container = container;
         this.capacity = capacity;
     }
@@ -24,13 +20,13 @@ public class ItemFluidHandlerWrapper implements IFluidHandlerItem {
     }
 
     public FluidStack getFluid() {
-        FluidComponent component = container.getOrDefault(componentType.get(), FluidComponent.EMPTY);
-        return new FluidStack(component.fluid(), component.amount());
+        FluidHolderComponent component = container.getOrDefault(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), FluidHolderComponent.EMPTY);
+        return new FluidStack(component.fluidHolder().getFluid(), component.fluidHolder().getAmount());
     }
 
     protected void setFluid(FluidStack fluid) {
-        FluidComponent component = container.getOrDefault(componentType.get(), FluidComponent.EMPTY);
-        container.set(componentType.get(), FluidComponent.of(fluid.getFluid(), fluid.getAmount(), component.capacity()));
+        FluidHolderComponent component = container.getOrDefault(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), FluidHolderComponent.EMPTY);
+        container.set(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), FluidHolderComponent.of(fluid.getFluid(), fluid.getAmount(), component.capacity()));
     }
     
     public int getTanks() {
@@ -123,31 +119,6 @@ public class ItemFluidHandlerWrapper implements IFluidHandlerItem {
     }
 
     protected void setContainerToEmpty() {
-        container.remove(componentType.get());
-    }
-
-    public static class Consumable extends ItemFluidHandlerWrapper {
-        public Consumable(Supplier<DataComponentType<FluidComponent>> componentType, ItemStack container, int capacity) {
-            super(componentType, container, capacity);
-        }
-
-        protected void setContainerToEmpty() {
-            super.setContainerToEmpty();
-            container.shrink(1);
-        }
-    }
-
-    public static class SwapEmpty extends ItemFluidHandlerWrapper {
-        protected final ItemStack emptyContainer;
-
-        public SwapEmpty(Supplier<DataComponentType<FluidComponent>> componentType, ItemStack container, ItemStack emptyContainer, int capacity) {
-            super(componentType, container, capacity);
-            this.emptyContainer = emptyContainer;
-        }
-        
-        protected void setContainerToEmpty() {
-            super.setContainerToEmpty();
-            container = emptyContainer;
-        }
+        container.remove(ComponentRegister.FLUID_HOLDER_COMPONENT.get());
     }
 }

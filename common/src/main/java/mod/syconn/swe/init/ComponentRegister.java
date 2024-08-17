@@ -1,6 +1,6 @@
 package mod.syconn.swe.init;
 
-import mod.syconn.swe.extra.data.components.FluidComponent;
+import mod.syconn.swe.extra.data.components.FluidHolderComponent;
 import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.core.component.DataComponentType;
 
@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 
 public class ComponentRegister {
 
-    public static final Supplier<DataComponentType<FluidComponent>> FLUID_COMPONENT = register("fluid_component",
-            () -> DataComponentType.<FluidComponent>builder().networkSynchronized(FluidComponent.STREAM_CODEC).persistent(FluidComponent.CODEC).build());
+    public static final Supplier<DataComponentType<FluidHolderComponent>> FLUID_HOLDER_COMPONENT = register("fluid_component",
+            () -> DataComponentType.<FluidHolderComponent>builder().networkSynchronized(FluidHolderComponent.STREAM_CODEC).persistent(FluidHolderComponent.CODEC).build());
 
     public static void init() {}
 

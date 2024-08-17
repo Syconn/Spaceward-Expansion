@@ -15,6 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -51,20 +52,20 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, DisperserBE e) {
         if (e.enabled) {
-            if (e.tank.getFluid().getAmount() > 0) {
+            if (e.tank.getFluidHolder().getAmount() > 0) {
                 e.testRate--;
                 if (e.testRate <= 0) {
                     e.testRate = 100;
                     addBlock(level, pos.relative(Direction.UP), pos, 1);
                     level.scheduleTick(pos, BlockRegister.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
                 }
-            } else AirBubblesSavedData.get().remove(level.dimension(), e.uuid);
+            } else AirBubblesSavedData.get((ServerLevel) level).remove(level.dimension(), e.uuid);
 
             if (e.active) {
-                if (e.list.size() / e.rate > e.tank.getCapacity()) {
+                if (e.list.size() / e.rate > e.tank.getTankCapacity()) {
                     e.active = false;
                     e.list.clear();
-                    AirBubblesSavedData.get().remove(level.dimension(), e.uuid);
+                    AirBubblesSavedData.get((ServerLevel) level).remove(level.dimension(), e.uuid);
                 } else {
                     if (e.lowerRate <= 0) {
                         e.lowerRate = 10;
@@ -85,28 +86,30 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     }
 
     public void failed(boolean t) {
-        for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersedAirBlock) level.removeBlock(pos, false);
-        if (t) {
-            active = false;
-            list.clear();
-            AirBubblesSavedData.get().remove(level.dimension(), uuid);
-        } else {
-            if (list.size() / rate > tank.getFluid().getAmount()) {
+        if (level instanceof ServerLevel) {
+            for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersedAirBlock) level.removeBlock(pos, false);
+            if (t) {
                 active = false;
                 list.clear();
-                AirBubblesSavedData.get().remove(level.dimension(), uuid);
+                AirBubblesSavedData.get((ServerLevel) level).remove(level.dimension(), uuid);
             } else {
-                active = true;
-                tank.drain(list.size() / rate, FluidAction.EXECUTE);
-                AirBubblesSavedData.get().set(level.dimension(), uuid, list);
+                if (list.size() / rate > tank.getFluidHolder().getAmount()) {
+                    active = false;
+                    list.clear();
+                    AirBubblesSavedData.get((ServerLevel) level).remove(level.dimension(), uuid);
+                } else {
+                    active = true;
+                    tank.drain(list.size() / rate, FluidAction.EXECUTE);
+                    AirBubblesSavedData.get((ServerLevel) level).set(level.dimension(), uuid, list);
+                }
             }
+            markDirty();
         }
-        markDirty();
     }
 
     public void toggleEnabled() {
         this.enabled = !this.enabled;
-        if (this.enabled && tank.getFluid().getAmount() > 0) {
+        if (this.enabled && tank.getFluidHolder().getAmount() > 0) {
             testRate = 100;
             addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
             level.scheduleTick(worldPosition, BlockRegister.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);

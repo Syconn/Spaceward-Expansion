@@ -42,7 +42,7 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack).isSuccess()) return ItemInteractionResult.CONSUME;
+        if (!pLevel.isClientSide && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack)) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 
@@ -62,7 +62,7 @@ public class OxygenDisperser extends FluidBaseBlock {
 
     public void onRemove(BlockState p_60515_, Level p_60516_, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
         if (p_60515_.hasBlockEntity() && (!p_60515_.is(p_60518_.getBlock()) || !p_60518_.hasBlockEntity()) && p_60516_.getBlockEntity(p_60517_) instanceof DisperserBE de) {
-            AirBubblesSavedData.get().remove(p_60516_.dimension(), de.getUUID());
+            if (p_60516_ instanceof ServerLevel sl) AirBubblesSavedData.get(sl).remove(p_60516_.dimension(), de.getUUID());
             for (BlockPos pos : de.list) p_60516_.removeBlock(pos, false);
         }
         super.onRemove(p_60515_, p_60516_, p_60517_, p_60518_, p_60519_);

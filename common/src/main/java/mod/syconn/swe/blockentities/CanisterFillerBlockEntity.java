@@ -5,7 +5,6 @@ import mod.syconn.swe.extra.core.FluidHandler;
 import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.core.FluidTank;
 import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.items.Canister;
 import net.minecraft.core.BlockPos;
@@ -37,8 +36,8 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
                 ItemStack itemStack = e.items.get(i);
                 FluidHandler handler = Services.FLUID_HANDLER.get(itemStack);
                 if (handler != null) {
-                    FluidHolder fluidHolder = handler.getFluid();
-                    if (handler.getCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(e.getFluidTank().getFluid())) {
+                    FluidHolder fluidHolder = handler.getFluidHolder();
+                    if (handler.getTankCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(e.getFluidTank().getFluidHolder())) {
                         FluidHolder resource = e.getFluidTank().drain(e.fillSpeed, FluidAction.EXECUTE);
                         e.getFluidTank().fill(resource.copyWith(resource.getAmount() - handler.fill(resource, FluidAction.EXECUTE)), FluidAction.EXECUTE);
                         e.update();
@@ -50,7 +49,7 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
 
     public boolean addCanister(ItemStack stack) {
         FluidHandler handler = Services.FLUID_HANDLER.get(stack);
-        if (handler != null && stack.getItem() instanceof Canister && handler.getFluid().is(Fluids.EMPTY) || handler.getFluid().is(getFluidTank().getFluid())) {
+        if (handler != null && stack.getItem() instanceof Canister && handler.getFluidHolder().is(Fluids.EMPTY) || handler.getFluidHolder().is(getFluidTank().getFluidHolder())) {
             for (int i = 0; i < 4; i++) {
                 if (items.get(i).isEmpty()) {
                     items.set(i, stack.copy());

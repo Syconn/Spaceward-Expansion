@@ -1,5 +1,6 @@
 package mod.syconn.swe.items;
 
+import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.extra.EquipmentItem;
 import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
@@ -38,9 +39,9 @@ public class Parachute extends Item implements Equipable, EquipmentItem {
         return SoundEvents.ARMOR_EQUIP_ELYTRA;
     }
 
-//    public EquipmentItemSlot.SpaceSlot getSlot() { TODO RE ADD
-//        return EquipmentItemSlot.SpaceSlot.PARACHUTE;
-//    }
+    public EquipmentItemSlot.SpaceSlot getSlot() {
+        return EquipmentItemSlot.SpaceSlot.PARACHUTE;
+    }
 
     public void onEquipmentTick(ItemStack stack, Level level, Player player) { }
 }

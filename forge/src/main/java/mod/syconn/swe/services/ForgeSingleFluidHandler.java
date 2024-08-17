@@ -1,26 +1,46 @@
 package mod.syconn.swe.services;
 
+import mod.syconn.swe.data.capability.APICapabilities;
+import mod.syconn.swe.extra.core.FluidHandler;
+import mod.syconn.swe.extra.core.FluidHandlerItem;
+import mod.syconn.swe.extra.core.FluidHolder;
+import mod.syconn.swe.extra.core.InteractionalFluidHandler;
 import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
-import mod.syconn.swe.init.ComponentRegister;
+import mod.syconn.swe.helper.ForgeFluidHandler;
+import mod.syconn.swe.init.CommonTags;
 import mod.syconn.swe.wrapper.ItemFluidHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 
 public class ForgeSingleFluidHandler implements ISingleFluidHandler {
 
-    public ISingleFluidHandler get(ItemStack stack) {
-        return new ForgeSingleFluidHandler(new ItemFluidHandlerWrapper(ComponentRegister.FLUID_COMPONENT, stack, 8000));
+    public FluidHandlerItem get(ItemStack stack) {
+        return new ForgeFluidHandler.ItemFluidHandler(new ItemFluidHandlerWrapper(stack, 8000));
     }
 
-    public ISingleFluidHandler get(Level level, BlockPos pos, Direction direction) {
-        return new ForgeSingleFluidHandler(level.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, direction).orElse(null));
+    public boolean has(ItemStack stack) {
+        return stack.is(CommonTags.CANISTERS);
+    }
+
+    public FluidHandler get(Level level, BlockPos pos, Direction direction) {
+        return new ForgeFluidHandler.BlockFluidHandler(level.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, direction).orElse(null));
     }
 
     public boolean has(Level level, BlockPos pos, Direction direction) {
         return level.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, direction).isPresent();
+    }
+
+    public InteractionalFluidHandler getInteractional(Level level, BlockPos pos, Direction direction) {
+        return level.getBlockEntity(pos).getCapability(APICapabilities.INTERACTIONAL_HANDLER, direction).orElse(null);
+    }
+
+    public ItemStack getBucket(FluidHolder fluidHolder) {
+        return FluidUtil.getFilledBucket(new FluidStack(fluidHolder.getFluid(), 1));
     }
 
 //    public FluidHolder getFluidInTank() {

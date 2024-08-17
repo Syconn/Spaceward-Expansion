@@ -18,11 +18,11 @@ public class BlockFluidWrapper implements IFluidHandler {
     }
 
     public FluidStack getFluidInTank(int tank) {
-        return of(handler.getFluid());
+        return of(handler.getFluidHolder());
     }
 
     public int getTankCapacity(int tank) {
-        return handler.getCapacity();
+        return handler.getTankCapacity();
     }
 
     public boolean isFluidValid(int tank, FluidStack stack) {

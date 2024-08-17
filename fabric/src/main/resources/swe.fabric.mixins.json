@@ -8,7 +8,7 @@
     "EntityMixin",
     "LivingEntityMixin",
     "PlayerListMixin",
-    "PlayerMixin",
+    "FabricPlayerMixin",
     "ServerLevelMixin"
   ],
   "client": [
