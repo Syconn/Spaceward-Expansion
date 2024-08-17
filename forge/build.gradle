@@ -29,10 +29,7 @@ minecraft {
 
     reobf = false // Forge 1.20.6+ uses official mappings at runtime, so we shouldn't reobf from official to SRG
 
-    def at = project(':common').file('src/main/resources/accesstransformer.cfg')
-    if (at.exists()) {
-        accessTransformer = at
-    }
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {

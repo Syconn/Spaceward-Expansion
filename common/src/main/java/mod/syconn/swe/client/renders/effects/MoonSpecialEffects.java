@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import mod.syconn.swe.Constants;
-import net.minecraft.client.Camera;
+import mod.syconn.swe.extra.core.CustomSkyRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 
-public class MoonSpecialEffects extends DimensionSpecialEffects {
+public class MoonSpecialEffects extends DimensionSpecialEffects implements CustomSkyRenderer {
 
     private static final ResourceLocation SUN_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/sun.png");
     private static final ResourceLocation EARTH_LOCATION = Constants.loc("textures/environment/earth.png");
@@ -31,9 +31,9 @@ public class MoonSpecialEffects extends DimensionSpecialEffects {
 
     public boolean isFoggyAt(int pX, int pY) {
         return false;
-    }
+    } // TODO NEVER CALLS RENDER SKY
 
-    public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
+    public boolean renderSky(ClientLevel level, float partialTick, Matrix4f modelViewMatrix, Matrix4f projectionMatrix, VertexBuffer starBuffer, Runnable setupFog) {
         PoseStack posestack = new PoseStack();
         posestack.mulPose(modelViewMatrix);
         RenderSystem.enableBlend();
@@ -86,8 +86,8 @@ public class MoonSpecialEffects extends DimensionSpecialEffects {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         float starBrightness = 1.0F;
         RenderSystem.setShaderColor(starBrightness, starBrightness, starBrightness, starBrightness);
-        minecraft.levelRenderer.starBuffer.bind();
-        minecraft.levelRenderer.starBuffer.drawWithShader(posestack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
+        starBuffer.bind();
+        starBuffer.drawWithShader(posestack.last().pose(), projectionMatrix, GameRenderer.getPositionShader());
         VertexBuffer.unbind();
         setupFog.run();
         RenderSystem.disableBlend();

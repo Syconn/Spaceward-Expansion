@@ -11,10 +11,10 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Spaceward-Expansion.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Spaceward-Expansion.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/Spaceward-Expansion.neoforge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/Spaceward-Expansion.neoforge.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Spaceward-Expansion.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Spaceward-Expansion.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/mod.syconn.swe.Spaceward-Expansion.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/mod.syconn.swe.Spaceward-Expansion.fabric.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/mod.syconn.swe.Spaceward-Expansion.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/mod.syconn.swe.Spaceward-Expansion.fabric.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/mod.syconn.swe.Spaceward-Expansion.forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/mod.syconn.swe.Spaceward-Expansion.forge.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/mod.syconn.swe.Spaceward-Expansion.neoforge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/mod.syconn.swe.Spaceward-Expansion.neoforge.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/SpacewardExpansion.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/SpacewardExpansion.fabric.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/SpacewardExpansion.fabric.test.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/SpacewardExpansion.fabric.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/forge/SpacewardExpansion.forge.test.iml" filepath="$PROJECT_DIR$/.idea/modules/forge/SpacewardExpansion.forge.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/SpacewardExpansion.neoforge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/SpacewardExpansion.neoforge.main.iml" />
     </modules>
   </component>
 </project>
