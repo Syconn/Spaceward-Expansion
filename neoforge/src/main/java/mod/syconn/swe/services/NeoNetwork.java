@@ -2,10 +2,12 @@ package mod.syconn.swe.services;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
+import mod.syconn.swe.extra.core.IMenuData;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.extra.core.Payload;
 import mod.syconn.swe.extra.platform.services.INetwork;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -13,11 +15,16 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.OptionalInt;
 
 public class NeoNetwork implements INetwork {
 
     private static PayloadRegistrar registrar;
     private static Map<Class<?>, Network.PlayMessage<?>> directory;
+
+    public <D extends IMenuData<D>> OptionalInt openMenuWithData(ServerPlayer player, MenuProvider provider, D data) {
+        return player.openMenu(provider, buf -> data.codec().encode(buf, data));
+    }
 
     public void sendToServer(Object payload) {
         PacketDistributor.sendToServer(encode(payload));

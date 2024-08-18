@@ -5,6 +5,7 @@ import mod.syconn.swe.blockentities.DisperserBE;
 import mod.syconn.swe.blocks.base.FluidBaseBlock;
 import mod.syconn.swe.extra.data.savedData.AirBubblesSavedData;
 import mod.syconn.swe.extra.helpers.FluidHelper;
+import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.init.BlockRegister;
 import net.minecraft.core.BlockPos;
@@ -42,7 +43,7 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack)) return ItemInteractionResult.CONSUME;
+        if (Services.FLUID_HANDLER.has(pStack) && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack)) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 

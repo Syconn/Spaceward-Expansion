@@ -56,7 +56,7 @@ public class FluidPipe extends AbstractPipeBlock {
     }
 
     protected MapCodec<? extends BaseEntityBlock> codec() {
-        return BlockRegister.FLUID_TANK_CODEC.get();
+        return BlockRegister.FlUID_PIPE_CODEC.get();
     }
 
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {

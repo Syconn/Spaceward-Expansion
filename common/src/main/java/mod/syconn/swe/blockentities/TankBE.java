@@ -53,11 +53,11 @@ public class TankBE extends AbstractTankBE implements MenuProvider, Container {
         if (!level.isClientSide) {
             ItemStack itemStack = e.container.getItem(0);
             FluidHandlerItem handler = Services.FLUID_HANDLER.get(itemStack);
-            if (handler != null) FluidHelper.handleInventoryMaxTransfer(e.tank, handler, e.container, 0, 1);
+            if (Services.FLUID_HANDLER.has(itemStack)) FluidHelper.handleInventoryMaxTransfer(e.tank, handler, e.container, 0, 1);
 
             itemStack = e.getItem(2);
             handler = Services.FLUID_HANDLER.get(itemStack);
-            if (handler != null) FluidHelper.fillItemStackFromBlock(e.tank, handler, e.fillSpeed);
+            if (Services.FLUID_HANDLER.has(itemStack)) FluidHelper.fillItemStackFromBlock(e.tank, handler, e.fillSpeed);
 
             e.tank.handlePush(level, pos);
             e.tank.handlePull(level, pos);

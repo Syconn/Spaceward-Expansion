@@ -3,11 +3,14 @@ package mod.syconn.swe.blocks;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.TankBE;
 import mod.syconn.swe.blocks.base.FluidBaseBlock;
+import mod.syconn.swe.extra.data.menu.PositionMenuData;
 import mod.syconn.swe.extra.helpers.FluidHelper;
 import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.init.BlockRegister;
+import mod.syconn.swe.network.Network;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -29,8 +32,8 @@ public class FluidTank extends FluidBaseBlock {
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
-        if (pLevel.getBlockEntity(pPos) instanceof TankBE tankBE) {
-            pPlayer.openMenu(tankBE);
+        if (pPlayer instanceof ServerPlayer sp && pLevel.getBlockEntity(pPos) instanceof TankBE tankBE) {
+            Network.openMenuWithData(sp, tankBE, new PositionMenuData(pPos));
             return InteractionResult.CONSUME;
         }
         return InteractionResult.FAIL;

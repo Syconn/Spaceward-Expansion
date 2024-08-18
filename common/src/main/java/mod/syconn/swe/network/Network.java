@@ -1,6 +1,7 @@
 package mod.syconn.swe.network;
 
 import mod.syconn.swe.Constants;
+import mod.syconn.swe.extra.core.IMenuData;
 import mod.syconn.swe.extra.core.Payload;
 import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.extra.platform.services.INetwork;
@@ -13,9 +14,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
+import java.util.OptionalInt;
 import java.util.function.BiConsumer;
 
 public class Network {
@@ -52,6 +55,10 @@ public class Network {
         register.stream().filter(PlayMessage::serverBound).forEach(network::registerPlayC2S);
         register.stream().filter(PlayMessage::bothBound).forEach(network::registerPlayBiDirectional);
         register.stream().filter(PlayMessage::serverBound).forEach(network::registerServerHandler);
+    }
+
+    public static <D extends IMenuData<D>> OptionalInt openMenuWithData(ServerPlayer player, MenuProvider provider, D data) {
+        return network.openMenuWithData(player, provider, data);
     }
 
     public record PlayMessage<T> (CustomPacketPayload.Type<Payload<T>> type, Class<T> msgClass, StreamCodec<RegistryFriendlyByteBuf, Payload<T>> codec, StreamCodec<RegistryFriendlyByteBuf, T> forgeCodec, BiConsumer<T, Player> handler, PacketFlow flow) {

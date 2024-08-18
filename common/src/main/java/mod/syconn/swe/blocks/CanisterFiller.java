@@ -62,7 +62,6 @@ public class CanisterFiller extends FluidBaseTopperBlock {
         p_49915_.add(FACING);
     }
 
-
     public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
         return Block.box(1, 0, 1, 15, 14, 15);
     }

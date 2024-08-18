@@ -1,8 +1,8 @@
 package mod.syconn.swe.init;
 
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.items.*;
 import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.items.*;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -12,9 +12,10 @@ import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+
+import static mod.syconn.swe.init.BlockRegister.*;
 
 public class ItemRegister {
 
@@ -49,14 +50,16 @@ public class ItemRegister {
         pOutput.accept(DIAMOND_UPGRADE.get());
         pOutput.accept(EMERALD_UPGRADE.get());
         pOutput.accept(NETHERITE_UPGRADE.get());
-        List<ItemStack> delayed = new ArrayList<>();
-        delayed.add(Canister.create(8000, 8000, Fluids.LAVA, CANISTER.get()));
-        delayed.add(Canister.create(8000, 8000, Fluids.LAVA, AUTO_REFILL_CANISTER.get()));
-        delayed.add(Canister.create(8000, 8000, Fluids.WATER, CANISTER.get()));
-        delayed.add(Canister.create(8000, 8000, Fluids.WATER, AUTO_REFILL_CANISTER.get()));
-        delayed.add(Canister.create(0, 8000, Fluids.EMPTY, CANISTER.get()));
-        delayed.add(Canister.create(0, 8000, Fluids.EMPTY, AUTO_REFILL_CANISTER.get()));
-        delayed.forEach(pOutput::accept);
+        pOutput.accept(Canister.create(8000, 8000, Fluids.LAVA, CANISTER.get()));
+        pOutput.accept(Canister.create(8000, 8000, Fluids.LAVA, AUTO_REFILL_CANISTER.get()));
+        pOutput.accept(Canister.create(8000, 8000, Fluids.WATER, CANISTER.get()));
+        pOutput.accept(Canister.create(8000, 8000, Fluids.WATER, AUTO_REFILL_CANISTER.get()));
+        pOutput.accept(Canister.create(0, 8000, Fluids.EMPTY, CANISTER.get()));
+        pOutput.accept(Canister.create(0, 8000, Fluids.EMPTY, AUTO_REFILL_CANISTER.get()));
+        pOutput.accept(OXYGEN_COLLECTOR.get());
+        pOutput.accept(FLUID_TANK.get());
+        pOutput.accept(CANISTER_FILLER.get());
+        pOutput.accept(FLUID_PIPE.get());
     }
 
     public static void init() {}

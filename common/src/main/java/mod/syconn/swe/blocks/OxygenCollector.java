@@ -2,11 +2,16 @@ package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.CollectorBE;
+import mod.syconn.swe.blockentities.TankBE;
 import mod.syconn.swe.blocks.base.FluidBaseBlock;
+import mod.syconn.swe.extra.data.menu.PositionMenuData;
 import mod.syconn.swe.extra.helpers.FluidHelper;
+import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.init.BlockRegister;
+import mod.syconn.swe.network.Network;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -26,19 +31,18 @@ public class OxygenCollector extends FluidBaseBlock {
         super(properties);
     }
 
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack)) return ItemInteractionResult.CONSUME;
-        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
-    }
-
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
-        BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-        if (blockentity instanceof CollectorBE be) {
-            pPlayer.openMenu(be);
-            return InteractionResult.SUCCESS;
+        if (pPlayer instanceof ServerPlayer sp && pLevel.getBlockEntity(pPos) instanceof TankBE collectorBE) {
+            Network.openMenuWithData(sp, collectorBE, new PositionMenuData(pPos));
+            return InteractionResult.CONSUME;
         }
         return InteractionResult.FAIL;
+    }
+
+    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+        if (Services.FLUID_HANDLER.has(pStack) && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack)) return ItemInteractionResult.CONSUME;
+        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {

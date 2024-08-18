@@ -7,26 +7,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="NeoForge Fixes for Launching Dev Space">
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoRegistration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/helper/NeoOxygenFluid.java" afterDir="false" />
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="New NeoForge Compatable Fluid System | Spacesuit Codec Fix | etc">
+      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/minecraft/atlases/blocks.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/SpaceMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/SpaceMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/fluids/OxygenFlowingFluid.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/fluids/OxygenFlowingFluid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/PipeNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/savedData/PipeNetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/attachment/SpaceSuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/attachment/SpaceSuit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/savedData/PipeNetworks.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/savedData/PipeNetworks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/CanisterFiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/CanisterFiller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidPipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidPipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenDisperser.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenDisperser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/FluidHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/FluidHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/jei/SpaceJEI.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/jei/SpaceJEI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/IRegistrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/IRegistrar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/FluidRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/FluidRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/data/swe/advancement/recipes/tools/wrench.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/data/swe/recipe/wrench.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/helper/NeoFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/helper/NeoFluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoAttachedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoAttachedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoSingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoSingleFluidHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/INetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/INetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,14 +276,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720302138832</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Canister Rework using IFluidHandlerItem capability, Made Blocks Communicate Better with FluidHandler Capabilities">
-      <option name="closed" value="true" />
-      <created>1721699582489</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1721699582489</updated>
     </task>
     <task id="LOCAL-00016" summary="Merge pull request #7 from Syconn/Item-Fluid-Handler-Rework">
       <option name="closed" value="true" />
@@ -674,7 +661,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723944168381</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="New NeoForge Compatable Fluid System | Spacesuit Codec Fix | etc">
+      <option name="closed" value="true" />
+      <created>1724006186851</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1724006186851</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -702,7 +697,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Updated Neoforge / Parchment Version" />
     <MESSAGE value="Gradle Reset" />
     <MESSAGE value="Changes" />
     <MESSAGE value="Gradle Fixes" />
@@ -727,6 +721,7 @@
     <MESSAGE value="Services Implementations" />
     <MESSAGE value="Final Changes Ready for Testing" />
     <MESSAGE value="NeoForge Fixes for Launching Dev Space" />
-    <option name="LAST_COMMIT_MESSAGE" value="NeoForge Fixes for Launching Dev Space" />
+    <MESSAGE value="New NeoForge Compatable Fluid System | Spacesuit Codec Fix | etc" />
+    <option name="LAST_COMMIT_MESSAGE" value="New NeoForge Compatable Fluid System | Spacesuit Codec Fix | etc" />
   </component>
 </project>

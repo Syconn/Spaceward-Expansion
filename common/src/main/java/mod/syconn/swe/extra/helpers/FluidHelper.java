@@ -2,8 +2,8 @@ package mod.syconn.swe.extra.helpers;
 
 import mod.syconn.swe.extra.core.FluidAction;
 import mod.syconn.swe.extra.core.FluidHandler;
-import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.core.FluidHandlerItem;
+import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,8 +14,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 public class FluidHelper {
-
-    // TODO FLUID FUNCTIONS
 
     public static void handleInventoryMaxTransfer(FluidHandler blockHandler, FluidHandlerItem itemHandler, Container inventory, int slot1, int slot2) {
         if (!inventory.getItem(slot1).isEmpty() && inventory.getItem(slot2).isEmpty()) {
