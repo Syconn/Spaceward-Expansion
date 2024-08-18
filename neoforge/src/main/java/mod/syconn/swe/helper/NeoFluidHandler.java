@@ -59,11 +59,11 @@ public class NeoFluidHandler {
         }
 
         public FluidHolder getFluidHolder() {
-            return null;
+            return of(handler.getFluidInTank(0));
         }
 
         public int getTankCapacity() {
-            return 0;
+            return handler.getTankCapacity(0);
         }
 
         public void setFluid(FluidHolder fluidHolder) {

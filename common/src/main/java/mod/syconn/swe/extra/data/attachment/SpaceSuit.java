@@ -25,10 +25,10 @@ import java.util.Random;
 
 public class SpaceSuit implements IAttachmentType<SpaceSuit>, Container {
 
+    private final SimpleContainer container;
     private boolean parachute;
     private AnimatorHelper chute;
     private int oxygen;
-    private SimpleContainer container;
 
     public SpaceSuit() {
         this.parachute = false;
@@ -49,7 +49,7 @@ public class SpaceSuit implements IAttachmentType<SpaceSuit>, Container {
                 Codec.BOOL.fieldOf("parachute").forGetter(SpaceSuit::parachute),
                 AnimatorHelper.CODEC.fieldOf("chute").forGetter(SpaceSuit::chuteAnim),
                 Codec.INT.fieldOf("oxygen").forGetter(SpaceSuit::O2),
-                ItemStack.CODEC.listOf().fieldOf("stacks").forGetter(SpaceSuit::getStacks)
+                ItemStack.OPTIONAL_CODEC.listOf().fieldOf("stacks").forGetter(SpaceSuit::getStacks)
         ).apply(instance, SpaceSuit::new));
     }
 

@@ -32,7 +32,6 @@ public class NeoSingleFluidHandler implements ISingleFluidHandler { // TODO Mayb
     }
 
     public boolean has(BlockGetter level, BlockPos pos, Direction direction) {
-        // TODO TEST CASE
         if (level instanceof ILevelExtension ext) return ext.getCapability(Capabilities.FluidHandler.BLOCK, pos, direction) != null;
         return false;
     }

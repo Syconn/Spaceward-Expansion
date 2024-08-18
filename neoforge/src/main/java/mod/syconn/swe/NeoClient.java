@@ -17,7 +17,6 @@ import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.extra.core.Events;
 import mod.syconn.swe.extra.util.RenderUtil;
-import mod.syconn.swe.helper.FluidTypes;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.init.FluidRegister;
 import mod.syconn.swe.init.ItemRegister;
@@ -40,8 +39,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
-import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.registries.DeferredHolder;
 
 import static mod.syconn.swe.items.Canister.getHandler;
 
@@ -64,7 +61,7 @@ public class NeoClient {
 
     @SubscribeEvent
     public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
-        for (DeferredHolder<FluidType, ? extends FluidType> type : NeoMod.FLUID_TYPES.getEntries()) if (type.get() instanceof FluidTypes ext) event.registerFluidType(ext.getExtension(), type.get());
+        event.registerFluidType(NeoRegistration.O2_FLUID_TYPE.get().getExtension(), NeoRegistration.O2_FLUID_TYPE.get());
     }
 
     @SubscribeEvent

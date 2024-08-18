@@ -12,7 +12,7 @@ public class SpaceMod {
         BlockRegister.init();
         BlockEntityRegister.init();
         Menus.init();
-        FluidRegister.init();
+//        FluidRegister.init();
         ItemRegister.init();
         RecipeSerializers.init();
     }

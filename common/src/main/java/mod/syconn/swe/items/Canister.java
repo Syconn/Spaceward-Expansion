@@ -75,7 +75,7 @@ public class Canister extends Item implements EquipmentItem {
     }
 
     public Component getName(ItemStack stack) {
-        if (!getHandler(stack).getFluidHolder().is(Fluids.EMPTY)) return Services.FLUID_EXTENSIONS.getTooltip(getHandler(stack).getFluidHolder().getFluid()).getFirst().copy().append(" " + super.getName(stack));
+        if (!getHandler(stack).getFluidHolder().is(Fluids.EMPTY)) return Services.FLUID_EXTENSIONS.getTooltip(getHandler(stack).getFluidHolder().getFluid()).getFirst().copy().append(" ").append(super.getName(stack));
         return Component.literal("Empty ").append(super.getName(stack));
     }
 

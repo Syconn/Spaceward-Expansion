@@ -2,7 +2,6 @@ package mod.syconn.swe.extra.data.savedData;
 
 import com.google.common.collect.Sets;
 import mod.syconn.swe.blockentities.base.AbstractPipeBE;
-import mod.syconn.swe.extra.data.PipeNetwork;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
 import mod.syconn.swe.extra.helpers.ListHelper;

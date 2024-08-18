@@ -18,7 +18,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -31,7 +30,6 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
-import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -53,8 +51,6 @@ public class NeoMod {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, Constants.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, Constants.MOD_ID);
-    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.FLUID_TYPES, Constants.MOD_ID);
-    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(BuiltInRegistries.FLUID, Constants.MOD_ID);
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Constants.MOD_ID);
     public static final DeferredRegister<MapCodec<? extends Block>> BLOCK_TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, Constants.MOD_ID);
 
@@ -70,10 +66,10 @@ public class NeoMod {
         DATA_COMPONENTS.register(eventBus);
         MENUS.register(eventBus);
         RECIPE_SERIALIZERS.register(eventBus);
-        FLUID_TYPES.register(eventBus);
-        FLUIDS.register(eventBus);
         BLOCK_TYPES.register(eventBus);
         ATTACHMENT_TYPES.register(eventBus);
+        NeoRegistration.FLUID_TYPES.register(eventBus);
+        NeoRegistration.FLUIDS.register(eventBus);
 
         if (FMLEnvironment.dist.isClient()) {
             NeoForge.EVENT_BUS.addListener(NeoClient::onPlayerRenderScreen);
@@ -85,6 +81,7 @@ public class NeoMod {
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, NeoConfig.CLIENT_CONFIG, "swe/swe-client.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, NeoConfig.COMMON_CONFIG, "swe/swe-common.toml");
+
         SpaceMod.init();
     }
 
