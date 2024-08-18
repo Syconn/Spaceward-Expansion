@@ -1,9 +1,9 @@
 package mod.syconn.swe.services;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
+import mod.syconn.swe.data.capability.SpaceSuitProvider;
 import mod.syconn.swe.extra.data.attachment.IAttachmentType;
 import mod.syconn.swe.extra.data.attachment.SpaceSuit;
-import mod.syconn.swe.data.capability.SpaceSuitProvider;
 import mod.syconn.swe.extra.platform.services.IAttachedData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;

@@ -2,6 +2,7 @@ package mod.syconn.swe.client.renders.ber;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import mod.syconn.swe.blockentities.CanisterFillerBlockEntity;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -11,7 +12,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import mod.syconn.swe.blockentities.CanisterFillerBlockEntity;
 
 public class CanisterBER implements BlockEntityRenderer<CanisterFillerBlockEntity> {
 

@@ -1,8 +1,8 @@
 package mod.syconn.swe.extra.data.recipes;
 
+import mod.syconn.swe.extra.util.ColorUtil;
 import mod.syconn.swe.init.ItemRegister;
 import mod.syconn.swe.init.RecipeSerializers;
-import mod.syconn.swe.extra.util.ColorUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeItem;

@@ -1,8 +1,8 @@
 package mod.syconn.swe.mixin;
 
 import mod.syconn.swe.extra.data.attachment.SpaceSuit;
-import mod.syconn.swe.init.DataAttachments;
 import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.init.DataAttachments;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;

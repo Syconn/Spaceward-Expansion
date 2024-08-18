@@ -1,8 +1,8 @@
 package mod.syconn.swe;
 
 import mod.syconn.swe.blocks.fluids.OxygenFlowingFluid;
-import mod.syconn.swe.helper.FluidTypes;
 import mod.syconn.swe.fluids.NeoOxygenFluid;
+import mod.syconn.swe.helper.FluidTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.material.Fluid;

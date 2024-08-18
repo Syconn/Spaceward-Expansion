@@ -2,8 +2,8 @@ package mod.syconn.swe.common.container.slot;
 
 import com.mojang.datafixers.util.Pair;
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.items.SpaceArmor;
 import mod.syconn.swe.extra.EquipmentItem;
+import mod.syconn.swe.items.SpaceArmor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;

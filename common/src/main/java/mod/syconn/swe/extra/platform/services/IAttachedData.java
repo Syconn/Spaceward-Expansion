@@ -1,7 +1,6 @@
 package mod.syconn.swe.extra.platform.services;
 
 import mod.syconn.swe.extra.data.attachment.IAttachmentType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Function;

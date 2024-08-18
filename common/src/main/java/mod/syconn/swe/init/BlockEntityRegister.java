@@ -1,7 +1,6 @@
 package mod.syconn.swe.init;
 
 import mod.syconn.swe.blockentities.*;
-import mod.syconn.swe.blockentities.FluidPipeBE;
 import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;

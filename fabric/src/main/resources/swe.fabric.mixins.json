@@ -6,9 +6,9 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "EntityMixin",
+    "FabricPlayerMixin",
     "LivingEntityMixin",
     "PlayerListMixin",
-    "FabricPlayerMixin",
     "ServerLevelMixin"
   ],
   "client": [

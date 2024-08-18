@@ -1,6 +1,7 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
+import mod.syconn.swe.blockentities.AirBlockEntity;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.init.BlockRegister;
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import mod.syconn.swe.blockentities.AirBlockEntity;
 
 public class DispersedAirBlock extends BaseEntityBlock {
 

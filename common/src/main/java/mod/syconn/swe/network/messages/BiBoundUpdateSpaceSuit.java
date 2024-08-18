@@ -1,7 +1,7 @@
 package mod.syconn.swe.network.messages;
 
-import mod.syconn.swe.init.DataAttachments;
 import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.init.DataAttachments;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

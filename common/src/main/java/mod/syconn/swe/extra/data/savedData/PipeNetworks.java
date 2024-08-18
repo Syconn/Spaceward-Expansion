@@ -2,10 +2,10 @@ package mod.syconn.swe.extra.data.savedData;
 
 import com.google.common.collect.Sets;
 import mod.syconn.swe.blockentities.base.AbstractPipeBE;
+import mod.syconn.swe.extra.core.Events;
+import mod.syconn.swe.extra.helpers.ListHelper;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
-import mod.syconn.swe.extra.helpers.ListHelper;
-import mod.syconn.swe.extra.core.Events;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

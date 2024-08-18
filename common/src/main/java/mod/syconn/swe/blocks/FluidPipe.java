@@ -1,13 +1,13 @@
 package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blockentities.base.AbstractPipeBE;
 import mod.syconn.swe.blockentities.FluidPipeBE;
+import mod.syconn.swe.blockentities.base.AbstractPipeBE;
 import mod.syconn.swe.blocks.base.AbstractPipeBlock;
 import mod.syconn.swe.client.ClientHooks;
 import mod.syconn.swe.extra.data.savedData.PipeNetworks;
-import mod.syconn.swe.init.BlockRegister;
 import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.init.BlockRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
