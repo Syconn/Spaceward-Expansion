@@ -66,7 +66,7 @@ public class NeoRegister implements IRegistrar {
         NeoMod.FLUID_TYPES.register(id, () -> new FluidTypes(still, flowing, overlay, tint, fog, FluidType.Properties.create().descriptionId(desc).canSwim(swim).canExtinguish(extinguish).canDrown(drown).pathType(type).sound(SoundActions.BUCKET_FILL, fill).sound(SoundActions.BUCKET_EMPTY, empty).sound(SoundActions.FLUID_VAPORIZE, vaporize).lightLevel(lightLevel).density(density).viscosity(viscosity)));
     }
 
-    public <T extends BlockEntity> Supplier<BlockEntityType<T>> registerBlockEntity(String id, BiFunction<BlockPos, BlockState, T> function, Supplier<Block[]> blockSupplier) {
+    public <T extends BlockEntity> Supplier<BlockEntityType<T>> registerBlockEntity(String id, BiFunction<BlockPos, BlockState, T> function, Supplier<Block> blockSupplier) {
         return NeoMod.BLOCK_ENTITIES.register(id, () -> BlockEntityType.Builder.of(function::apply, blockSupplier.get()).build(null));
     }
 

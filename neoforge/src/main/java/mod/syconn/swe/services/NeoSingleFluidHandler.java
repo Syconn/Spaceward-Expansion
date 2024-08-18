@@ -10,8 +10,10 @@ import mod.syconn.swe.helper.NeoFluidHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.common.extensions.ILevelExtension;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
@@ -29,8 +31,10 @@ public class NeoSingleFluidHandler implements ISingleFluidHandler { // TODO Mayb
         return new NeoFluidHandler.BlockFluidHandler(level.getCapability(Capabilities.FluidHandler.BLOCK, pos, direction));
     }
 
-    public boolean has(Level level, BlockPos pos, Direction direction) {
-        return level.getCapability(Capabilities.FluidHandler.BLOCK, pos, direction) != null;
+    public boolean has(BlockGetter level, BlockPos pos, Direction direction) {
+        // TODO TEST CASE
+        if (level instanceof ILevelExtension ext) return ext.getCapability(Capabilities.FluidHandler.BLOCK, pos, direction) != null;
+        return false;
     }
 
     public InteractionalFluidHandler getInteractional(Level level, BlockPos pos, Direction direction) {

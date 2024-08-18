@@ -9,6 +9,7 @@ public interface INetwork {
     void sendToClient(Object payload, ServerPlayer serverPlayer);
     <T> void registerPlayS2C(Network.PlayMessage<T> message);
     <T> void registerPlayC2S(Network.PlayMessage<T> message);
+    <T> void registerPlayBiDirectional(Network.PlayMessage<T> message);
     default <T> void registerClientHandler(Network.PlayMessage<T> message) {}
     default <T> void registerServerHandler(Network.PlayMessage<T> message) {}
 }

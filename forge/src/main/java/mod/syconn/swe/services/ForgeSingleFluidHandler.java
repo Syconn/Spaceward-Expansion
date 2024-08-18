@@ -12,6 +12,7 @@ import mod.syconn.swe.wrapper.ItemFluidHandlerWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
@@ -31,7 +32,7 @@ public class ForgeSingleFluidHandler implements ISingleFluidHandler {
         return new ForgeFluidHandler.BlockFluidHandler(level.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, direction).orElse(null));
     }
 
-    public boolean has(Level level, BlockPos pos, Direction direction) {
+    public boolean has(BlockGetter level, BlockPos pos, Direction direction) {
         return level.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, direction).isPresent();
     }
 

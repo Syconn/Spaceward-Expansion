@@ -50,6 +50,7 @@ public class Network {
     public static void S2CPayloads() {
         register.stream().filter(PlayMessage::clientBound).forEach(network::registerPlayS2C);
         register.stream().filter(PlayMessage::serverBound).forEach(network::registerPlayC2S);
+        register.stream().filter(PlayMessage::bothBound).forEach(network::registerPlayBiDirectional);
         register.stream().filter(PlayMessage::serverBound).forEach(network::registerServerHandler);
     }
 
@@ -61,7 +62,8 @@ public class Network {
         }
 
         public Payload<T> getPayload(T msg) { return new Payload<>(this.type, msg); }
-        public boolean clientBound() { return this.flow == PacketFlow.CLIENTBOUND || this.flow == null; }
-        public boolean serverBound() { return this.flow == PacketFlow.SERVERBOUND || this.flow == null; }
+        public boolean clientBound() { return this.flow == PacketFlow.CLIENTBOUND; }
+        public boolean serverBound() { return this.flow == PacketFlow.SERVERBOUND; }
+        public boolean bothBound() { return this.flow == null; }
     }
 }

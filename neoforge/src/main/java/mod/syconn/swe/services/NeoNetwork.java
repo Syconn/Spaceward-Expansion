@@ -35,6 +35,10 @@ public class NeoNetwork implements INetwork {
         registrar.playToServer(message.type(), message.codec(), (payload, context) -> context.enqueueWork(() -> message.handler().accept(payload.msg(), context.player())));
     }
 
+    public <T> void registerPlayBiDirectional(Network.PlayMessage<T> message) {
+        registrar.playBidirectional(message.type(), message.codec(), (payload, context) -> context.enqueueWork(() -> message.handler().accept(payload.msg(), context.player())));
+    }
+
     public static void onRegisterPayloadHandler(final RegisterPayloadHandlersEvent event) {
         registrar = event.registrar("1");
         directory = createDirectory(Network.register);

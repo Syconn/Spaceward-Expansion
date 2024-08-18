@@ -3,8 +3,12 @@ package mod.syconn.swe;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.common.dimensions.OxygenProductionManager;
 import mod.syconn.swe.common.dimensions.PlanetManager;
+import mod.syconn.swe.data.capability.APICapabilities;
 import mod.syconn.swe.datagen.*;
+import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.services.NeoNetwork;
+import mod.syconn.swe.wrapper.BlockFluidWrapper;
+import mod.syconn.swe.wrapper.ItemFluidHandlerWrapper;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableProvider;
@@ -22,15 +26,21 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.Collections;
 import java.util.List;
+
+import static mod.syconn.swe.init.ItemRegister.AUTO_REFILL_CANISTER;
+import static mod.syconn.swe.init.ItemRegister.CANISTER;
 
 @Mod(Constants.MOD_ID)
 public class NeoMod {
@@ -49,8 +59,8 @@ public class NeoMod {
     public static final DeferredRegister<MapCodec<? extends Block>> BLOCK_TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_TYPE, Constants.MOD_ID);
 
     public NeoMod(IEventBus eventBus, ModContainer modContainer) {
-        eventBus.register(NeoCommon.class);
         eventBus.addListener(NeoNetwork::onRegisterPayloadHandler);
+        eventBus.addListener(NeoMod::registerCapabilities);
 
         BLOCKS.register(eventBus);
         BLOCK_ENTITIES.register(eventBus);
@@ -71,15 +81,21 @@ public class NeoMod {
         }
 
         NeoForge.EVENT_BUS.addListener(this::loadData);
-        NeoForge.EVENT_BUS.addListener(NeoCommon::playerJoined);
-        NeoForge.EVENT_BUS.addListener(NeoCommon::playerLeft);
-        NeoForge.EVENT_BUS.addListener(NeoCommon::playerChangedDimension);
-        NeoForge.EVENT_BUS.addListener(NeoCommon::playerTickEvent);
-        NeoForge.EVENT_BUS.addListener(NeoCommon::levelTickEvent);
+        NeoForge.EVENT_BUS.register(NeoCommon.class);
 
         modContainer.registerConfig(ModConfig.Type.CLIENT, NeoConfig.CLIENT_CONFIG, "swe/swe-client.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, NeoConfig.COMMON_CONFIG, "swe/swe-common.toml");
         SpaceMod.init();
+    }
+
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new ItemFluidHandlerWrapper(stack, 8000), CANISTER.get(), AUTO_REFILL_CANISTER.get());
+
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> new BlockFluidWrapper(o.getFluidTank()));
+        event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.COLLECTOR.get(), (o, v) -> o.getFluidTank());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> new BlockFluidWrapper(o.getFluidTank()));
+        event.registerBlockEntity(APICapabilities.FluidHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> o.getFluidTank());
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, BlockEntityRegister.TANK.get(), (o, v) -> new InvWrapper(o));
     }
 
     public void loadData(AddReloadListenerEvent e){

@@ -29,7 +29,7 @@ public class FluidPipe extends AbstractPipeBlock {
     }
 
     protected PipeConnectionTypes getConnectorType(BlockGetter level, BlockPos thisPos, BlockPos connectionPos, Direction facing) {
-        if (Services.FLUID_HANDLER.has((Level) level, connectionPos, facing.getOpposite())) return PipeConnectionTypes.BLOCK;
+        if (Services.FLUID_HANDLER.has(level, connectionPos, facing.getOpposite())) return PipeConnectionTypes.BLOCK;
         return level.getBlockEntity(connectionPos) instanceof AbstractPipeBE ? PipeConnectionTypes.CABLE : PipeConnectionTypes.NONE;
     }
 

@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 
 public class FabricSingleFluidHandler implements ISingleFluidHandler {
@@ -29,8 +30,8 @@ public class FabricSingleFluidHandler implements ISingleFluidHandler {
         return ((BlockFluidWrapper) FluidStorage.SIDED.find(level, pos, direction)).getHandler();
     }
 
-    public boolean has(Level level, BlockPos pos, Direction direction) {
-        return FluidStorage.SIDED.find(level, pos, direction) instanceof BlockFluidWrapper;
+    public boolean has(BlockGetter level, BlockPos pos, Direction direction) {
+        return FluidStorage.SIDED.find((Level) level, pos, direction) instanceof BlockFluidWrapper;
     }
 
     public InteractionalFluidHandler getInteractional(Level level, BlockPos pos, Direction direction) {
