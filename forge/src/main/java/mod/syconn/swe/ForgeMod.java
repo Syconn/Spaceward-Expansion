@@ -13,18 +13,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod(Constants.MOD_ID)
 public class ForgeMod {
@@ -36,8 +33,6 @@ public class ForgeMod {
     public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, Constants.MOD_ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Constants.MOD_ID);
-    public static final DeferredRegister<FluidType> FLUID_TYPES = DeferredRegister.create(ForgeRegistries.FLUID_TYPES, Constants.MOD_ID);
-    public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID, Constants.MOD_ID);
     public static final DeferredRegister<MapCodec<? extends Block>> BLOCK_TYPES = DeferredRegister.create(Registries.BLOCK_TYPE, Constants.MOD_ID);
 
     public ForgeMod() {
@@ -53,9 +48,9 @@ public class ForgeMod {
         DATA_COMPONENTS.register(eventBus);
         MENUS.register(eventBus);
         RECIPE_SERIALIZERS.register(eventBus);
-        FLUID_TYPES.register(eventBus);
-        FLUIDS.register(eventBus);
         BLOCK_TYPES.register(eventBus);
+        ForgeRegistration.FLUID_TYPES.register(eventBus);
+        ForgeRegistration.FLUIDS.register(eventBus);
 
         if (FMLEnvironment.dist.isClient()) {
             MinecraftForge.EVENT_BUS.addListener(ForgeClient::onPlayerRenderScreen);

@@ -7,21 +7,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="New NeoForge Compatable Fluid System | Spacesuit Codec Fix | etc">
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/minecraft/atlases/blocks.json" afterDir="false" />
+    <list default="true" id="5fb2d36b-9eb5-4eb3-afd4-15b94d50ca1f" name="Changes" comment="Resource Fixes">
+      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeRegistration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/fluids/ForgeOxygenFluid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/CanisterFiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/CanisterFiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidPipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidPipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.run/NeoForge Client (_neoforge).run.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.run/NeoForge Client (_neoforge).run.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenCollector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenDisperser.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenDisperser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/FluidHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/FluidHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/jei/SpaceJEI.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/jei/SpaceJEI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/INetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/platform/services/INetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/fluids/OxygenFlowingFluid.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/fluids/OxygenFlowingFluid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/Network.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricRegistrar.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricRegistrar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeNetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/helper/NeoOxygenFluid.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/fluids/NeoOxygenFluid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +53,9 @@
         <task path="$PROJECT_DIR$/common">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/fabric">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -61,13 +66,7 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
-                <item name="common" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
-                <item name="common" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="neoforge" type="2d1252cf:ModuleNode" />
               </path>
             </expand>
             <select />
@@ -163,6 +162,7 @@
     "Gradle.Spaceward-Expansion [genSourcesWithVineflower].executor": "Run",
     "Gradle.Spaceward-Expansion [serverIdeBeforeRun].executor": "Run",
     "Gradle.Spaceward-Expansion:fabric [:fabric:net.neoforged.devlaunch.Main.main()].executor": "Debug",
+    "Gradle.Spaceward-Expansion:fabric [build].executor": "Run",
     "Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor": "Debug",
     "JavaClassFindUsagesOptions.isDerivedClasses": "true",
     "JavaClassFindUsagesOptions.isImplementingClasses": "true",
@@ -171,12 +171,12 @@
     "git-widget-placeholder": "multiloader/V1.2.1",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Aidan/Downloads/MultiLoader-Template-1.21",
-    "project.structure.last.edited": "Project",
+    "last_opened_file_path": "C:/Users/Aidan/IdeaProjects/Spaceward-Expansion/neoforge/src/main",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors"
+    "settings.editor.selected.configurable": "configurable.group.build"
   }
 }]]></component>
   <component name="Push.Settings">
@@ -187,9 +187,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\forge\src\main\java\mod\syconn\swe" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\forge\src\main\resources\META-INF" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\fabric\src\main\java\mod\syconn\swe" />
-      <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\forge\src\main\java\mod\syconn\swe" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\neoforge\src\main\java\mod\syconn\swe\data" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\fabric\src\main\resources\META-INF\services" />
     </key>
@@ -201,14 +201,24 @@
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\common\src\main\java\mod\syconn\swe\mixin" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="mod.syconn.swe" />
       <recent name="mod.syconn.swe.data.capability" />
       <recent name="mod.syconn.swe.helper" />
       <recent name="mod.syconn.swe.wrapper" />
       <recent name="mod.syconn.swe.extra" />
-      <recent name="mod.syconn.swe.mixin" />
     </key>
   </component>
   <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
+    <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
+      <module name="Spaceward-Expansion.neoforge.main" />
+      <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunProgramArgs.txt" />
+      <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="NeoForge Data (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="Spaceward-Expansion.neoforge.main" />
@@ -251,6 +261,28 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="Spaceward-Expansion:fabric [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fabric" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.NeoForge Client (:neoforge)" />
       <item itemvalue="Application.NeoForge Data (:neoforge)" />
@@ -260,10 +292,12 @@
       <item itemvalue="Application.forge Client" />
       <item itemvalue="Application.forge Data" />
       <item itemvalue="Application.forge Server" />
+      <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
       <item itemvalue="Gradle.Spaceward-Expansion [build]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
         <item itemvalue="Gradle.Spaceward-Expansion [build]" />
       </list>
     </recent_temporary>
@@ -276,22 +310,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720302138832</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Merge pull request #7 from Syconn/Item-Fluid-Handler-Rework">
-      <option name="closed" value="true" />
-      <created>1721762809595</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1721762809595</updated>
-    </task>
-    <task id="LOCAL-00017" summary="API Fix">
-      <option name="closed" value="true" />
-      <created>1721762946472</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1721762946472</updated>
     </task>
     <task id="LOCAL-00018" summary="Update Tracker">
       <option name="closed" value="true" />
@@ -669,7 +687,23 @@
       <option name="project" value="LOCAL" />
       <updated>1724006186851</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="New Menu Opening System">
+      <option name="closed" value="true" />
+      <created>1724009278875</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1724009278875</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Resource Fixes">
+      <option name="closed" value="true" />
+      <created>1724009622786</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1724009622786</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -697,8 +731,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Gradle Reset" />
-    <MESSAGE value="Changes" />
     <MESSAGE value="Gradle Fixes" />
     <MESSAGE value="Item Port" />
     <MESSAGE value="Fixed Old Srcing" />
@@ -722,6 +754,8 @@
     <MESSAGE value="Final Changes Ready for Testing" />
     <MESSAGE value="NeoForge Fixes for Launching Dev Space" />
     <MESSAGE value="New NeoForge Compatable Fluid System | Spacesuit Codec Fix | etc" />
-    <option name="LAST_COMMIT_MESSAGE" value="New NeoForge Compatable Fluid System | Spacesuit Codec Fix | etc" />
+    <MESSAGE value="New Menu Opening System" />
+    <MESSAGE value="Resource Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Resource Fixes" />
   </component>
 </project>

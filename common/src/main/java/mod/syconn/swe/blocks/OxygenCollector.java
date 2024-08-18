@@ -2,7 +2,6 @@ package mod.syconn.swe.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.CollectorBE;
-import mod.syconn.swe.blockentities.TankBE;
 import mod.syconn.swe.blocks.base.FluidBaseBlock;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
 import mod.syconn.swe.extra.helpers.FluidHelper;
@@ -33,7 +32,7 @@ public class OxygenCollector extends FluidBaseBlock {
 
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         if (pLevel.isClientSide) return InteractionResult.SUCCESS;
-        if (pPlayer instanceof ServerPlayer sp && pLevel.getBlockEntity(pPos) instanceof TankBE collectorBE) {
+        if (pPlayer instanceof ServerPlayer sp && pLevel.getBlockEntity(pPos) instanceof CollectorBE collectorBE) {
             Network.openMenuWithData(sp, collectorBE, new PositionMenuData(pPos));
             return InteractionResult.CONSUME;
         }

@@ -54,6 +54,8 @@ public class ItemRegister {
         pOutput.accept(Canister.create(8000, 8000, Fluids.LAVA, AUTO_REFILL_CANISTER.get()));
         pOutput.accept(Canister.create(8000, 8000, Fluids.WATER, CANISTER.get()));
         pOutput.accept(Canister.create(8000, 8000, Fluids.WATER, AUTO_REFILL_CANISTER.get()));
+        pOutput.accept(Canister.create(8000, 8000, FluidRegister.O2.get(), CANISTER.get()));
+        pOutput.accept(Canister.create(8000, 8000, FluidRegister.O2.get(), AUTO_REFILL_CANISTER.get()));
         pOutput.accept(Canister.create(0, 8000, Fluids.EMPTY, CANISTER.get()));
         pOutput.accept(Canister.create(0, 8000, Fluids.EMPTY, AUTO_REFILL_CANISTER.get()));
         pOutput.accept(OXYGEN_COLLECTOR.get());

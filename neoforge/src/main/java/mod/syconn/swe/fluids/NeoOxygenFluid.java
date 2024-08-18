@@ -1,4 +1,4 @@
-package mod.syconn.swe.helper;
+package mod.syconn.swe.fluids;
 
 import mod.syconn.swe.NeoRegistration;
 import mod.syconn.swe.blocks.fluids.OxygenFlowingFluid;

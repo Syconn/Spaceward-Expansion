@@ -40,6 +40,7 @@ public class FluidTank extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
+        System.out.println(Services.FLUID_HANDLER.has(pStack));
         if (Services.FLUID_HANDLER.has(pStack) && FluidHelper.maxTransferStackToBlock(pLevel, pPos, null, pStack)) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
