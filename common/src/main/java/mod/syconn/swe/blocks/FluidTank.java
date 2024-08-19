@@ -3,6 +3,7 @@ package mod.syconn.swe.blocks;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.TankBE;
 import mod.syconn.swe.blocks.base.FluidBaseBlock;
+import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
 import mod.syconn.swe.extra.helpers.FluidHelper;
 import mod.syconn.swe.extra.platform.Services;
@@ -15,7 +16,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -40,10 +43,7 @@ public class FluidTank extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (Services.FLUID_HANDLER.has(pStack)) {
-            FluidHelper.maxTransferStackToBlock(pLevel, pPos, pHitResult.getDirection().getOpposite(), pStack);
-            return ItemInteractionResult.CONSUME;
-        }
+        if (!pLevel.isClientSide && Services.FLUID_HANDLER.has(pStack) && FluidHelper.interactWithBlock(pLevel, pPos, pHitResult, pPlayer, pHand)) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 

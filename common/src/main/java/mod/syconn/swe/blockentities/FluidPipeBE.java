@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class FluidPipeBE extends AbstractPipeBE {
 
-    private Fluid fluid = null;
+    private Fluid fluid = Fluids.EMPTY;
 
     public FluidPipeBE(BlockPos pos, BlockState state) {
         super(BlockEntityRegister.PIPE.get(), pos, state);

@@ -40,7 +40,7 @@ public class InteractableFluidTank extends FluidTank implements InteractionalFlu
     public void handlePush(Level level, BlockPos blockPos) {
         for (Direction direction : Direction.values()) {
             if (sided_interactions.get(direction).isPush() && Services.FLUID_HANDLER.has(level, blockPos.relative(direction), direction.getOpposite())) {
-                FluidHandler blockHandler = Services.FLUID_HANDLER.get(level, blockPos.relative(direction), direction.getOpposite());
+                FluidHandler blockHandler = Services.FLUID_HANDLER.getInteractional(level, blockPos.relative(direction), direction.getOpposite());
                 if (!blockHandler.getFluidHolder().isEmpty()) {
                     int fill = blockHandler.fill(blockHandler.getFluidHolder().copyWith(speed), FluidAction.SIMULATE);
                     blockHandler.fill(drain(Math.min(speed, fill), FluidAction.EXECUTE), FluidAction.EXECUTE);
@@ -52,7 +52,7 @@ public class InteractableFluidTank extends FluidTank implements InteractionalFlu
     public void handlePull(Level level, BlockPos blockPos) {
         for (Direction direction : Direction.values()) {
             if (sided_interactions.get(direction).isPull() && Services.FLUID_HANDLER.has(level, blockPos.relative(direction), direction.getOpposite())) {
-                FluidHandler blockHandler = Services.FLUID_HANDLER.get(level, blockPos.relative(direction), direction.getOpposite());
+                FluidHandler blockHandler = Services.FLUID_HANDLER.getInteractional(level, blockPos.relative(direction), direction.getOpposite());
                 if (!blockHandler.getFluidHolder().isEmpty()) {
                     int fill = fill(blockHandler.getFluidHolder().copyWith(speed), FluidAction.SIMULATE);
                     fill(blockHandler.drain(Math.min(speed, fill), FluidAction.EXECUTE), FluidAction.EXECUTE);
