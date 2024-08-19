@@ -29,6 +29,7 @@ public interface FluidHandler {
     }
 
     default int fill(FluidHolder resource, FluidAction doFill) {
+        System.out.println(resource);
         if (preCondition() || !isFluidValid(resource) || resource.is(Fluids.EMPTY)) return 0;
         FluidHolder contained = getFluidHolder();
         if (contained.is(Fluids.EMPTY)) {

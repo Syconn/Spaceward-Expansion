@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="New Fluid System BasePoint">
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fixed Fluid System">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/FluidPipeBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/FluidPipeBE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/FluidTank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenCollector.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/OxygenCollector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/InteractableFluidTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/InteractableFluidTank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/FluidHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/helpers/FluidHelper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,41 +64,41 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Syconn"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Syconn&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Syconn/Spaceward-Expansion",
-    "accountId": "c33642d1-d95d-4d57-b16f-72b41563ba77"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Syconn/Spaceward-Expansion&quot;,
+    &quot;accountId&quot;: &quot;c33642d1-d95d-4d57-b16f-72b41563ba77&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2kqxNMrWK2xalhnQDBfFy3e1Z4y" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build Spaceward-Expansion.executor": "Run",
-    "Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
-    "Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor": "Run",
-    "Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor": "Debug",
-    "Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "multiloader/V1.2.1",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build Spaceward-Expansion.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;multiloader/V1.2.1&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
@@ -185,13 +183,22 @@
       <option name="project" value="LOCAL" />
       <updated>1724028347108</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Fixed Fluid System">
+      <option name="closed" value="true" />
+      <created>1724038100613</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1724038100613</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Gradle Fix" />
     <MESSAGE value="New Fluid System BasePoint" />
-    <option name="LAST_COMMIT_MESSAGE" value="New Fluid System BasePoint" />
+    <MESSAGE value="Fixed Fluid System" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Fluid System" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
