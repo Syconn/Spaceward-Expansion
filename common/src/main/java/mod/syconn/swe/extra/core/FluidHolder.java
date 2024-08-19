@@ -138,7 +138,7 @@ public class FluidHolder {
     }
 
     public FluidHolder fill(int fillAmount) {
-        this.amount -= fillAmount;
+        this.amount += fillAmount;
         return this;
     }
 

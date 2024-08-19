@@ -29,7 +29,7 @@ public interface FluidHandler {
     }
 
     default int fill(FluidHolder resource, FluidAction doFill) {
-        if (preCondition() || isFluidValid(resource) || resource.is(Fluids.EMPTY)) return 0;
+        if (preCondition() || !isFluidValid(resource) || resource.is(Fluids.EMPTY)) return 0;
         FluidHolder contained = getFluidHolder();
         if (contained.is(Fluids.EMPTY)) {
             int fillAmount = Math.min(getTankCapacity(), resource.getAmount());

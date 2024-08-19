@@ -18,10 +18,4 @@ public interface ISingleFluidHandler {
     InteractionalFluidHandler getInteractional(Level level, BlockPos pos, Direction direction);
     boolean has(BlockGetter level, BlockPos pos, Direction direction);
     ItemStack getBucket(FluidHolder fluidHolder);
-//    boolean isFluidValid(FluidHolder fluidHolder);
-//    FluidHolder getFluidInTank();
-//    int getTankCapacity();
-//    int fill(FluidHolder resource, FluidAction action);
-//    FluidHolder drain(FluidHolder resource, FluidAction action);
-//    FluidHolder drain(int drain, FluidAction action);
 }

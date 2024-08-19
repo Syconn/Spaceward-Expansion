@@ -43,39 +43,4 @@ public class NeoSingleFluidHandler implements ISingleFluidHandler { // TODO Mayb
     public ItemStack getBucket(FluidHolder fluidHolder) {
         return FluidUtil.getFilledBucket(new FluidStack(fluidHolder.getFluid(), fluidHolder.getAmount()));
     }
-
-    //    public FluidHolder getFluidInTank() { TODO REMOVE OR RE-IMPLEMENT
-//        return of(handler.getFluidInTank(0));
-//    }
-//
-//    public int getTankCapacity() {
-//        return handler.getTankCapacity(0);
-//    }
-//
-//    public int fill(FluidHolder resource, FluidAction action) {
-//        return handler.fill(of(resource), of(action));
-//    }
-//
-//    public FluidHolder drain(FluidHolder resource, FluidAction action) {
-//        return of(handler.drain(of(resource), of(action)));
-//    }
-//
-//    public FluidHolder drain(int drain, FluidAction action) {
-//        return of(handler.drain(drain, of(action)));
-//    }
-//
-//    private FluidHolder of(FluidStack stack) {
-//        return new FluidHolder(stack.getFluid(), stack.getAmount());
-//    }
-//
-//    private FluidStack of(FluidHolder holder) {
-//        return new FluidStack(holder.getFluid(), holder.getAmount());
-//    }
-//
-//    private IFluidHandler.FluidAction of(FluidAction action) {
-//        return switch (action) {
-//            case EXECUTE -> IFluidHandler.FluidAction.EXECUTE;
-//            case SIMULATE -> IFluidHandler.FluidAction.SIMULATE;
-//        };
-//    }
 }
