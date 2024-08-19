@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fixed Fluid System">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="TODO's Solved">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/InteractableFluidTank.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/InteractableFluidTank.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,14 +188,32 @@
       <option name="project" value="LOCAL" />
       <updated>1724038100613</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Final Fluid System Fix">
+      <option name="closed" value="true" />
+      <created>1724091945962</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1724091945962</updated>
+    </task>
+    <task id="LOCAL-00005" summary="TODO's Solved">
+      <option name="closed" value="true" />
+      <created>1724092194619</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1724092194619</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Gradle Fix" />
     <MESSAGE value="New Fluid System BasePoint" />
     <MESSAGE value="Fixed Fluid System" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Fluid System" />
+    <MESSAGE value="Final Fluid System Fix" />
+    <MESSAGE value="TODO's Solved" />
+    <option name="LAST_COMMIT_MESSAGE" value="TODO's Solved" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
