@@ -1,4 +1,4 @@
-package mod.syconn.swe.client.screen;
+package mod.syconn.swe.client.screen.base;
 
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.client.screen.widgets.SpriteButton;
@@ -7,13 +7,16 @@ import mod.syconn.swe.extra.core.InteractionalFluidHandler;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
 
 import java.awt.*;
+import java.util.List;
 
 public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
@@ -25,10 +28,14 @@ public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu>
     private final SpriteButton[] interactionButtons = new SpriteButton[6];
     private SpriteButton openMenuButton;
     private boolean sideMenuActive = false;
+    private final Level level;
+    private final BlockPos pos;
 
-    public InteractionSelectorScreen(T pMenu, Inventory pPlayerInventory, Component pTitle, InteractableFluidTank tank) {
+    public InteractionSelectorScreen(T pMenu, Inventory pPlayerInventory, Component pTitle, InteractableFluidTank tank, BlockPos pos) {
         super(pMenu, pPlayerInventory, pTitle);
         this.tank = tank;
+        this.level = pPlayerInventory.player.level();
+        this.pos = pos;
     }
 
     protected void init() {
@@ -37,12 +44,13 @@ public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu>
         for (Direction direction : Direction.values()) {
             Interactables interaction = Interactables.fromInteraction(tank.getSideInteraction(direction));
             Point point = buttonPoints[direction.get3DDataValue()];
-            addRenderableWidget(interactionButtons[direction.get3DDataValue()] = new SpriteButton(leftPos + getMenuX() + point.x, topPos + getMenuY() + point.y, boxSize, boxSize, Component.literal(direction.toString().substring(0, 1).toUpperCase()), Component.literal(interaction.msg), sideMenu, interaction.xLoc, interaction.yLoc,
+            List<Component> info = List.of(Component.literal(interaction.msg), Component.literal("Block: ").append(level.getBlockState(pos.relative(direction)).getBlock().getName()));
+            addRenderableWidget(interactionButtons[direction.get3DDataValue()] = new SpriteButton(leftPos + getMenuX() + point.x, topPos + getMenuY() + point.y, boxSize, boxSize, Component.literal(direction.toString().substring(0, 1).toUpperCase()), info, sideMenu, interaction.xLoc, interaction.yLoc,
                     pButton -> interactionButton(direction.get3DDataValue())));
             interactionButtons[direction.get3DDataValue()].setInteractable(false);
             interactables[direction.get3DDataValue()] = interaction;
         }
-        addRenderableWidget(openMenuButton = new SpriteButton(getSpriteX(), getSpriteY(), boxSize, boxSize, Component.empty(), Component.empty(), sideMenu, Interactables.ACTIVE.xLoc, Interactables.ACTIVE.yLoc, this::openButton));
+        addRenderableWidget(openMenuButton = new SpriteButton(getSpriteX(), getSpriteY(), boxSize, boxSize, Component.empty(), List.of(Component.empty()), sideMenu, Interactables.ACTIVE.xLoc, Interactables.ACTIVE.yLoc, this::openButton));
         interactables[6] = Interactables.ACTIVE;
     }
 
@@ -56,18 +64,19 @@ public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu>
     }
 
     private void interactionButton(int i) {
-        setSpriteButton(interactionButtons[i], interactables[i] = interactables[i].rotate());
+        setSpriteButton(interactionButtons[i], interactables[i] = interactables[i].rotate(), i);
         sendPacket(interactables[i], Direction.from3DDataValue(i));
     }
 
     private void openButton(AbstractButton button) {
         sideMenuActive = !sideMenuActive;
-        setSpriteButton(openMenuButton, interactables[6] = interactables[6].rotate());
+        setSpriteButton(openMenuButton, interactables[6] = interactables[6].rotate(), 6);
     }
 
-    private void setSpriteButton(SpriteButton button, Interactables interaction) {
+    private void setSpriteButton(SpriteButton button, Interactables interaction, int dir) {
         button.setSprite(interaction.xLoc, interaction.yLoc);
-        button.setHoverInfo(Component.literal(interaction.msg));
+        if (dir != 6) button.setHoverInfo(List.of(Component.literal(interaction.msg), Component.literal("Block: " + level.getBlockState(pos.relative(Direction.from3DDataValue(dir))).getBlock().getName())));
+        else button.setHoverInfo(List.of(Component.literal(interaction.msg)));
     }
 
     protected abstract int getMenuX();

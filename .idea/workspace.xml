@@ -4,8 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="TODO's Solved">
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="NeoForge Final Fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/CollectorScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/CollectorScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/FluidPipeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/FluidPipeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/InteractionSelectorScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/base/InteractionSelectorScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/TankScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/TankScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/widgets/SpriteButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/widgets/SpriteButton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +66,11 @@
     </system>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="multiloader/V1.2.1" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -83,19 +95,20 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build Spaceward-Expansion.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;multiloader/V1.2.1&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build Spaceward-Expansion.executor": "Run",
+    "Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
+    "Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
+    "Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor": "Run",
+    "Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor": "Debug",
+    "Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "multiloader/V1.2.2",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
@@ -204,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724092194619</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="NeoForge Final Fix">
+      <option name="closed" value="true" />
+      <created>1724092659546</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1724092659546</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -213,7 +234,8 @@
     <MESSAGE value="Fixed Fluid System" />
     <MESSAGE value="Final Fluid System Fix" />
     <MESSAGE value="TODO's Solved" />
-    <option name="LAST_COMMIT_MESSAGE" value="TODO's Solved" />
+    <MESSAGE value="NeoForge Final Fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="NeoForge Final Fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

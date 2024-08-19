@@ -2,6 +2,7 @@ package mod.syconn.swe.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.syconn.swe.Constants;
+import mod.syconn.swe.client.screen.base.InteractionSelectorScreen;
 import mod.syconn.swe.client.screen.widgets.InfoWidget;
 import mod.syconn.swe.common.container.CollectorMenu;
 import mod.syconn.swe.extra.core.FluidHolder;
@@ -26,7 +27,7 @@ public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
     private static final ResourceLocation BG = Constants.loc("textures/gui/disperser.png");
 
     public CollectorScreen(CollectorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank());
+        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank(), pMenu.getBE().getBlockPos());
     }
 
     protected void init() {

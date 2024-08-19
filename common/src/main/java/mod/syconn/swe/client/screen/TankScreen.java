@@ -1,6 +1,7 @@
 package mod.syconn.swe.client.screen;
 
 import mod.syconn.swe.Constants;
+import mod.syconn.swe.client.screen.base.InteractionSelectorScreen;
 import mod.syconn.swe.common.container.TankMenu;
 import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.core.FluidTank;
@@ -11,6 +12,7 @@ import mod.syconn.swe.network.messages.ServerBoundInteractableButtonPress;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +25,7 @@ public class TankScreen extends InteractionSelectorScreen<TankMenu> {
     private static final ResourceLocation BG = Constants.loc("textures/gui/tank.png");
 
     public TankScreen(TankMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank());
+        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank(), pMenu.getBE().getBlockPos());
     }
 
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) { }

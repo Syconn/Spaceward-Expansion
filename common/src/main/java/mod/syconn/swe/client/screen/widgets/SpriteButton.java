@@ -7,13 +7,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 
+import java.util.List;
+
 public class SpriteButton extends ExtendedButton {
 
     private ResourceLocation sprite;
-    private Component hoverInfo;
+    private List<Component> hoverInfo;
     private int xLoc, yLoc;
 
-    public SpriteButton(int xPos, int yPos, int width, int height, Component displayString, Component hoverInfo, ResourceLocation sprite, int xLoc, int yLoc, OnPress handler) {
+    public SpriteButton(int xPos, int yPos, int width, int height, Component displayString, List<Component> hoverInfo, ResourceLocation sprite, int xLoc, int yLoc, OnPress handler) {
         super(xPos, yPos, width, height, displayString, handler);
         this.hoverInfo = hoverInfo;
         this.sprite = sprite;
@@ -23,7 +25,7 @@ public class SpriteButton extends ExtendedButton {
 
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         if (visible) {
-            if (isHoveredOrFocused() && !hoverInfo.equals(Component.empty())) guiGraphics.renderTooltip(Minecraft.getInstance().font, hoverInfo, mouseX, mouseY);
+            if (isHoveredOrFocused() && !hoverInfo.equals(Component.empty())) guiGraphics.renderComponentTooltip(Minecraft.getInstance().font, hoverInfo, mouseX, mouseY);
             guiGraphics.blit(sprite, getX(), getY(), xLoc, yLoc, width, height);
             if (!getMessage().equals(Component.empty())) guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX() + width / 2 - 3, getY() + height / 2 - 4, DyeColor.BLACK.getFireworkColor());
         }
@@ -34,7 +36,7 @@ public class SpriteButton extends ExtendedButton {
         active = interactable;
     }
 
-    public void setHoverInfo(Component hoverInfo) {
+    public void setHoverInfo(List<Component> hoverInfo) {
         this.hoverInfo = hoverInfo;
     }
 

@@ -12,6 +12,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.List;
+
 public class FluidPipeScreen extends Screen {
 
     private final ResourceLocation SM = Constants.loc("textures/gui/interaction_selector.png");
@@ -38,7 +40,7 @@ public class FluidPipeScreen extends Screen {
                 Interaction interaction = Interaction.fromPipeConnection(type);
                 int xMove = i < 4 ? i * (boxSize + 18) : (i - 3) * (boxSize + 18);
                 int yMove = i < 4 ? 0 : boxSize + 14;
-                addRenderableWidget(interactionButtons[direction.get3DDataValue()] = new SpriteButton(leftPos + xMove + 13, topPos + yMove + 11, boxSize, boxSize, Component.literal(direction.toString().substring(0, 1).toUpperCase()), Component.literal(interaction.msg), SM, interaction.xLoc, interaction.yLoc,
+                addRenderableWidget(interactionButtons[direction.get3DDataValue()] = new SpriteButton(leftPos + xMove + 13, topPos + yMove + 11, boxSize, boxSize, Component.literal(direction.toString().substring(0, 1).toUpperCase()), List.of(Component.literal(interaction.msg)), SM, interaction.xLoc, interaction.yLoc,
                         pButton -> interactionButton(direction.get3DDataValue())));
                 interactions[direction.get3DDataValue()] = interaction;
                 i++;
@@ -62,7 +64,7 @@ public class FluidPipeScreen extends Screen {
 
     private void setSpriteButton(SpriteButton button, Interaction interaction) {
         button.setSprite(interaction.xLoc, interaction.yLoc);
-        button.setHoverInfo(Component.literal(interaction.msg));
+        button.setHoverInfo(List.of(Component.literal(interaction.msg)));
     }
 
     public void onClose() {
