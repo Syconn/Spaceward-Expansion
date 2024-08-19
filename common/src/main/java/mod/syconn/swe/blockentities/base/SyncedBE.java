@@ -37,10 +37,6 @@ public abstract class SyncedBE extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-//    public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) { TODO DONT NEED MAYBE?
-//        loadClientData(tag, lookupProvider);
-//    }
-
     public void markDirty() {
         setChanged();
         level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);

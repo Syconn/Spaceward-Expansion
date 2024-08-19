@@ -8,7 +8,7 @@ import net.minecraft.world.level.material.Fluid;
 import java.util.List;
 import java.util.Optional;
 
-public interface IFluidExtensions { // TODO FABRIC
+public interface IFluidExtensions {
 
     int getTintColor(Fluid fluid);
     List<Component> getTooltip(Fluid fluid);

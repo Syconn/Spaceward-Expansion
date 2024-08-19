@@ -39,16 +39,6 @@ public class BlockRegister {
         return registeredBlock;
     }
 
-//    private static <BLOCK extends Block> DeferredBlock<BLOCK> registerBlockAndItem(String id, Supplier<BLOCK> blockSupplier) { TODO OLD CODE TEST AND REMOVE
-//        return registerBlockAndItem(id, blockSupplier, block1 -> new BlockItem(block1, new Item.Properties()));
-//    }
-//
-//    private static <BLOCK extends Block, ITEM extends BlockItem> DeferredBlock<BLOCK> registerBlockAndItem(String name, Supplier<BLOCK> blockFactory, Function<? super BLOCK,ITEM> itemFactory) {
-//        DeferredBlock<BLOCK> block = BLOCKS.register(name, blockFactory);
-//        ITEMS.register(name, () -> itemFactory.apply(block.get()));
-//        return block;
-//    }
-
     private static <T extends Block> Supplier<MapCodec<T>> registerCodec(String id, Supplier<MapCodec<T>> blockCodec) {
         return Services.REGISTRAR.registerBlockCodec(id, blockCodec);
     }

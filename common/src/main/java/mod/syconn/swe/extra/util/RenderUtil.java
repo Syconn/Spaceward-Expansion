@@ -30,10 +30,6 @@ public class RenderUtil {
     }
 
     public static int getAtlasSpriteRGBA(TextureAtlasSprite sprite, int x, int y) {
-//        if (sprite.contents().animatedTexture != null) { TODO TEST WHERE NEEDED
-//            x += sprite.contents().animatedTexture.getFrameX(frameIndex) * this.contents.width;
-//            y += sprite.contents().animatedTexture.getFrameY(frameIndex) * this.contents.height;
-//        }
         return sprite.contents().originalImage.getPixelRGBA(x, y);
     }
 

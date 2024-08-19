@@ -11,7 +11,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class EquipmentItemSlot extends Slot { // TODO SWAP OVER TO API VERSION
+public class EquipmentItemSlot extends Slot {
 
     private final Player player;
     private final SpaceSlot slot;

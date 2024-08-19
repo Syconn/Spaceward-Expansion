@@ -76,7 +76,7 @@ public class NeoFluidHandler {
 
         public void onContentsChanged() {}
 
-        public int fill(FluidHolder resource, FluidAction doFill) { // TODO MAY NOT WORK CAUSE NOT COMPATIBLE
+        public int fill(FluidHolder resource, FluidAction doFill) {
             return handler.fill(of(resource), of(doFill));
         }
 

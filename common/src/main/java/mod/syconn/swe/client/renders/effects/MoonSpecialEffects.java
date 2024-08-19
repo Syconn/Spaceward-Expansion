@@ -31,7 +31,7 @@ public class MoonSpecialEffects extends DimensionSpecialEffects implements Custo
 
     public boolean isFoggyAt(int pX, int pY) {
         return false;
-    } // TODO NEVER CALLS RENDER SKY
+    }
 
     public boolean renderSky(ClientLevel level, float partialTick, Matrix4f modelViewMatrix, Matrix4f projectionMatrix, VertexBuffer starBuffer, Runnable setupFog) {
         PoseStack posestack = new PoseStack();
@@ -75,7 +75,6 @@ public class MoonSpecialEffects extends DimensionSpecialEffects implements Custo
         bufferbuilder1.addVertex(matrix4f1, f12, 100.0F, f12).setUv(1.0F, 1.0F);
         bufferbuilder1.addVertex(matrix4f1, -f12, 100.0F, f12).setUv(0.0F, 1.0F);
         BufferUploader.drawWithShader(bufferbuilder1.buildOrThrow());
-//        posestack.mulPose(Axis.XP.rotationDegrees(30F)); TODO CALCULATE LATER
         RenderSystem.setShaderTexture(0, EARTH_LOCATION);
         bufferbuilder1 = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
         bufferbuilder1.addVertex(matrix4f1, -f12, -100.0F, f12).setUv(0.0F, 0.0F);

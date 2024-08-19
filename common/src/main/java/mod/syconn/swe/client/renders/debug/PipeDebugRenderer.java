@@ -120,7 +120,7 @@ public class PipeDebugRenderer {
             PoseStack poseStack = event.poseStack();
             poseStack.pushPose();
 
-            RenderSystem.setShader(GameRenderer::getPositionColorShader); // TODO LOSE POSESTACK
+            RenderSystem.setShader(GameRenderer::getPositionColorShader);
             RenderSystem.applyModelViewMatrix();
             RenderSystem.depthFunc(GL11.GL_ALWAYS);
 

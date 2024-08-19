@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.extensions.ILevelExtension;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidUtil;
 
-public class NeoSingleFluidHandler implements ISingleFluidHandler { // TODO Maybe have ItemHandler Be held in Wrapper then get from Wrapper
+public class NeoSingleFluidHandler implements ISingleFluidHandler {
 
     public FluidHandlerItem get(ItemStack stack) {
         return new NeoFluidHandler.ItemFluidHandler(stack.getCapability(Capabilities.FluidHandler.ITEM));

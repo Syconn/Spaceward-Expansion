@@ -20,7 +20,6 @@ import java.util.List;
 
 public class DyedParachuteRecipe extends CustomRecipe {
 
-    // TODO DOESNT APPEAR IN CRAFTING TABLE BOOK
     public DyedParachuteRecipe(CraftingBookCategory pCategory) {
         super(pCategory);
     }
