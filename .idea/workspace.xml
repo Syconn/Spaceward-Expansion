@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="NeoForge Final Fix">
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Small Feature Update">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/CollectorScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/CollectorScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/FluidPipeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/FluidPipeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/InteractionSelectorScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/base/InteractionSelectorScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/TankScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/TankScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/widgets/SpriteButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/client/screen/widgets/SpriteButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +27,9 @@
         <task path="$PROJECT_DIR$/forge">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/neoforge">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -43,20 +40,20 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
-                <item name="forge" type="2d1252cf:ModuleNode" />
+                <item name="neoforge" type="2d1252cf:ModuleNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
-                <item name="forge" type="2d1252cf:ModuleNode" />
+                <item name="neoforge" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
-                <item name="forge" type="2d1252cf:ModuleNode" />
+                <item name="neoforge" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="forgegradle runs" type="c8890929:TasksNode$1" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -103,6 +100,7 @@
     "Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor": "Run",
     "Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor": "Debug",
     "Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor": "Debug",
+    "Gradle.Spaceward-Expansion:neoforge [build].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "multiloader/V1.2.2",
     "ignore.virus.scanning.warn.message": "true",
@@ -162,8 +160,31 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="Spaceward-Expansion:neoforge [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/neoforge" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
         <item itemvalue="Gradle.Spaceward-Expansion:forge [genEclipseRuns]" />
       </list>
     </recent_temporary>
@@ -225,7 +246,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724092659546</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Small Feature Update">
+      <option name="closed" value="true" />
+      <created>1724095145834</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1724095145834</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -235,7 +264,8 @@
     <MESSAGE value="Final Fluid System Fix" />
     <MESSAGE value="TODO's Solved" />
     <MESSAGE value="NeoForge Final Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="NeoForge Final Fix" />
+    <MESSAGE value="Small Feature Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small Feature Update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
