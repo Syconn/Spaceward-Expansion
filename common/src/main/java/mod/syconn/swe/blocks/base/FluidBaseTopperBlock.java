@@ -1,5 +1,6 @@
 package mod.syconn.swe.blocks.base;
 
+import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
@@ -16,7 +17,7 @@ public abstract class FluidBaseTopperBlock extends BaseEntityBlock {
     }
 
     public boolean canSurvive(BlockState p_60525_, LevelReader p_60526_, BlockPos p_60527_) {
-        return p_60526_.getBlockState(p_60527_.below()).getBlock() instanceof FluidStorageBlock; // TODO CHANGE
+        return Services.FLUID_HANDLER.has(p_60526_, p_60527_.below(), Direction.UP) && canSupportCenter(p_60526_, p_60527_.below(), Direction.UP);
     }
 
     public RenderShape getRenderShape(BlockState p_49232_) {

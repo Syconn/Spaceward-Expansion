@@ -31,7 +31,8 @@ public class FabricSingleFluidHandler implements ISingleFluidHandler {
     }
 
     public boolean has(BlockGetter level, BlockPos pos, Direction direction) {
-        return FluidStorage.SIDED.find((Level) level, pos, direction) instanceof BlockFluidWrapper;
+        if (level instanceof Level ext) return FluidStorage.SIDED.find(ext, pos, direction) instanceof BlockFluidWrapper;
+        return false;
     }
 
     public InteractionalFluidHandler getInteractional(Level level, BlockPos pos, Direction direction) {
@@ -41,24 +42,4 @@ public class FabricSingleFluidHandler implements ISingleFluidHandler {
     public ItemStack getBucket(FluidHolder fluidHolder) {
         return new ItemStack(fluidHolder.getFluid().getBucket());
     }
-
-    //    public FluidHolder getFluidInTank() {
-//        return handler.getFluid();
-//    }
-//
-//    public int getTankCapacity() {
-//        return handler.getCapacity();
-//    }
-//
-//    public int fill(FluidHolder resource, FluidAction action) {
-//        return handler.fill(resource, action);
-//    }
-//
-//    public FluidHolder drain(FluidHolder resource, FluidAction action) {
-//        return handler.drain(resource, action);
-//    }
-//
-//    public FluidHolder drain(int drain, FluidAction action) {
-//        return handler.drain(drain, action);
-//    }
 }

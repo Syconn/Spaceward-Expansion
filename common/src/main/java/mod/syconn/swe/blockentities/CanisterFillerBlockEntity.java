@@ -1,13 +1,11 @@
 package mod.syconn.swe.blockentities;
 
-import mod.syconn.swe.extra.core.FluidAction;
-import mod.syconn.swe.extra.core.FluidHandler;
-import mod.syconn.swe.extra.core.FluidHolder;
-import mod.syconn.swe.extra.core.FluidTank;
+import mod.syconn.swe.extra.core.*;
 import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.items.Canister;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 
-public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH ALL FLUID ITEM HANDLERS
+public class CanisterFillerBlockEntity extends BlockEntity {
 
     private final int fillSpeed = 10;
     private NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
@@ -34,12 +32,13 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
         for (int i = 0; i < 4; i++) {
             if (!e.items.get(i).isEmpty()) {
                 ItemStack itemStack = e.items.get(i);
-                FluidHandler handler = Services.FLUID_HANDLER.get(itemStack);
-                if (handler != null) {
-                    FluidHolder fluidHolder = handler.getFluidHolder();
-                    if (handler.getTankCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(e.getFluidTank().getFluidHolder())) {
-                        FluidHolder resource = e.getFluidTank().drain(e.fillSpeed, FluidAction.EXECUTE);
-                        e.getFluidTank().fill(resource.copyWith(resource.getAmount() - handler.fill(resource, FluidAction.EXECUTE)), FluidAction.EXECUTE);
+                FluidHandlerItem itemHandler = Services.FLUID_HANDLER.get(itemStack);
+                FluidHandler handler = Services.FLUID_HANDLER.get(level, pos.below(), Direction.UP);
+                if (itemHandler != null) {
+                    FluidHolder fluidHolder = itemHandler.getFluidHolder();
+                    if (itemHandler.getTankCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(handler.getFluidHolder())) {
+                        FluidHolder resource = handler.drain(e.fillSpeed, FluidAction.EXECUTE);
+                        handler.fill(resource.copyWith(resource.getAmount() - itemHandler.fill(resource, FluidAction.EXECUTE)), FluidAction.EXECUTE);
                         e.update();
                     }
                 }
@@ -48,8 +47,9 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
     }
 
     public boolean addCanister(ItemStack stack) {
-        FluidHandler handler = Services.FLUID_HANDLER.get(stack);
-        if (handler != null && stack.getItem() instanceof Canister && handler.getFluidHolder().is(Fluids.EMPTY) || handler.getFluidHolder().is(getFluidTank().getFluidHolder())) {
+        FluidHandlerItem itemHandler = Services.FLUID_HANDLER.get(stack);
+        FluidHandler handler = Services.FLUID_HANDLER.get(level, worldPosition.below(), Direction.UP);
+        if (Services.FLUID_HANDLER.has(stack) && stack.getItem() instanceof Canister && itemHandler.getFluidHolder().is(Fluids.EMPTY) || itemHandler.getFluidHolder().is(handler.getFluidHolder())) {
             for (int i = 0; i < 4; i++) {
                 if (items.get(i).isEmpty()) {
                     items.set(i, stack.copy());
@@ -75,10 +75,6 @@ public class CanisterFillerBlockEntity extends BlockEntity { // TODO WORK WITH A
 
     public ItemStack getCanister(int i) {
         return items.get(i);
-    }
-
-    public FluidTank getFluidTank() {
-        return level.getBlockEntity(worldPosition.below(), BlockEntityRegister.TANK.get()).get().getFluidTank();
     }
 
     protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
