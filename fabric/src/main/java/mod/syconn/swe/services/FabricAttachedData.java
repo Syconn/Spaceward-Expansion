@@ -25,7 +25,7 @@ public class FabricAttachedData implements IAttachedData {
 
     @SuppressWarnings("all")
     public <T extends IAttachmentType<T>> T get(Class<T> typeClass, Player player) {
-        return player.getAttached(getType(typeClass));
+        return player.getAttachedOrCreate(getType(typeClass));
     }
 
     @SuppressWarnings("all")

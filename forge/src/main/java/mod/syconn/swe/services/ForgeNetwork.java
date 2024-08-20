@@ -10,10 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.network.ChannelBuilder;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.SimpleChannel;
+import net.minecraftforge.network.*;
 
 import java.util.OptionalInt;
 
@@ -37,7 +34,7 @@ public class ForgeNetwork implements INetwork {
     }
 
     public <T> void registerPlayBiDirectional(Network.PlayMessage<T> message) {
-
+        CHANNEL.messageBuilder(message.msgClass(), NetworkProtocol.PLAY).codec(message.forgeCodec()).consumerMainThread((payload, context) -> message.handler().accept(payload, context.getSender())).add();
     }
 
     public <T> void registerPlayS2C(Network.PlayMessage<T> message) {

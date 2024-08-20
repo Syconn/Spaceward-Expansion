@@ -57,6 +57,7 @@ public class NeoClient {
     public static void coloredItems(RegisterColorHandlersEvent.Item event) {
         event.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, ItemRegister.PARACHUTE.get());
         event.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluidHolder().getFluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
+        event.register((s, layer) -> layer == 1 ? RenderUtil.getFluidColor(FluidRegister.O2.get()) : -1, ItemRegister.LIQUID_OXYGEN_BUCKET.get());
     }
 
     @SubscribeEvent

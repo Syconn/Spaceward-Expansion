@@ -35,7 +35,7 @@ public abstract class OxygenFlowingFluid extends FlowingFluid {
     }
 
     public Item getBucket() {
-        return ItemRegister.O2_BUCKET.get();
+        return ItemRegister.LIQUID_OXYGEN_BUCKET.get();
     }
 
     protected boolean canConvertToSource(Level pLevel) {

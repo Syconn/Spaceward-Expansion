@@ -1,5 +1,7 @@
 {
-  "parent": "neoforge:item/bucket",
-  "loader": "neoforge:fluid_container",
-  "fluid": "swe:source_o2_fluid"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "item/bucket",
+    "layer1": "swe:item/drip_bucket"
+  }
 }

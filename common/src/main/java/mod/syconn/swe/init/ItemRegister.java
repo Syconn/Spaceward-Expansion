@@ -31,7 +31,7 @@ public class ItemRegister {
     public static final Supplier<UpgradeItem> DIAMOND_UPGRADE = register("diamond_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1), 10));
     public static final Supplier<UpgradeItem> EMERALD_UPGRADE = register("emerald_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1), 15));
     public static final Supplier<UpgradeItem> NETHERITE_UPGRADE = register("netherite_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1).fireResistant(), 25));
-    public static final Supplier<BucketItem> O2_BUCKET = register("o2_fluid_bucket", () -> new BucketItem(FluidRegister.O2.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+    public static final Supplier<BucketItem> LIQUID_OXYGEN_BUCKET = register("o2_fluid_bucket", () -> new BucketItem(FluidRegister.O2.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
 
     public static final Supplier<CreativeModeTab> TAB = Services.REGISTRAR.registerCreativeModeTab("nexus", () -> Services.REGISTRAR.newCreativeTabBuilder()
             .title(Component.translatable("itemGroup." + Constants.MOD_ID)).icon(() -> SPACE_HELMET.get().getDefaultInstance()).displayItems(ItemRegister::addCreative).build());
@@ -47,6 +47,7 @@ public class ItemRegister {
         pOutput.accept(DIAMOND_UPGRADE.get());
         pOutput.accept(EMERALD_UPGRADE.get());
         pOutput.accept(NETHERITE_UPGRADE.get());
+        pOutput.accept(LIQUID_OXYGEN_BUCKET.get());
         pOutput.accept(Canister.create(8000, 8000, Fluids.LAVA, CANISTER.get()));
         pOutput.accept(Canister.create(8000, 8000, Fluids.LAVA, AUTO_REFILL_CANISTER.get()));
         pOutput.accept(Canister.create(8000, 8000, Fluids.WATER, CANISTER.get()));

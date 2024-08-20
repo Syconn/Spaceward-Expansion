@@ -42,8 +42,6 @@ public class FabricNetwork implements INetwork {
         });
     }
 
-    public <T> void registerPlayBiDirectional(Network.PlayMessage<T> message) {}
-
     public void sendToServer(Object payload) {
         ClientPlayNetworking.send(encode(payload));
     }
@@ -60,6 +58,12 @@ public class FabricNetwork implements INetwork {
     public <T> void registerPlayC2S(Network.PlayMessage<T> message) {
         createDirectory();
         PayloadTypeRegistry.playC2S().register(message.type(), message.codec());
+    }
+
+    public <T> void registerPlayBiDirectional(Network.PlayMessage<T> message) {
+        createDirectory();
+        PayloadTypeRegistry.playC2S().register(message.type(), message.codec());
+        PayloadTypeRegistry.playS2C().register(message.type(), message.codec());
     }
 
     public <T> void registerClientHandler(Network.PlayMessage<T> message) {

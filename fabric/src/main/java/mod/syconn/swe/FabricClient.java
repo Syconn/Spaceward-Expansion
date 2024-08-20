@@ -42,6 +42,7 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.level.material.Fluids;
 
 import static mod.syconn.swe.items.Canister.getHandler;
 
@@ -55,20 +56,27 @@ public class FabricClient implements ClientModInitializer {
         MenuScreens.register(Menus.TANK_MENU.get(), TankScreen::new);
         MenuScreens.register(Menus.DISPERSER_MENU.get(), DisperserScreen::new);
         MenuScreens.register(Menus.COLLECTOR_MENU.get(), CollectorScreen::new);
+
         BlockEntityRenderers.register(BlockEntityRegister.TANK.get(), TankBER::new);
         BlockEntityRenderers.register(BlockEntityRegister.FILLER.get(), CanisterBER::new);
         BlockEntityRenderers.register(BlockEntityRegister.PIPE.get(), FluidPipeBER::new);
-        ItemProperties.register(ItemRegister.CANISTER.get(), Constants.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
-        ItemProperties.register(ItemRegister.AUTO_REFILL_CANISTER.get(), Constants.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
+
+        BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(), FluidRegister.O2.get(), FluidRegister.O2_FLOWING.get());
+        FluidRenderHandlerRegistry.INSTANCE.register(FluidRegister.O2.get(), FluidRegister.O2_FLOWING.get(), new SimpleFluidRenderHandler(OxygenFlowingFluid.O2_STILL_RL, OxygenFlowingFluid.O2_FLOWING_RL, OxygenFlowingFluid.O2_OVERLAY_RL, -1));
+
         EntityModelLayerRegistry.registerModelLayer(ParachuteModel.LAYER_LOCATION, ParachuteModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(ChuteModel.LAYER_LOCATION, ChuteModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(TankModel.LAYER_LOCATION, TankModel::createBodyLayer);
-        DimensionRenderingRegistry.registerDimensionEffects(Constants.loc("moon"), new MoonSpecialEffects());
+
+        ItemProperties.register(ItemRegister.CANISTER.get(), Constants.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
+        ItemProperties.register(ItemRegister.AUTO_REFILL_CANISTER.get(), Constants.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
         ColorProviderRegistry.ITEM.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, ItemRegister.PARACHUTE.get());
         ColorProviderRegistry.ITEM.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluidHolder().getFluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
-        FluidRenderHandlerRegistry.INSTANCE.register(FluidRegister.O2.get(), FluidRegister.O2_FLOWING.get(), new SimpleFluidRenderHandler(OxygenFlowingFluid.O2_STILL_RL, OxygenFlowingFluid.O2_FLOWING_RL, OxygenFlowingFluid.O2_OVERLAY_RL, -1));
-        BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(), FluidRegister.O2.get(), FluidRegister.O2_FLOWING.get());
+        ColorProviderRegistry.ITEM.register((s, layer) -> layer == 1 ? RenderUtil.getFluidColor(FluidRegister.O2.get()) : -1, ItemRegister.O2_BUCKET.get());
+
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricPlanetManager());
+
+        DimensionRenderingRegistry.registerDimensionEffects(Constants.loc("moon"), new MoonSpecialEffects());
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if(entityRenderer instanceof PlayerRenderer renderer) registrationHelper.register(new SpaceSuitLayer<>(renderer, context.getModelSet()));
@@ -84,7 +92,7 @@ public class FabricClient implements ClientModInitializer {
 
         public void onInitializeModelLoader(Context pluginContext) {
             pluginContext.modifyModelOnLoad().register((original, context) -> {
-                if(context.resourceId().equals(Constants.loc("pipe"))) return new PipeModelLoader();
+                if(context.resourceId() != null && context.resourceId().equals(Constants.loc("pipe"))) return new PipeModelLoader();
                 return original;
             });
         }
