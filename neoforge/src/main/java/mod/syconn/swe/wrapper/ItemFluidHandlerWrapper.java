@@ -101,11 +101,7 @@ public class ItemFluidHandlerWrapper implements IFluidHandlerItem {
 
         if (action.execute()) {
             contained.shrink(drainAmount);
-            if (contained.isEmpty()) {
-                setContainerToEmpty();
-            } else {
-                setFluid(contained);
-            }
+            setFluid(contained);
         }
 
         return drained;
@@ -117,9 +113,5 @@ public class ItemFluidHandlerWrapper implements IFluidHandlerItem {
 
     public boolean canDrainFluidType(FluidStack fluid) {
         return true;
-    }
-
-    protected void setContainerToEmpty() {
-        container.set(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), FluidHolderComponent.EMPTY);
     }
 }

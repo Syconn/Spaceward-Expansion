@@ -10,7 +10,7 @@ import net.minecraft.world.level.material.Fluid;
 
 public record FluidHolderComponent(FluidHolder fluidHolder, int capacity) {
 
-    public static FluidHolderComponent EMPTY = of(FluidHolder.EMPTY, 0);
+    public static FluidHolderComponent EMPTY = of(FluidHolder.EMPTY, 8000);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, FluidHolderComponent> STREAM_CODEC = StreamCodec.composite(
             FluidHolder.OPTIONAL_STREAM_CODEC, FluidHolderComponent::fluidHolder, ByteBufCodecs.INT, FluidHolderComponent::capacity, FluidHolderComponent::new

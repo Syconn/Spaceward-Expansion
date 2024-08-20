@@ -121,6 +121,6 @@ public class NeoClient {
 
     public static void renderBlockOutline(RenderLevelStageEvent event) {
         // TODO CONFIG IMPLEMENTATION
-        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS) PipeDebugRenderer.renderBlockOutline(new Events.LevelRenderStage(event.getPoseStack(), event.getModelViewMatrix(), event.getProjectionMatrix()));
+//        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_TRIPWIRE_BLOCKS) PipeDebugRenderer.renderBlockOutline(new Events.LevelRenderStage(event.getPoseStack(), event.getModelViewMatrix(), event.getProjectionMatrix()));
     }
 }

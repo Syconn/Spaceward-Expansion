@@ -44,12 +44,7 @@ public class TankMenu extends AbstractContainerMenu {
         if (quickMovedSlot != null && quickMovedSlot.hasItem()) {
             ItemStack rawStack = quickMovedSlot.getItem();
             quickMovedStack = rawStack.copy();
-            if (quickMovedSlotIndex == 0) {
-//                if (!this.moveItemStackTo(rawStack, 5, 41, true)) {
-//                    return ItemStack.EMPTY;
-//                }
-            }
-            else if (quickMovedSlotIndex >= 5 && quickMovedSlotIndex < 41) {
+            if (quickMovedSlotIndex >= 5 && quickMovedSlotIndex < 41) {
                 if (!this.moveItemStackTo(rawStack, 1, 5, false)) {
                     if (quickMovedSlotIndex < 32) {
                         if (!this.moveItemStackTo(rawStack, 32, 41, false)) {
@@ -61,9 +56,6 @@ public class TankMenu extends AbstractContainerMenu {
                     }
                 }
             }
-//            else if (!this.moveItemStackTo(rawStack, 5, 41, false)) {
-//                return ItemStack.EMPTY;
-//            }
 
             if (rawStack.isEmpty()) {
                 quickMovedSlot.set(ItemStack.EMPTY);

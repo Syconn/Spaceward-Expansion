@@ -65,7 +65,7 @@ public class FluidHolder {
         }
     };
 
-    private final Fluid fluid;
+    private Fluid fluid;
     private int amount;
 
     public FluidHolder(Fluid fluid) {
@@ -81,11 +81,13 @@ public class FluidHolder {
     public FluidHolder(Fluid fluid, int amount) {
         this.fluid = fluid;
         this.amount = amount;
+        checkAmount();
     }
 
     public FluidHolder(Holder<Fluid> fluid, int amount) {
         this.fluid = fluid.value();
         this.amount = amount;
+        checkAmount();
     }
 
     public static Optional<FluidHolder> parse(HolderLookup.Provider lookupProvider, Tag tag) {
@@ -101,6 +103,13 @@ public class FluidHolder {
             throw new IllegalStateException("Cannot encode empty FluidStack");
         } else {
             return CODEC.encodeStart(lookupProvider.createSerializationContext(NbtOps.INSTANCE), this).getOrThrow();
+        }
+    }
+
+    private void checkAmount() {
+        if (amount <= 0) {
+            fluid = Fluids.EMPTY;
+            amount = 0;
         }
     }
 
@@ -134,11 +143,13 @@ public class FluidHolder {
 
     public FluidHolder shrink(int drainAmount) {
         this.amount -= drainAmount;
+        checkAmount();
         return this;
     }
 
     public FluidHolder fill(int fillAmount) {
         this.amount += fillAmount;
+        checkAmount();
         return this;
     }
 
