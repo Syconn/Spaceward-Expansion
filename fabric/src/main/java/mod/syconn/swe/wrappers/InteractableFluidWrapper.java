@@ -4,7 +4,7 @@ import mod.syconn.swe.extra.core.InteractionalFluidHandler;
 
 public class InteractableFluidWrapper extends BlockFluidWrapper {
 
-    private InteractionalFluidHandler interactionalHandler;
+    private final InteractionalFluidHandler interactionalHandler;
 
     public InteractableFluidWrapper(InteractionalFluidHandler handler) {
         super(handler);

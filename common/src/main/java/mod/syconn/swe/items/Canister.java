@@ -33,7 +33,7 @@ public class Canister extends Item implements EquipmentItem {
 
     public boolean isBarVisible(ItemStack stack) {
         if (getHandler(stack) == null || getHandler(stack).getFluidHolder().is(Fluids.EMPTY)) return false;
-        return getDisplayValue(stack) != 6F;
+        return getDisplayValue(stack) != 0.6F;
     }
 
     public int getBarColor(ItemStack stack) {
@@ -46,8 +46,7 @@ public class Canister extends Item implements EquipmentItem {
     }
 
     public static float getDisplayValue(ItemStack stack){
-        if (getHandler(stack) != null)
-            return (float) (getHandler(stack).getFluidHolder().getAmount()) / getHandler(stack).getTankCapacity() * 6.0f;
+        if (getHandler(stack) != null) return (float) (getHandler(stack).getFluidHolder().getAmount()) / getHandler(stack).getTankCapacity() * 6.0f / 10f;
         return 0;
     }
 
@@ -96,6 +95,7 @@ public class Canister extends Item implements EquipmentItem {
     }
 
     public static FluidHandlerItem getHandler(ItemStack stack) {
+        if (!Services.FLUID_HANDLER.has(stack)) return null;
         return Services.FLUID_HANDLER.get(stack);
     }
 }

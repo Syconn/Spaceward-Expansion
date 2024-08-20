@@ -5,11 +5,13 @@ import mod.syconn.swe.extra.core.FluidHandlerItem;
 import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.core.InteractionalFluidHandler;
 import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
+import mod.syconn.swe.helper.FabricFluidHandler;
 import mod.syconn.swe.wrappers.BlockFluidWrapper;
 import mod.syconn.swe.wrappers.ComponentFluidWrapper;
 import mod.syconn.swe.wrappers.InteractableFluidWrapper;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
@@ -19,24 +21,24 @@ import net.minecraft.world.level.Level;
 public class FabricSingleFluidHandler implements ISingleFluidHandler {
 
     public FluidHandlerItem get(ItemStack stack) {
-        return (FluidHandlerItem) ContainerItemContext.withConstant(stack).find(FluidStorage.ITEM);
+        return new FabricFluidHandler.ItemFluidHandler(ContainerItemContext.withConstant(stack).find(FluidStorage.ITEM), stack);
     }
 
     public boolean has(ItemStack stack) {
-        return ContainerItemContext.withConstant(stack).find(FluidStorage.ITEM) instanceof ComponentFluidWrapper;
+        return ContainerItemContext.withConstant(stack).find(FluidStorage.ITEM) != null;
     }
 
     public FluidHandler get(Level level, BlockPos pos, Direction direction) {
-        return ((BlockFluidWrapper) FluidStorage.SIDED.find(level, pos, direction)).getHandler();
+        return new FabricFluidHandler.BlockFluidHandler(FluidStorage.SIDED.find(level, pos, direction));
     }
 
     public boolean has(BlockGetter level, BlockPos pos, Direction direction) {
-        if (level instanceof Level ext) return FluidStorage.SIDED.find(ext, pos, direction) instanceof BlockFluidWrapper;
+        if (level instanceof Level ext) return FluidStorage.SIDED.find(ext, pos, direction) != null;
         return false;
     }
 
     public InteractionalFluidHandler getInteractional(Level level, BlockPos pos, Direction direction) {
-        return ((InteractableFluidWrapper) FluidStorage.SIDED.find(level, pos, direction)).getHandler();
+        return ((InteractableFluidWrapper) FluidStorage.SIDED.find(level, pos, direction)).getHandler(); // TODO DEF WONT WORK
     }
 
     public ItemStack getBucket(FluidHolder fluidHolder) {

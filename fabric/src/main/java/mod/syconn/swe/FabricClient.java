@@ -18,10 +18,7 @@ import mod.syconn.swe.client.screen.gui.SpaceSuitOverlay;
 import mod.syconn.swe.events.RenderEvents;
 import mod.syconn.swe.extra.core.Events;
 import mod.syconn.swe.extra.util.RenderUtil;
-import mod.syconn.swe.init.BlockEntityRegister;
-import mod.syconn.swe.init.FluidRegister;
-import mod.syconn.swe.init.ItemRegister;
-import mod.syconn.swe.init.Menus;
+import mod.syconn.swe.init.*;
 import mod.syconn.swe.items.Canister;
 import mod.syconn.swe.model.loader.PipeModelLoader;
 import mod.syconn.swe.network.Network;
@@ -62,6 +59,7 @@ public class FabricClient implements ClientModInitializer {
         BlockEntityRenderers.register(BlockEntityRegister.PIPE.get(), FluidPipeBER::new);
 
         BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(), FluidRegister.O2.get(), FluidRegister.O2_FLOWING.get());
+        BlockRenderLayerMap.INSTANCE.putBlocks(RenderType.translucent(), BlockRegister.FLUID_TANK.get(), BlockRegister.FLUID_PIPE.get());
         FluidRenderHandlerRegistry.INSTANCE.register(FluidRegister.O2.get(), FluidRegister.O2_FLOWING.get(), new SimpleFluidRenderHandler(OxygenFlowingFluid.O2_STILL_RL, OxygenFlowingFluid.O2_FLOWING_RL, OxygenFlowingFluid.O2_OVERLAY_RL, -1));
 
         EntityModelLayerRegistry.registerModelLayer(ParachuteModel.LAYER_LOCATION, ParachuteModel::createBodyLayer);
@@ -72,7 +70,7 @@ public class FabricClient implements ClientModInitializer {
         ItemProperties.register(ItemRegister.AUTO_REFILL_CANISTER.get(), Constants.loc("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
         ColorProviderRegistry.ITEM.register((s, layer) -> layer == 0 ? DyedItemColor.getOrDefault(s, -1) : -1, ItemRegister.PARACHUTE.get());
         ColorProviderRegistry.ITEM.register((s, layer) -> layer == 1  && getHandler(s) != null ? RenderUtil.getFluidColor(getHandler(s).getFluidHolder().getFluid()) : -1, ItemRegister.CANISTER.get(), ItemRegister.AUTO_REFILL_CANISTER.get());
-        ColorProviderRegistry.ITEM.register((s, layer) -> layer == 1 ? RenderUtil.getFluidColor(FluidRegister.O2.get()) : -1, ItemRegister.O2_BUCKET.get());
+        ColorProviderRegistry.ITEM.register((s, layer) -> layer == 1 ? RenderUtil.getFluidColor(FluidRegister.O2.get()) : -1, ItemRegister.LIQUID_OXYGEN_BUCKET.get());
 
         ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new FabricPlanetManager());
 

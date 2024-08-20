@@ -4,37 +4,37 @@
     {
       "model": "swe:item/auto_fill_canister1",
       "predicate": {
-        "swe:stage": 1.0
+        "swe:stage": 0.1
       }
     },
     {
       "model": "swe:item/auto_fill_canister2",
       "predicate": {
-        "swe:stage": 2.0
+        "swe:stage": 0.2
       }
     },
     {
       "model": "swe:item/auto_fill_canister3",
       "predicate": {
-        "swe:stage": 3.0
+        "swe:stage": 0.3
       }
     },
     {
       "model": "swe:item/auto_fill_canister4",
       "predicate": {
-        "swe:stage": 4.0
+        "swe:stage": 0.4
       }
     },
     {
       "model": "swe:item/auto_fill_canister5",
       "predicate": {
-        "swe:stage": 5.0
+        "swe:stage": 0.5
       }
     },
     {
       "model": "swe:item/auto_fill_canisterfull",
       "predicate": {
-        "swe:stage": 6.0
+        "swe:stage": 0.6
       }
     }
   ],

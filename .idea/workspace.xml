@@ -4,19 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Forge Textures Fix">
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Added O2 Bucket">
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/helper/FabricFluidHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/fluids/OxygenFlowingFluid.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blocks/fluids/OxygenFlowingFluid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/BlockRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/BlockRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/Canister.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/resources/assets/swe/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/resources/assets/swe/lang/en_us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/assets/swe/models/item/o2_fluid_bucket.json" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/resources/assets/swe/models/item/o2_fluid_bucket.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/assets/swe/models/item/wrench.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/resources/assets/swe/models/item/auto_fill_canister.json" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/resources/assets/swe/models/item/auto_fill_canister.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/resources/assets/swe/models/item/canister.json" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/resources/assets/swe/models/item/canister.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/FabricClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricAttachedData.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricAttachedData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/services/ForgeNetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/wrappers/InteractableFluidWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/wrappers/InteractableFluidWrapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +56,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="FabricBlock" />
       </list>
     </option>
   </component>
@@ -97,32 +96,35 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build Spaceward-Expansion.executor": "Run",
-    "Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
-    "Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
-    "Gradle.Spaceward-Expansion [:forge:prepareClientCompile].executor": "Run",
-    "Gradle.Spaceward-Expansion:fabric [:fabric:net.fabricmc.devlaunchinjector.Main.main()].executor": "Debug",
-    "Gradle.Spaceward-Expansion:forge [:forge:net.minecraftforge.bootstrap.ForgeBootstrap.main()].executor": "Debug",
-    "Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor": "Run",
-    "Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor": "Debug",
-    "Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor": "Debug",
-    "Gradle.Spaceward-Expansion:neoforge [build].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "multiloader/V1.2.3",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build Spaceward-Expansion.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [:forge:prepareClientCompile].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:fabric [:fabric:net.fabricmc.devlaunchinjector.Main.main()].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Spaceward-Expansion:forge [:forge:net.minecraftforge.bootstrap.ForgeBootstrap.main()].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Spaceward-Expansion:neoforge [build].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;multiloader/V1.2.3&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\forge\src\main\resources" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion" />
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\common\src\main\resources" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="mod.syconn.swe.helper" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
+  <component name="RunManager" selected="Application.Fabric Client (:fabric)">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="Spaceward-Expansion.neoforge.main" />
@@ -309,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724126513234</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added O2 Bucket">
+      <option name="closed" value="true" />
+      <created>1724128568933</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1724128568933</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -324,7 +334,8 @@
     <MESSAGE value="Fluid Handler Fixes for Helper Methods | Missing Tags Files" />
     <MESSAGE value="Forge Fix for Armor Material" />
     <MESSAGE value="Forge Textures Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Forge Textures Fix" />
+    <MESSAGE value="Added O2 Bucket" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added O2 Bucket" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -333,6 +344,11 @@
           <url>jar://$PROJECT_DIR$/neoforge/build/moddev/artifacts/neoforge-21.0.160-minecraft-merged.jar!/net/neoforged/neoforge/fluids/capability/wrappers/FluidBucketWrapper.java</url>
           <line>95</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
