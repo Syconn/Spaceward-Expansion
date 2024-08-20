@@ -4,18 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Canister Filler Fix, Texture Changes">
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/swe/tags/fluid/oxygen.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/swe/tags/item/canisters.json" afterDir="false" />
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fluid Handler Fixes for Helper Methods | Missing Tags Files">
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ArmorMats.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/forge/src/main/resources/META-INF/services/mod.syconn.swe.extra.platform.services.INetwork" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/blockentities/TankBE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/container/TankMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/core/FluidHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/components/FluidHolderComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/components/FluidHolderComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/FluidRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/FluidRegister.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/data/swe/tags/item/glass.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/wrapper/ItemFluidHandlerWrapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/SpaceArmor.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/items/SpaceArmor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeCommon.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeCommon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/forge/src/main/java/mod/syconn/swe/ForgeMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/NeoMod.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +50,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -81,6 +85,9 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2kqxNMrWK2xalhnQDBfFy3e1Z4y" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="false" />
@@ -91,13 +98,15 @@
     "Gradle.Build Spaceward-Expansion.executor": "Run",
     "Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
     "Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
+    "Gradle.Spaceward-Expansion [:forge:prepareClientCompile].executor": "Run",
     "Gradle.Spaceward-Expansion:fabric [:fabric:net.fabricmc.devlaunchinjector.Main.main()].executor": "Debug",
+    "Gradle.Spaceward-Expansion:forge [:forge:net.minecraftforge.bootstrap.ForgeBootstrap.main()].executor": "Debug",
     "Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor": "Run",
     "Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor": "Debug",
     "Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor": "Debug",
     "Gradle.Spaceward-Expansion:neoforge [build].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "multiloader/V1.2.2",
+    "git-widget-placeholder": "multiloader/V1.2.3",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true"
   }
@@ -108,7 +117,7 @@
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\common\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
+  <component name="RunManager" selected="Application.forge Client">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="Spaceward-Expansion.neoforge.main" />
@@ -271,7 +280,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724117657191</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fluid Handler Fixes for Helper Methods | Missing Tags Files">
+      <option name="closed" value="true" />
+      <created>1724120559449</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1724120559449</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -283,7 +300,8 @@
     <MESSAGE value="NeoForge Final Fix" />
     <MESSAGE value="Small Feature Update" />
     <MESSAGE value="Canister Filler Fix, Texture Changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Canister Filler Fix, Texture Changes" />
+    <MESSAGE value="Fluid Handler Fixes for Helper Methods | Missing Tags Files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fluid Handler Fixes for Helper Methods | Missing Tags Files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

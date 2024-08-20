@@ -3,9 +3,12 @@ package mod.syconn.swe;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.common.dimensions.OxygenProductionManager;
 import mod.syconn.swe.common.dimensions.PlanetManager;
+import mod.syconn.swe.data.capability.SpaceSuitProvider;
 import mod.syconn.swe.services.ForgeNetwork;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
@@ -15,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -37,7 +41,6 @@ public class ForgeMod {
 
     public ForgeMod() {
         final IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        eventBus.register(ForgeCommon.class);
         eventBus.addListener(ForgeNetwork::setupNetwork);
 
         BLOCKS.register(eventBus);
@@ -58,11 +61,7 @@ public class ForgeMod {
         }
 
         MinecraftForge.EVENT_BUS.addListener(this::loadData);
-        MinecraftForge.EVENT_BUS.addListener(ForgeCommon::playerJoined);
-        MinecraftForge.EVENT_BUS.addListener(ForgeCommon::playerLeft);
-        MinecraftForge.EVENT_BUS.addListener(ForgeCommon::playerChangedDimension);
-        MinecraftForge.EVENT_BUS.addListener(ForgeCommon::playerTickEvent);
-        MinecraftForge.EVENT_BUS.addListener(ForgeCommon::levelTickEvent);
+        MinecraftForge.EVENT_BUS.register(ForgeCommon.class);
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.COMMON_CONFIG, "swe/swe-client.toml");
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.CLIENT_CONFIG, "swe/swe-common.toml");
@@ -72,5 +71,10 @@ public class ForgeMod {
     public void loadData(AddReloadListenerEvent e){
         e.addListener(new PlanetManager());
         e.addListener(new OxygenProductionManager());
+    }
+
+    public static void attachPlayerCapability(AttachCapabilitiesEvent<Entity> event) {
+        if (event.getObject() instanceof Player && !event.getObject().getCapability(SpaceSuitProvider.SPACE_SUIT).isPresent())
+            event.addCapability(Constants.loc("space_suit"), new SpaceSuitProvider());
     }
 }

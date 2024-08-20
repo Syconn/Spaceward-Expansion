@@ -33,38 +33,43 @@ public class ForgeCommon {
     }
 
     @SubscribeEvent
-    public static void attachPlayerCapability(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof Player && !event.getObject().getCapability(SpaceSuitProvider.SPACE_SUIT).isPresent())
-            event.addCapability(Constants.loc("space_suit"), new SpaceSuitProvider());
-    }
-
-    @SubscribeEvent
     public static void registerCapability(RegisterCapabilitiesEvent event) {
         event.register(SpaceSuit.class);
         event.register(InteractionalFluidHandler.class);
     }
 
     @SubscribeEvent
-    public static void clonePlayer(PlayerEvent.Clone event) { // TODO FIGURE OUT
-//        if (event.isWasDeath()) event.getEntity().getCapability(SpaceSuitProvider.SPACE_SUIT).ifPresent(); = event.getOriginal().getCapability(SpaceSuitProvider.SPACE_SUIT);
+    public static void attachPlayerCapability(AttachCapabilitiesEvent<Entity> event) {
+        if (event.getObject() instanceof Player && !event.getObject().getCapability(SpaceSuitProvider.SPACE_SUIT).isPresent())
+            event.addCapability(Constants.loc("space_suit"), new SpaceSuitProvider());
     }
 
+//    @SubscribeEvent
+//    public static void clonePlayer(PlayerEvent.Clone event) { // TODO FIGURE OUT
+////        if (event.isWasDeath()) event.getEntity().getCapability(SpaceSuitProvider.SPACE_SUIT).ifPresent(); = event.getOriginal().getCapability(SpaceSuitProvider.SPACE_SUIT);
+//    }
+
+    @SubscribeEvent
     public static void levelTickEvent(TickEvent.LevelTickEvent.Pre event) {
         PipeNetworks.tickNetworks(new Events.LevelTick(event.level));
     }
 
+    @SubscribeEvent
     public static void playerTickEvent(TickEvent.PlayerTickEvent.Post event) {
         CommonHandler.playerTickEvent(new Events.PlayerEvent(event.player));
     }
 
+    @SubscribeEvent
     public static void playerJoined(PlayerEvent.PlayerLoggedInEvent event) {
         CommonHandler.playerJoined(new Events.PlayerEvent(event.getEntity()));
     }
 
+    @SubscribeEvent
     public static void playerLeft(PlayerEvent.PlayerLoggedOutEvent event) {
         CommonHandler.playerLeft(new Events.PlayerEvent(event.getEntity()));
     }
 
+    @SubscribeEvent
     public static void playerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         CommonHandler.playerChangedDimension(new Events.PlayerEvent(event.getEntity()));
     }

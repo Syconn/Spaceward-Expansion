@@ -2,6 +2,7 @@ package mod.syconn.swe.items;
 
 import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
+import mod.syconn.swe.init.ArmorMats;
 import mod.syconn.swe.init.ItemRegister;
 import net.minecraft.Util;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,7 +24,7 @@ public class SpaceArmor extends ArmorItem {
     });
 
     public SpaceArmor(Type pType) {
-        super(ItemRegister.SPACE_SUIT_MATERIAL, pType, new Properties().durability(200));
+        super(ArmorMats.SPACE_SUIT, pType, new Properties().durability(200));
     }
 
     public static boolean hasFullKit(Player p){

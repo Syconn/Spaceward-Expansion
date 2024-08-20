@@ -5,6 +5,7 @@ import mod.syconn.swe.common.dimensions.OxygenProductionManager;
 import mod.syconn.swe.common.dimensions.PlanetManager;
 import mod.syconn.swe.data.capability.APICapabilities;
 import mod.syconn.swe.datagen.*;
+import mod.syconn.swe.init.ArmorMats;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.services.NeoNetwork;
 import mod.syconn.swe.wrapper.BlockFluidWrapper;
@@ -82,6 +83,7 @@ public class NeoMod {
         modContainer.registerConfig(ModConfig.Type.CLIENT, NeoConfig.CLIENT_CONFIG, "swe/swe-client.toml");
         modContainer.registerConfig(ModConfig.Type.COMMON, NeoConfig.COMMON_CONFIG, "swe/swe-common.toml");
 
+        ArmorMats.init();
         SpaceMod.init();
     }
 
