@@ -40,9 +40,9 @@ public class FabricMod implements ModInitializer {
         // TODO FIGURE OUT CONFIG
         EntityEvents.FALL_EVENT.register(((livingEntity, distance, damageMultiplier, cancelled) -> CommonHandler.livingFallEvent(new Events.LivingFallEvent(livingEntity, distance, damageMultiplier, cancelled))));
         EntityEvents.ENTITY_TICK.register(entity -> CommonHandler.entityTickEvent(new Events.LivingEntityEvent(entity)));
-        PlayerEvents.PLAYER_TICK.register(player -> CommonHandler.playerJoined(new Events.PlayerEvent(player)));
-        PlayerEvents.PLAYER_JOIN.register(player -> CommonHandler.playerLeft(new Events.PlayerEvent(player)));
-        PlayerEvents.PLAYER_DISCONNECT.register(player -> CommonHandler.playerTickEvent(new Events.PlayerEvent(player)));
+        PlayerEvents.PLAYER_JOIN.register(player -> CommonHandler.playerJoined(new Events.PlayerEvent(player)));
+        PlayerEvents.PLAYER_DISCONNECT.register(player -> CommonHandler.playerLeft(new Events.PlayerEvent(player)));
+        PlayerEvents.PLAYER_TICK.register(player -> CommonHandler.playerTickEvent(new Events.PlayerEvent(player)));
         ServerTickEvents.END_WORLD_TICK.register(serverLevel -> PipeNetworks.tickNetworks(new Events.LevelTick(serverLevel)));
         ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> CommonHandler.playerChangedDimension(new Events.PlayerEvent(player)));
 

@@ -47,7 +47,7 @@ public class ItemRegister {
         pOutput.accept(DIAMOND_UPGRADE.get());
         pOutput.accept(EMERALD_UPGRADE.get());
         pOutput.accept(NETHERITE_UPGRADE.get());
-        pOutput.accept(LIQUID_OXYGEN_BUCKET.get());
+//        pOutput.accept(LIQUID_OXYGEN_BUCKET.get());
         pOutput.accept(Canister.create(8000, 8000, Fluids.LAVA, CANISTER.get()));
         pOutput.accept(Canister.create(8000, 8000, Fluids.LAVA, AUTO_REFILL_CANISTER.get()));
         pOutput.accept(Canister.create(8000, 8000, Fluids.WATER, CANISTER.get()));
