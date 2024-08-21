@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fluid Pipe Model Loads">
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fabric Event Methods Setup Incorrectly">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/init/ItemRegister.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/network/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -328,7 +330,15 @@
       <option name="project" value="LOCAL" />
       <updated>1724204403463</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Fabric Event Methods Setup Incorrectly">
+      <option name="closed" value="true" />
+      <created>1724205134725</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1724205134725</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -346,7 +356,8 @@
     <MESSAGE value="Added O2 Bucket" />
     <MESSAGE value="Fabric Fluid System | Changed Canister Subtypes to clamped version | Fixed rendering for Fluid Tanks" />
     <MESSAGE value="Fluid Pipe Model Loads" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fluid Pipe Model Loads" />
+    <MESSAGE value="Fabric Event Methods Setup Incorrectly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fabric Event Methods Setup Incorrectly" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

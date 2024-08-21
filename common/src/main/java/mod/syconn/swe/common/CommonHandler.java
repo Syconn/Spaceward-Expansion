@@ -35,7 +35,7 @@ public class CommonHandler {
         Player player = event.player();
         if (player instanceof ServerPlayer p){
             if (p.level() instanceof ServerLevel serverlevel && p.getY() >= 400) { // TODO Config.spaceHeight.get()
-                DimensionTransition dimensiontransition = PlanetTraveler.changePlanet(serverlevel, p); // SPAWING IN AIR
+                DimensionTransition dimensiontransition = PlanetTraveler.changePlanet(serverlevel, p);
                 if (dimensiontransition != null) {
                     ServerLevel serverlevel1 = dimensiontransition.newLevel();
                     if (serverlevel.getServer().isLevelEnabled(serverlevel1) && (serverlevel1.dimension() == serverlevel.dimension() || p.canChangeDimensions(serverlevel, serverlevel1))) {

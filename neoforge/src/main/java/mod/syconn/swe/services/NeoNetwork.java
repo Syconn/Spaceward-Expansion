@@ -48,7 +48,7 @@ public class NeoNetwork implements INetwork {
 
     public static void onRegisterPayloadHandler(final RegisterPayloadHandlersEvent event) {
         registrar = event.registrar("1");
-        directory = createDirectory(Network.register);
+        createDirectory(Network.register);
         Network.S2CPayloads();
         Network.C2SPayloads();
     }
@@ -60,9 +60,9 @@ public class NeoNetwork implements INetwork {
         return msg.getPayload(message);
     }
 
-    private static Map<Class<?>, Network.PlayMessage<?>> createDirectory(Collection<Network.PlayMessage<?>> m) {
+    private static void createDirectory(Collection<Network.PlayMessage<?>> m) {
         Object2ObjectMap<Class<?>, Network.PlayMessage<?>> map = new Object2ObjectArrayMap<>();
         m.forEach(msg -> map.put(msg.msgClass(), msg));
-        return Collections.unmodifiableMap(map);
+        directory = Collections.unmodifiableMap(map);
     }
 }

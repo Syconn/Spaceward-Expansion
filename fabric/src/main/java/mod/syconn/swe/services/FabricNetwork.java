@@ -62,8 +62,8 @@ public class FabricNetwork implements INetwork {
 
     public <T> void registerPlayBiDirectional(Network.PlayMessage<T> message) {
         createDirectory();
-        PayloadTypeRegistry.playC2S().register(message.type(), message.codec());
         PayloadTypeRegistry.playS2C().register(message.type(), message.codec());
+        PayloadTypeRegistry.playC2S().register(message.type(), message.codec());
     }
 
     public <T> void registerClientHandler(Network.PlayMessage<T> message) {
@@ -74,16 +74,18 @@ public class FabricNetwork implements INetwork {
         ServerPlayNetworking.registerGlobalReceiver(message.type(), (payload, context) -> context.server().execute(() -> message.handler().accept(payload.msg(), context.player())));
     }
 
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    private <T> Payload<T> encode(Object message) {
-        Network.PlayMessage msg = directory.get(message.getClass());
+    @SuppressWarnings("unchecked")
+    private <T> Payload<T> encode(T message) {
+        Network.PlayMessage<T> msg = (Network.PlayMessage<T>) directory.get(message.getClass());
         if(msg == null) throw new IllegalArgumentException("Unregistered message: " + message.getClass().getName());
         return msg.getPayload(message);
     }
 
     private static void createDirectory() {
-        Object2ObjectMap<Class<?>, Network.PlayMessage<?>> map = new Object2ObjectArrayMap<>();
-        ((Collection<Network.PlayMessage<?>>) Network.register).forEach(msg -> map.put(msg.msgClass(), msg));
-        directory = Collections.unmodifiableMap(map);
+        if (directory == null) {
+            Object2ObjectMap<Class<?>, Network.PlayMessage<?>> map = new Object2ObjectArrayMap<>();
+            ((Collection<Network.PlayMessage<?>>) Network.register).forEach(msg -> map.put(msg.msgClass(), msg));
+            directory = Collections.unmodifiableMap(map);
+        }
     }
 }

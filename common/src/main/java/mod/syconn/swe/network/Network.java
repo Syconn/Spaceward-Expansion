@@ -27,6 +27,8 @@ public class Network {
     public static final ArrayList<PlayMessage<?>> register = new ArrayList<>();
 
     public static void registerMessages() {
+        register.clear(); // For Fabric Client Side Setup
+
         //Server Bound
         register.add(PlayMessage.of("update_interaction", ServerBoundInteractableButtonPress.class, ServerBoundInteractableButtonPress.STREAM_CODEC, ServerBoundInteractableButtonPress::handle, PacketFlow.SERVERBOUND));
         register.add(PlayMessage.of("update_pipe_state", ServerBoundUpdatePipeState.class, ServerBoundUpdatePipeState.STREAM_CODEC, ServerBoundUpdatePipeState::handle, PacketFlow.SERVERBOUND));
@@ -47,14 +49,14 @@ public class Network {
     }
 
     public static void C2SPayloads() {
-        register.stream().filter(PlayMessage::clientBound).forEach(network::registerClientHandler);
+        register.stream().filter(msg -> msg.clientBound() || msg.bothBound()).forEach(network::registerClientHandler);
     }
 
     public static void S2CPayloads() {
         register.stream().filter(PlayMessage::clientBound).forEach(network::registerPlayS2C);
         register.stream().filter(PlayMessage::serverBound).forEach(network::registerPlayC2S);
         register.stream().filter(PlayMessage::bothBound).forEach(network::registerPlayBiDirectional);
-        register.stream().filter(PlayMessage::serverBound).forEach(network::registerServerHandler);
+        register.stream().filter(msg -> msg.serverBound() || msg.bothBound()).forEach(network::registerServerHandler);
     }
 
     public static <D extends IMenuData<D>> OptionalInt openMenuWithData(ServerPlayer player, MenuProvider provider, D data) {
