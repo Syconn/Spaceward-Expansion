@@ -28,23 +28,7 @@ import static mod.syconn.swe.extra.helpers.BakedModelHelper.quad;
 import static mod.syconn.swe.extra.helpers.BakedModelHelper.v;
 
 @Environment(EnvType.CLIENT)
-public class PipeBakedModel implements BakedModel { // TODO CONVERT TO PIPE MODEL
-
-//    private final Mesh mesh;
-//    private final TextureAtlasSprite sprite;
-
-//    public PipeBakedModel(Mesh mesh, TextureAtlasSprite sprite) {
-//        this.mesh = mesh;
-//        this.sprite = sprite;
-//    }
-
-//    public void emitItemQuads(ItemStack stack, Supplier<RandomSource> randomSupplier, RenderContext context) {
-//        this.mesh.outputTo(context.getEmitter());
-//    }
-//
-//    public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context) {
-//        this.mesh.outputTo(context.getEmitter());
-//    }
+public class PipeBakedModel implements BakedModel {
 
     private final boolean facade;
     private final double size;
@@ -118,7 +102,7 @@ public class PipeBakedModel implements BakedModel { // TODO CONVERT TO PIPE MODE
         };
     }
 
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand) {
+    public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource rand) {
         initTextures();
         List<BakedQuad> quads = new ArrayList<>();
 

@@ -39,7 +39,6 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.component.DyedItemColor;
-import net.minecraft.world.level.material.Fluids;
 
 import static mod.syconn.swe.items.Canister.getHandler;
 
@@ -89,8 +88,12 @@ public class FabricClient implements ClientModInitializer {
     private static class ModelLoader implements ModelLoadingPlugin {
 
         public void onInitializeModelLoader(Context pluginContext) {
-            pluginContext.modifyModelOnLoad().register((original, context) -> {
-                if(context.resourceId() != null && context.resourceId().equals(Constants.loc("pipe"))) return new PipeModelLoader();
+            pluginContext.modifyModelOnLoad().register(((model, context) -> {
+                if (context.resourceId() != null && context.resourceId().equals(Constants.loc("item/fluid_pipe"))) return new PipeModelLoader();
+                return model;
+            }));
+            pluginContext.modifyModelBeforeBake().register((original, context) -> {
+                if (context.resourceId() != null && context.resourceId().equals(Constants.loc("block/fluid_pipe"))) return new PipeModelLoader();
                 return original;
             });
         }
