@@ -2,9 +2,7 @@ package mod.syconn.swe.blockentities;
 
 import mod.syconn.swe.blockentities.base.AbstractTankBE;
 import mod.syconn.swe.common.container.TankMenu;
-import mod.syconn.swe.extra.core.FluidHandlerItem;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
-import mod.syconn.swe.extra.helpers.FluidHelper;
 import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.init.BlockEntityRegister;
 import net.minecraft.core.BlockPos;
@@ -52,16 +50,10 @@ public class TankBE extends AbstractTankBE implements MenuProvider, Container {
     public static void serverTick(Level level, BlockPos pos, BlockState state, TankBE e) {
         if (!level.isClientSide) {
             ItemStack itemStack = e.container.getItem(0);
-            if (Services.FLUID_HANDLER.has(itemStack)) {
-                FluidHandlerItem handler = Services.FLUID_HANDLER.get(itemStack.copy());
-                FluidHelper.handleInventoryMaxTransfer(e.tank, handler, e.container, 0, 1);
-            }
+            if (Services.FLUID_HANDLER.has(itemStack)) Services.FLUID_HELPER.handleInventoryMaxTransfer(e.tank, itemStack, e.container, 0, 1, e);
 
             itemStack = e.getItem(2);
-            if (Services.FLUID_HANDLER.has(itemStack)) {
-                FluidHandlerItem handler = Services.FLUID_HANDLER.get(itemStack);
-                FluidHelper.fillItemStackFromBlock(e.tank, handler, e.fillSpeed);
-            }
+            if (Services.FLUID_HANDLER.has(itemStack)) Services.FLUID_HELPER.fillItemStackFromBlock(e, e.tank, itemStack, e.fillSpeed, 2);
 
             e.tank.handlePush(level, pos);
             e.tank.handlePull(level, pos);

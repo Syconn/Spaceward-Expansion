@@ -7,15 +7,19 @@ import mod.syconn.swe.extra.data.components.FluidHolderComponent;
 import mod.syconn.swe.init.ComponentRegister;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.world.item.ItemStack;
 
 public class ComponentFluidWrapper implements FluidHandlerItem, SingleSlotStorage<FluidVariant> {
+    protected final ContainerItemContext context;
     protected final ItemStack container;
     protected int capacity;
+    private TransactionContext activeTransaction;
 
     public ComponentFluidWrapper(ContainerItemContext context, int capacity) {
+        this.context = context;
         this.container = context.getItemVariant().toStack();
         this.capacity = capacity;
     }
@@ -28,6 +32,7 @@ public class ComponentFluidWrapper implements FluidHandlerItem, SingleSlotStorag
     public void setFluid(FluidHolder fluid) {
         FluidHolderComponent component = container.getOrDefault(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), FluidHolderComponent.EMPTY);
         container.set(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), FluidHolderComponent.of(fluid.getFluid(), fluid.getAmount(), component.capacity()));
+        context.exchange(ItemVariant.of(container.getItem(), container.getComponentsPatch()), 1, activeTransaction);
     }
 
     public int getFluidAmount() {
@@ -60,10 +65,12 @@ public class ComponentFluidWrapper implements FluidHandlerItem, SingleSlotStorag
     }
 
     public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
+        this.activeTransaction = transaction;
         return this.fill(new FluidHolder(resource.getFluid(), (int) maxAmount), FluidAction.EXECUTE);
     }
 
     public long extract(FluidVariant resource, long maxAmount, TransactionContext transaction) {
+        this.activeTransaction = transaction;
         return this.drain(new FluidHolder(resource.getFluid(), (int) maxAmount), FluidAction.EXECUTE).getAmount();
     }
 

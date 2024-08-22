@@ -156,4 +156,8 @@ public class FluidHolder {
     public FluidHolder copyWith(int amount) {
         return new FluidHolder(fluid, amount);
     }
+
+    public String toString() {
+        return "FluidHolder{" + "fluid=" + fluid + ", amount=" + amount + '}';
+    }
 }

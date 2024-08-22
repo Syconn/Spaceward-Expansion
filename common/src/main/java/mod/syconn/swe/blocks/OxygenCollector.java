@@ -4,7 +4,6 @@ import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.CollectorBE;
 import mod.syconn.swe.blocks.base.FluidBaseBlock;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
-import mod.syconn.swe.extra.helpers.FluidHelper;
 import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.init.BlockEntityRegister;
 import mod.syconn.swe.init.BlockRegister;
@@ -40,7 +39,7 @@ public class OxygenCollector extends FluidBaseBlock {
     }
 
     protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (!pLevel.isClientSide && Services.FLUID_HANDLER.has(pStack) && FluidHelper.interactWithBlock(pLevel, pPos, pHitResult, pPlayer, pHand)) return ItemInteractionResult.CONSUME;
+        if (Services.FLUID_HANDLER.has(pStack) && Services.FLUID_HELPER.interactWithBlock(pLevel, pPos, pHitResult, pPlayer, pHand)) return ItemInteractionResult.CONSUME;
         return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
     }
 

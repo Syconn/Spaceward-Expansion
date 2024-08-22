@@ -69,6 +69,8 @@ public class NeoMod {
         RECIPE_SERIALIZERS.register(eventBus);
         BLOCK_TYPES.register(eventBus);
         ATTACHMENT_TYPES.register(eventBus);
+
+
         NeoRegistration.FLUID_TYPES.register(eventBus);
         NeoRegistration.FLUIDS.register(eventBus);
 

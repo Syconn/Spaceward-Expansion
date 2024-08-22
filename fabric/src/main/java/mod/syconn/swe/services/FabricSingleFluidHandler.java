@@ -17,6 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluids;
 
 public class FabricSingleFluidHandler implements ISingleFluidHandler {
 

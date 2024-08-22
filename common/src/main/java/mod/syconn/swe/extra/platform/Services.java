@@ -12,6 +12,7 @@ public class Services {
     public static final IFluidExtensions FLUID_EXTENSIONS = load(IFluidExtensions.class);
     public static final INetwork NETWORK = load(INetwork.class);
     public static final IAttachedData ATTACHED_DATA = load(IAttachedData.class);
+    public static final IFluidHelper FLUID_HELPER = load(IFluidHelper.class);
 
     public static <T> T load(Class<T> clazz) {
         final T loadedService = ServiceLoader.load(clazz).findFirst().orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
