@@ -58,13 +58,29 @@ public class FabricFluidHelper implements IFluidHelper {
 
     public boolean interactWithBlock(Level level, BlockPos pos, BlockHitResult hitResult, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        FluidHolder holder = Services.FLUID_HANDLER.get(level, pos, hitResult.getDirection().getOpposite()).getFluidHolder();
         FluidHandlerItem itemHandler = getFabricHandler(player, hand);
-        boolean fillBlock = maxTransferStackToBlockFillBlock(level, pos, hitResult.getDirection().getOpposite(), itemHandler);
-        boolean success = maxTransferStackToBlock(level, pos, hitResult.getDirection().getOpposite(), itemHandler);
-        if (success && stack.getItem() instanceof BucketItem) {
-            if (fillBlock) player.setItemInHand(hand, new ItemStack(Items.BUCKET));
-            else player.setItemInHand(hand, Services.FLUID_HANDLER.getBucket(holder));
+        boolean success = false;
+        if (!(stack.getItem() instanceof BucketItem)) {
+            FluidHolder holder = Services.FLUID_HANDLER.get(level, pos, hitResult.getDirection().getOpposite()).getFluidHolder();
+            boolean fillBlock = maxTransferStackToBlockFillBlock(level, pos, hitResult.getDirection().getOpposite(), itemHandler);
+            success = maxTransferStackToBlock(level, pos, hitResult.getDirection().getOpposite(), itemHandler);
+            if (success && stack.getItem() instanceof BucketItem) {
+                if (fillBlock) player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+                else player.setItemInHand(hand, Services.FLUID_HANDLER.getBucket(holder));
+            }
+        } else {
+            FluidHandler blockHandler = Services.FLUID_HANDLER.get(level, pos, hitResult.getDirection().getOpposite());
+            FluidHolder holder = itemHandler.getFluidHolder();
+            if (blockHandler.getFluidHolder().isEmpty() || itemHandler.getFluidHolder().getAmount() == itemHandler.getTankCapacity() && !holder.isEmpty()) {
+                int fill = blockHandler.fill(holder.copyWith(1000), FluidAction.EXECUTE);
+                if (fill == 1000) success = true;
+                else blockHandler.drain(1000, FluidAction.EXECUTE);
+                player.setItemInHand(hand,  new ItemStack(Items.BUCKET));
+            } else if (holder.isEmpty() && blockHandler.getFluidHolder().getAmount() >= 1000) {
+                player.setItemInHand(hand, Services.FLUID_HANDLER.getBucket(blockHandler.getFluidHolder()));
+                blockHandler.drain(1000, FluidAction.EXECUTE);
+                success = true;
+            }
         }
         return success;
     }

@@ -113,6 +113,7 @@ public class FabricFluidHandler {
 
         public FluidHolder drain(FluidHolder resource, FluidAction action) {
             try (Transaction transaction = Transaction.openOuter()) {
+                System.out.println(of(resource));
                 int value = (int) storage.extract(of(resource), resource.getAmount(), transaction);
                 if (action == FluidAction.EXECUTE) {
                     transaction.commit();
