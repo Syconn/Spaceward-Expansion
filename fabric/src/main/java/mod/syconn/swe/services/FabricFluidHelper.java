@@ -134,6 +134,4 @@ public class FabricFluidHelper implements IFluidHelper {
         InventoryStorage storage = (InventoryStorage) ItemStorage.SIDED.find(level, pos, direction);
         return new FabricFluidHandler.ItemFluidHandler(ContainerItemContext.ofSingleSlot(storage.getSlot(slot)).find(FluidStorage.ITEM), storage.getSlot(slot).getResource().toStack());
     }
-
-
 }
