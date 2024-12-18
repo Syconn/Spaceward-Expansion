@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fixed Bucket working on Tanks">
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Removed Forge Support">
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/helper/FabricFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/helper/FabricFluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricFluidHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricFluidHelper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,27 +88,30 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build Spaceward-Expansion.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion [:forge:prepareClientCompile].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion:fabric [:fabric:net.fabricmc.devlaunchinjector.Main.main()].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Spaceward-Expansion:forge [:forge:net.minecraftforge.bootstrap.ForgeBootstrap.main()].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor&quot;: &quot;Debug&quot;,
-    &quot;Gradle.Spaceward-Expansion:neoforge [build].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;multiloader/V1.2.3&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build Spaceward-Expansion.executor": "Run",
+    "Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
+    "Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg].executor": "Run",
+    "Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
+    "Gradle.Spaceward-Expansion [:forge:prepareClientCompile].executor": "Run",
+    "Gradle.Spaceward-Expansion:fabric [:fabric:net.fabricmc.devlaunchinjector.Main.main()].executor": "Run",
+    "Gradle.Spaceward-Expansion:forge [:forge:net.minecraftforge.bootstrap.ForgeBootstrap.main()].executor": "Debug",
+    "Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor": "Run",
+    "Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor": "Debug",
+    "Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor": "Run",
+    "Gradle.Spaceward-Expansion:neoforge [build].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "multiloader/V1.2.3",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\forge\src\main\resources" />
@@ -124,7 +125,7 @@
   <component name="RunManager" selected="Application.Fabric Client (:fabric)">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="Spaceward-Expansion.neoforge.main" />
+      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -134,7 +135,7 @@
     </configuration>
     <configuration name="NeoForge Data (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="Spaceward-Expansion.neoforge.main" />
+      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -144,7 +145,7 @@
     </configuration>
     <configuration name="NeoForge Server (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="Spaceward-Expansion.neoforge.main" />
+      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -196,6 +197,14 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.Fabric Client (:fabric)" />
+      <item itemvalue="Application.Fabric Server (:fabric)" />
+      <item itemvalue="Application.NeoForge Data (:neoforge)" />
+      <item itemvalue="Application.NeoForge Server (:neoforge)" />
+      <item itemvalue="Gradle.Spaceward-Expansion:forge [genEclipseRuns]" />
+      <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
@@ -372,7 +381,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726006106852</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Testing">
+      <option name="closed" value="true" />
+      <created>1734490674615</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1734490674615</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Removed Forge Support">
+      <option name="closed" value="true" />
+      <created>1734491011382</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1734491011382</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -395,7 +420,9 @@
     <MESSAGE value="Inventory Reshuffle" />
     <MESSAGE value="Fluid Tank Works with Bucket in Screen" />
     <MESSAGE value="Fixed Bucket working on Tanks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Bucket working on Tanks" />
+    <MESSAGE value="Testing" />
+    <MESSAGE value="Removed Forge Support" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed Forge Support" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
