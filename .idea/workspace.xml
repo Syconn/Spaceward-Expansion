@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Removed Forge Support">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -30,12 +31,33 @@
         <task path="$PROJECT_DIR$/neoforge">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/fabric">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
+                <item name="fabric" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
+                <item name="fabric" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
+                <item name="fabric" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="fabric" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -96,6 +118,10 @@
     "Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
     "Gradle.Spaceward-Expansion [:forge:prepareClientCompile].executor": "Run",
     "Gradle.Spaceward-Expansion:fabric [:fabric:net.fabricmc.devlaunchinjector.Main.main()].executor": "Run",
+    "Gradle.Spaceward-Expansion:fabric [build].executor": "Run",
+    "Gradle.Spaceward-Expansion:fabric [configureClientLaunch].executor": "Run",
+    "Gradle.Spaceward-Expansion:fabric [genSources].executor": "Run",
+    "Gradle.Spaceward-Expansion:fabric [runClient].executor": "Run",
     "Gradle.Spaceward-Expansion:forge [:forge:net.minecraftforge.bootstrap.ForgeBootstrap.main()].executor": "Debug",
     "Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor": "Run",
     "Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor": "Debug",
@@ -112,6 +138,11 @@
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
+  <component name="Push.Settings">
+    <force-push-targets>
+      <force-push-target remote-path="origin" branch="multiloader/V1.2.2" />
+    </force-push-targets>
+  </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Aidan\IdeaProjects\Spaceward-Expansion\forge\src\main\resources" />
@@ -125,7 +156,7 @@
   <component name="RunManager" selected="Application.Fabric Client (:fabric)">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
+      <module name="Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -135,7 +166,7 @@
     </configuration>
     <configuration name="NeoForge Data (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
+      <module name="Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -145,7 +176,7 @@
     </configuration>
     <configuration name="NeoForge Server (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
+      <module name="Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -153,10 +184,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Spaceward-Expansion:forge [genEclipseRuns]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Spaceward-Expansion:fabric [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/forge" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fabric" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -164,7 +195,73 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="genEclipseRuns" />
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Spaceward-Expansion:fabric [configureClientLaunch]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fabric" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="configureClientLaunch" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Spaceward-Expansion:fabric [genSources]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fabric" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="genSources" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Spaceward-Expansion:fabric [runClient]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fabric" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runClient" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -198,17 +295,24 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.NeoForge Client (:neoforge)" />
       <item itemvalue="Application.Fabric Client (:fabric)" />
       <item itemvalue="Application.Fabric Server (:fabric)" />
       <item itemvalue="Application.NeoForge Data (:neoforge)" />
       <item itemvalue="Application.NeoForge Server (:neoforge)" />
-      <item itemvalue="Gradle.Spaceward-Expansion:forge [genEclipseRuns]" />
+      <item itemvalue="Gradle.Spaceward-Expansion:fabric [configureClientLaunch]" />
+      <item itemvalue="Gradle.Spaceward-Expansion:fabric [genSources]" />
+      <item itemvalue="Gradle.Spaceward-Expansion:fabric [runClient]" />
+      <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
       <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Spaceward-Expansion:fabric [genSources]" />
+        <item itemvalue="Gradle.Spaceward-Expansion:fabric [configureClientLaunch]" />
+        <item itemvalue="Gradle.Spaceward-Expansion:fabric [runClient]" />
+        <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
         <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
-        <item itemvalue="Gradle.Spaceward-Expansion:forge [genEclipseRuns]" />
       </list>
     </recent_temporary>
   </component>
@@ -397,8 +501,27 @@
       <option name="project" value="LOCAL" />
       <updated>1734491011382</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Removed Forge Support">
+      <option name="closed" value="true" />
+      <created>1734491360256</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1734491360256</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Gradle Fix" />
