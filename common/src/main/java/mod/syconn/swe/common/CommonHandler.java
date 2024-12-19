@@ -65,7 +65,7 @@ public class CommonHandler {
     public static Events.LivingFallEvent livingFallEvent(Events.LivingFallEvent event) {
         if (event.entity() instanceof Player p && Services.ATTACHED_DATA.has(DataAttachments.SPACE_SUIT, p) && Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, p).parachute()) return new Events.LivingFallEvent(event.entity(), 0, 0, true);
         if (DimensionHelper.onMoon(event.entity())) {
-            if (event.distance() < 6.5D) return new Events.LivingFallEvent(event.entity(), 0, 0, true);;
+            if (event.distance() < 6.5D) return new Events.LivingFallEvent(event.entity(), 0, 0, true);
             return new Events.LivingFallEvent(event.entity(), event.distance() - 4.0f, 0.16f, true);
         }
         return event;

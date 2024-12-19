@@ -6,23 +6,20 @@ import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.core.InteractionalFluidHandler;
 import mod.syconn.swe.extra.platform.services.ISingleFluidHandler;
 import mod.syconn.swe.helper.FabricFluidHandler;
-import mod.syconn.swe.wrappers.BlockFluidWrapper;
-import mod.syconn.swe.wrappers.ComponentFluidWrapper;
 import mod.syconn.swe.wrappers.InteractableFluidWrapper;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
-import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluids;
+import java.util.Objects;
 
 public class FabricSingleFluidHandler implements ISingleFluidHandler {
 
     public FluidHandlerItem get(ItemStack stack) {
-        return new FabricFluidHandler.ItemFluidHandler(ContainerItemContext.withConstant(stack).find(FluidStorage.ITEM), stack);
+        return new FabricFluidHandler.ItemFluidHandler(Objects.requireNonNull(ContainerItemContext.withConstant(stack).find(FluidStorage.ITEM)), stack);
     }
 
     public boolean has(ItemStack stack) {
@@ -30,7 +27,7 @@ public class FabricSingleFluidHandler implements ISingleFluidHandler {
     }
 
     public FluidHandler get(Level level, BlockPos pos, Direction direction) {
-        return new FabricFluidHandler.BlockFluidHandler(FluidStorage.SIDED.find(level, pos, direction));
+        return new FabricFluidHandler.BlockFluidHandler(Objects.requireNonNull(FluidStorage.SIDED.find(level, pos, direction)));
     }
 
     public boolean has(BlockGetter level, BlockPos pos, Direction direction) {

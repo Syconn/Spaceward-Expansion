@@ -3,10 +3,14 @@ package mod.syconn.swe.extra.data.components;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import mod.syconn.swe.extra.core.FluidHolder;
+import mod.syconn.swe.init.ComponentRegister;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
+
+import java.util.Objects;
 
 public record FluidHolderComponent(FluidHolder fluidHolder, int capacity) {
 
@@ -29,20 +33,12 @@ public record FluidHolderComponent(FluidHolder fluidHolder, int capacity) {
         if (fluidHolder.getAmount() <= 0) new FluidHolderComponent(FluidHolder.EMPTY, capacity);
         return new FluidHolderComponent(fluidHolder, capacity);
     }
+    
+    public static void updateFluidHolder(ItemStack stack, FluidHolder fluidHolder) {
+        stack.set(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), Objects.requireNonNull(stack.get(ComponentRegister.FLUID_HOLDER_COMPONENT.get())).setFluidHolder(fluidHolder));
+    }
 
     public FluidHolderComponent setFluidHolder(FluidHolder fluidHolder) {
         return of(fluidHolder, capacity);
-    }
-
-    public FluidHolderComponent setFluid(Fluid fluid) {
-        return of(fluid, fluidHolder.getAmount(), capacity);
-    }
-
-    public FluidHolderComponent setAmount(int amount) {
-        return new FluidHolderComponent(fluidHolder.copyWith(amount), capacity);
-    }
-
-    public FluidHolderComponent setCapacity(int capacity) {
-        return new FluidHolderComponent(fluidHolder, capacity);
     }
 }

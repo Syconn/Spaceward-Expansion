@@ -4,6 +4,7 @@ import mod.syconn.swe.extra.core.FluidAction;
 import mod.syconn.swe.extra.core.FluidHandler;
 import mod.syconn.swe.extra.core.FluidHandlerItem;
 import mod.syconn.swe.extra.core.FluidHolder;
+import mod.syconn.swe.extra.data.components.FluidHolderComponent;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
@@ -99,7 +100,7 @@ public class FabricFluidHandler {
 
         public void onContentsChanged() {}
 
-        public int fill(FluidHolder resource, FluidAction doFill) { // TODO MAY NOT HANDLE SIMULATE RIGHT
+        public int fill(FluidHolder resource, FluidAction doFill) {
             try (Transaction transaction = Transaction.openOuter()) {
                 int value = (int) storage.insert(of(resource), resource.getAmount(), transaction);
                 if (doFill == FluidAction.EXECUTE) {
@@ -128,6 +129,7 @@ public class FabricFluidHandler {
         }
 
         public ItemStack getContainer() {
+            FluidHolderComponent.updateFluidHolder(holder, getFluidHolder());
             return holder;
         }
     }

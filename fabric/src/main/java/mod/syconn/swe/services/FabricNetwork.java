@@ -84,7 +84,7 @@ public class FabricNetwork implements INetwork {
     private static void createDirectory() {
         if (directory == null) {
             Object2ObjectMap<Class<?>, Network.PlayMessage<?>> map = new Object2ObjectArrayMap<>();
-            ((Collection<Network.PlayMessage<?>>) Network.register).forEach(msg -> map.put(msg.msgClass(), msg));
+            Network.register.forEach(msg -> map.put(msg.msgClass(), msg));
             directory = Collections.unmodifiableMap(map);
         }
     }

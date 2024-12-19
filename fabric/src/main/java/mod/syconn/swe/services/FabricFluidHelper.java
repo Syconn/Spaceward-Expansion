@@ -31,11 +31,9 @@ public class FabricFluidHelper implements IFluidHelper {
             boolean success = false, isBucket = movedStack.getItem() instanceof BucketItem;
             FluidHandlerItem itemHandler = getFabricHandler(be.getLevel(), be.getBlockPos(), null, slot1);
             if (!(movedStack.getItem() instanceof BucketItem)) {
-                if (blockHandler.getFluidHolder().isEmpty() || itemHandler.getFluidHolder().getAmount() == itemHandler.getTankCapacity()) {
+                if (blockHandler.getFluidHolder().isEmpty() || itemHandler.getFluidHolder().getAmount() == itemHandler.getTankCapacity()) 
                     success = fillBlockFromItemStack(blockHandler, itemHandler, Integer.MAX_VALUE);
-                } else {
-                    success = fillItemStackFromBlock(blockHandler, itemHandler, Integer.MAX_VALUE);
-                }
+                else success = fillItemStackFromBlock(blockHandler, itemHandler, Integer.MAX_VALUE);
             } else {
                 FluidHolder holder = itemHandler.getFluidHolder();
                 if (blockHandler.getFluidHolder().isEmpty() || itemHandler.getFluidHolder().getAmount() == itemHandler.getTankCapacity() && !holder.isEmpty()) {
@@ -60,15 +58,9 @@ public class FabricFluidHelper implements IFluidHelper {
         ItemStack stack = player.getItemInHand(hand);
         FluidHandlerItem itemHandler = getFabricHandler(player, hand);
         boolean success = false;
-        if (!(stack.getItem() instanceof BucketItem)) {
-            FluidHolder holder = Services.FLUID_HANDLER.get(level, pos, hitResult.getDirection().getOpposite()).getFluidHolder();
-            boolean fillBlock = maxTransferStackToBlockFillBlock(level, pos, hitResult.getDirection().getOpposite(), itemHandler);
+        if (!(stack.getItem() instanceof BucketItem)) 
             success = maxTransferStackToBlock(level, pos, hitResult.getDirection().getOpposite(), itemHandler);
-            if (success && stack.getItem() instanceof BucketItem) {
-                if (fillBlock) player.setItemInHand(hand, new ItemStack(Items.BUCKET));
-                else player.setItemInHand(hand, Services.FLUID_HANDLER.getBucket(holder));
-            }
-        } else {
+        else {
             FluidHandler blockHandler = Services.FLUID_HANDLER.get(level, pos, hitResult.getDirection().getOpposite());
             FluidHolder holder = itemHandler.getFluidHolder();
             if (blockHandler.getFluidHolder().isEmpty() || itemHandler.getFluidHolder().getAmount() == itemHandler.getTankCapacity() && !holder.isEmpty()) {
@@ -85,11 +77,6 @@ public class FabricFluidHelper implements IFluidHelper {
         return success;
     }
 
-    public boolean maxTransferStackToBlockFillBlock(Level level, BlockPos pos, Direction dir, FluidHandlerItem itemHandler) {
-        FluidHandler blockHandler = Services.FLUID_HANDLER.get(level, pos, dir);
-        return blockHandler.getFluidHolder().isEmpty() || itemHandler.getFluidHolder().getAmount() == itemHandler.getTankCapacity();
-    }
-
     public boolean maxTransferStackToBlock(Level level, BlockPos pos, Direction dir, FluidHandlerItem itemHandler) {
         FluidHandler blockHandler = Services.FLUID_HANDLER.get(level, pos, dir);
         return maxTransferStackToBlock(blockHandler, itemHandler);
@@ -102,9 +89,8 @@ public class FabricFluidHelper implements IFluidHelper {
 
     public boolean fillBlockFromItemStack(FluidHandler block, FluidHandlerItem itemHandler, int amount) {
         if (block.isFluidValid(itemHandler.getFluidHolder())) {
-            FluidHolder fluidHolder = itemHandler.drain(amount, FluidAction.EXECUTE);
-            itemHandler.fill(fluidHolder, FluidAction.EXECUTE); // FABRIC LACKS SIM FUNCTIONS
-            int fill = block.fill(fluidHolder, FluidAction.EXECUTE);
+            int fill = Math.min(block.getTankCapacity() - block.getFluidAmount(), itemHandler.getFluidAmount());
+            block.fill(itemHandler.getFluidHolder().copyWith(fill), FluidAction.EXECUTE);
             itemHandler.drain(fill, FluidAction.EXECUTE);
             return fill > 0;
         }
@@ -116,10 +102,9 @@ public class FabricFluidHelper implements IFluidHelper {
     }
 
     public boolean fillItemStackFromBlock(FluidHandler block, FluidHandlerItem itemHandler, int amount) {
-        if (itemHandler.isFluidValid(block.getFluidHolder())){
-            FluidHolder fluidHolder = block.drain(amount, FluidAction.EXECUTE);
-            block.fill(fluidHolder, FluidAction.EXECUTE); // FABRIC LACKS SIM FUNCTIONS
-            int fill = itemHandler.fill(fluidHolder, FluidAction.EXECUTE);
+        if (itemHandler.isFluidValid(block.getFluidHolder())) {
+            int fill = Math.min(itemHandler.getTankCapacity() - itemHandler.getFluidAmount(), block.getFluidAmount());
+            itemHandler.fill(block.getFluidHolder().copyWith(fill), FluidAction.EXECUTE);
             block.drain(fill, FluidAction.EXECUTE);
             return fill > 0;
         }
