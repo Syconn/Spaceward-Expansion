@@ -89,22 +89,6 @@ public class SpaceSuit implements IAttachmentType<SpaceSuit>, Container {
         sync(player);
     }
 
-    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
-        CompoundTag t = new CompoundTag();
-        t.putBoolean("parachute", parachute);
-        t.put("animchute", chute.serializeNBT());
-        t.putInt("oxygen", oxygen);
-        ContainerHelper.saveAllItems(t, container.getItems(), provider);
-        return t;
-    }
-
-    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        parachute = nbt.getBoolean("parachute");
-        chute = new AnimatorHelper(nbt.getCompound("animchute"));
-        oxygen = nbt.getInt("oxygen");
-        ContainerHelper.loadAllItems(nbt, container.getItems(), provider);
-    }
-
     public int getContainerSize() {
         return container.getContainerSize();
     }

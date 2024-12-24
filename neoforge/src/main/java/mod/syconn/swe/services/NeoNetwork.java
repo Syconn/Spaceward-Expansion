@@ -12,7 +12,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.OptionalInt;
@@ -48,7 +47,7 @@ public class NeoNetwork implements INetwork {
 
     public static void onRegisterPayloadHandler(final RegisterPayloadHandlersEvent event) {
         registrar = event.registrar("1");
-        createDirectory(Network.register);
+        createDirectory();
         Network.S2CPayloads();
         Network.C2SPayloads();
     }
@@ -60,9 +59,9 @@ public class NeoNetwork implements INetwork {
         return msg.getPayload(message);
     }
 
-    private static void createDirectory(Collection<Network.PlayMessage<?>> m) {
+    private static void createDirectory() {
         Object2ObjectMap<Class<?>, Network.PlayMessage<?>> map = new Object2ObjectArrayMap<>();
-        m.forEach(msg -> map.put(msg.msgClass(), msg));
+        Network.register.forEach(msg -> map.put(msg.msgClass(), msg));
         directory = Collections.unmodifiableMap(map);
     }
 }

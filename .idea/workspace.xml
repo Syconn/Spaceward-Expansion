@@ -7,14 +7,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fixed Run Configs">
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fluid Components work in Tank">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/CommonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/common/CommonHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/components/FluidHolderComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/mod/syconn/swe/extra/data/components/FluidHolderComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/helper/FabricFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/helper/FabricFluidHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricFluidHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricFluidHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricNetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricSingleFluidHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.run/NeoForge Client (_neoforge).run.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.run/NeoForge Client (_neoforge).run.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/AbstractContainerScreenMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/AbstractContainerScreenMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +62,7 @@
                 <item name="Spaceward-Expansion" type="f1a62948:ProjectNode" />
                 <item name="fabric" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="fabric" type="c8890929:TasksNode$1" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -117,35 +115,35 @@
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build Spaceward-Expansion.executor": "Run",
-    "Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
-    "Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg].executor": "Run",
-    "Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor": "Run",
-    "Gradle.Spaceward-Expansion [:forge:prepareClientCompile].executor": "Run",
-    "Gradle.Spaceward-Expansion:fabric [:fabric:net.fabricmc.devlaunchinjector.Main.main()].executor": "Debug",
-    "Gradle.Spaceward-Expansion:fabric [build].executor": "Run",
-    "Gradle.Spaceward-Expansion:fabric [configureClientLaunch].executor": "Run",
-    "Gradle.Spaceward-Expansion:fabric [genSources].executor": "Run",
-    "Gradle.Spaceward-Expansion:fabric [runClient].executor": "Run",
-    "Gradle.Spaceward-Expansion:forge [:forge:net.minecraftforge.bootstrap.ForgeBootstrap.main()].executor": "Debug",
-    "Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor": "Run",
-    "Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor": "Debug",
-    "Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor": "Run",
-    "Gradle.Spaceward-Expansion:neoforge [build].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "multiloader/V1.2.3",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build Spaceward-Expansion.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.C:/Users/Aidan/IdeaProjects/Spaceward-Expansion [:forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [:forge:createMcpToSrg :forge:createMcpToSrg :forge:createMcpToSrg].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion [:forge:prepareClientCompile].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:fabric [:fabric:net.fabricmc.devlaunchinjector.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:fabric [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:fabric [configureClientLaunch].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:fabric [genSources].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:fabric [runClient].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:forge [:forge:net.minecraftforge.bootstrap.ForgeBootstrap.main()].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Spaceward-Expansion:forge [genEclipseRuns].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:forge [genIntellijRuns].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Spaceward-Expansion:neoforge [:neoforge:net.neoforged.devlaunch.Main.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Spaceward-Expansion:neoforge [build].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;multiloader/V1.2.3&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;tasks.servers&quot;
   }
-}]]></component>
+}</component>
   <component name="Push.Settings">
     <force-push-targets>
       <force-push-target remote-path="origin" branch="multiloader/V1.2.2" />
@@ -161,7 +159,7 @@
       <recent name="mod.syconn.swe.helper" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Fabric Client (:fabric)">
+  <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="Spaceward-Expansion.neoforge.main" />
@@ -174,7 +172,7 @@
     </configuration>
     <configuration name="NeoForge Data (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="Spaceward-Expansion.neoforge.main" />
+      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -184,7 +182,7 @@
     </configuration>
     <configuration name="NeoForge Server (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="Spaceward-Expansion.neoforge.main" />
+      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
       <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunProgramArgs.txt" />
       <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
@@ -304,22 +302,22 @@
     </configuration>
     <list>
       <item itemvalue="Application.NeoForge Client (:neoforge)" />
-      <item itemvalue="Application.Fabric Client (:fabric)" />
-      <item itemvalue="Application.Fabric Server (:fabric)" />
       <item itemvalue="Application.NeoForge Data (:neoforge)" />
       <item itemvalue="Application.NeoForge Server (:neoforge)" />
+      <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
       <item itemvalue="Gradle.Spaceward-Expansion:fabric [configureClientLaunch]" />
       <item itemvalue="Gradle.Spaceward-Expansion:fabric [genSources]" />
       <item itemvalue="Gradle.Spaceward-Expansion:fabric [runClient]" />
-      <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
       <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
+      <item itemvalue="Application.Fabric Client (:fabric)" />
+      <item itemvalue="Application.Fabric Server (:fabric)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
         <item itemvalue="Gradle.Spaceward-Expansion:fabric [genSources]" />
         <item itemvalue="Gradle.Spaceward-Expansion:fabric [configureClientLaunch]" />
         <item itemvalue="Gradle.Spaceward-Expansion:fabric [runClient]" />
-        <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
         <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
       </list>
     </recent_temporary>
@@ -525,8 +523,29 @@
       <option name="project" value="LOCAL" />
       <updated>1734563952206</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
-    <servers />
+    <task id="LOCAL-00025" summary="Fluid Components work in Tank">
+      <option name="closed" value="true" />
+      <created>1734642842555</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1734642842555</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
+    <servers>
+      <Trello shared="true">
+        <option name="currentBoard">
+          <TrelloBoard id="6687356467ca66202b2fae21" name="Spaceward Expansion Development" />
+        </option>
+        <option name="currentList">
+          <TrelloList name="-- from all lists --" />
+        </option>
+        <option name="currentUser">
+          <TrelloUser id="668735064d0265ce11ca8024" name="syconn1" />
+        </option>
+        <option name="includeAllCards" value="true" />
+      </Trello>
+    </servers>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -562,7 +581,8 @@
     <MESSAGE value="Testing" />
     <MESSAGE value="Removed Forge Support" />
     <MESSAGE value="Fixed Run Configs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Run Configs" />
+    <MESSAGE value="Fluid Components work in Tank" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fluid Components work in Tank" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -571,16 +591,6 @@
           <url>jar://$PROJECT_DIR$/neoforge/build/moddev/artifacts/neoforge-21.0.160-minecraft-merged.jar!/net/neoforged/neoforge/fluids/capability/wrappers/FluidBucketWrapper.java</url>
           <line>95</line>
           <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricFluidHelper.java</url>
-          <line>108</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/services/FabricFluidHelper.java</url>
-          <line>51</line>
-          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

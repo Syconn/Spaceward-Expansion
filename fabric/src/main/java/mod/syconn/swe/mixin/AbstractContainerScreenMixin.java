@@ -12,9 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AbstractContainerScreen.class)
 public class AbstractContainerScreenMixin {
 
-    @Shadow public int leftPos;
+    @Shadow
+    protected int leftPos;
 
-    @Shadow public int topPos;
+    @Shadow
+    protected int topPos;
 
     @Inject(method = "render", at = @At("TAIL"))
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
