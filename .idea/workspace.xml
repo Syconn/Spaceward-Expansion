@@ -7,12 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fluid Components work in Tank">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.run/NeoForge Client (_neoforge).run.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.run/NeoForge Client (_neoforge).run.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/AbstractContainerScreenMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/mod/syconn/swe/mixin/AbstractContainerScreenMixin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/mod/syconn/swe/services/NeoNetwork.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -531,7 +527,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734642842555</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Fixes">
+      <option name="closed" value="true" />
+      <created>1735019885222</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1735019885222</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers>
       <Trello shared="true">
         <option name="currentBoard">
@@ -582,7 +586,8 @@
     <MESSAGE value="Removed Forge Support" />
     <MESSAGE value="Fixed Run Configs" />
     <MESSAGE value="Fluid Components work in Tank" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fluid Components work in Tank" />
+    <MESSAGE value="Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
