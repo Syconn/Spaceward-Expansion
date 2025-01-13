@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'Spaceward Expansion'
+rootProject.name = 'Spaceward_Expansion'
 
 include 'common'
 include 'fabric'
