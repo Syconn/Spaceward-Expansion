@@ -2,7 +2,7 @@ package mod.syconn.swe.common.blockentities;
 
 import mod.syconn.swe.extra.core.*;
 import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.items.Canister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +25,7 @@ public class CanisterFillerBlockEntity extends BlockEntity {
     private NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
 
     public CanisterFillerBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(BlockEntityRegister.FILLER.get(), p_155229_, p_155230_);
+        super(ModBlockEntities.FILLER.get(), p_155229_, p_155230_);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CanisterFillerBlockEntity e) {

@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 
 public class ModDamageSources {
 
-    private static final ResourceKey<DamageType> ANOXIA = ResourceKey.create(Registries.DAMAGE_TYPE, Constants.loc("anoxia"));
+    private static final ResourceKey<DamageType> ANOXIA = ResourceKey.create(Registries.DAMAGE_TYPE, Constants.withId("anoxia"));
 
     public static DamageSource anoxia(Level level) {
         return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ANOXIA));

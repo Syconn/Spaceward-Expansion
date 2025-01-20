@@ -8,9 +8,9 @@ import mod.syconn.swe.extra.BlockInfo;
 import mod.syconn.swe.extra.core.FluidAction;
 import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModTags;
-import mod.syconn.swe.core.FluidRegister;
+import mod.syconn.swe.core.ModFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +31,7 @@ public class CollectorBE extends AbstractTankBE implements MenuProvider, BlockIn
     private int rate = 0;
 
     public CollectorBE(BlockPos pos, BlockState state) {
-        super(BlockEntityRegister.COLLECTOR.get(), pos, state, 8000, 250);
+        super(ModBlockEntities.COLLECTOR.get(), pos, state, 8000, 250);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, CollectorBE e) {
@@ -47,7 +47,7 @@ public class CollectorBE extends AbstractTankBE implements MenuProvider, BlockIn
             if (PlanetManager.getSettings(level.dimension()).breathable()) {
                 total += 186;
             }
-            e.tank.fill(new FluidHolder(FluidRegister.O2.get(), (int) total), FluidAction.EXECUTE);
+            e.tank.fill(new FluidHolder(ModFluids.O2.get(), (int) total), FluidAction.EXECUTE);
             e.rate = (int) total;
         }
         e.tank.handlePull(level, pos);

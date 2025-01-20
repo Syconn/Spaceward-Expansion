@@ -5,7 +5,7 @@ import mod.syconn.swe.blocks.FluidPipe;
 import mod.syconn.swe.blocks.base.AbstractPipeBlock;
 import mod.syconn.swe.extra.PipePatterns;
 import mod.syconn.swe.extra.core.FluidHolder;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -22,7 +22,7 @@ public class FluidPipeBE extends AbstractPipeBE {
     private Fluid fluid = Fluids.EMPTY;
 
     public FluidPipeBE(BlockPos pos, BlockState state) {
-        super(BlockEntityRegister.PIPE.get(), pos, state);
+        super(ModBlockEntities.PIPE.get(), pos, state);
     }
 
     public boolean canConnectToPipe(Level level, BlockPos pos, Direction conDir) {

@@ -8,7 +8,7 @@ import mod.syconn.swe.extra.core.FluidHandlerItem;
 import mod.syconn.swe.extra.data.components.FluidHolderComponent;
 import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.extra.util.RenderUtil;
-import mod.syconn.swe.core.FluidRegister;
+import mod.syconn.swe.core.ModFluids;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FastColor;
@@ -66,7 +66,7 @@ public class Canister extends Item implements EquipmentItem {
             if (getHandler(stack).getFluidHolder().is(Fluids.LAVA)) {
                 if (!player.fireImmune()) player.igniteForSeconds(3.0F);
                 player.hurt(level.damageSources().inFire(), 2f);
-            } else if (getHandler(stack).getFluidHolder().is(FluidRegister.O2.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
+            } else if (getHandler(stack).getFluidHolder().is(ModFluids.O2.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
                 getHandler(stack).drain(1, FluidAction.EXECUTE);
             }
         }

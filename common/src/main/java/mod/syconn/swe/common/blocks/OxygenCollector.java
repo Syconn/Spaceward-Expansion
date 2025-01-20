@@ -3,7 +3,7 @@ package mod.syconn.swe.common.blocks;
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.common.blockentities.CollectorBE;
 import mod.syconn.swe.common.blocks.base.FluidBaseBlock;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
 import mod.syconn.swe.network.Network;
 import net.minecraft.core.BlockPos;
@@ -41,7 +41,7 @@ public class OxygenCollector extends FluidBaseBlock {
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, BlockEntityRegister.COLLECTOR.get(), CollectorBE::tick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, ModBlockEntities.COLLECTOR.get(), CollectorBE::tick) : null;
     }
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

@@ -8,7 +8,7 @@ import mod.syconn.swe.extra.core.FluidAction;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
 import mod.syconn.swe.extra.data.savedData.AirBubblesSavedData;
 import mod.syconn.swe.extra.helpers.NbtHelper;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -43,7 +43,7 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     private boolean enabled = true;
 
     public DisperserBE(BlockPos p_155229_, BlockState p_155230_) {
-        super(BlockEntityRegister.DISPERSER.get(), p_155229_, p_155230_, 1000, 15);
+        super(ModBlockEntities.DISPERSER.get(), p_155229_, p_155230_, 1000, 15);
 //        this.tank = new C(1000, ){
 //            public void onContentsChanged() { markDirty(); }
 //            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2.get(); }
@@ -79,8 +79,8 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     }
 
     public static void remove(Level level, BlockPos defPos) {
-        if (level.getBlockEntity(defPos, BlockEntityRegister.DISPERSER.get()).isPresent()) {
-            List<BlockPos> list = level.getBlockEntity(defPos, BlockEntityRegister.DISPERSER.get()).get().list;
+        if (level.getBlockEntity(defPos, ModBlockEntities.DISPERSER.get()).isPresent()) {
+            List<BlockPos> list = level.getBlockEntity(defPos, ModBlockEntities.DISPERSER.get()).get().list;
             for (BlockPos pos : list) if (level.getBlockState(pos).getBlock() instanceof DispersedAirBlock) level.removeBlock(pos, false);
         }
     }

@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.container;
 
 import mod.syconn.swe.common.blockentities.DisperserBE;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModMenus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,7 +16,7 @@ public class DisperserMenu extends AbstractContainerMenu {
 
     public DisperserMenu(int id, Inventory inventory, FriendlyByteBuf data) {
         super(ModMenus.DISPERSER_MENU.get(), id);
-        this.be = inventory.player.level().getBlockEntity(data.readBlockPos(), BlockEntityRegister.DISPERSER.get()).orElseThrow();
+        this.be = inventory.player.level().getBlockEntity(data.readBlockPos(), ModBlockEntities.DISPERSER.get()).orElseThrow();
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {

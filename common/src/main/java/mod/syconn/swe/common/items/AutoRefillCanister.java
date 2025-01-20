@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.items;
 
 import mod.syconn.swe.server.reloaders.PlanetManager;
-import mod.syconn.swe.core.FluidRegister;
+import mod.syconn.swe.core.ModFluids;
 import mod.syconn.swe.util.core.FluidHolder;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.Entity;
@@ -20,7 +20,7 @@ public class AutoRefillCanister extends Canister {
     public void inventoryTick(ItemStack stack, Level level, Entity e, int p_41407_, boolean p_41408_) {
         if (e instanceof Player player) {
             if (!level.isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.hasFullKit(player)) {
-                if (getHandler(stack).getFluidHolder().is(Fluids.EMPTY) || getHandler(stack).getFluidHolder().is(FluidRegister.O2.get())) getHandler(stack).fill(new FluidHolder(FluidRegister.O2.get(), 1), FluidAction.EXECUTE);
+                if (getHandler(stack).getFluidHolder().is(Fluids.EMPTY) || getHandler(stack).getFluidHolder().is(ModFluids.O2.get())) getHandler(stack).fill(new FluidHolder(ModFluids.O2.get(), 1), FluidAction.EXECUTE);
             }
         }
     }
@@ -28,7 +28,7 @@ public class AutoRefillCanister extends Canister {
     public void onEquipmentTick(ItemStack stack, Level level, Player player) {
         super.onEquipmentTick(stack, level, player);
         if (!level.isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.hasFullKit(player)) {
-            if (getHandler(stack).getFluidHolder().is(Fluids.EMPTY) || getHandler(stack).getFluidHolder().is(FluidRegister.O2.get())) getHandler(stack).fill(new FluidHolder(FluidRegister.O2.get(), 1), FluidAction.EXECUTE);
+            if (getHandler(stack).getFluidHolder().is(Fluids.EMPTY) || getHandler(stack).getFluidHolder().is(ModFluids.O2.get())) getHandler(stack).fill(new FluidHolder(ModFluids.O2.get(), 1), FluidAction.EXECUTE);
         }
     }
 

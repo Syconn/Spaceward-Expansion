@@ -4,7 +4,7 @@ import mod.syconn.swe.blockentities.base.AbstractTankBE;
 import mod.syconn.swe.common.container.TankMenu;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
 import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +26,7 @@ public class TankBE extends AbstractTankBE implements MenuProvider, Container {
     private final SimpleContainer container = new SimpleContainer(3);
 
     public TankBE(BlockPos pos, BlockState state) {
-        super(BlockEntityRegister.TANK.get(), pos, state, 16000, 500);
+        super(ModBlockEntities.TANK.get(), pos, state, 16000, 500);
     }
 
     protected void saveClientData(CompoundTag pTag, HolderLookup.Provider provider) {

@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.blockentities;
 
 import mod.syconn.swe.blocks.OxygenDisperser;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -18,7 +18,7 @@ public class AirBlockEntity extends BlockEntity {
     private boolean has_run = false;
 
     public AirBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
-        super(BlockEntityRegister.AIR.get(), p_155229_, p_155230_);
+        super(ModBlockEntities.AIR.get(), p_155229_, p_155230_);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, AirBlockEntity e) {
@@ -27,7 +27,7 @@ public class AirBlockEntity extends BlockEntity {
                 if (e.distance + 1 <= OxygenDisperser.maxFill(level, e.pos)) {
                     OxygenDisperser.addBlock(level, e.worldPosition.relative(d), e.pos, e.distance + 1);
                 } else {
-                    level.getBlockEntity(e.pos, BlockEntityRegister.DISPERSER.get()).get().failed(true);
+                    level.getBlockEntity(e.pos, ModBlockEntities.DISPERSER.get()).get().failed(true);
                 }
             }
             e.has_run = true;

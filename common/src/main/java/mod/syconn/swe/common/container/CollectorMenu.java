@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.container;
 
 import mod.syconn.swe.common.blockentities.CollectorBE;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModMenus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,7 +16,7 @@ public class CollectorMenu extends AbstractContainerMenu {
 
     public CollectorMenu(int id, Inventory inventory, FriendlyByteBuf data) {
         super(ModMenus.COLLECTOR_MENU.get(), id);
-        this.be = inventory.player.level().getBlockEntity(data.readBlockPos(), BlockEntityRegister.COLLECTOR.get()).orElseThrow();
+        this.be = inventory.player.level().getBlockEntity(data.readBlockPos(), ModBlockEntities.COLLECTOR.get()).orElseThrow();
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {

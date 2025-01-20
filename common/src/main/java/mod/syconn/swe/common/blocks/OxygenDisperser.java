@@ -5,7 +5,7 @@ import mod.syconn.swe.blockentities.DisperserBE;
 import mod.syconn.swe.common.blocks.base.FluidBaseBlock;
 import mod.syconn.swe.extra.data.savedData.AirBubblesSavedData;
 import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -77,7 +77,7 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, BlockEntityRegister.DISPERSER.get(), DisperserBE::serverTick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, ModBlockEntities.DISPERSER.get(), DisperserBE::serverTick) : null;
     }
 
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
@@ -89,15 +89,15 @@ public class OxygenDisperser extends FluidBaseBlock {
     }
 
     public static void addBlock(Level l, BlockPos target, BlockPos source, int distance){
-        if (l.getBlockState(target).isAir() && !(l.getBlockState(target).getBlock() instanceof DispersedAirBlock) && l.getBlockEntity(source, BlockEntityRegister.DISPERSER.get()).isPresent()) {
+        if (l.getBlockState(target).isAir() && !(l.getBlockState(target).getBlock() instanceof DispersedAirBlock) && l.getBlockEntity(source, ModBlockEntities.DISPERSER.get()).isPresent()) {
             l.setBlock(target, ModBlocks.DISPERSED_OXYGEN.get().defaultBlockState(), 2);
-            l.getBlockEntity(source, BlockEntityRegister.DISPERSER.get()).get().list.add(target);
-            if (l.getBlockEntity(target, BlockEntityRegister.AIR.get()).isPresent()) l.getBlockEntity(target, BlockEntityRegister.AIR.get()).get().setup(distance, source);
+            l.getBlockEntity(source, ModBlockEntities.DISPERSER.get()).get().list.add(target);
+            if (l.getBlockEntity(target, ModBlockEntities.AIR.get()).isPresent()) l.getBlockEntity(target, ModBlockEntities.AIR.get()).get().setup(distance, source);
         }
     }
 
     public static int maxFill(Level l, BlockPos pos) {
-        if (l.getBlockEntity(pos, BlockEntityRegister.DISPERSER.get()).isPresent()) return l.getBlockEntity(pos, BlockEntityRegister.DISPERSER.get()).get().maxFill;
+        if (l.getBlockEntity(pos, ModBlockEntities.DISPERSER.get()).isPresent()) return l.getBlockEntity(pos, ModBlockEntities.DISPERSER.get()).get().maxFill;
         else return 20;
     }
 }

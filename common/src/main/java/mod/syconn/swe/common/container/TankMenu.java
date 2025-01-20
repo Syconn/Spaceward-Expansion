@@ -2,7 +2,7 @@ package mod.syconn.swe.common.container;
 
 import mod.syconn.swe.common.blockentities.TankBE;
 import mod.syconn.swe.common.container.slot.SpecifiedSlotHandler;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModTags;
 import mod.syconn.swe.core.ModMenus;
 import net.minecraft.network.FriendlyByteBuf;
@@ -18,7 +18,7 @@ public class TankMenu extends AbstractContainerMenu {
 
     public TankMenu(int id, Inventory inventory, FriendlyByteBuf data) {
         super(ModMenus.TANK_MENU.get(), id);
-        this.be = inventory.player.level().getBlockEntity(data.readBlockPos(), BlockEntityRegister.TANK.get()).orElseThrow();
+        this.be = inventory.player.level().getBlockEntity(data.readBlockPos(), ModBlockEntities.TANK.get()).orElseThrow();
         this.addSlot(new Slot(be, 0, 14, 9));
         this.addSlot(new Slot(be, 1, 14, 61));
         this.addSlot(new SpecifiedSlotHandler(be, 2, 72, 9, ModTags.CANISTERS));

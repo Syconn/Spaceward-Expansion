@@ -2,7 +2,7 @@ package mod.syconn.swe.common.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.AirBlockEntity;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -46,7 +46,7 @@ public class DispersedAirBlock extends BaseEntityBlock {
     }
 
     public BlockState updateShape(BlockState p_60541_, Direction p_60542_, BlockState p_60543_, LevelAccessor level, BlockPos p_60545_, BlockPos p_60546_) {
-        if (!level.isClientSide()) level.getBlockEntity(p_60545_, BlockEntityRegister.AIR.get()).get().blockUpdate();
+        if (!level.isClientSide()) level.getBlockEntity(p_60545_, ModBlockEntities.AIR.get()).get().blockUpdate();
         return super.updateShape(p_60541_, p_60542_, p_60543_, level, p_60545_, p_60546_);
     }
 
@@ -56,7 +56,7 @@ public class DispersedAirBlock extends BaseEntityBlock {
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, BlockEntityRegister.AIR.get(), AirBlockEntity::serverTick) : null;
+        return !p_153212_.isClientSide ? createTickerHelper(p_153214_, ModBlockEntities.AIR.get(), AirBlockEntity::serverTick) : null;
     }
 
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {

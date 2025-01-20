@@ -10,10 +10,7 @@ import dev.architectury.utils.EnvExecutor;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
-import mod.syconn.swe.core.ModBlocks;
-import mod.syconn.swe.core.ModItems;
-import mod.syconn.swe.core.ModMenus;
-import mod.syconn.swe.core.ModRecipes;
+import mod.syconn.swe.core.*;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.server.reloaders.OxygenProductionManager;
 import mod.syconn.swe.server.reloaders.PlanetManager;
@@ -25,8 +22,10 @@ import net.minecraft.server.packs.PackType;
 public class SpaceMod {
 
     public static void init() {
+        ModFluids.FLUIDS.register();
         ModItems.ITEMS.register();
         ModBlocks.BLOCKS.register();
+        ModBlockEntities.BLOCK_ENTITIES.register();
         ModItems.TABS.register();
         ModMenus.MENUS.register();
         ModRecipes.RECIPE_SERIALIZERS.register();

@@ -5,7 +5,7 @@ import mod.syconn.swe.blockentities.TankBE;
 import mod.syconn.swe.common.blocks.base.FluidBaseBlock;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
 import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.core.BlockEntityRegister;
+import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
 import mod.syconn.swe.network.Network;
 import net.minecraft.core.BlockPos;
@@ -44,7 +44,7 @@ public class FluidTank extends FluidBaseBlock {
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level l, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-        return createTickerHelper(p_153214_, BlockEntityRegister.TANK.get(), TankBE::serverTick);
+        return createTickerHelper(p_153214_, ModBlockEntities.TANK.get(), TankBE::serverTick);
     }
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
