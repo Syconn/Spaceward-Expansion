@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "swe:item/canister",
+    "layer1": "swe:item/fluid_stage_5"
+  }
+}

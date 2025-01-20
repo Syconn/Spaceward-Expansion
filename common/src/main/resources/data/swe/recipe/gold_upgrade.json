@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "n": {
+      "item": "minecraft:gold_ingot"
+    },
+    "r": {
+      "item": "swe:iron_upgrade"
+    }
+  },
+  "pattern": [
+    " n ",
+    "nrn",
+    " n "
+  ],
+  "result": {
+    "count": 1,
+    "id": "swe:gold_upgrade"
+  }
+}

@@ -2,24 +2,27 @@
   "schemaVersion": 1,
   "id": "swe",
   "version": "${version}",
-  "name": "Spaceward Expansion",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "${mod_name}",
+  "description": "${description}",
   "authors": [
-    "Me!"
+    "${author}"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/syconns-space-mod",
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
   "license": "CC0-1.0",
-  "icon": "assets/swe/icon.png",
+  "icon": "swe.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "mod.syconn.swe.fabric.ExampleModFabric"
+      "mod.syconn.swe.fabric.SpaceModFabric"
     ],
     "client": [
-      "mod.syconn.swe.fabric.client.ExampleModFabricClient"
+      "mod.syconn.swe.fabric.client.SpaceModFabricClient"
+    ],
+    "fabric-datagen": [
+      "mod.syconn.swe.fabric.datagen.HeroDataGenerator"
     ]
   },
   "mixins": [

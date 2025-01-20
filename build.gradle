@@ -31,6 +31,10 @@ subprojects {
             name = 'ParchmentMC'
             url = 'https://maven.parchmentmc.org'
         }
+        maven {
+            name "KosmX's maven"
+            url 'https://maven.kosmx.dev/'
+        }
     }
 
     loom {

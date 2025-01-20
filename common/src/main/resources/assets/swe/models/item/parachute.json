@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "swe:item/parachute_top",
+    "layer1": "swe:item/parachute_bot"
+  }
+}

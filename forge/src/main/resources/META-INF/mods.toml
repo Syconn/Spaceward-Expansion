@@ -1,17 +1,18 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+license = "${license}"
+issueTrackerURL="https://github.com/Syconn/Spaceward-Expansion/issues/new"
 
 [[mods]]
 modId = "swe"
 version = "${version}"
-displayName = "Spaceward Expansion"
-authors = "Me!"
-description = '''
-This is an example description! Tell everyone what your mod is about!
-'''
-#logoFile = ""
+displayName = "${mod_name}"
+updateJSONURL="https://raw.githubusercontent.com/Syconn/Syconn-Mod-Updates/main/Spaceward-Expansion.json"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/syconns-space-mod"
+logoFile="swe.png"
+credits="${credits}"
+authors = "${mod_author}"
+description = "${description}"
 
 [[dependencies.swe]]
 modId = "forge"
