@@ -1,6 +1,6 @@
 package mod.syconn.swe.common.items;
 
-import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
+import mod.syconn.swe.server.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.extra.EquipmentItem;
 import mod.syconn.swe.extra.core.FluidAction;

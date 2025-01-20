@@ -7,7 +7,7 @@ import mod.syconn.swe.Constants;
 import mod.syconn.swe.client.model.ChuteModel;
 import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
-import mod.syconn.swe.common.container.slot.EquipmentItemSlot;
+import mod.syconn.swe.server.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.extra.core.FluidHandlerItem;
 import mod.syconn.swe.extra.data.attachment.SpaceSuit;

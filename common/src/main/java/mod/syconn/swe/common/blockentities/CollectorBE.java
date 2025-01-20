@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.blockentities;
 
 import mod.syconn.swe.blockentities.base.AbstractTankBE;
-import mod.syconn.swe.common.container.CollectorMenu;
+import mod.syconn.swe.server.container.CollectorMenu;
 import mod.syconn.swe.server.reloaders.OxygenProductionManager;
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.extra.BlockInfo;

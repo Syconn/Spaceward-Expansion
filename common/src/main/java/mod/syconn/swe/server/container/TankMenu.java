@@ -1,7 +1,9 @@
-package mod.syconn.swe.common.container;
+package mod.syconn.swe.server.container;
 
-import mod.syconn.swe.common.blockentities.CollectorBE;
+import mod.syconn.swe.common.blockentities.TankBE;
+import mod.syconn.swe.server.container.slot.SpecifiedSlotHandler;
 import mod.syconn.swe.core.ModBlockEntities;
+import mod.syconn.swe.core.ModTags;
 import mod.syconn.swe.core.ModMenus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,13 +12,16 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class CollectorMenu extends AbstractContainerMenu {
+public class TankMenu extends AbstractContainerMenu {
 
-    private final CollectorBE be;
+    private final TankBE be;
 
-    public CollectorMenu(int id, Inventory inventory, FriendlyByteBuf data) {
-        super(ModMenus.COLLECTOR_MENU.get(), id);
-        this.be = inventory.player.level().getBlockEntity(data.readBlockPos(), ModBlockEntities.COLLECTOR.get()).orElseThrow();
+    public TankMenu(int id, Inventory inventory, FriendlyByteBuf data) {
+        super(ModMenus.TANK_MENU.get(), id);
+        this.be = inventory.player.level().getBlockEntity(data.readBlockPos(), ModBlockEntities.TANK.get()).orElseThrow();
+        this.addSlot(new Slot(be, 0, 14, 9));
+        this.addSlot(new Slot(be, 1, 14, 61));
+        this.addSlot(new SpecifiedSlotHandler(be, 2, 72, 9, ModTags.CANISTERS));
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
@@ -29,7 +34,7 @@ public class CollectorMenu extends AbstractContainerMenu {
         }
     }
 
-    public CollectorBE getBE() {
+    public TankBE getBE() {
         return be;
     }
 
@@ -39,12 +44,7 @@ public class CollectorMenu extends AbstractContainerMenu {
         if (quickMovedSlot != null && quickMovedSlot.hasItem()) {
             ItemStack rawStack = quickMovedSlot.getItem();
             quickMovedStack = rawStack.copy();
-            if (quickMovedSlotIndex == 0) {
-//                if (!this.moveItemStackTo(rawStack, 5, 41, true)) {
-//                    return ItemStack.EMPTY;
-//                }
-            }
-            else if (quickMovedSlotIndex >= 5 && quickMovedSlotIndex < 41) {
+            if (quickMovedSlotIndex >= 5 && quickMovedSlotIndex < 41) {
                 if (!this.moveItemStackTo(rawStack, 1, 5, false)) {
                     if (quickMovedSlotIndex < 32) {
                         if (!this.moveItemStackTo(rawStack, 32, 41, false)) {
@@ -56,9 +56,6 @@ public class CollectorMenu extends AbstractContainerMenu {
                     }
                 }
             }
-//            else if (!this.moveItemStackTo(rawStack, 5, 41, false)) {
-//                return ItemStack.EMPTY;
-//            }
 
             if (rawStack.isEmpty()) {
                 quickMovedSlot.set(ItemStack.EMPTY);

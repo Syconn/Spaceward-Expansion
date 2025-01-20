@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.container;
+package mod.syconn.swe.server.container;
 
 import mod.syconn.swe.common.blockentities.DisperserBE;
 import mod.syconn.swe.core.ModBlockEntities;

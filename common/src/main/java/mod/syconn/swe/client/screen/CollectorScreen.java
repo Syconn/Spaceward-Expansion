@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.client.screen.base.InteractionSelectorScreen;
 import mod.syconn.swe.client.screen.widgets.InfoWidget;
-import mod.syconn.swe.common.container.CollectorMenu;
+import mod.syconn.swe.server.container.CollectorMenu;
 import mod.syconn.swe.extra.core.FluidHolder;
 import mod.syconn.swe.extra.core.FluidTank;
 import mod.syconn.swe.extra.platform.Services;

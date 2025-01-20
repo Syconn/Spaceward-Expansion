@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.blockentities;
 
 import mod.syconn.swe.blockentities.base.AbstractTankBE;
-import mod.syconn.swe.common.container.TankMenu;
+import mod.syconn.swe.server.container.TankMenu;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;
 import mod.syconn.swe.extra.platform.Services;
 import mod.syconn.swe.core.ModBlockEntities;

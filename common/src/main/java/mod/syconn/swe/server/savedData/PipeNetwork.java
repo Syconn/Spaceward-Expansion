@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.savedData;
+package mod.syconn.swe.server.savedData;
 
 import mod.syconn.swe.blockentities.FluidPipeBE;
 import mod.syconn.swe.blocks.base.AbstractPipeBlock;

@@ -2,7 +2,7 @@ package mod.syconn.swe.common.blocks;
 
 import mod.syconn.swe.client.renders.debug.PipeDebugRenderer;
 import mod.syconn.swe.server.reloaders.PlanetManager;
-import mod.syconn.swe.common.dimensions.PlanetTraveler;
+import mod.syconn.swe.server.dimensions.PlanetTraveler;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import mod.syconn.swe.extra.EquipmentItem;
 import mod.syconn.swe.extra.core.Events;

@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.dimensions;
+package mod.syconn.swe.server.dimensions;
 
 import mod.syconn.swe.core.ModTags;
 import net.minecraft.core.BlockPos;

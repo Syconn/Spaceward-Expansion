@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.savedData;
+package mod.syconn.swe.server.savedData;
 
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.extra.helpers.NbtHelper;

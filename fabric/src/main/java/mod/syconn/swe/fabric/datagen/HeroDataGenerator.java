@@ -10,7 +10,7 @@ public class HeroDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator generator) {
         FabricDataGenerator.Pack pack = generator.createPack();
         pack.addProvider(LangGen::new);
-        pack.addProvider(BlockTagGen::new);
+        pack.addProvider(RecipeGen::new);
         pack.addProvider(ItemTagGen::new);
         pack.addProvider(ItemModelGen::new);
         pack.addProvider(DamageTypeGen::new);

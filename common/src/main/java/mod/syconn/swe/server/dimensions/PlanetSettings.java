@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.dimensions;
+package mod.syconn.swe.server.dimensions;
 
 import com.google.gson.JsonObject;
 import net.minecraft.network.RegistryFriendlyByteBuf;

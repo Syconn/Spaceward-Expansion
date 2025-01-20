@@ -2,7 +2,7 @@ package mod.syconn.swe.common.blockentities;
 
 import mod.syconn.swe.blockentities.base.AbstractTankBE;
 import mod.syconn.swe.blocks.DispersedAirBlock;
-import mod.syconn.swe.common.container.DisperserMenu;
+import mod.syconn.swe.server.container.DisperserMenu;
 import mod.syconn.swe.extra.BlockInfo;
 import mod.syconn.swe.extra.core.FluidAction;
 import mod.syconn.swe.extra.data.menu.PositionMenuData;

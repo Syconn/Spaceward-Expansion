@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.savedData;
+package mod.syconn.swe.server.savedData;
 
 import com.google.common.collect.Sets;
 import mod.syconn.swe.blockentities.base.AbstractPipeBE;

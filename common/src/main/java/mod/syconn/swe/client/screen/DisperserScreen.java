@@ -2,7 +2,7 @@ package mod.syconn.swe.client.screen;
 
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.client.screen.widgets.InfoWidget;
-import mod.syconn.swe.common.container.DisperserMenu;
+import mod.syconn.swe.server.container.DisperserMenu;
 import mod.syconn.swe.extra.core.ExtendedButton;
 import mod.syconn.swe.extra.core.FluidTank;
 import net.minecraft.client.gui.GuiGraphics;

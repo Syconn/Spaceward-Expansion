@@ -1,7 +1,7 @@
 package mod.syconn.swe.mixin;
 
 import com.mojang.authlib.GameProfile;
-import mod.syconn.swe.common.container.ExtendedPlayerContainer;
+import mod.syconn.swe.server.container.ExtendedPlayerContainer;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;

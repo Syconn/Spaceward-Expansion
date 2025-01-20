@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.container.slot;
+package mod.syconn.swe.server.container.slot;
 
 import com.mojang.datafixers.util.Pair;
 import mod.syconn.swe.Constants;

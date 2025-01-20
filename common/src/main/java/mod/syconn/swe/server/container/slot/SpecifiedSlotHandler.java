@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.container.slot;
+package mod.syconn.swe.server.container.slot;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
