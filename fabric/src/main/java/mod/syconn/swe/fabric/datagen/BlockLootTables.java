@@ -6,11 +6,11 @@ import net.minecraft.world.flag.FeatureFlags;
 
 import java.util.Collections;
 
-public class BlockLootTables extends BlockLootSubProvider {
+public class BlockLootTables {
 
-    public BlockLootTables(HolderLookup.Provider pRegistries) {
-        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags(), pRegistries);
-    }
+//    public BlockLootTables(HolderLookup.Provider pRegistries) {
+//        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags(), pRegistries);
+//    }
 
     protected void generate() {
 //        dropSelf(Registration.FLUID_TANK.get());

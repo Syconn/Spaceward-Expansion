@@ -1,7 +1,10 @@
 package mod.syconn.swe.fabric.datagen;
 
+import mod.syconn.swe.Constants;
 import mod.syconn.swe.core.ModBlocks;
 import mod.syconn.swe.core.ModItems;
+import mod.syconn.swe.core.ModRecipes;
+import mod.syconn.swe.core.ModTags;
 import mod.syconn.swe.server.recipes.CustomRecipeBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -21,8 +24,8 @@ public class RecipeGen extends FabricRecipeProvider {
     }
 
     public void buildRecipes(Consumer<FinishedRecipe> writer) {
-        CustomRecipeBuilder.special(DyedParachuteRecipe::new).save(pRecipeOutput, Main.loc("dyed_parachute"), has(ItemTags.WOOL));
-        CustomRecipeBuilder.special(RefillingCanisterRecipe::new).save(pRecipeOutput, Main.loc("refill_canister"), has(Registration.CANISTER));
+        CustomRecipeBuilder.special(ModRecipes.PARACHUTE_RECIPE.get()).save(writer, "dyed_parachute", RecipeCategory.TOOLS, has(ItemTags.WOOL));
+        CustomRecipeBuilder.special(ModRecipes.REFILLING_CANISTER.get()).save(writer, "refill_canister", RecipeCategory.TOOLS, has(ModItems.CANISTER.get()));
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.CANISTER_FILLER.get())
                 .pattern("ggg")
                 .pattern("gig")
@@ -36,7 +39,7 @@ public class RecipeGen extends FabricRecipeProvider {
                 .pattern("nrn")
                 .pattern(" n ")
                 .define('n', Items.NETHERITE_INGOT)
-                .define('r', Registration.EMERALD_UPGRADE.get())
+                .define('r', ModItems.EMERALD_UPGRADE.get())
                 .unlockedBy("has_ingot", inventoryTrigger(ItemPredicate.Builder.item().of(Items.NETHERITE_INGOT).build()))
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.DIAMOND_UPGRADE.get())
@@ -44,7 +47,7 @@ public class RecipeGen extends FabricRecipeProvider {
                 .pattern("nrn")
                 .pattern(" n ")
                 .define('n', Items.DIAMOND)
-                .define('r', Registration.GOLD_UPGRADE.get())
+                .define('r', ModItems.GOLD_UPGRADE.get())
                 .unlockedBy("has_ingot", inventoryTrigger(ItemPredicate.Builder.item().of(Items.DIAMOND).build()))
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EMERALD_UPGRADE.get())
@@ -52,7 +55,7 @@ public class RecipeGen extends FabricRecipeProvider {
                 .pattern("nrn")
                 .pattern(" n ")
                 .define('n', Items.EMERALD)
-                .define('r', Registration.DIAMOND_UPGRADE.get())
+                .define('r', ModItems.DIAMOND_UPGRADE.get())
                 .unlockedBy("has_ingot", inventoryTrigger(ItemPredicate.Builder.item().of(Items.EMERALD).build()))
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GOLD_UPGRADE.get())
@@ -60,7 +63,7 @@ public class RecipeGen extends FabricRecipeProvider {
                 .pattern("nrn")
                 .pattern(" n ")
                 .define('n', Items.GOLD_INGOT)
-                .define('r', Registration.IRON_UPGRADE.get())
+                .define('r', ModItems.IRON_UPGRADE.get())
                 .unlockedBy("has_ingot", inventoryTrigger(ItemPredicate.Builder.item().of(Items.GOLD_INGOT).build()))
                 .save(writer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.IRON_UPGRADE.get())
@@ -75,7 +78,7 @@ public class RecipeGen extends FabricRecipeProvider {
                 .pattern("nnn")
                 .pattern("nrn")
                 .pattern("nnn")
-                .define('n', Tags.Items.GLASS_PANES)
+                .define('n', ModTags.Items.GLASS_PANES)
                 .define('r', Items.BUCKET)
                 .unlockedBy("has_bucket", inventoryTrigger(ItemPredicate.Builder.item().of(Items.BUCKET).build()))
                 .save(writer);
@@ -83,7 +86,7 @@ public class RecipeGen extends FabricRecipeProvider {
                 .pattern("bbb")
                 .pattern("nrn")
                 .pattern("bbb")
-                .define('n', Tags.Items.GLASS_BLOCKS)
+                .define('n', ModTags.Items.GLASS_BLOCKS)
                 .define('r', Items.BUCKET)
                 .define('b', Items.IRON_BLOCK)
                 .unlockedBy("has_bucket", inventoryTrigger(ItemPredicate.Builder.item().of(Items.BUCKET).build()))

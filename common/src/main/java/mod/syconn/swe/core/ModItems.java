@@ -35,8 +35,6 @@ public class ModItems {
     public static final RegistrySupplier<UpgradeItem> DIAMOND_UPGRADE = register("diamond_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1), 10));
     public static final RegistrySupplier<UpgradeItem> EMERALD_UPGRADE = register("emerald_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1), 15));
     public static final RegistrySupplier<UpgradeItem> NETHERITE_UPGRADE = register("netherite_upgrade", () -> new UpgradeItem(new Item.Properties().stacksTo(1).fireResistant(), 25));
-    public static final RegistrySupplier<BucketItem> LIQUID_OXYGEN_BUCKET = register("o2_fluid_bucket", () -> new BucketItem(ModFluids.O2.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
-
     public static final RegistrySupplier<CreativeModeTab> TAB = TABS.register(Constants.withId("nexus"), () -> CreativeTabRegistry.create(Component.translatable("itemGroup." + MOD), () -> SPACE_HELMET.get().getDefaultInstance()));
 
     public static void addCreative(FeatureFlagSet flags, CreativeTabOutput output, boolean canUseGameMasterBlocks) {

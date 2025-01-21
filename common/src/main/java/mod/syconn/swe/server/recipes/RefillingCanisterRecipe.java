@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.recipes;
+package mod.syconn.swe.server.recipes;
 
 import mod.syconn.swe.common.items.Canister;
 import mod.syconn.swe.core.ModItems;

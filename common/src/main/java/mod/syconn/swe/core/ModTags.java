@@ -11,12 +11,23 @@ import net.minecraft.world.level.material.Fluid;
 
 public class ModTags {
 
-    public static final ResourceKey<Level> MOON_KEY = ResourceKey.create(Registries.DIMENSION, Constants.MOON);
+    public static class Items {
+        public static final TagKey<Item> CANISTERS = TagKey.create(Registries.ITEM, Constants.withId("canisters"));
+        public static final TagKey<Item> GLASS_BLOCKS = TagKey.create(Registries.ITEM, Constants.withId("glass_block"));
+        public static final TagKey<Item> GLASS_PANES = TagKey.create(Registries.ITEM, Constants.withId("glass_pane_block"));
+    }
 
-    public static final TagKey<Item> CANISTERS = TagKey.create(Registries.ITEM, Constants.loc("canisters"));
+    public static class Blocks {
+        public static final TagKey<Block> O2_PRODUCING = TagKey.create(Registries.BLOCK, Constants.withId("o2_producing"));
+        public static final TagKey<Block> PERMABURN_MOON = TagKey.create(Registries.BLOCK, Constants.withId("infinburn_moon"));
+    }
 
-    public static final TagKey<Block> O2_PRODUCING = TagKey.create(Registries.BLOCK, Constants.loc("o2_producing"));
-    public static final TagKey<Block> INFINBURN_MOON = TagKey.create(Registries.BLOCK, Constants.loc("infinburn_moon"));
+    public static class FLUIDS {
+        public static final TagKey<Fluid> OXYGEN = TagKey.create(Registries.FLUID, Constants.withId("oxygen"));
+    }
 
-    public static final TagKey<Fluid> OXYGEN = TagKey.create(Registries.FLUID, Constants.loc("oxygen"));
+    public static class Planets {
+        public static final ResourceKey<Level> MOON_KEY = ResourceKey.create(Registries.DIMENSION, Constants.withId("moon"));
+
+    }
 }

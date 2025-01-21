@@ -1,23 +1,34 @@
 package mod.syconn.swe.fabric.datagen;
 
-import mod.syconn.swe.Constants;
+import mod.syconn.swe.core.ModBlocks;
+import mod.syconn.swe.core.ModTags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 
-public class BlockTagsGen extends BlockTagsProvider {
+public class BlockTagsGen extends FabricTagProvider.BlockTagProvider {
 
-    public BlockTagsGen(PackOutput p_256596_, CompletableFuture<HolderLookup.Provider> p_256513_, ExistingFileHelper existingFileHelper) {
-        super(p_256596_, p_256513_, Constants.MOD_ID, existingFileHelper);
+    public BlockTagsGen(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registriesFuture);
     }
 
     protected void addTags(HolderLookup.Provider provider) {
-//        this.tag(BlockTags.NEEDS_IRON_TOOL).add(Registration.FLUID_PIPE.get(), Registration.FLUID_TANK.get(), Registration.OXYGEN_DISPERSER.get(), Registration.CANISTER_FILLER.get(), Registration.OXYGEN_COLLECTOR.get());
-//        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(Registration.FLUID_PIPE.get(), Registration.FLUID_TANK.get(), Registration.OXYGEN_DISPERSER.get(), Registration.CANISTER_FILLER.get(), Registration.OXYGEN_COLLECTOR.get());
-//        this.tag(Registration.O2_PRODUCING).add(Blocks.GRASS_BLOCK, Blocks.FERN, Blocks.VINE, Blocks.GLOW_LICHEN, Blocks.SUNFLOWER, Blocks.LILAC, Blocks.ROSE_BUSH, Blocks.PEONY, Blocks.TALL_GRASS, Blocks.LARGE_FERN, Blocks.HANGING_ROOTS).addTags(BlockTags.LEAVES).addTag(BlockTags.CROPS);
-//        this.tag(Registration.INFINBURN_MOON).replace(false);
+        this.addAll(BlockTags.NEEDS_IRON_TOOL, ModBlocks.FLUID_PIPE.get(), ModBlocks.FLUID_TANK.get(), ModBlocks.OXYGEN_DISPERSER.get(), ModBlocks.CANISTER_FILLER.get(), ModBlocks.OXYGEN_COLLECTOR.get());
+        this.addAll(BlockTags.MINEABLE_WITH_PICKAXE, ModBlocks.FLUID_PIPE.get(), ModBlocks.FLUID_TANK.get(), ModBlocks.OXYGEN_DISPERSER.get(), ModBlocks.CANISTER_FILLER.get(), ModBlocks.OXYGEN_COLLECTOR.get());
+        this.addAll(ModTags.Blocks.O2_PRODUCING, Blocks.GRASS_BLOCK, Blocks.FERN, Blocks.VINE, Blocks.GLOW_LICHEN, Blocks.SUNFLOWER, Blocks.LILAC, Blocks.ROSE_BUSH, Blocks.PEONY, Blocks.TALL_GRASS, Blocks.LARGE_FERN, Blocks.HANGING_ROOTS).addTag(BlockTags.LEAVES).addTag(BlockTags.CROPS);
+        this.tag(ModTags.Blocks.PERMABURN_MOON);
+    }
+
+    private TagsProvider.TagAppender<Block> addAll(TagKey<Block> tagKey, Block... blocks) {
+        var tag = this.tag(tagKey);
+        for (Block block : blocks) tag.add(reverseLookup(block));
+        return tag;
     }
 }

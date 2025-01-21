@@ -11,13 +11,14 @@ public class HeroDataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = generator.createPack();
         pack.addProvider(LangGen::new);
         pack.addProvider(RecipeGen::new);
-        pack.addProvider(ItemTagGen::new);
-        pack.addProvider(ItemModelGen::new);
-        pack.addProvider(DamageTypeGen::new);
+        BlockTagsGen blockTags = pack.addProvider(BlockTagsGen::new);
+        pack.addProvider((output, lookup) -> new ItemTagGen(output, lookup, blockTags));
+        pack.addProvider(ModelGen::new);
+        pack.addProvider(FluidTagsGen::new);
     }
 
-    public void buildRegistry(RegistrySetBuilder registryBuilder) {
-        DataGeneratorEntrypoint.super.buildRegistry(registryBuilder);
-        registryBuilder.add(Registries.DAMAGE_TYPE, DamageTypeGen::bootstrapDamageTypes);
-    }
+//    public void buildRegistry(RegistrySetBuilder registryBuilder) {
+//        DataGeneratorEntrypoint.super.buildRegistry(registryBuilder);
+//        registryBuilder.add(Registries.DAMAGE_TYPE, DamageTypeGen::bootstrapDamageTypes);
+//    }
 }

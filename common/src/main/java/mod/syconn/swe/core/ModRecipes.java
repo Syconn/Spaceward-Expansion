@@ -2,8 +2,8 @@ package mod.syconn.swe.core;
 
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import mod.syconn.swe.common.recipes.DyedParachuteRecipe;
-import mod.syconn.swe.common.recipes.RefillingCanisterRecipe;
+import mod.syconn.swe.server.recipes.DyedParachuteRecipe;
+import mod.syconn.swe.server.recipes.RefillingCanisterRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;

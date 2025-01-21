@@ -1,21 +1,20 @@
 package mod.syconn.swe.fabric.datagen;
 
-import mod.syconn.swe.Constants;
+import mod.syconn.swe.core.ModFluids;
+import mod.syconn.swe.core.ModTags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.FluidTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class FluidTagsGen extends FluidTagsProvider {
+public class FluidTagsGen extends FabricTagProvider.FluidTagProvider {
 
-    public FluidTagsGen(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pProvider, @Nullable ExistingFileHelper existingFileHelper) {
-        super(pOutput, pProvider, Constants.MOD_ID, existingFileHelper);
+    public FluidTagsGen(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+        super(output, completableFuture);
     }
 
     protected void addTags(HolderLookup.Provider pProvider) {
-//        this.tag(Registration.OXYGEN).add(Registration.O2_FLOWING.get()).add(Registration.O2.get());
+        this.tag(ModTags.FLUIDS.OXYGEN).add(reverseLookup(ModFluids.O2_FLOWING.get())).add(reverseLookup(ModFluids.O2.get()));
     }
 }
