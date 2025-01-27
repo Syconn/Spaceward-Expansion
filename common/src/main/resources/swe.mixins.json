@@ -6,6 +6,8 @@
   "client": [
   ],
   "mixins": [
+    "LivingEntityMixin",
+    "PlayerPersistentDataMixin"
   ],
   "injectors": {
     "defaultRequire": 1

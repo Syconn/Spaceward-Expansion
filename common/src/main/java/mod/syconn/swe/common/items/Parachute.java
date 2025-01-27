@@ -1,13 +1,11 @@
 package mod.syconn.swe.common.items;
 
-import mod.syconn.swe.server.container.slot.EquipmentItemSlot;
-import mod.syconn.swe.extra.EquipmentItem;
-import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
@@ -16,7 +14,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 
 import java.util.Optional;
 
-public class Parachute extends Item implements Equipable, EquipmentItem {
+public class Parachute extends Item implements Equipable, DyeableLeatherItem {
 
     public Parachute() {
         super(new Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
@@ -35,13 +33,11 @@ public class Parachute extends Item implements Equipable, EquipmentItem {
         return EquipmentSlot.CHEST;
     }
 
-    public Holder<SoundEvent> getEquipSound() {
+    public SoundEvent getEquipSound() {
         return SoundEvents.ARMOR_EQUIP_ELYTRA;
     }
 
-    public EquipmentItemSlot.SpaceSlot getSlot() {
-        return EquipmentItemSlot.SpaceSlot.PARACHUTE;
+    public static boolean hasParachute(LivingEntity entity) { // TODO
+        throw new AssertionError();
     }
-
-    public void onEquipmentTick(ItemStack stack, Level level, Player player) { }
 }

@@ -1,4 +1,4 @@
-package mod.syconn.swe.util;
+package mod.syconn.swe.common.items;
 
 import mod.syconn.swe.server.container.slot.EquipmentItemSlot;
 import net.minecraft.world.entity.player.Player;
