@@ -7,14 +7,14 @@ import mod.syconn.swe.Constants;
 import mod.syconn.swe.client.model.ChuteModel;
 import mod.syconn.swe.client.model.ParachuteModel;
 import mod.syconn.swe.client.model.TankModel;
+import mod.syconn.swe.common.data.SpaceGearData;
+import mod.syconn.swe.common.items.Canister;
+import mod.syconn.swe.common.items.Parachute;
+import mod.syconn.swe.common.items.SpaceArmor;
+import mod.syconn.swe.core.ModItems;
 import mod.syconn.swe.server.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
-import mod.syconn.swe.extra.core.FluidHandlerItem;
-import mod.syconn.swe.extra.data.attachment.SpaceSuit;
-import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.items.Canister;
-import mod.syconn.swe.items.Parachute;
-import mod.syconn.swe.items.SpaceArmor;
+import mod.syconn.swe.util.RenderUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -22,12 +22,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.layers.SheepFurLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.DyedItemColor;
 
 public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends RenderLayer<P, M> {
 
@@ -43,35 +43,38 @@ public class SpaceSuitLayer<P extends Player, M extends PlayerModel<P>> extends 
     }
 
     public void render(PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, P pPlayer, float pLimbSwing, float pLimbSwingAmount, float pPartialTick, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-        if (SpaceArmor.hasFullKit(pPlayer)) {
-            ItemStack itemstack = SpaceArmor.hasParachute(pPlayer) ? ((ExtendedPlayerInventory) pPlayer.getInventory()).getItemBySlot(EquipmentItemSlot.SpaceSlot.PARACHUTE) : pPlayer.getItemBySlot(EquipmentSlot.CHEST);
-            if (itemstack.getItem() instanceof Parachute) {
-                int i = DyedItemColor.getOrDefault(itemstack, -1);
+        if (SpaceArmor.wearingSpaceSuit(pPlayer)) {
+            SpaceGearData spaceGear = SpaceGearData.get(pPlayer);
+            ItemStack itemstack = spaceGear.hasEquipment(SpaceArmor.PARACHUTE, ModItems.PARACHUTE.get()) ? spaceGear.getEquipment(SpaceArmor.PARACHUTE) : pPlayer.getItemBySlot(EquipmentSlot.CHEST);
+            if (itemstack.getItem() instanceof Parachute parachute) {
+                int[] color = RenderUtil.getRGB(parachute.getColor(itemstack));
+
                 pPoseStack.pushPose();
                 pPoseStack.translate(0.0F, -0.80F, 0.2F);
-                VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Constants.loc("textures/entity/layers/parachute.png")), itemstack.hasFoil());
-                this.pm.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(-1, i));
+                VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Constants.withId("textures/entity/layers/parachute.png")), false, itemstack.hasFoil());
+                this.pm.renderToBuffer(pPoseStack, vertexconsumer, pPackedLight, OverlayTexture.NO_OVERLAY, color[0], color[1], color[2], 1.0f);
                 pPoseStack.popPose();
-                SpaceSuit suit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, pPlayer);
-                if (suit.parachute()) {
+
+                if (spaceGear.parachute()) {
                     pPoseStack.pushPose();
-                    double seg = -0.69F / suit.chuteAnim().maxAnimLen();
-                    pPoseStack.translate(0.0F, -0.11 + seg * suit.chuteAnim().animLen(), 0.2F);
-                    VertexConsumer v2 = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Constants.loc("textures/entity/layers/chute.png")), itemstack.hasFoil());
-                    this.cm.renderToBuffer(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, FastColor.ARGB32.color(-1, i));
+//                    double seg = -0.69F / suit.chuteAnim().maxAnimLen(); TODO ANIMATIONS
+//                    pPoseStack.translate(0.0F, -0.11 + seg * suit.chuteAnim().animLen(), 0.2F);
+                    VertexConsumer v2 = ItemRenderer.getArmorFoilBuffer(pBufferSource, RenderType.armorCutoutNoCull(Constants.withId("textures/entity/layers/chute.png")), false, itemstack.hasFoil());
+                    this.cm.renderToBuffer(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, color[0], color[1], color[2], 1.0f);
                     pPoseStack.popPose();
                 }
             }
 
-            itemstack = SpaceArmor.getGear(EquipmentItemSlot.SpaceSlot.TANK, pPlayer);
+            itemstack = spaceGear.getEquipment(SpaceArmor.TANK);
             if (itemstack != null && itemstack.getItem() instanceof Canister canister && Services.FLUID_HANDLER.has(itemstack)) {
                 FluidHandlerItem handler = Services.FLUID_HANDLER.get(itemstack);
                 int i = canister.getBarColor(itemstack);
                 int i2 = canister.getOutlineColor();
+
                 pPoseStack.pushPose();
                 pPoseStack.translate(0F, -0.80F, 0.3F);
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(180F));
-                VertexConsumer v2 = pBufferSource.getBuffer(RenderType.entityTranslucentCull(Constants.loc("textures/entity/layers/tank.png")));
+                VertexConsumer v2 = pBufferSource.getBuffer(RenderType.entityTranslucentCull(Constants.withId("textures/entity/layers/tank.png")));
                 tm.fluidScaling((float) handler.getFluidHolder().getAmount() / handler.getTankCapacity());
                 tm.render(pPoseStack, v2, pPackedLight, OverlayTexture.NO_OVERLAY, new int[]{i, i2});
                 pPoseStack.popPose();

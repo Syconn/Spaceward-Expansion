@@ -2,9 +2,6 @@ package mod.syconn.swe.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import mod.syconn.swe.extra.PipePatterns;
-import mod.syconn.swe.extra.core.FluidHolder;
-import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -27,6 +24,10 @@ public class RenderUtil {
         int c = FastColor.ARGB32.color(FastColor.ARGB32.blue(b), FastColor.ARGB32.green(b), FastColor.ARGB32.red(b));
         if (i == -1) return c;
         return tintRGBA(c, i);
+    }
+
+    public static int[] getRGB(int color) {
+        return new int[] {FastColor.ARGB32.red(color), FastColor.ARGB32.green(color), FastColor.ARGB32.blue(color)};
     }
 
     public static int getAtlasSpriteRGBA(TextureAtlasSprite sprite, int x, int y) {
@@ -139,7 +140,7 @@ public class RenderUtil {
     }
 
     private static void add(VertexConsumer renderer, PoseStack stack, double x, double y, double z, float u, float v, int tint) {
-        renderer.addVertex(stack.last().pose(), (float) x, (float) y, (float) z).setColor(tint).setUv(u, v).setUv2(0, 200).setNormal(1, 0, 0); // pV: Brightness
+        renderer.vertex(stack.last().pose(), (float) x, (float) y, (float) z).color(tint).uv(u, v).uv2(0, 200).normal(1, 0, 0);
     }
 
     private static Vec3 v(float x, float y, float z) {

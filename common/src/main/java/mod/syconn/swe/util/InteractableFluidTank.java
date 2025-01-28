@@ -1,6 +1,6 @@
 package mod.syconn.swe.util;
 
-import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.common.blocks.FluidTank;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;

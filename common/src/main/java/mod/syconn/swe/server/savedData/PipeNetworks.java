@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import mod.syconn.swe.common.blockentities.base.AbstractPipeBE;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.MessageUpdateClientPipeCache;
-import mod.syconn.swe.util.ListHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -34,7 +33,7 @@ public class PipeNetworks extends SavedData {
             for (Direction direction : Direction.values())
                 if (pipeBE.canConnectToPipe(level, pos, direction) && level.getBlockEntity(pos.relative(direction)) instanceof AbstractPipeBE otherPipe && !connectionUUIDS.contains(otherPipe.getNetworkID()))
                     connectionUUIDS.add(otherPipe.getNetworkID());
-            UUID uuid = ListHelper.getListMostCommonElement(connectionUUIDS, UUID.randomUUID());
+            UUID uuid = getListMostCommonElement(connectionUUIDS, UUID.randomUUID());
             if (connectionUUIDS.isEmpty()) networks.put(uuid, new PipeNetwork(uuid, level, pos));
             else if (connectionUUIDS.contains(uuid) && networks.containsKey(uuid)) {
                 connectionUUIDS.remove(uuid);
@@ -105,7 +104,7 @@ public class PipeNetworks extends SavedData {
         }
     }
 
-    public void fixList() {
+    private void fixList() {
         List<UUID> removeElement = new ArrayList<>();
         for (Map.Entry<UUID, PipeNetwork> entry : networks.entrySet()) {
             if (entry.getValue().getPipes().isEmpty()) removeElement.add(entry.getKey());
@@ -117,6 +116,26 @@ public class PipeNetworks extends SavedData {
         }
         removeElement.forEach(networks::remove);
         setDirty();
+    }
+
+    private <T extends @Nullable Object> T getListMostCommonElement(List<T> list, @Nullable T other) {
+        if (!list.isEmpty()) {
+            int times = 0;
+            T resultElement = list.get(0);
+            for (T element : list) {
+                int found = 0;
+                for (T check : list) {
+                    if (element == null) continue;
+                    if (element.equals(check)) found++;
+                }
+                if (found > times) {
+                    resultElement = element;
+                    times = found;
+                }
+            }
+            return resultElement;
+        }
+        return other;
     }
 
     private void renderPipes(Level level) {

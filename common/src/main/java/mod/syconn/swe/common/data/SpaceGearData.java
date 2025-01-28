@@ -7,6 +7,8 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Function;
 
@@ -35,6 +37,14 @@ public class SpaceGearData {
 
     public SimpleContainer getInventory() {
         return inventory;
+    }
+
+    public ItemStack getEquipment(int slot) {
+        return inventory.getItem(slot);
+    }
+
+    public boolean hasEquipment(int slot, Item item) {
+        return getEquipment(slot).is(item);
     }
 
     public void tick(Player player) {

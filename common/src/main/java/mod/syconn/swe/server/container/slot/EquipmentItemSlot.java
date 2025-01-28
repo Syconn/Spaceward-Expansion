@@ -38,20 +38,4 @@ public class EquipmentItemSlot extends Slot {
     public boolean mayPlace(ItemStack stack) {
         return stack.getItem() instanceof EquipmentItem && isActive() && ((EquipmentItem) stack.getItem()).getSlot() == slot;
     }
-
-    public enum SpaceSlot {
-
-        TANK("empty_canister"),
-        PARACHUTE("empty_parachute");
-
-        final String loc;
-
-        SpaceSlot(String loc) {
-            this.loc = loc;
-        }
-
-        public String getLoc() {
-            return loc;
-        }
-    }
 }
