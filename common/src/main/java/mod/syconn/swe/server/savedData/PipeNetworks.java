@@ -1,25 +1,21 @@
 package mod.syconn.swe.server.savedData;
 
 import com.google.common.collect.Sets;
-import mod.syconn.swe.blockentities.base.AbstractPipeBE;
-import mod.syconn.swe.extra.core.Events;
-import mod.syconn.swe.extra.helpers.ListHelper;
+import mod.syconn.swe.common.blockentities.base.AbstractPipeBE;
 import mod.syconn.swe.network.Network;
-import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
+import mod.syconn.swe.network.messages.MessageUpdateClientPipeCache;
+import mod.syconn.swe.util.ListHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.*;
 
 public class PipeNetworks extends SavedData {
@@ -124,7 +120,7 @@ public class PipeNetworks extends SavedData {
     }
 
     private void renderPipes(Level level) {
-        if (render() && level instanceof ServerLevel sl) sl.getPlayers(LivingEntity::isAlive).forEach(serverPlayer -> Network.sendToPlayer(new ClientBoundUpdatePipeCache(getDataMap()), serverPlayer));
+        if (render() && level instanceof ServerLevel sl) sl.getPlayers(LivingEntity::isAlive).forEach(serverPlayer -> Network.CHANNEL.sendToPlayer(serverPlayer, new MessageUpdateClientPipeCache(getDataMap())));
     }
 
     protected boolean render() {
@@ -142,7 +138,7 @@ public class PipeNetworks extends SavedData {
         return dataMap;
     }
 
-    public @NotNull CompoundTag save(@NotNull CompoundTag pTag, HolderLookup.@NotNull Provider pRegistries) {
+    public @NotNull CompoundTag save(@NotNull CompoundTag pTag) {
         ListTag list = new ListTag();
         for (Map.Entry<UUID, PipeNetwork> entry : networks.entrySet()) {
             CompoundTag tag = new CompoundTag();
@@ -155,7 +151,7 @@ public class PipeNetworks extends SavedData {
         return pTag;
     }
 
-    public static PipeNetworks load(ServerLevel serverLevel, CompoundTag pTag, HolderLookup.Provider lookupProvider) {
+    public static PipeNetworks load(ServerLevel serverLevel, CompoundTag pTag) {
         PipeNetworks pipeNetworks = create(serverLevel);
         if (pTag.contains("networks")) pTag.getList("networks", Tag.TAG_COMPOUND).forEach(nbt -> {
             CompoundTag tag = (CompoundTag) nbt;
@@ -170,10 +166,10 @@ public class PipeNetworks extends SavedData {
     }
 
     public static PipeNetworks get(ServerLevel server) {
-        return server.getDataStorage().computeIfAbsent(new Factory<>(() -> create(server), (t, p) -> load(server, t, p), DataFixTypes.LEVEL), "pipe_network");
+        return server.getDataStorage().computeIfAbsent(tag -> load(server, tag), () -> new PipeNetworks(server), "pipe_network");
     }
 
-    public static void tickNetworks(Events.LevelTick event) {
-        if (event.level() instanceof ServerLevel sl) get(sl).tick();
+    public static void tickNetworks(ServerLevel serverLevel) {
+        get(serverLevel).tick();
     }
 }

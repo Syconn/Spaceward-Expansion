@@ -19,6 +19,7 @@ import mod.syconn.swe.core.*;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.server.reloaders.OxygenProductionManager;
 import mod.syconn.swe.server.reloaders.PlanetManager;
+import mod.syconn.swe.server.savedData.PipeNetworks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -40,6 +41,7 @@ public class SpaceMod {
 
         CreativeTabRegistry.modify(ModItems.TAB, ModItems::addCreative);
 
+        TickEvent.SERVER_LEVEL_PRE.register(PipeNetworks::tickNetworks);
         TickEvent.PLAYER_PRE.register(CommonHandler::playerTickEvent);
         PlayerEvent.PLAYER_JOIN.register(CommonHandler::playerJoined);
         PlayerEvent.PLAYER_QUIT.register(CommonHandler::playerQuit);

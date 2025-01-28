@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-only
  */
 
-package mod.syconn.swe.util.core;
+package mod.syconn.swe.util;
 
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.FormattedText;

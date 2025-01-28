@@ -1,4 +1,4 @@
-package mod.syconn.swe.util.core;
+package mod.syconn.swe.util;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;

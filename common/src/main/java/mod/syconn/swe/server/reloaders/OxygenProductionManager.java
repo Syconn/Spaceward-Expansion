@@ -42,6 +42,6 @@ public class OxygenProductionManager extends SimpleJsonResourceReloadListener {
         for (Map.Entry<TagKey<Block>, Double> entry : TAGS.entrySet()) {
             if (block.is(entry.getKey())) return entry.getValue();
         }
-        return block.is(ModTags.O2_PRODUCING) ? 1 : 0;
+        return block.is(ModTags.Blocks.O2_PRODUCING) ? 1 : 0;
     }
 }

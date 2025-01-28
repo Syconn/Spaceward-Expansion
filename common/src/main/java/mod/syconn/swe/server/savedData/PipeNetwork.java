@@ -1,12 +1,9 @@
 package mod.syconn.swe.server.savedData;
 
-import mod.syconn.swe.blockentities.FluidPipeBE;
-import mod.syconn.swe.blocks.base.AbstractPipeBlock;
-import mod.syconn.swe.extra.PipePatterns;
-import mod.syconn.swe.extra.core.FluidAction;
-import mod.syconn.swe.extra.core.FluidHandler;
-import mod.syconn.swe.extra.helpers.NbtHelper;
-import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.common.blockentities.FluidPipeBE;
+import mod.syconn.swe.common.blocks.base.AbstractPipeBlock;
+import mod.syconn.swe.util.PipePatterns;
+import mod.syconn.swe.util.TagUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -44,7 +41,7 @@ public class PipeNetwork {
     public PipeNetwork(@NotNull CompoundTag tag) {
         this.networkID = tag.getUUID("uuid");
         this.executor = new PipeExecutor(this, tag.getCompound("executor"));
-        this.pipes = NbtHelper.readPositionList(tag.getCompound("pipes"));
+        this.pipes = TagUtil.readBlockPositions(tag.getCompound("pipes"));
     }
 
     public boolean addPipe(BlockState state, BlockPos pos) {
@@ -94,7 +91,7 @@ public class PipeNetwork {
         CompoundTag tag = new CompoundTag();
         tag.putUUID("uuid", networkID);
         tag.put("executor", executor.serializeNBT());
-        tag.put("pipes", NbtHelper.writePositionList(pipes));
+        tag.put("pipes", TagUtil.writeBlockPositions(pipes));
         return tag;
     }
 
@@ -123,16 +120,16 @@ public class PipeNetwork {
             Map<BlockPos, List<Direction>> imports = new HashMap<>();
             tag.getList("imports", Tag.TAG_COMPOUND).forEach(nbt -> {
                 CompoundTag data = (CompoundTag) nbt;
-                imports.put(NbtUtils.readBlockPos(data, "pos").get(), NbtHelper.readDirectionList(data.getCompound("directions")));
+                imports.put(NbtUtils.readBlockPos(data.getCompound("pos")), TagUtil.readDirections(data.getCompound("directions")));
             });
             this.imports = imports;
             Map<BlockPos, List<Direction>> exports = new HashMap<>();
             tag.getList("exports", Tag.TAG_COMPOUND).forEach(nbt -> {
                 CompoundTag data = (CompoundTag) nbt;
-                exports.put(NbtUtils.readBlockPos(data, "pos").get(), NbtHelper.readDirectionList(data.getCompound("directions")));
+                exports.put(NbtUtils.readBlockPos(data.getCompound("pos")), TagUtil.readDirections(data.getCompound("directions")));
             });
             this.exports = exports;
-            this.interactionPoint = NbtHelper.readPositionList(tag.getCompound("interaction_point"));
+            this.interactionPoint = TagUtil.readBlockPositions(tag.getCompound("interaction_point"));
             List<Task> tasks = new ArrayList<>();
             tag.getList("tasks", Tag.TAG_COMPOUND).forEach(nbt -> tasks.add(new Task((CompoundTag) nbt)));
             this.tasks = tasks;
@@ -221,7 +218,7 @@ public class PipeNetwork {
             imports.forEach(((pos, directions) -> {
                 CompoundTag data = new CompoundTag();
                 data.put("pos", NbtUtils.writeBlockPos(pos));
-                data.put("directions", NbtHelper.writeDirectionList(directions));
+                data.put("directions", TagUtil.writeDirections(directions));
                 importList.add(data);
             }));
             tag.put("imports", importList);
@@ -229,11 +226,11 @@ public class PipeNetwork {
             imports.forEach(((pos, directions) -> {
                 CompoundTag data = new CompoundTag();
                 data.put("pos", NbtUtils.writeBlockPos(pos));
-                data.put("directions", NbtHelper.writeDirectionList(directions));
+                data.put("directions", TagUtil.writeDirections(directions));
                 exportList.add(data);
             }));
             tag.put("exports", exportList);
-            tag.put("interaction_point", NbtHelper.writePositionList(interactionPoint));
+            tag.put("interaction_point", TagUtil.writeBlockPositions(interactionPoint));
             ListTag taskList = new ListTag();
             tasks.forEach(task -> taskList.add(task.serializeNBT()));
             tag.put("tasks", taskList);
@@ -259,11 +256,11 @@ public class PipeNetwork {
         }
 
         public Task(@NotNull CompoundTag tag) {
-            this.startPos = NbtUtils.readBlockPos(tag, "startpos").get();
+            this.startPos = NbtUtils.readBlockPos(tag.getCompound("startpos"));
             this.startDirection = Direction.from3DDataValue(tag.getInt("startdirection"));
-            this.endPos = NbtUtils.readBlockPos(tag, "endpos").get();
+            this.endPos = NbtUtils.readBlockPos(tag.getCompound("endpos"));
             this.endDirection = Direction.from3DDataValue(tag.getInt("enddirection"));
-            this.directions = NbtHelper.readPositionList(tag.getCompound("directions"));
+            this.directions = TagUtil.readBlockPositions(tag.getCompound("directions"));
             if (tag.contains("result")) this.result = TaskResult.fromNumber(tag.getInt("result"));
         }
 
@@ -298,7 +295,7 @@ public class PipeNetwork {
             tag.putInt("startdirection", startDirection.get3DDataValue());
             tag.put("endpos", NbtUtils.writeBlockPos(endPos));
             tag.putInt("enddirection", endDirection.get3DDataValue());
-            tag.put("directions", NbtHelper.writePositionList(directions));
+            tag.put("directions", TagUtil.writeBlockPositions(directions));
             if (result != null) tag.putInt("result", result.number);
             return tag;
         }

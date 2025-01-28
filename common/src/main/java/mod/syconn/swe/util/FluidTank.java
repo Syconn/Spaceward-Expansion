@@ -1,4 +1,4 @@
-package mod.syconn.swe.util.core;
+package mod.syconn.swe.util;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

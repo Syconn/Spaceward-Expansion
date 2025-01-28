@@ -1,4 +1,4 @@
-package mod.syconn.swe.util.core;
+package mod.syconn.swe.util;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;

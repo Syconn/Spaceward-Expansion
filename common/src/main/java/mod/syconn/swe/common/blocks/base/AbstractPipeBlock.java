@@ -1,6 +1,7 @@
 package mod.syconn.swe.common.blocks.base;
 
-import mod.syconn.swe.blockentities.base.AbstractPipeBE;
+import mod.syconn.swe.common.blockentities.base.AbstractPipeBE;
+import mod.syconn.swe.util.PipePatterns;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,18 +27,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.ticks.ScheduledTick;
 import org.jetbrains.annotations.Nullable;
 
-import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes;
-import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes.BLOCK;
-import static mod.syconn.swe.extra.PipePatterns.PipeConnectionTypes.CABLE;
-
 public abstract class AbstractPipeBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
 
-    public static final EnumProperty<PipeConnectionTypes> NORTH = EnumProperty.create("north", PipeConnectionTypes.class);
-    public static final EnumProperty<PipeConnectionTypes> SOUTH = EnumProperty.create("south", PipeConnectionTypes.class);
-    public static final EnumProperty<PipeConnectionTypes> WEST = EnumProperty.create("west", PipeConnectionTypes.class);
-    public static final EnumProperty<PipeConnectionTypes> EAST = EnumProperty.create("east", PipeConnectionTypes.class);
-    public static final EnumProperty<PipeConnectionTypes> UP = EnumProperty.create("up", PipeConnectionTypes.class);
-    public static final EnumProperty<PipeConnectionTypes> DOWN = EnumProperty.create("down", PipeConnectionTypes.class);
+    public static final EnumProperty<PipePatterns.PipeConnectionTypes> NORTH = EnumProperty.create("north", PipePatterns.PipeConnectionTypes.class);
+    public static final EnumProperty<PipePatterns.PipeConnectionTypes> SOUTH = EnumProperty.create("south", PipePatterns.PipeConnectionTypes.class);
+    public static final EnumProperty<PipePatterns.PipeConnectionTypes> WEST = EnumProperty.create("west", PipePatterns.PipeConnectionTypes.class);
+    public static final EnumProperty<PipePatterns.PipeConnectionTypes> EAST = EnumProperty.create("east", PipePatterns.PipeConnectionTypes.class);
+    public static final EnumProperty<PipePatterns.PipeConnectionTypes> UP = EnumProperty.create("up", PipePatterns.PipeConnectionTypes.class);
+    public static final EnumProperty<PipePatterns.PipeConnectionTypes> DOWN = EnumProperty.create("down", PipePatterns.PipeConnectionTypes.class);
 
     private static VoxelShape[] shapeCache = null;
     private static final VoxelShape SHAPE_CABLE_NORTH = Shapes.box(.3, .3, 0, .7, .7, .3);
@@ -60,21 +57,21 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
     }
 
-    private int calculateShapeIndex(PipeConnectionTypes north, PipeConnectionTypes south, PipeConnectionTypes west, PipeConnectionTypes east, PipeConnectionTypes up, PipeConnectionTypes down) {
-        int l = PipeConnectionTypes.values().length;
+    private int calculateShapeIndex(PipePatterns.PipeConnectionTypes north, PipePatterns.PipeConnectionTypes south, PipePatterns.PipeConnectionTypes west, PipePatterns.PipeConnectionTypes east, PipePatterns.PipeConnectionTypes up, PipePatterns.PipeConnectionTypes down) {
+        int l = PipePatterns.PipeConnectionTypes.values().length;
         return ((((south.ordinal() * l + north.ordinal()) * l + west.ordinal()) * l + east.ordinal()) * l + up.ordinal()) * l + down.ordinal();
     }
 
     private void makeShapes() {
         if (shapeCache == null) {
-            int length = PipeConnectionTypes.values().length;
+            int length = PipePatterns.PipeConnectionTypes.values().length;
             shapeCache = new VoxelShape[length * length * length * length * length * length];
-            for (PipeConnectionTypes up : PipeConnectionTypes.values()) {
-                for (PipeConnectionTypes down : PipeConnectionTypes.values()) {
-                    for (PipeConnectionTypes north : PipeConnectionTypes.values()) {
-                        for (PipeConnectionTypes south : PipeConnectionTypes.values()) {
-                            for (PipeConnectionTypes east : PipeConnectionTypes.values()) {
-                                for (PipeConnectionTypes west : PipeConnectionTypes.values()) {
+            for (PipePatterns.PipeConnectionTypes up : PipePatterns.PipeConnectionTypes.values()) {
+                for (PipePatterns.PipeConnectionTypes down : PipePatterns.PipeConnectionTypes.values()) {
+                    for (PipePatterns.PipeConnectionTypes north : PipePatterns.PipeConnectionTypes.values()) {
+                        for (PipePatterns.PipeConnectionTypes south : PipePatterns.PipeConnectionTypes.values()) {
+                            for (PipePatterns.PipeConnectionTypes east : PipePatterns.PipeConnectionTypes.values()) {
+                                for (PipePatterns.PipeConnectionTypes west : PipePatterns.PipeConnectionTypes.values()) {
                                     int idx = calculateShapeIndex(north, south, west, east, up, down);
                                     shapeCache[idx] = makeShape(north, south, west, east, up, down);
                                 }
@@ -87,7 +84,7 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         }
     }
 
-    private VoxelShape makeShape(PipeConnectionTypes north, PipeConnectionTypes south, PipeConnectionTypes west, PipeConnectionTypes east, PipeConnectionTypes up, PipeConnectionTypes down) {
+    private VoxelShape makeShape(PipePatterns.PipeConnectionTypes north, PipePatterns.PipeConnectionTypes south, PipePatterns.PipeConnectionTypes west, PipePatterns.PipeConnectionTypes east, PipePatterns.PipeConnectionTypes up, PipePatterns.PipeConnectionTypes down) {
         VoxelShape shape = Shapes.box(.3, .3, .3, .7, .7, .7);
         shape = combineShape(shape, north, SHAPE_CABLE_NORTH, SHAPE_BLOCK_NORTH);
         shape = combineShape(shape, south, SHAPE_CABLE_SOUTH, SHAPE_BLOCK_SOUTH);
@@ -98,20 +95,20 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         return shape;
     }
 
-    private VoxelShape combineShape(VoxelShape shape, PipeConnectionTypes ConnectionType, VoxelShape cableShape, VoxelShape blockShape) {
-        if (ConnectionType == CABLE) return Shapes.join(shape, cableShape, BooleanOp.OR);
-//        else if (ConnectionType == INPUT || ConnectionType == OUTPUT) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
-        else if (ConnectionType == BLOCK) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
+    private VoxelShape combineShape(VoxelShape shape, PipePatterns.PipeConnectionTypes ConnectionType, VoxelShape cableShape, VoxelShape blockShape) {
+        if (ConnectionType == PipePatterns.PipeConnectionTypes.CABLE) return Shapes.join(shape, cableShape, BooleanOp.OR);
+//        else if (ConnectionType == INPUT || ConnectionType == OUTPUT) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR); TODO DO I NEED?
+        else if (ConnectionType == PipePatterns.PipeConnectionTypes.BLOCK) return Shapes.join(shape, Shapes.join(blockShape, cableShape, BooleanOp.OR), BooleanOp.OR);
         else return shape;
     }
 
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        PipeConnectionTypes north = getConnectorType(world, pos, Direction.NORTH);
-        PipeConnectionTypes south = getConnectorType(world, pos, Direction.SOUTH);
-        PipeConnectionTypes west = getConnectorType(world, pos, Direction.WEST);
-        PipeConnectionTypes east = getConnectorType(world, pos, Direction.EAST);
-        PipeConnectionTypes up = getConnectorType(world, pos, Direction.UP);
-        PipeConnectionTypes down = getConnectorType(world, pos, Direction.DOWN);
+        PipePatterns.PipeConnectionTypes north = getConnectorType(world, pos, Direction.NORTH);
+        PipePatterns.PipeConnectionTypes south = getConnectorType(world, pos, Direction.SOUTH);
+        PipePatterns.PipeConnectionTypes west = getConnectorType(world, pos, Direction.WEST);
+        PipePatterns.PipeConnectionTypes east = getConnectorType(world, pos, Direction.EAST);
+        PipePatterns.PipeConnectionTypes up = getConnectorType(world, pos, Direction.UP);
+        PipePatterns.PipeConnectionTypes down = getConnectorType(world, pos, Direction.DOWN);
         int index = calculateShapeIndex(north, south, west, east, up, down);
         return shapeCache[index];
     }
@@ -129,11 +126,11 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         if (state != blockState) level.setBlockAndUpdate(pos, blockState);
     }
 
-    protected PipeConnectionTypes getConnectorType(BlockGetter world, BlockPos connectorPos, Direction facing) {
+    protected PipePatterns.PipeConnectionTypes getConnectorType(BlockGetter world, BlockPos connectorPos, Direction facing) {
         return getConnectorType(world, connectorPos, connectorPos.relative(facing), facing);
     }
 
-    protected abstract PipeConnectionTypes getConnectorType(BlockGetter level, BlockPos thisPos, BlockPos connectionPos, Direction facing);
+    protected abstract PipePatterns.PipeConnectionTypes getConnectorType(BlockGetter level, BlockPos thisPos, BlockPos connectionPos, Direction facing);
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
@@ -147,12 +144,12 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
     }
 
     protected BlockState calculateState(LevelAccessor world, BlockPos pos, BlockState state) {
-        PipeConnectionTypes north = getConnectorType(world, pos, Direction.NORTH);
-        PipeConnectionTypes south = getConnectorType(world, pos, Direction.SOUTH);
-        PipeConnectionTypes west = getConnectorType(world, pos, Direction.WEST);
-        PipeConnectionTypes east = getConnectorType(world, pos, Direction.EAST);
-        PipeConnectionTypes up = getConnectorType(world, pos, Direction.UP);
-        PipeConnectionTypes down = getConnectorType(world, pos, Direction.DOWN);
+        PipePatterns.PipeConnectionTypes north = getConnectorType(world, pos, Direction.NORTH);
+        PipePatterns.PipeConnectionTypes south = getConnectorType(world, pos, Direction.SOUTH);
+        PipePatterns.PipeConnectionTypes west = getConnectorType(world, pos, Direction.WEST);
+        PipePatterns.PipeConnectionTypes east = getConnectorType(world, pos, Direction.EAST);
+        PipePatterns.PipeConnectionTypes up = getConnectorType(world, pos, Direction.UP);
+        PipePatterns.PipeConnectionTypes down = getConnectorType(world, pos, Direction.DOWN);
         return state.setValue(NORTH, north).setValue(SOUTH, south).setValue(WEST, west).setValue(EAST, east).setValue(UP, up).setValue(DOWN, down);
     }
 
@@ -164,11 +161,11 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
         return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
 
-    protected RenderShape getRenderShape(BlockState pState) {
+    public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
 
-    public static EnumProperty<PipeConnectionTypes> fromDirection(Direction direction) {
+    public static EnumProperty<PipePatterns.PipeConnectionTypes> fromDirection(Direction direction) {
         return switch (direction) {
             case DOWN -> DOWN;
             case UP -> UP;

@@ -3,8 +3,8 @@ package mod.syconn.swe.server.reloaders;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.server.dimensions.PlanetSettings;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -47,5 +47,16 @@ public class PlanetManager extends SimpleJsonResourceReloadListener {
     public static PlanetSettings getSettings(Player p){
         if (SETTINGS.containsKey(p.level().dimension().location())) return SETTINGS.get(p.level().dimension().location());
         return SETTINGS.get(Constants.withId("default"));
+    }
+
+    public record PlanetSettings(ResourceLocation location, double gravity, boolean breathable) {
+
+        public String toString() {
+            return "Gravitational Force: " + gravity + " Breathable: " + breathable + "Saved @:" + location;
+        }
+
+        public static PlanetSettings fromGson(ResourceLocation location, JsonObject o){
+            return new PlanetSettings(location, o.get("gravity").getAsDouble(), o.get("breathable").getAsBoolean());
+        }
     }
 }

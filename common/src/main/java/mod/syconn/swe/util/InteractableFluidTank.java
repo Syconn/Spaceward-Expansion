@@ -1,4 +1,4 @@
-package mod.syconn.swe.util.core;
+package mod.syconn.swe.util;
 
 import mod.syconn.swe.extra.platform.Services;
 import net.minecraft.core.BlockPos;

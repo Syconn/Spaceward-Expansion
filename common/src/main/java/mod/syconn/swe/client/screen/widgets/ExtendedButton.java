@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-only
  */
 
-package mod.syconn.swe.util.core;
+package mod.syconn.swe.client.screen.widgets;
 
+import mod.syconn.swe.util.ForgeFont;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

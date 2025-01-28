@@ -1,11 +1,10 @@
 package mod.syconn.swe.common.blockentities;
 
-import mod.syconn.swe.blockentities.base.AbstractPipeBE;
-import mod.syconn.swe.blocks.FluidPipe;
-import mod.syconn.swe.blocks.base.AbstractPipeBlock;
-import mod.syconn.swe.extra.PipePatterns;
-import mod.syconn.swe.extra.core.FluidHolder;
+import mod.syconn.swe.common.blockentities.base.AbstractPipeBE;
+import mod.syconn.swe.common.blocks.FluidPipe;
+import mod.syconn.swe.common.blocks.base.AbstractPipeBlock;
 import mod.syconn.swe.core.ModBlockEntities;
+import mod.syconn.swe.util.PipePatterns;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
