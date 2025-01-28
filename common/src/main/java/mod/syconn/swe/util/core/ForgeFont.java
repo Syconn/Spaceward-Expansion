@@ -11,7 +11,7 @@ import net.minecraft.network.chat.FormattedText;
 /**
  * Extension interface for {@link Font}.
  */
-public interface IForgeFont
+public interface ForgeFont
 {
     FormattedText ELLIPSIS = FormattedText.of("...");
 

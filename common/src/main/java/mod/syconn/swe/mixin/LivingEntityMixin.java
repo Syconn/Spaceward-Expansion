@@ -1,9 +1,8 @@
 package mod.syconn.swe.mixin;
 
-import mod.syconn.swe.common.items.Parachute;
+import mod.syconn.swe.common.data.SpaceGearData;
 import mod.syconn.swe.core.ModAttributes;
 import mod.syconn.swe.server.reloaders.PlanetManager;
-import mod.syconn.swe.util.DimensionHelper;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -11,7 +10,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,7 +37,7 @@ public abstract class LivingEntityMixin {
     @Inject(method = "calculateFallDamage", at = @At("HEAD"), cancellable = true)
     protected void swe_modifyFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Integer> cir) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
-        if (livingEntity.getType().is(EntityTypeTags.FALL_DAMAGE_IMMUNE) || Parachute.hasParachute(livingEntity) ||
+        if (livingEntity.getType().is(EntityTypeTags.FALL_DAMAGE_IMMUNE) || SpaceGearData.get(livingEntity).parachute() ||
                 DimensionHelper.onMoon(livingEntity) && fallDistance < 6.5D) cir.setReturnValue(0);
         else {
             MobEffectInstance mobEffectInstance = livingEntity.getEffect(MobEffects.JUMP);
@@ -54,6 +52,6 @@ public abstract class LivingEntityMixin {
         AttributeInstance gravity = livingEntity.getAttribute(ModAttributes.GRAVITY.get());
         double g = PlanetManager.getSettings(livingEntity.level().dimension()).gravity();
         if (gravity.getValue() != g) gravity.setBaseValue(g);
-        if (Parachute.hasParachute(livingEntity)) gravity.setBaseValue(g / 12.0);
+        if (SpaceGearData.get(livingEntity).parachute()) gravity.setBaseValue(g / 12.0);
     }
 }

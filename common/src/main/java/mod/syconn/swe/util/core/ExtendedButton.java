@@ -27,7 +27,7 @@ import net.minecraft.resources.ResourceLocation;
  *
  * @author bspkrs
  */
-public class ExtendedButton extends Button implements IForgeFont {
+public class ExtendedButton extends Button implements ForgeFont {
     private static final WidgetSprites SPRITES = new WidgetSprites(
             ResourceLocation.withDefaultNamespace("widget/button"),
             ResourceLocation.withDefaultNamespace("widget/button_disabled"),
