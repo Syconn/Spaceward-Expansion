@@ -2,6 +2,7 @@ package mod.syconn.swe.mixin;
 
 import mod.syconn.swe.common.items.Parachute;
 import mod.syconn.swe.core.ModAttributes;
+import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.util.DimensionHelper;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
@@ -9,12 +10,15 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
@@ -42,5 +46,14 @@ public abstract class LivingEntityMixin {
             float f = mobEffectInstance == null ? 0.0F : (float)(mobEffectInstance.getAmplifier() + 1);
             cir.setReturnValue(Mth.ceil((fallDistance - 3.0F - f) * damageMultiplier));
         }
+    }
+
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void swe_livingTick(CallbackInfo ci) {
+        LivingEntity livingEntity = (LivingEntity) (Object) this;
+        AttributeInstance gravity = livingEntity.getAttribute(ModAttributes.GRAVITY.get());
+        double g = PlanetManager.getSettings(livingEntity.level().dimension()).gravity();
+        if (gravity.getValue() != g) gravity.setBaseValue(g);
+        if (Parachute.hasParachute(livingEntity)) gravity.setBaseValue(g / 12.0);
     }
 }

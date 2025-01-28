@@ -2,11 +2,16 @@ package mod.syconn.swe.network;
 
 import dev.architectury.networking.NetworkChannel;
 import mod.syconn.swe.Constants;
+import mod.syconn.swe.network.messages.MessageSyncPersistentData;
 
 public class Network {
-    public static NetworkChannel NETWORK = NetworkChannel.create(Constants.withId("network"));
+    public static NetworkChannel CHANNEL = NetworkChannel.create(Constants.withId("network"));
 
-    public static void init() {
+    public static void initC2S() {
+        CHANNEL.register(MessageSyncPersistentData.class, MessageSyncPersistentData::encode, MessageSyncPersistentData::new, MessageSyncPersistentData::apply);
+    }
 
+    public static void initS2C() {
+        CHANNEL.register(MessageSyncPersistentData.class, MessageSyncPersistentData::encode, MessageSyncPersistentData::new, MessageSyncPersistentData::apply);
     }
 }

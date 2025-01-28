@@ -18,21 +18,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
 public class PlayerMixin {
-    @Shadow
-    @Final
-    @Mutable
-    Inventory inventory;
-
-    @Shadow
-    @Final
-    @Mutable
-    public InventoryMenu inventoryMenu;
-
-    @Inject(method = "<init>", at = @At(value = "TAIL"))
-    private void constructorTail(Level world, BlockPos pos, float spawnAngle, GameProfile profile, CallbackInfo ci) {
-        Player player = (Player) (Object) this;
-        this.inventory = new ExtendedPlayerInventory(player);
-        this.inventoryMenu = new ExtendedPlayerContainer(this.inventory, !world.isClientSide, player);
-        player.containerMenu = this.inventoryMenu;
-    }
+//    @Shadow
+//    @Final
+//    @Mutable
+//    Inventory inventory;
+//
+//    @Shadow
+//    @Final
+//    @Mutable
+//    public InventoryMenu inventoryMenu;
+//
+//    @Inject(method = "<init>", at = @At(value = "TAIL"))
+//    private void constructorTail(Level world, BlockPos pos, float spawnAngle, GameProfile profile, CallbackInfo ci) {
+//        Player player = (Player) (Object) this;
+//        this.inventory = new ExtendedPlayerInventory(player);
+//        this.inventoryMenu = new ExtendedPlayerContainer(this.inventory, !world.isClientSide, player);
+//        player.containerMenu = this.inventoryMenu;
+//    }
 }

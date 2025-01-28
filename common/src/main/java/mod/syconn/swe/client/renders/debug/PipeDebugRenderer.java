@@ -2,16 +2,16 @@ package mod.syconn.swe.client.renders.debug;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import mod.syconn.swe.extra.core.Events;
-import mod.syconn.swe.extra.data.savedData.PipeNetworks;
 import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
+import mod.syconn.swe.server.savedData.PipeNetworks;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
@@ -26,21 +26,20 @@ public class PipeDebugRenderer {
     private static VertexBuffer vertexBuffer;
     private static final int color = 0;
 
-    public static @Nullable ClientBoundUpdatePipeCache playerJoined(Events.PlayerEvent event) {
-        if (event.player().level() instanceof ServerLevel sl)
-            return new ClientBoundUpdatePipeCache(PipeNetworks.get(sl).getDataMap());
-        return null;
+    @Environment(EnvType.SERVER)
+
+    public static ClientBoundUpdatePipeCache playerJoined(ServerPlayer player) {
+        return new ClientBoundUpdatePipeCache(PipeNetworks.get(player.serverLevel()).getDataMap());
     }
 
-    public static ClientBoundUpdatePipeCache playerLeft(Events.PlayerEvent event) {
-        if (event.player().level() instanceof ServerLevel sl) return new ClientBoundUpdatePipeCache(new HashMap<>());
-        return null;
+    @Environment(EnvType.SERVER)
+    public static ClientBoundUpdatePipeCache playerLeft() {
+        return new ClientBoundUpdatePipeCache(new HashMap<>());
     }
 
-    public static @Nullable ClientBoundUpdatePipeCache playerChangedDimension(Events.PlayerEvent event) {
-        if (event.player().level() instanceof ServerLevel sl)
-            return new ClientBoundUpdatePipeCache(PipeNetworks.get(sl).getDataMap());
-        return null;
+    @Environment(EnvType.SERVER)
+    public static ClientBoundUpdatePipeCache playerChangedDimension(ServerPlayer player) {
+        return new ClientBoundUpdatePipeCache(PipeNetworks.get(player.serverLevel()).getDataMap());
     }
 
     public static void renderBlockOutline(Events.LevelRenderStage event) {

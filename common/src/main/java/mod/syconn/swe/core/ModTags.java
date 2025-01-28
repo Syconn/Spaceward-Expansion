@@ -27,7 +27,7 @@ public class ModTags {
     }
 
     public static class Planets {
-        public static final ResourceKey<Level> MOON_KEY = ResourceKey.create(Registries.DIMENSION, Constants.withId("moon"));
+        public static final ResourceKey<Level> MOON = ResourceKey.create(Registries.DIMENSION, Constants.withId("moon"));
 
     }
 }

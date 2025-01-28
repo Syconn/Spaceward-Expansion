@@ -17,10 +17,8 @@ import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.common.items.Canister;
 import mod.syconn.swe.core.*;
 import mod.syconn.swe.network.Network;
-import mod.syconn.swe.network.messages.MessageSyncPersistentData;
 import mod.syconn.swe.server.reloaders.OxygenProductionManager;
 import mod.syconn.swe.server.reloaders.PlanetManager;
-import mod.syconn.swe.util.PersistentData;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -43,7 +41,8 @@ public class SpaceMod {
         CreativeTabRegistry.modify(ModItems.TAB, ModItems::addCreative);
 
         TickEvent.PLAYER_PRE.register(CommonHandler::playerTickEvent);
-        PlayerEvent.PLAYER_JOIN.register(player -> Network.CHANNEL.sendToPlayer(player, new MessageSyncPersistentData(((PersistentData) player).getPersistentData())));
+        PlayerEvent.PLAYER_JOIN.register(CommonHandler::playerJoined);
+        PlayerEvent.PLAYER_QUIT.register(CommonHandler::playerQuit);
 
         EnvExecutor.runInEnv(Env.CLIENT, () -> Client::init);
         EnvExecutor.runInEnv(Env.SERVER, () -> Server::init);
@@ -78,6 +77,8 @@ public class SpaceMod {
         public static void init() {
             ReloadListenerRegistry.register(PackType.SERVER_DATA, new OxygenProductionManager());
             ReloadListenerRegistry.register(PackType.SERVER_DATA, new PlanetManager());
+
+            PlayerEvent.CHANGE_DIMENSION.register(CommonHandler::playerChangedDimension);
 
             Network.initS2C();
         }
