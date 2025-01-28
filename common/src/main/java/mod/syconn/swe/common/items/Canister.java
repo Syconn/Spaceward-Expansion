@@ -1,14 +1,8 @@
 package mod.syconn.swe.common.items;
 
-import mod.syconn.swe.server.container.slot.EquipmentItemSlot;
 import mod.syconn.swe.server.reloaders.PlanetManager;
-import mod.syconn.swe.extra.EquipmentItem;
-import mod.syconn.swe.extra.core.FluidAction;
-import mod.syconn.swe.extra.core.FluidHandlerItem;
-import mod.syconn.swe.extra.data.components.FluidHolderComponent;
-import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.extra.util.RenderUtil;
 import mod.syconn.swe.core.ModFluids;
+import mod.syconn.swe.util.RenderUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.FastColor;
@@ -17,7 +11,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
@@ -61,7 +54,7 @@ public class Canister extends Item implements EquipmentItem {
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 
-    public void onEquipmentTick(ItemStack stack, Level level, Player player) {
+    public void equipmentTick(ItemStack stack, Player player) {
         if (!level.isClientSide){
             if (getHandler(stack).getFluidHolder().is(Fluids.LAVA)) {
                 if (!player.fireImmune()) player.igniteForSeconds(3.0F);
@@ -77,8 +70,8 @@ public class Canister extends Item implements EquipmentItem {
         return Component.literal("Empty ").append(super.getName(stack));
     }
 
-    public EquipmentItemSlot.SpaceSlot getSlot() {
-        return EquipmentItemSlot.SpaceSlot.TANK;
+    public int getSlot() {
+        return SpaceArmor.TANK;
     }
 
     public static ItemStack create(int volume, int max, Fluid fluid, Item item) {

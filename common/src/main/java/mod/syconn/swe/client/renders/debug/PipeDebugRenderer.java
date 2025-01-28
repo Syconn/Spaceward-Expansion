@@ -2,7 +2,7 @@ package mod.syconn.swe.client.renders.debug;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import mod.syconn.swe.network.messages.ClientBoundUpdatePipeCache;
+import mod.syconn.swe.network.messages.MessageUpdateClientPipeCache;
 import mod.syconn.swe.server.savedData.PipeNetworks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.phys.Vec3;
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
@@ -24,31 +25,31 @@ public class PipeDebugRenderer {
     public static Map<UUID, Set<BlockPos>> PIPE_RENDERS = new HashMap<>();
     public static boolean requestedRefresh = false;
     private static VertexBuffer vertexBuffer;
-    private static final int color = 0;
 
     @Environment(EnvType.SERVER)
 
-    public static ClientBoundUpdatePipeCache playerJoined(ServerPlayer player) {
-        return new ClientBoundUpdatePipeCache(PipeNetworks.get(player.serverLevel()).getDataMap());
+    public static MessageUpdateClientPipeCache playerJoined(ServerPlayer player) {
+        return new MessageUpdateClientPipeCache(PipeNetworks.get(player.serverLevel()).getDataMap());
     }
 
     @Environment(EnvType.SERVER)
-    public static ClientBoundUpdatePipeCache playerLeft() {
-        return new ClientBoundUpdatePipeCache(new HashMap<>());
+    public static MessageUpdateClientPipeCache playerLeft() {
+        return new MessageUpdateClientPipeCache(new HashMap<>());
     }
 
     @Environment(EnvType.SERVER)
-    public static ClientBoundUpdatePipeCache playerChangedDimension(ServerPlayer player) {
-        return new ClientBoundUpdatePipeCache(PipeNetworks.get(player.serverLevel()).getDataMap());
+    public static MessageUpdateClientPipeCache playerChangedDimension(ServerPlayer player) {
+        return new MessageUpdateClientPipeCache(PipeNetworks.get(player.serverLevel()).getDataMap());
     }
 
-    public static void renderBlockOutline(Events.LevelRenderStage event) {
+    public static void renderBlockOutline(PoseStack poseStack, Matrix4f projectionMatrix) {
         if (vertexBuffer == null || requestedRefresh) {
             requestedRefresh = false;
             vertexBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
 
-            Tesselator tessellator = Tesselator.getInstance();
-            BufferBuilder buffer = tessellator.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
+            Tesselator tesselator = Tesselator.getInstance();
+            BufferBuilder buffer = tesselator.getBuilder();
+            buffer.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
 
             var opacity = 1F;
             PIPE_RENDERS.forEach((uuid, positionList) -> {
@@ -61,52 +62,52 @@ public class PipeDebugRenderer {
                     final float green = (color >> 8 & 0xff) / 255f;
                     final float blue = (color & 0xff) / 255f;
 
-                    buffer.addVertex(x, y + size, z).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x + size, y + size, z).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x + size, y + size, z).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x + size, y + size, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x + size, y + size, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x, y + size, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x, y + size, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x, y + size, z).setColor(red, green, blue, opacity);
+                    buffer.vertex(x, y + size, z).color(red, green, blue, opacity);
+                    buffer.vertex(x + size, y + size, z).color(red, green, blue, opacity);
+                    buffer.vertex(x + size, y + size, z).color(red, green, blue, opacity);
+                    buffer.vertex(x + size, y + size, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x + size, y + size, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x, y + size, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x, y + size, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x, y + size, z).color(red, green, blue, opacity);
 
                     // BOTTOM
-                    buffer.addVertex(x + size, y, z).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x + size, y, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x + size, y, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x, y, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x, y, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x, y, z).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x, y, z).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x + size, y, z).setColor(red, green, blue, opacity);
+                    buffer.vertex(x + size, y, z).color(red, green, blue, opacity);
+                    buffer.vertex(x + size, y, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x + size, y, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x, y, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x, y, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x, y, z).color(red, green, blue, opacity);
+                    buffer.vertex(x, y, z).color(red, green, blue, opacity);
+                    buffer.vertex(x + size, y, z).color(red, green, blue, opacity);
 
                     // Edge 1
-                    buffer.addVertex(x + size, y, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x + size, y + size, z + size).setColor(red, green, blue, opacity);
+                    buffer.vertex(x + size, y, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x + size, y + size, z + size).color(red, green, blue, opacity);
 
                     // Edge 2
-                    buffer.addVertex(x + size, y, z).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x + size, y + size, z).setColor(red, green, blue, opacity);
+                    buffer.vertex(x + size, y, z).color(red, green, blue, opacity);
+                    buffer.vertex(x + size, y + size, z).color(red, green, blue, opacity);
 
                     // Edge 3
-                    buffer.addVertex(x, y, z + size).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x, y + size, z + size).setColor(red, green, blue, opacity);
+                    buffer.vertex(x, y, z + size).color(red, green, blue, opacity);
+                    buffer.vertex(x, y + size, z + size).color(red, green, blue, opacity);
 
                     // Edge 4
-                    buffer.addVertex(x, y, z).setColor(red, green, blue, opacity);
-                    buffer.addVertex(x, y + size, z).setColor(red, green, blue, opacity);
+                    buffer.vertex(x, y, z).color(red, green, blue, opacity);
+                    buffer.vertex(x, y + size, z).color(red, green, blue, opacity);
                 });
             });
 
-            MeshData build = buffer.build();
-            if (build == null) {
-                vertexBuffer = null;
-                return;
-            } else {
+            BufferBuilder.RenderedBuffer build = buffer.end();
+//            if (build == null) {
+//                vertexBuffer = null;
+//                return;
+//            } else { TODO DO I NEED AGAIN
                 vertexBuffer.bind();
                 vertexBuffer.upload(build);
                 VertexBuffer.unbind();
-            }
+//            }
         }
 
         if (vertexBuffer != null) {
@@ -116,21 +117,17 @@ public class PipeDebugRenderer {
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
 
-            PoseStack poseStack = event.poseStack();
-            poseStack.pushPose();
 
+            poseStack.pushPose();
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
             RenderSystem.applyModelViewMatrix();
             RenderSystem.depthFunc(GL11.GL_ALWAYS);
-
-            poseStack.mulPose(event.modelViewMatrix());
+//            poseStack.mulPose(event.modelViewMatrix()); TODO AGAIN DO I NEED
             poseStack.translate(-playerPos.x(), -playerPos.y(), -playerPos.z());
-
             vertexBuffer.bind();
-            vertexBuffer.drawWithShader(poseStack.last().pose(), event.projectionMatrix(), RenderSystem.getShader());
+            vertexBuffer.drawWithShader(poseStack.last().pose(), projectionMatrix, RenderSystem.getShader());
             VertexBuffer.unbind();
             RenderSystem.depthFunc(GL11.GL_LEQUAL);
-
             poseStack.popPose();
             RenderSystem.applyModelViewMatrix();
         }
@@ -141,6 +138,6 @@ public class PipeDebugRenderer {
         int r = (int) ((mostSigBits >> 32) & 0xFF);
         int g = (int) ((mostSigBits >> 16) & 0xFF);
         int b = (int) (mostSigBits & 0xFF);
-        return FastColor.ARGB32.color(r, g, b);
+        return FastColor.ARGB32.color(256, r, g, b);
     }
 }

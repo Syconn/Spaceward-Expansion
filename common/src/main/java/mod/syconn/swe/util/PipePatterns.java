@@ -34,7 +34,7 @@ public class PipePatterns {
         }
     }
 
-    public enum PipeConnectionTypes implements StringRepresentable {
+    public enum PipeConnectionTypes {
         INPUT,
         OUTPUT,
         BOTH,
@@ -52,10 +52,6 @@ public class PipePatterns {
 
         public boolean isExport() {
             return this == OUTPUT || this == BOTH;
-        }
-
-        public @NotNull String getSerializedName() {
-            return name().toLowerCase();
         }
     }
 }

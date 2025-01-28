@@ -1,12 +1,15 @@
-package mod.syconn.swe.mixin;
+package mod.syconn.swe.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexBuffer;
+import mod.syconn.swe.client.renders.debug.PipeDebugRenderer;
 import mod.syconn.swe.client.renders.effects.SpaceEffect;
 import mod.syconn.swe.core.ModTags;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,5 +33,10 @@ public class LevelRendererMixin {
             SpaceEffect.renderSky(level, partialTick, projectionMatrix, starBuffer, skyFogSetup);
             ci.cancel();
         }
+    }
+
+    @Inject(method = "renderLevel", at = @At("TAIL"))
+    public void renderSectionLayer(PoseStack poseStack, float partialTick, long finishNanoTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f projectionMatrix, CallbackInfo ci) {
+        PipeDebugRenderer.renderBlockOutline(poseStack, projectionMatrix);
     }
 }

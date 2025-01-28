@@ -2,15 +2,10 @@ package mod.syconn.swe.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.client.screen.base.InteractionSelectorScreen;
-import mod.syconn.swe.client.screen.widgets.InfoWidget;
 import mod.syconn.swe.server.container.CollectorMenu;
-import mod.syconn.swe.extra.core.FluidHolder;
-import mod.syconn.swe.extra.core.FluidTank;
-import mod.syconn.swe.extra.platform.Services;
-import mod.syconn.swe.extra.util.RenderUtil;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.ServerBoundInteractableButtonPress;
+import mod.syconn.swe.util.RenderUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -24,7 +19,7 @@ import java.util.List;
 
 public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
 
-    private static final ResourceLocation BG = Constants.loc("textures/gui/disperser.png");
+    private static final ResourceLocation BG = Constants.withId("textures/gui/disperser.png");
 
     public CollectorScreen(CollectorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank(), pMenu.getBE().getBlockPos());
@@ -85,6 +80,6 @@ public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
     }
 
     protected void sendPacket(Interactables interactable, Direction direction) {
-        Network.sendToServer(new ServerBoundInteractableButtonPress(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
+        Network.CHANNEL.sendToServer(new ServerBoundInteractableButtonPress(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
     }
 }

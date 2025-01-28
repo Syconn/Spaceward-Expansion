@@ -1,5 +1,6 @@
 package mod.syconn.swe;
 
+import dev.architectury.event.events.client.ClientGuiEvent;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.event.events.common.TickEvent;
@@ -13,6 +14,7 @@ import dev.architectury.utils.EnvExecutor;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
+import mod.syconn.swe.client.screen.overlay.SpaceSuitOverlay;
 import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.common.items.Canister;
 import mod.syconn.swe.core.*;
@@ -57,6 +59,7 @@ public class SpaceMod {
         public static void init() {
             ClientLifecycleEvent.CLIENT_SETUP.register(ModMenus::registerScreens);
             PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(Constants.withId("animation"), 42, Client::registerPlayerAnimation);
+            ClientGuiEvent.RENDER_HUD.register(SpaceSuitOverlay::renderOverlay);
 
             ItemPropertiesRegistry.register(ModItems.CANISTER.get(), Constants.withId("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
             ItemPropertiesRegistry.register(ModItems.AUTO_REFILL_CANISTER.get(), Constants.withId("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));

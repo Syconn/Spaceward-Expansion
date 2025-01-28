@@ -2,7 +2,6 @@ package mod.syconn.swe.client.screen.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.extra.core.ExtendedButton;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,11 +16,11 @@ import org.apache.commons.lang3.StringUtils;
 
 public class TabButton extends ExtendedButton {
 
-    private static final ResourceLocation TEXTURE = Constants.loc("textures/gui/tabs.png");
+    private final ResourceLocation TEXTURE = Constants.withId("textures/gui/tabs.png");
     private final State state;
     private final String name;
     private final Item item;
-    private boolean selected;
+    private final boolean selected;
 
     public TabButton(int x, int y, State state, String name, Item stack, boolean selected, Button.OnPress onPress) {
         super(x, y - 26, 28, 28, Component.literal(name.toUpperCase().substring(0, 1)).withStyle(ChatFormatting.WHITE), onPress);
@@ -54,16 +53,8 @@ public class TabButton extends ExtendedButton {
         if (isMouseOver(mouseX, mouseY)) guiGraphics.drawString(mc.font, StringUtils.capitalize(name), x - 10, y - 10, 14737632);
     }
 
-    public boolean isSelected() {
-        return selected;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
     }
 
     public enum State {

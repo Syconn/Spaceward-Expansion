@@ -1,6 +1,5 @@
 package mod.syconn.swe.client.screen.widgets;
 
-import mod.syconn.swe.extra.core.ExtendedButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -41,12 +40,6 @@ public class SpriteButton extends ExtendedButton {
     }
 
     public void setSprite(int xLoc, int yLoc) {
-        this.xLoc = xLoc;
-        this.yLoc = yLoc;
-    }
-
-    public void setSprite(ResourceLocation sprite, int xLoc, int yLoc) {
-        this.sprite = sprite;
         this.xLoc = xLoc;
         this.yLoc = yLoc;
     }

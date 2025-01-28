@@ -1,23 +1,22 @@
 package mod.syconn.swe.client.screen;
 
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.blockentities.FluidPipeBE;
 import mod.syconn.swe.client.screen.widgets.SpriteButton;
-import mod.syconn.swe.extra.PipePatterns;
+import mod.syconn.swe.common.blockentities.FluidPipeBE;
 import mod.syconn.swe.network.Network;
-import mod.syconn.swe.network.messages.ServerBoundUpdatePipeState;
+import mod.syconn.swe.network.messages.MessageUpdatePipeState;
+import mod.syconn.swe.util.PipePatterns;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-
 import java.util.List;
 
 public class FluidPipeScreen extends Screen {
 
-    private final ResourceLocation SM = Constants.loc("textures/gui/interaction_selector.png");
-    private final ResourceLocation BG = Constants.loc("textures/gui/fluid_pipe.png");
+    private final ResourceLocation SM = Constants.withId("textures/gui/interaction_selector.png");
+    private final ResourceLocation BG = Constants.withId("textures/gui/fluid_pipe.png");
     private final SpriteButton[] interactionButtons = new SpriteButton[6];
     private final Interaction[] interactions = new Interaction[6];
     private final int imageWidth = 176, imageHeight = 85;
@@ -56,8 +55,6 @@ public class FluidPipeScreen extends Screen {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 
-    public void renderBackground(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {}
-
     private void interactionButton(int i) {
         setSpriteButton(interactionButtons[i], interactions[i] = interactions[i].rotate());
     }
@@ -70,7 +67,7 @@ public class FluidPipeScreen extends Screen {
     public void onClose() {
         super.onClose();
         for (Direction direction : Direction.values()) {
-            if (interactions[direction.get3DDataValue()] != Interaction.NONE) Network.sendToServer(new ServerBoundUpdatePipeState(pipe.getBlockPos(), Direction.from3DDataValue(direction.get3DDataValue()), interactions[direction.get3DDataValue()].type));
+            if (interactions[direction.get3DDataValue()] != Interaction.NONE) Network.CHANNEL.sendToServer(new MessageUpdatePipeState(pipe.getBlockPos(), Direction.from3DDataValue(direction.get3DDataValue()), interactions[direction.get3DDataValue()].type));
         }
     }
 
