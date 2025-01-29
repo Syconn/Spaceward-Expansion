@@ -1,0 +1,45 @@
+package mod.syconn.swe.forge.client;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import mod.syconn.swe.client.model.PipeBakedModel;
+import net.minecraft.client.renderer.block.model.ItemOverrides;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelState;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
+import net.minecraftforge.client.model.geometry.IGeometryLoader;
+import net.minecraftforge.client.model.geometry.IUnbakedGeometry;
+
+import java.util.function.Function;
+
+public class PipeModelLoader implements IGeometryLoader<PipeModelLoader.CableModelGeometry> {
+
+    public CableModelGeometry read(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        boolean facade = jsonObject.has("facade") && jsonObject.get("facade").getAsBoolean();
+        double size = jsonObject.has("size") ? jsonObject.get("size").getAsDouble() : 0;
+        String[] array = new String[11];
+        if (jsonObject.has("locations")) for (int i = 0; i < array.length; i++) array[i] = jsonObject.getAsJsonArray("locations").asList().get(i).getAsString();
+        return new CableModelGeometry(facade, size, array);
+    }
+
+    public static class CableModelGeometry implements IUnbakedGeometry<CableModelGeometry> {
+        private final boolean facade;
+        private final double size;
+        private final String[] textures;
+
+        public CableModelGeometry(boolean facade, double size, String[] textures) {
+            this.facade = facade;
+            this.size = size;
+            this.textures = textures;
+        }
+
+        public BakedModel bake(IGeometryBakingContext context, ModelBaker arg, Function<Material, TextureAtlasSprite> function, ModelState arg2, ItemOverrides arg3, ResourceLocation arg4) {
+            return new PipeBakedModel(facade, size, textures);
+        }
+    }
+}

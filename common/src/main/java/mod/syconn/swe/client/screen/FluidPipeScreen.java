@@ -5,7 +5,7 @@ import mod.syconn.swe.client.screen.widgets.SpriteButton;
 import mod.syconn.swe.common.blockentities.FluidPipeBE;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.MessageUpdatePipeState;
-import mod.syconn.swe.util.PipePatterns;
+import mod.syconn.swe.util.PipeUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Direction;
@@ -33,7 +33,7 @@ public class FluidPipeScreen extends Screen {
         int boxSize = 24;
         int i = 0;
         for (Direction direction : Direction.values()) {
-            PipePatterns.PipeConnectionTypes type = pipe.getConnectionType(direction);
+            PipeUtil.PipeConnectionTypes type = pipe.getConnectionType(direction);
             interactions[direction.get3DDataValue()] = Interaction.NONE;
             if (type.isInteractionPoint()) {
                 Interaction interaction = Interaction.fromPipeConnection(type);
@@ -72,17 +72,17 @@ public class FluidPipeScreen extends Screen {
     }
 
     protected enum Interaction {
-        IMPORT(232, 26, "Input Interface", PipePatterns.PipeConnectionTypes.INPUT),
-        EXPORT(206, 26, "Export Interface", PipePatterns.PipeConnectionTypes.OUTPUT),
-        BOTH(180, 26, "Input & Export Interface", PipePatterns.PipeConnectionTypes.BOTH),
-        BLOCK(180, 0, "Block Interface", PipePatterns.PipeConnectionTypes.BLOCK),
-        NONE(0, 0, "", PipePatterns.PipeConnectionTypes.NONE);
+        IMPORT(232, 26, "Input Interface", PipeUtil.PipeConnectionTypes.INPUT),
+        EXPORT(206, 26, "Export Interface", PipeUtil.PipeConnectionTypes.OUTPUT),
+        BOTH(180, 26, "Input & Export Interface", PipeUtil.PipeConnectionTypes.BOTH),
+        BLOCK(180, 0, "Block Interface", PipeUtil.PipeConnectionTypes.BLOCK),
+        NONE(0, 0, "", PipeUtil.PipeConnectionTypes.NONE);
 
         final int xLoc, yLoc;
         final String msg;
-        final PipePatterns.PipeConnectionTypes type;
+        final PipeUtil.PipeConnectionTypes type;
 
-        Interaction(int xLoc, int yLoc, String msg, PipePatterns.PipeConnectionTypes type) {
+        Interaction(int xLoc, int yLoc, String msg, PipeUtil.PipeConnectionTypes type) {
             this.xLoc = xLoc;
             this.yLoc = yLoc;
             this.msg = msg;
@@ -99,7 +99,7 @@ public class FluidPipeScreen extends Screen {
             };
         }
 
-        static Interaction fromPipeConnection(PipePatterns.PipeConnectionTypes type) {
+        static Interaction fromPipeConnection(PipeUtil.PipeConnectionTypes type) {
             for (Interaction interaction : values()) if (interaction.type == type) return interaction;
             return BLOCK;
         }

@@ -1,7 +1,9 @@
 package mod.syconn.swe.common.items;
 
-import mod.syconn.swe.server.reloaders.PlanetManager;
+import dev.architectury.fluid.FluidStack;
+import dev.architectury.hooks.fluid.FluidStackHooks;
 import mod.syconn.swe.core.ModFluids;
+import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.util.RenderUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -11,62 +13,62 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-/** USED FOR LIQUIDS ONLY */
-public class Canister extends Item implements EquipmentItem {
+public class Canister extends Item implements EquipmentItem, FluidHolderItem {
 
     public Canister(Rarity rarity) {
-        super(new Properties().stacksTo(1).rarity(rarity).component(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), FluidHolderComponent.EMPTY));
+        super(new Properties().stacksTo(1).rarity(rarity));
     }
 
     public boolean isBarVisible(ItemStack stack) {
-        if (getHandler(stack) == null || getHandler(stack).getFluidHolder().is(Fluids.EMPTY)) return false;
+        if (isEmpty(stack)) return false;
         return getDisplayValue(stack) != 0.6F;
     }
 
-    public int getBarColor(ItemStack stack) {
-        if (getHandler(stack) == null) return -1;
-        return RenderUtil.getFluidColor(getHandler(stack).getFluidHolder().getFluid());
-    }
-
-    public int getBarWidth(ItemStack stack) {
-        return 13 * getHandler(stack).getFluidHolder().getAmount() / getHandler(stack).getTankCapacity();
-    }
-
     public static float getDisplayValue(ItemStack stack){
-        if (getHandler(stack) != null) return (float) (getHandler(stack).getFluidHolder().getAmount()) / getHandler(stack).getTankCapacity() * 6.0f / 10f;
+        if (stack.getItem() instanceof FluidHolderItem holder && !holder.isEmpty(stack)) return (float) (holder.getFluidStack(stack).getAmount()) / holder.getMax(stack) * 6.0f / 10f;
         return 0;
     }
 
-    public int getOutlineColor() {
-        return FastColor.ARGB32.color(117, 116, 116);
+    public int getBarColor(ItemStack stack) {
+        if (isEmpty(stack)) return -1;
+        return RenderUtil.getFluidColor(getFluidStack(stack).getFluid());
     }
 
-    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        if (getHandler(pStack) != null && !getHandler(pStack).getFluidHolder().is(Fluids.EMPTY)) {
-            pTooltipComponents.add(Component.empty());
-            pTooltipComponents.add(Component.literal(getHandler(pStack).getFluidHolder().getAmount() + "mb / " + getHandler(pStack).getTankCapacity() + "mb").withStyle(ChatFormatting.YELLOW));
+    public int getBarWidth(ItemStack stack) {
+        return (int) (13 * getFluidStack(stack).getAmount() / getMax(stack));
+    }
+
+    public int getOutlineColor() {
+        return FastColor.ARGB32.color(-1,117, 116, 116);
+    }
+
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
+        if (isEmpty(stack)) {
+            tooltipComponents.add(Component.empty());
+            tooltipComponents.add(Component.literal(getFluidStack(stack).getAmount() + "mb / " + getMax(stack) + "mb").withStyle(ChatFormatting.YELLOW));
         }
-        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
+        super.appendHoverText(stack, level, tooltipComponents, isAdvanced);
     }
 
     public void equipmentTick(ItemStack stack, Player player) {
-        if (!level.isClientSide){
-            if (getHandler(stack).getFluidHolder().is(Fluids.LAVA)) {
-                if (!player.fireImmune()) player.igniteForSeconds(3.0F);
-                player.hurt(level.damageSources().inFire(), 2f);
-            } else if (getHandler(stack).getFluidHolder().is(ModFluids.O2.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
-                getHandler(stack).drain(1, FluidAction.EXECUTE);
+        if (!player.level().isClientSide){
+            if (getFluidStack(stack).getFluid().isSame(Fluids.LAVA)) {
+                if (!player.fireImmune()) player.setSecondsOnFire(3);
+                player.hurt(player.level().damageSources().inFire(), 2f);
+            } else if (getFluidStack(stack).getFluid().isSame(ModFluids.O2.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
+                drain(stack, 1, false);
             }
         }
     }
 
     public Component getName(ItemStack stack) {
-        if (!getHandler(stack).getFluidHolder().is(Fluids.EMPTY)) return Services.FLUID_EXTENSIONS.getTooltip(getHandler(stack).getFluidHolder().getFluid()).getFirst().copy().append(" ").append(super.getName(stack));
+        if (!isEmpty(stack)) return getFluidStack(stack).getName().copy().append(super.getName(stack));
         return Component.literal("Empty ").append(super.getName(stack));
     }
 
@@ -74,20 +76,7 @@ public class Canister extends Item implements EquipmentItem {
         return SpaceArmor.TANK;
     }
 
-    public static ItemStack create(int volume, int max, Fluid fluid, Item item) {
-        ItemStack itemStack = new ItemStack(item);
-        itemStack.set(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), FluidHolderComponent.of(fluid, volume, max));
-        return itemStack;
-    }
-
-    public static ItemStack createEmpty(Item item) {
-        ItemStack itemStack = new ItemStack(item);
-        itemStack.set(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), FluidHolderComponent.of(Fluids.EMPTY, 0, 800));
-        return itemStack;
-    }
-
-    public static FluidHandlerItem getHandler(ItemStack stack) {
-        if (!Services.FLUID_HANDLER.has(stack)) return null;
-        return Services.FLUID_HANDLER.get(stack);
+    public long defaultMax() {
+        return FluidStack.bucketAmount() * 16;
     }
 }

@@ -38,7 +38,7 @@ public class RefillingCanisterRecipe extends CustomRecipe {
             }
             if (container.getItem(4).is(ModItems.CANISTER.get())) {
                 ItemStack result = new ItemStack(ModItems.AUTO_REFILL_CANISTER.get());
-                result.set(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), pInput.getItem(4).get(ComponentRegister.FLUID_HOLDER_COMPONENT.get()));
+                result.set(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), pInput.getItem(4).get(ComponentRegister.FLUID_HOLDER_COMPONENT.get())); // TODO
                 return result;
             }
         }

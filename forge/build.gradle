@@ -3,6 +3,8 @@ plugins {
 }
 
 loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+
     forge {
         mixinConfig "swe.mixins.json"
     }

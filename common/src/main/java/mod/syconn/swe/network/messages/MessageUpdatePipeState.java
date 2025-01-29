@@ -2,7 +2,7 @@ package mod.syconn.swe.network.messages;
 
 import dev.architectury.networking.NetworkManager;
 import mod.syconn.swe.common.blockentities.FluidPipeBE;
-import mod.syconn.swe.util.PipePatterns;
+import mod.syconn.swe.util.PipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,16 +12,16 @@ public class MessageUpdatePipeState {
 
     private final BlockPos pos;
     private final Direction side;
-    private final PipePatterns.PipeConnectionTypes connection;
+    private final PipeUtil.PipeConnectionTypes connection;
 
-    public MessageUpdatePipeState(BlockPos pos, Direction side, PipePatterns.PipeConnectionTypes connection) {
+    public MessageUpdatePipeState(BlockPos pos, Direction side, PipeUtil.PipeConnectionTypes connection) {
         this.pos = pos;
         this.side = side;
         this.connection = connection;
     }
 
     public MessageUpdatePipeState(FriendlyByteBuf buf) {
-        this(buf.readBlockPos(), buf.readEnum(Direction.class), buf.readEnum(PipePatterns.PipeConnectionTypes.class));
+        this(buf.readBlockPos(), buf.readEnum(Direction.class), buf.readEnum(PipeUtil.PipeConnectionTypes.class));
     }
 
     public void encode(FriendlyByteBuf buf) {

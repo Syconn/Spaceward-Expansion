@@ -1,7 +1,7 @@
 package mod.syconn.swe.server.savedData;
 
 import mod.syconn.swe.server.reloaders.PlanetManager;
-import mod.syconn.swe.extra.helpers.NbtHelper;
+import mod.syconn.swe.util.TagUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -11,7 +11,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 
@@ -43,7 +42,7 @@ public class AirBubblesSavedData extends SavedData {
         return false;
     }
 
-    public CompoundTag save(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+    public CompoundTag save(CompoundTag pTag) {
         ListTag levelPoses = new ListTag();
         levelBlockPositions.forEach((level, positions) -> {
             CompoundTag cp = new CompoundTag();
@@ -52,7 +51,7 @@ public class AirBubblesSavedData extends SavedData {
             positions.forEach(((uuid, blockPos) -> {
                 CompoundTag ct = new CompoundTag();
                 ct.putUUID("uuid", uuid);
-                ct.put("positions", NbtHelper.writePositionList(blockPos));
+                ct.put("positions", TagUtil.writeBlockPositions(blockPos));
                 cpList.add(ct);
             }));
             cp.put("cdata", cpList);
@@ -70,9 +69,9 @@ public class AirBubblesSavedData extends SavedData {
                 Map<UUID, List<BlockPos>> oxygenMap = new HashMap<>();
                 outerData.getList("cdata", Tag.TAG_COMPOUND).forEach(nNBT -> {
                     CompoundTag ct = (CompoundTag) nNBT;
-                    oxygenMap.put(ct.getUUID("uuid"), NbtHelper.readPositionList(ct.getCompound("positions")));
+                    oxygenMap.put(ct.getUUID("uuid"), TagUtil.readBlockPositions(ct.getCompound("positions")));
                 });
-                levelBlockPositions.put(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(outerData.getString("loc"))), oxygenMap);
+                levelBlockPositions.put(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(outerData.getString("loc"))), oxygenMap);
             });
         }
     }
@@ -81,13 +80,13 @@ public class AirBubblesSavedData extends SavedData {
         return new AirBubblesSavedData();
     }
 
-    public static AirBubblesSavedData load(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+    public static AirBubblesSavedData load(CompoundTag tag) {
         AirBubblesSavedData data = create();
         data.read(tag);
         return data;
     }
 
     public static AirBubblesSavedData get(ServerLevel server) { // TODO SWAP TO SAVED DATA PER DIMENSIN INSTEAD OF ALL ON OVERWORLD
-        return server.getDataStorage().computeIfAbsent(new Factory<>(AirBubblesSavedData::create, AirBubblesSavedData::load, DataFixTypes.LEVEL), "air_bubbles");
+        return server.getDataStorage().computeIfAbsent(AirBubblesSavedData::load, AirBubblesSavedData::create, "air_bubbles");
     }
 }

@@ -4,7 +4,7 @@ import mod.syconn.swe.common.blockentities.base.AbstractPipeBE;
 import mod.syconn.swe.common.blocks.FluidPipe;
 import mod.syconn.swe.common.blocks.base.AbstractPipeBlock;
 import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.util.PipePatterns;
+import mod.syconn.swe.util.PipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -33,11 +33,11 @@ public class FluidPipeBE extends AbstractPipeBE {
         return false;
     }
 
-    public PipePatterns.PipeConnectionTypes getConnectionType(Direction direction) {
+    public PipeUtil.PipeConnectionTypes getConnectionType(Direction direction) {
         return getBlockState().getValue(AbstractPipeBlock.fromDirection(direction));
     }
 
-    public void setConnectionType(Direction direction, PipePatterns.PipeConnectionTypes type) {
+    public void setConnectionType(Direction direction, PipeUtil.PipeConnectionTypes type) {
         level.setBlock(worldPosition, getBlockState().setValue(AbstractPipeBlock.fromDirection(direction), type), 2);
     }
 

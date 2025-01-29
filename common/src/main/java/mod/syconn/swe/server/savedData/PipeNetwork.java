@@ -2,7 +2,7 @@ package mod.syconn.swe.server.savedData;
 
 import mod.syconn.swe.common.blockentities.FluidPipeBE;
 import mod.syconn.swe.common.blocks.base.AbstractPipeBlock;
-import mod.syconn.swe.util.PipePatterns;
+import mod.syconn.swe.util.PipeUtil;
 import mod.syconn.swe.util.TagUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -136,7 +136,7 @@ public class PipeNetwork {
             this.activeTask = tag.getInt("active_task");
         }
 
-        public void addInteractionPoint(BlockPos pos, Direction direction, PipePatterns.PipeConnectionTypes type) {
+        public void addInteractionPoint(BlockPos pos, Direction direction, PipeUtil.PipeConnectionTypes type) {
             if (network.pipes.contains(pos)) {
                 if (type.isInteractionPoint() && !interactionPoint.contains(pos)) interactionPoint.add(pos);
                 if (type.isImport()) addImport(pos, direction);
@@ -149,10 +149,10 @@ public class PipeNetwork {
             interactionPoint.remove(pos);
             imports.remove(pos);
             exports.remove(pos);
-            removeTasksForPosition(pos, PipePatterns.PipeConnectionTypes.BOTH);
+            removeTasksForPosition(pos, PipeUtil.PipeConnectionTypes.BOTH);
         }
 
-        private void generatePositionalTask(BlockPos pos, Direction direction, PipePatterns.PipeConnectionTypes type) {
+        private void generatePositionalTask(BlockPos pos, Direction direction, PipeUtil.PipeConnectionTypes type) {
             removeTasksForPosition(pos, type);
             if (type.isExport()) {
                 for (Map.Entry<BlockPos, List<Direction>> importEntry : imports.entrySet()) {
@@ -190,7 +190,7 @@ public class PipeNetwork {
             return new Task(startPosition, startDirection, stopPosition, stopDirection, network.pipes);
         }
 
-        private void removeTasksForPosition(BlockPos pos, PipePatterns.PipeConnectionTypes type) {
+        private void removeTasksForPosition(BlockPos pos, PipeUtil.PipeConnectionTypes type) {
             List<Task> removeTask = new ArrayList<>();
             tasks.forEach(task -> { if (task.hasPoint(pos, type)) removeTask.add(task); });
             removeTask.forEach(tasks::remove);
@@ -285,7 +285,7 @@ public class PipeNetwork {
             return fill > 0 ? setResultT(TaskResult.SUCCESS) : setResultT(TaskResult.SKIP);
         }
 
-        public boolean hasPoint(BlockPos pos, PipePatterns.PipeConnectionTypes type) {
+        public boolean hasPoint(BlockPos pos, PipeUtil.PipeConnectionTypes type) {
             return startPos.equals(pos) && type.isImport() || endPos.equals(pos) && type.isExport();
         }
 

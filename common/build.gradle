@@ -1,3 +1,7 @@
+loom {
+    accessWidenerPath = project(':common').file("src/main/resources/swe.accessWidener")
+}
+
 architectury {
     common rootProject.enabled_platforms.split(',')
 }

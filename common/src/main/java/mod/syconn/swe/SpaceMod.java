@@ -4,8 +4,11 @@ import dev.architectury.event.events.client.ClientGuiEvent;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.event.events.common.TickEvent;
+import dev.architectury.fluid.FluidStack;
+import dev.architectury.hooks.fluid.FluidStackHooks;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.ReloadListenerRegistry;
+import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import dev.architectury.registry.item.ItemPropertiesRegistry;
@@ -14,9 +17,13 @@ import dev.architectury.utils.EnvExecutor;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationFactory;
+import mod.syconn.swe.client.model.ChuteModel;
+import mod.syconn.swe.client.model.ParachuteModel;
+import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.client.screen.overlay.SpaceSuitOverlay;
 import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.common.items.Canister;
+import mod.syconn.swe.common.items.Parachute;
 import mod.syconn.swe.core.*;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.server.reloaders.OxygenProductionManager;
@@ -64,7 +71,7 @@ public class SpaceMod {
             ItemPropertiesRegistry.register(ModItems.CANISTER.get(), Constants.withId("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
             ItemPropertiesRegistry.register(ModItems.AUTO_REFILL_CANISTER.get(), Constants.withId("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
             RenderTypeRegistry.register(RenderType.translucent(), ModFluids.O2.get(), ModFluids.O2_FLOWING.get());
-            ColorHandlerRegistry.registerItemColors((s, layer) -> layer == 0 ? ((DyeableLeatherItem)s.getItem()).getColor(s) : -1, ModItems.PARACHUTE.get());
+            ColorHandlerRegistry.registerItemColors((s, layer) -> layer == 0 ? ((DyeableLeatherItem) s.getItem()).getColor(s) : -1, ModItems.PARACHUTE.get());
 //  TODO          ColorHandlerRegistry.registerItemColors((s, layer) -> layer == 1  && s.getCapability(Capabilities.FluidHandler.ITEM) != null ? RenderUtil.getFluidColor(s.getCapability(Capabilities.FluidHandler.ITEM).getFluidInTank(0)) : -1, Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
 
             Network.initC2S();
@@ -82,6 +89,9 @@ public class SpaceMod {
         public static void init() {
             ReloadListenerRegistry.register(PackType.SERVER_DATA, new OxygenProductionManager());
             ReloadListenerRegistry.register(PackType.SERVER_DATA, new PlanetManager());
+            EntityModelLayerRegistry.register(ChuteModel.LAYER_LOCATION, ChuteModel::createBodyLayer);
+            EntityModelLayerRegistry.register(ParachuteModel.LAYER_LOCATION, ParachuteModel::createBodyLayer);
+            EntityModelLayerRegistry.register(TankModel.LAYER_LOCATION, TankModel::createBodyLayer);
 
             PlayerEvent.CHANGE_DIMENSION.register(CommonHandler::playerChangedDimension);
 

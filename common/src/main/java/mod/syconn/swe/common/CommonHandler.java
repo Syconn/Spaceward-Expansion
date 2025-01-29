@@ -4,7 +4,6 @@ import mod.syconn.swe.client.renders.debug.PipeDebugRenderer;
 import mod.syconn.swe.common.data.SpaceGearData;
 import mod.syconn.swe.common.data.SpacePlayerData;
 import mod.syconn.swe.common.inventory.ExtendedPlayerInventory;
-import mod.syconn.swe.common.items.EquipmentItem;
 import mod.syconn.swe.common.items.Parachute;
 import mod.syconn.swe.common.items.SpaceArmor;
 import mod.syconn.swe.core.ModDamageSources;

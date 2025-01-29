@@ -1,11 +1,9 @@
 package mod.syconn.swe.util;
 
-import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PipePatterns {
+public class PipeUtil {
 
     public static final Map<Pattern, QuadSetting> PATTERNS = new HashMap<>();
 

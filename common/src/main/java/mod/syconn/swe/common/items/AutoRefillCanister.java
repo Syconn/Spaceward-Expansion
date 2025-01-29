@@ -1,5 +1,6 @@
 package mod.syconn.swe.common.items;
 
+import dev.architectury.fluid.FluidStack;
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.core.ModFluids;
 import net.minecraft.util.FastColor;
@@ -16,22 +17,15 @@ public class AutoRefillCanister extends Canister {
         super(Rarity.RARE);
     }
 
-    public void inventoryTick(ItemStack stack, Level level, Entity e, int p_41407_, boolean p_41408_) {
-        if (e instanceof Player player) {
-            if (!level.isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.wearingSpaceSuit(player)) {
-                if (getHandler(stack).getFluidHolder().is(Fluids.EMPTY) || getHandler(stack).getFluidHolder().is(ModFluids.O2.get())) getHandler(stack).fill(new FluidHolder(ModFluids.O2.get(), 1), FluidAction.EXECUTE);
-            }
-        }
-    }
-
-    public void equipmentTick(ItemStack stack, Level level, Player player) {
-        super.equipmentTick(stack, level, player);
-        if (!level.isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.wearingSpaceSuit(player)) {
-            if (getHandler(stack).getFluidHolder().is(Fluids.EMPTY) || getHandler(stack).getFluidHolder().is(ModFluids.O2.get())) getHandler(stack).fill(new FluidHolder(ModFluids.O2.get(), 1), FluidAction.EXECUTE);
+    public void equipmentTick(ItemStack stack, Player player) {
+        super.equipmentTick(stack, player);
+        if (!player.level().isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.wearingSpaceSuit(player)) {
+            if (getFluidStack(stack).getFluid().isSame(Fluids.EMPTY) || getFluidStack(stack).getFluid().isSame(ModFluids.O2.get()))
+                fill(stack, FluidStack.create(ModFluids.O2.get(), 1), false);
         }
     }
 
     public int getOutlineColor() {
-        return FastColor.ARGB32.color(148, 135, 63);
+        return FastColor.ARGB32.color(-1, 148, 135, 63);
     }
 }

@@ -14,6 +14,7 @@
   "license": "CC0-1.0",
   "icon": "swe.png",
   "environment": "*",
+  "accessWidener": "swe.accesswidener",
   "entrypoints": {
     "main": [
       "mod.syconn.swe.fabric.SpaceModFabric"

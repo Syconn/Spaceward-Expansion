@@ -67,15 +67,15 @@ public class RenderUtil {
         }
     }
 
-    public static void renderFluidInPipe(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, PipePatterns.PipeConnectionTypes type, Direction direction) {
+    public static void renderFluidInPipe(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, PipeUtil.PipeConnectionTypes type, Direction direction) {
         if (!fluid.isSame(Fluids.EMPTY)) {
             int tint = Services.FLUID_EXTENSIONS.getTintColor(fluid);
             TextureAtlasSprite sprite = getSprite(fluid);
             VertexConsumer builder = pBufferSource.getBuffer(RenderType.translucent());
 
-            if (type == PipePatterns.PipeConnectionTypes.NONE) {
+            if (type == PipeUtil.PipeConnectionTypes.NONE) {
                 createSquaredFace(builder, pPoseStack, 0.375f, 0.625f, 0.3001f, 0.6999f, sprite, tint, direction);
-            } else if (type == PipePatterns.PipeConnectionTypes.CABLE) {
+            } else if (type == PipeUtil.PipeConnectionTypes.CABLE) {
                 for (Direction faceRotation : getFaceRotation(direction)) {
                     if (direction.getAxis() == Direction.Axis.X) {
                         if (direction.getAxisDirection() == Direction.AxisDirection.NEGATIVE)
