@@ -1,7 +1,7 @@
 package mod.syconn.swe.server.savedData;
 
 import com.google.common.collect.Sets;
-import mod.syconn.swe.common.blockentities.base.AbstractPipeBE;
+import mod.syconn.swe.common.blockentities.AbstractPipeBE;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.network.messages.MessageUpdateClientPipeCache;
 import net.minecraft.core.BlockPos;

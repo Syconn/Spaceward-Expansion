@@ -1,6 +1,5 @@
 package mod.syconn.swe.util;
 
-import mod.syconn.swe.common.blocks.FluidTankBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -12,30 +11,7 @@ import net.minecraft.world.level.Level;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InteractableFluidTankBlock extends FluidTankBlock implements InteractionalFluidHandler {
-
-    private final int speed;
-    Map<Direction, Interaction> sided_interactions = new HashMap<>() {{
-        put(Direction.NORTH, Interaction.NONE);
-        put(Direction.SOUTH, Interaction.NONE);
-        put(Direction.EAST, Interaction.NONE);
-        put(Direction.WEST, Interaction.NONE);
-        put(Direction.DOWN, Interaction.NONE);
-        put(Direction.UP, Interaction.NONE);
-    }};
-
-    public InteractableFluidTankBlock(int capacity, int speed) {
-        super(capacity);
-        this.speed = speed;
-    }
-
-    public Interaction getSideInteraction(Direction side) {
-        return sided_interactions.get(side);
-    }
-
-    public void setSideInteraction(Direction side, Interaction interaction) {
-        sided_interactions.put(side, interaction);
-    }
+public class InteractableFluidTankBlock {
 
     public void handlePush(Level level, BlockPos blockPos) {
         for (Direction direction : Direction.values()) {

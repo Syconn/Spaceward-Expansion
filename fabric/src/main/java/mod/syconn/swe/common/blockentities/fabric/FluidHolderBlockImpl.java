@@ -3,10 +3,16 @@ package mod.syconn.swe.common.blockentities.fabric;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.fabric.FluidStackHooksFabric;
 import mod.syconn.swe.common.blockentities.FluidHolderBlock;
+import mod.syconn.swe.util.FluidHolderBlockWrapper;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
@@ -19,6 +25,20 @@ public class FluidHolderBlockImpl {
 
     public static FluidHolderBlock create(long capacity, Consumer<FluidHolderBlock> onChange) {
         return new FabricFluidHolderBlock(capacity, onChange);
+    }
+
+    public static boolean hasHolder(Level level, BlockPos pos, @Nullable Direction face) {
+        return FluidStorage.SIDED.find(level, pos, face) != null;
+    }
+
+    @Nullable
+    public static FluidHolderBlock wrapFluidHolderBlock(Level level, BlockPos pos, @Nullable Direction face) {
+        Storage<FluidVariant> storage = FluidStorage.SIDED.find(level, pos, face);
+        if (storage != null) {
+            if (level.getBlockEntity(pos) instanceof FluidHolderBlock.IFluidHolderBlock block) return block.getFluidHolder();
+            return new FluidHolderBlockWrapper(storage);
+        }
+        return null;
     }
 
     public static class FabricFluidHolderBlock extends FluidHolderBlock {

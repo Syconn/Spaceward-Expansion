@@ -2,7 +2,6 @@ package mod.syconn.swe.common.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.common.blockentities.CollectorBE;
-import mod.syconn.swe.common.blocks.base.FluidBaseBlock;
 import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
 import mod.syconn.swe.network.Network;

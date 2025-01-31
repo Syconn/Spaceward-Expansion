@@ -1,5 +1,7 @@
 package mod.syconn.swe.util;
 
+import net.minecraft.util.StringRepresentable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ public class PipeUtil {
         }
     }
 
-    public enum PipeConnectionTypes {
+    public enum PipeConnectionTypes implements StringRepresentable {
         INPUT,
         OUTPUT,
         BOTH,
@@ -50,6 +52,11 @@ public class PipeUtil {
 
         public boolean isExport() {
             return this == OUTPUT || this == BOTH;
+        }
+
+
+        public String getSerializedName() {
+            return name();
         }
     }
 }

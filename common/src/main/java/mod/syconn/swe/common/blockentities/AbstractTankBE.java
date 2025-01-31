@@ -1,14 +1,12 @@
-package mod.syconn.swe.common.blockentities.base;
+package mod.syconn.swe.common.blockentities;
 
-import mod.syconn.swe.extra.core.InteractableFluidTank;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractTankBE extends SyncedBE {
+public abstract class AbstractTankBE extends BlockEntity {
 
     protected InteractableFluidTank tank;
 
@@ -19,13 +17,7 @@ public abstract class AbstractTankBE extends SyncedBE {
         };
     }
 
-    protected void loadClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        tank.readNBT(pRegistries, pTag);
-    }
 
-    protected void saveClientData(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        tank.writeNBT(pRegistries, pTag);
-    }
 
     public InteractableFluidTank getFluidTank() {
         return tank;

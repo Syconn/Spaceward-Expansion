@@ -1,7 +1,7 @@
 package mod.syconn.swe.server.savedData;
 
 import mod.syconn.swe.common.blockentities.FluidPipeBE;
-import mod.syconn.swe.common.blocks.base.AbstractPipeBlock;
+import mod.syconn.swe.common.blocks.AbstractPipeBlock;
 import mod.syconn.swe.util.PipeUtil;
 import mod.syconn.swe.util.TagUtil;
 import net.minecraft.core.BlockPos;

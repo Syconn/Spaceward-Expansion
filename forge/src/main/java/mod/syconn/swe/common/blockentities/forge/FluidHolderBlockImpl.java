@@ -3,13 +3,18 @@ package mod.syconn.swe.common.blockentities.forge;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
 import mod.syconn.swe.common.blockentities.FluidHolderBlock;
+import mod.syconn.swe.util.FluidHolderBlockWrapper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class FluidHolderBlockImpl {
@@ -20,6 +25,20 @@ public class FluidHolderBlockImpl {
 
     public static FluidHolderBlock create(long capacity, Consumer<FluidHolderBlock> onChange) {
         return new ForgeFluidHolderBlock(capacity, onChange);
+    }
+
+    public static boolean hasHolder(Level level, BlockPos pos, @Nullable Direction face) {
+        return level.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, face).isPresent();
+    }
+
+    @Nullable
+    public static FluidHolderBlock wrapFluidHolderBlock(Level level, BlockPos pos, @Nullable Direction face) {
+        Optional<IFluidHandler> fluidHandler = level.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, face).resolve();
+        if (fluidHandler.isPresent()) {
+            if (level.getBlockEntity(pos) instanceof FluidHolderBlock.IFluidHolderBlock block) return block.getFluidHolder();
+            return new FluidHolderBlockWrapper(fluidHandler.get(), 0);
+        }
+        return null;
     }
 
     public static class ForgeFluidHolderBlock extends FluidHolderBlock {

@@ -1,6 +1,5 @@
 package mod.syconn.swe.network.messages;
 
-import mod.syconn.swe.util.InteractionalFluidHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;

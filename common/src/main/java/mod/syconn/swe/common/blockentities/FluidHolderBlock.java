@@ -9,12 +9,14 @@ import mod.syconn.swe.network.messages.MessageSyncFluidBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -50,6 +52,17 @@ public abstract class FluidHolderBlock extends FluidHolderItem {
 
     @ExpectPlatform
     public static FluidHolderBlock create(long capacity, Consumer<FluidHolderBlock> onChange) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean hasHolder(Level level, BlockPos pos, @Nullable Direction face) {
+        throw new AssertionError();
+    }
+
+    @Nullable
+    @ExpectPlatform
+    public static FluidHolderBlock wrapFluidHolderBlock(Level level, BlockPos pos, @Nullable Direction face) {
         throw new AssertionError();
     }
 

@@ -1,7 +1,7 @@
 package mod.syconn.swe.client.model;
 
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.common.blocks.base.AbstractPipeBlock;
+import mod.syconn.swe.common.blocks.AbstractPipeBlock;
 import mod.syconn.swe.util.PipeUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;

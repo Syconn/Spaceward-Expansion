@@ -2,6 +2,7 @@ package mod.syconn.swe.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.FluidStackHooks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,18 +21,23 @@ import net.minecraft.world.phys.Vec3;
 @Environment(EnvType.CLIENT)
 public class RenderUtil {
 
-    public static int getFluidColor(Fluid fluid) {
-        if (fluid.isSame(Fluids.EMPTY)) return -1;
-        int i = FluidStackHooks.getColor(fluid);
-        TextureAtlasSprite sprite = getSprite(fluid);
+    public static int getFluidColor(FluidStack fluidStack) {
+        if (fluidStack.getFluid().isSame(Fluids.EMPTY)) return -1;
+        int i = FluidStackHooks.getColor(fluidStack);
+        TextureAtlasSprite sprite = getSprite(fluidStack.getFluid());
         int b = getAtlasSpriteRGBA(sprite, 8, 8);
         int c = FastColor.ARGB32.color(-1, FastColor.ARGB32.blue(b), FastColor.ARGB32.green(b), FastColor.ARGB32.red(b)); // TODO NOT ALPHA? - ALSO BACKWARDS?
         if (i == -1) return c;
         return tintRGBA(c, i);
     }
 
-    public static int[] getRGB(int color) {
-        return new int[] {FastColor.ARGB32.red(color), FastColor.ARGB32.green(color), FastColor.ARGB32.blue(color)};
+    public static int[] getRGBA(int color) {
+        return new int[] {FastColor.ARGB32.red(color), FastColor.ARGB32.green(color), FastColor.ARGB32.blue(color), FastColor.ARGB32.alpha(color)};
+    }
+
+    public static float[][] getRGBA(int color1, int color2) {
+        return new float[][] {new float[] {FastColor.ARGB32.red(color1), FastColor.ARGB32.red(color2)}, new float[] {FastColor.ARGB32.green(color1), FastColor.ARGB32.green(color2)},
+                new float[] {FastColor.ARGB32.blue(color1), FastColor.ARGB32.blue(color2)}, new float[] {FastColor.ARGB32.alpha(color1), FastColor.ARGB32.alpha(color2)}};
     }
 
     public static int getAtlasSpriteRGBA(TextureAtlasSprite sprite, int x, int y) {

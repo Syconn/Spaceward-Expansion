@@ -2,7 +2,6 @@ package mod.syconn.swe.common.blocks;
 
 import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.blockentities.CanisterFillerBlockEntity;
-import mod.syconn.swe.common.blocks.base.FluidBaseTopperBlock;
 import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
 import net.minecraft.core.BlockPos;

@@ -1,6 +1,6 @@
-package mod.syconn.swe.common.blocks.base;
+package mod.syconn.swe.common.blocks;
 
-import mod.syconn.swe.common.blockentities.base.AbstractPipeBE;
+import mod.syconn.swe.common.blockentities.AbstractPipeBE;
 import mod.syconn.swe.util.PipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

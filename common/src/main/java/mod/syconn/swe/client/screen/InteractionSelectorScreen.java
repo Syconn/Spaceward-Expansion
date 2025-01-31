@@ -3,7 +3,6 @@ package mod.syconn.swe.client.screen;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.client.screen.widgets.SpriteButton;
 import mod.syconn.swe.util.InteractableFluidTankBlock;
-import mod.syconn.swe.util.InteractionalFluidHandler;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

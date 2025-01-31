@@ -19,9 +19,10 @@ public class AutoRefillCanister extends Canister {
 
     public void equipmentTick(ItemStack stack, Player player) {
         super.equipmentTick(stack, player);
+        FluidHolderItem fluidHolder = getFluidHolder(player, player.containerMenu, stack);
         if (!player.level().isClientSide && PlanetManager.getSettings(player).breathable() && SpaceArmor.wearingSpaceSuit(player)) {
-            if (getFluidStack(stack).getFluid().isSame(Fluids.EMPTY) || getFluidStack(stack).getFluid().isSame(ModFluids.O2.get()))
-                fill(stack, FluidStack.create(ModFluids.O2.get(), 1), false);
+            if (fluidHolder.getFluidStack().getFluid().isSame(Fluids.EMPTY) ||fluidHolder.getFluidStack().getFluid().isSame(ModFluids.O2.get()))
+                fluidHolder.push(FluidStack.create(ModFluids.O2.get(), 1), false);
         }
     }
 

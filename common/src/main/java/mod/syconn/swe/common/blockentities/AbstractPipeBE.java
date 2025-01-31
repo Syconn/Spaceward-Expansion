@@ -1,4 +1,4 @@
-package mod.syconn.swe.common.blockentities.base;
+package mod.syconn.swe.common.blockentities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
