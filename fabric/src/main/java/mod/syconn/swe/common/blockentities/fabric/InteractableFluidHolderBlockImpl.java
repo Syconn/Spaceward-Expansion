@@ -4,53 +4,33 @@ import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.fabric.FluidStackHooksFabric;
 import mod.syconn.swe.common.blockentities.FluidHolderBlock;
 import mod.syconn.swe.common.blockentities.InteractableFluidHolderBlock;
-import mod.syconn.swe.util.FluidHolderBlockWrapper;
-import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage;
-import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+
 import java.util.function.Consumer;
 
 @SuppressWarnings("UnstableApiUsage")
-public class FluidHolderBlockImpl {
+public class InteractableFluidHolderBlockImpl {
 
-    public static FluidHolderBlock create(long capacity) {
-        return new FabricFluidHolderBlock(capacity, null);
+    public static InteractableFluidHolderBlock create(long speed, long capacity) {
+        return new FabricInteractableFluidHolderBlock(speed, capacity, null);
     }
 
-    public static FluidHolderBlock create(long capacity, Consumer<FluidHolderBlock> onChange) {
-        return new FabricFluidHolderBlock(capacity, onChange);
+    public static InteractableFluidHolderBlock create(long speed, long capacity, Consumer<FluidHolderBlock> onChange) {
+        return new FabricInteractableFluidHolderBlock(speed, capacity, onChange);
     }
 
-    public static boolean hasHolder(Level level, BlockPos pos, @Nullable Direction face) {
-        return FluidStorage.SIDED.find(level, pos, face) != null;
-    }
-
-    @Nullable
-    public static FluidHolderBlock wrapFluidHolderBlock(Level level, BlockPos pos, @Nullable Direction face) {
-        Storage<FluidVariant> storage = FluidStorage.SIDED.find(level, pos, face);
-        if (storage != null) {
-            if (level.getBlockEntity(pos) instanceof FluidHolderBlock.IFluidHolderBlock block) return block.getFluidHolder();
-            if (level.getBlockEntity(pos) instanceof InteractableFluidHolderBlock.IInteractableFluidHolderBlock block) return block.getFluidHolder();
-            return new FluidHolderBlockWrapper(storage);
-        }
-        return null;
-    }
-
-    public static class FabricFluidHolderBlock extends FluidHolderBlock {
+    public static class FabricInteractableFluidHolderBlock extends InteractableFluidHolderBlock {
 
         private final SingleFluidStorage tank;
 
-        protected FabricFluidHolderBlock(long capacity, @Nullable Consumer<FluidHolderBlock> onChange)
-        {
+        protected FabricInteractableFluidHolderBlock(long speed, long capacity, @Nullable Consumer<FluidHolderBlock> onChange) {
+            super(speed);
             this.tank = SingleFluidStorage.withFixedCapacity(capacity, () -> {
-                if(onChange != null) onChange.accept(FabricFluidHolderBlock.this);
+                if(onChange != null) onChange.accept(InteractableFluidHolderBlockImpl.FabricInteractableFluidHolderBlock.this);
             });
         }
 

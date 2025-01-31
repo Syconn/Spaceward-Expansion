@@ -121,7 +121,7 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
 
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(level, pos, state, placer, stack);
-        if (!level.isClientSide && level.getBlockEntity(pos) instanceof AbstractPipeBE cable) cable.markDirty();
+//        if (!level.isClientSide && level.getBlockEntity(pos) instanceof AbstractPipeBE cable) cable.markDirty(); TODO MARK DIRTY UNEEDED?
         BlockState blockState = calculateState(level, pos, state);
         if (state != blockState) level.setBlockAndUpdate(pos, blockState);
     }

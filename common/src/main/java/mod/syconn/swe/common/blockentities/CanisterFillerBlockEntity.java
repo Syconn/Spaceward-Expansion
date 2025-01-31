@@ -1,9 +1,7 @@
 package mod.syconn.swe.common.blockentities;
 
-import mod.syconn.swe.extra.core.*;
-import mod.syconn.swe.extra.platform.Services;
+import mod.syconn.swe.common.items.Canister;
 import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.items.Canister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -77,22 +75,22 @@ public class CanisterFillerBlockEntity extends BlockEntity {
         return items.get(i);
     }
 
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
-        ContainerHelper.saveAllItems(pTag, this.items, pRegistries);
-    }
-
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        this.items = NonNullList.withSize(4, ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(pTag, this.items, pRegistries);
-    }
-
-    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-        CompoundTag tag = super.getUpdateTag(pRegistries);
-        ContainerHelper.saveAllItems(tag, this.items, pRegistries);
-        return tag;
-    }
+//    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) { TODO PROBABLY UNESSACARY
+//        super.saveAdditional(pTag, pRegistries);
+//        ContainerHelper.saveAllItems(pTag, this.items, pRegistries);
+//    }
+//
+//    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
+//        super.loadAdditional(pTag, pRegistries);
+//        this.items = NonNullList.withSize(4, ItemStack.EMPTY);
+//        ContainerHelper.loadAllItems(pTag, this.items, pRegistries);
+//    }
+//
+//    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
+//        CompoundTag tag = super.getUpdateTag(pRegistries);
+//        ContainerHelper.saveAllItems(tag, this.items, pRegistries);
+//        return tag;
+//    }
 
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);

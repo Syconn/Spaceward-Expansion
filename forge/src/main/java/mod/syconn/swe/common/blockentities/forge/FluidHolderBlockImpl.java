@@ -3,6 +3,7 @@ package mod.syconn.swe.common.blockentities.forge;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
 import mod.syconn.swe.common.blockentities.FluidHolderBlock;
+import mod.syconn.swe.common.blockentities.InteractableFluidHolderBlock;
 import mod.syconn.swe.util.FluidHolderBlockWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,6 +37,7 @@ public class FluidHolderBlockImpl {
         Optional<IFluidHandler> fluidHandler = level.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, face).resolve();
         if (fluidHandler.isPresent()) {
             if (level.getBlockEntity(pos) instanceof FluidHolderBlock.IFluidHolderBlock block) return block.getFluidHolder();
+            if (level.getBlockEntity(pos) instanceof InteractableFluidHolderBlock.IInteractableFluidHolderBlock block) return block.getFluidHolder();
             return new FluidHolderBlockWrapper(fluidHandler.get(), 0);
         }
         return null;

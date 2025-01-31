@@ -1,7 +1,9 @@
 package mod.syconn.swe;
 
 import mod.syconn.swe.common.blockentities.FluidHolderBlock;
+import mod.syconn.swe.common.blockentities.InteractableFluidHolderBlock;
 import mod.syconn.swe.common.blockentities.forge.FluidHolderBlockImpl;
+import mod.syconn.swe.common.blockentities.forge.InteractableFluidHolderBlockImpl;
 import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.common.items.forge.FluidHolderItemImpl;
 import net.minecraft.core.Direction;
@@ -25,6 +27,8 @@ public class ForgeEvents {
     static void onAttachBlockCapability(AttachCapabilitiesEvent<BlockEntity> event) {
         if(event.getObject() instanceof FluidHolderBlock.IFluidHolderBlock block)
             event.addCapability(Constants.withId("fluid_holder_block"), new FluidHolderBlockProvider(block));
+        if(event.getObject() instanceof InteractableFluidHolderBlock.IInteractableFluidHolderBlock block)
+            event.addCapability(Constants.withId("interactable_fluid_holder_block"), new FluidHolderBlockProvider(block));
     }
 
     static void onAttachItemCapability(AttachCapabilitiesEvent<ItemStack> event) {
@@ -41,6 +45,14 @@ public class ForgeEvents {
                 FluidHolderBlock fluidHolder = block.getFluidHolder();
                 if(fluidHolder == null) return EmptyFluidHandler.INSTANCE;
                 return ((FluidHolderBlockImpl.ForgeFluidHolderBlock) fluidHolder).getTank();
+            });
+        }
+
+        public FluidHolderBlockProvider(InteractableFluidHolderBlock.IInteractableFluidHolderBlock block) {
+            this.holder = LazyOptional.of(() -> {
+                FluidHolderBlock fluidHolder = block.getFluidHolder();
+                if(fluidHolder == null) return EmptyFluidHandler.INSTANCE;
+                return ((InteractableFluidHolderBlockImpl.ForgeInteractableFluidHolderBlock) fluidHolder).getTank();
             });
         }
 

@@ -1,7 +1,9 @@
 package mod.syconn.swe;
 
 import mod.syconn.swe.common.blockentities.FluidHolderBlock;
+import mod.syconn.swe.common.blockentities.InteractableFluidHolderBlock;
 import mod.syconn.swe.common.blockentities.fabric.FluidHolderBlockImpl;
+import mod.syconn.swe.common.blockentities.fabric.InteractableFluidHolderBlockImpl;
 import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.common.items.fabric.FluidHolderItemImpl;
 import net.fabricmc.api.ModInitializer;
@@ -11,8 +13,13 @@ import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 public final class SpaceModFabric implements ModInitializer {
 
     public void onInitialize() {
-        FluidStorage.SIDED.registerFallback((level, pos, state, blockEntity, direction) ->
-                blockEntity instanceof FluidHolderBlock.IFluidHolderBlock b ? ((FluidHolderBlockImpl.FabricFluidHolderBlock) b.getFluidHolder()).getTank() : null);
+        FluidStorage.SIDED.registerFallback((level, pos, state, blockEntity, direction) -> {
+            if (blockEntity instanceof FluidHolderBlock.IFluidHolderBlock b)
+                return ((FluidHolderBlockImpl.FabricFluidHolderBlock) b.getFluidHolder()).getTank();
+            if (blockEntity instanceof InteractableFluidHolderBlock.IInteractableFluidHolderBlock b)
+                return ((InteractableFluidHolderBlockImpl.FabricInteractableFluidHolderBlock) b.getFluidHolder()).getTank();
+            return null;
+        });
 
         FluidStorage.ITEM.registerFallback(((itemStack, context) -> {
             if (itemStack.getItem() instanceof FluidHolderItem.IFluidHolderItem item)

@@ -1,19 +1,16 @@
 package mod.syconn.swe.common.blocks;
 
-import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blockentities.CanisterFillerBlockEntity;
+import mod.syconn.swe.common.blockentities.CanisterFillerBlockEntity;
 import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.core.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -35,19 +32,19 @@ public class CanisterFillerBlock extends FluidBaseTopperBlock {
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide) return ItemInteractionResult.SUCCESS;
-        ItemStack heldItem = pPlayer.getItemInHand(pHand);
-        if (pLevel.getBlockEntity(pPos) instanceof CanisterFillerBlockEntity ce) {
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        ItemStack heldItem = player.getItemInHand(hand);
+        if (level.getBlockEntity(pos) instanceof CanisterFillerBlockEntity ce) {
             if (heldItem.isEmpty()) {
-                pPlayer.setItemInHand(pHand, ce.removeCanister());
-                return ItemInteractionResult.CONSUME;
+                player.setItemInHand(hand, ce.removeCanister());
+                return InteractionResult.CONSUME;
             } else if (ce.addCanister(heldItem)) {
-                pPlayer.getItemInHand(pHand).shrink(1);
-                return ItemInteractionResult.CONSUME;
+                player.getItemInHand(hand).shrink(1);
+                return InteractionResult.CONSUME;
             }
         }
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.PASS;
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
@@ -62,15 +59,11 @@ public class CanisterFillerBlock extends FluidBaseTopperBlock {
         p_49915_.add(FACING);
     }
 
-    public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return Block.box(1, 0, 1, 15, 14, 15);
     }
 
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return ModBlocks.CANISTER_FILLER_CODEC.get();
-    }
-
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return new CanisterFillerBlockEntity(p_153215_, p_153216_);
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new CanisterFillerBlockEntity(pos, state);
     }
 }
