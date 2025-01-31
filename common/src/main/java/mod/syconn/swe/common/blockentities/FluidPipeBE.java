@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.blockentities;
 
 import mod.syconn.swe.common.blockentities.base.AbstractPipeBE;
-import mod.syconn.swe.common.blocks.FluidPipe;
+import mod.syconn.swe.common.blocks.FluidPipeBlock;
 import mod.syconn.swe.common.blocks.base.AbstractPipeBlock;
 import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.util.PipeUtil;
@@ -25,7 +25,7 @@ public class FluidPipeBE extends AbstractPipeBE {
     }
 
     public boolean canConnectToPipe(Level level, BlockPos pos, Direction conDir) {
-        return level.getBlockState(pos.relative(conDir)).getBlock() instanceof FluidPipe;
+        return level.getBlockState(pos.relative(conDir)).getBlock() instanceof FluidPipeBlock;
     }
 
     public boolean hasMenu() {

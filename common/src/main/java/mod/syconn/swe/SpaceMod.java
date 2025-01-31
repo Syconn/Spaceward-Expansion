@@ -36,7 +36,14 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.DyeableLeatherItem;
 
+import java.util.List;
+
 public class SpaceMod {
+
+//    TODO DO I NEED THIS?
+//    public void syncServerDataEvent(OnDatapackSyncEvent event) {
+//        event.getRelevantPlayers().forEach(serverPlayer -> Channel.sendToPlayer(new ClientBoundUpdatePlanetSettings(List.copyOf(PlanetManager.getSettings())), serverPlayer));
+//    }
 
     public static void init() {
         ModFluids.FLUIDS.register();

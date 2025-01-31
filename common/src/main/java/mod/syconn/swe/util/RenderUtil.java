@@ -2,6 +2,9 @@ package mod.syconn.swe.util;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import dev.architectury.hooks.fluid.FluidStackHooks;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -14,14 +17,15 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 
+@Environment(EnvType.CLIENT)
 public class RenderUtil {
 
     public static int getFluidColor(Fluid fluid) {
         if (fluid.isSame(Fluids.EMPTY)) return -1;
-        int i = Services.FLUID_EXTENSIONS.getTintColor(fluid);
+        int i = FluidStackHooks.getColor(fluid);
         TextureAtlasSprite sprite = getSprite(fluid);
         int b = getAtlasSpriteRGBA(sprite, 8, 8);
-        int c = FastColor.ARGB32.color(FastColor.ARGB32.blue(b), FastColor.ARGB32.green(b), FastColor.ARGB32.red(b));
+        int c = FastColor.ARGB32.color(-1, FastColor.ARGB32.blue(b), FastColor.ARGB32.green(b), FastColor.ARGB32.red(b)); // TODO NOT ALPHA? - ALSO BACKWARDS?
         if (i == -1) return c;
         return tintRGBA(c, i);
     }
@@ -48,17 +52,13 @@ public class RenderUtil {
     }
 
     public static TextureAtlasSprite getSprite(Fluid fluid) {
-        if (fluid.isSame(Fluids.EMPTY) || Services.FLUID_EXTENSIONS.getStillTexture(fluid).isEmpty()) return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
-        return Services.FLUID_EXTENSIONS.getStillTexture(fluid).get();
-    }
-
-    public static TextureAtlasSprite getSprite(FluidHolder fluid) {
-        return getSprite(fluid.getFluid());
+        if (fluid.isSame(Fluids.EMPTY)) return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
+        return FluidStackHooks.getStillTexture(fluid);
     }
 
     public static void renderLiquid(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, Direction... directions) {
         if (!fluid.isSame(Fluids.EMPTY)) {
-            int tint = Services.FLUID_EXTENSIONS.getTintColor(fluid);
+            int tint = FluidStackHooks.getColor(fluid);
             TextureAtlasSprite sprite = getSprite(fluid);
             VertexConsumer builder = pBufferSource.getBuffer(RenderType.translucent());
             for (Direction faceDirection : directions) {
@@ -69,7 +69,7 @@ public class RenderUtil {
 
     public static void renderFluidInPipe(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, PipeUtil.PipeConnectionTypes type, Direction direction) {
         if (!fluid.isSame(Fluids.EMPTY)) {
-            int tint = Services.FLUID_EXTENSIONS.getTintColor(fluid);
+            int tint = FluidStackHooks.getColor(fluid);
             TextureAtlasSprite sprite = getSprite(fluid);
             VertexConsumer builder = pBufferSource.getBuffer(RenderType.translucent());
 
@@ -104,23 +104,23 @@ public class RenderUtil {
 
     private static void createSquaredFace(VertexConsumer builder, PoseStack poseStack, float min, float max, float posMin, float posMax, TextureAtlasSprite sprite, int tint, Direction rotation) {
         switch (rotation) {
-            case Direction.DOWN -> createFace(builder, poseStack, v(min, posMin, max), v(min, posMin, min), v(max, posMin, min), v(max, posMin, max), sprite, tint); // D;
-            case Direction.UP -> createFace(builder, poseStack, v(max, posMax, max), v(max, posMax, min), v(min, posMax, min), v(min, posMax, max), sprite, tint); // U;
-            case Direction.NORTH -> createFace(builder, poseStack, v(max, min, posMin), v(min, min, posMin), v(min, max, posMin), v(max, max, posMin), sprite, tint); // N;
-            case Direction.SOUTH -> createFace(builder, poseStack, v(max, max, posMax), v(min, max, posMax), v(min, min, posMax), v(max, min, posMax), sprite, tint); // S;
-            case Direction.WEST -> createFace(builder, poseStack, v(posMin, max, max), v(posMin, max, min), v(posMin, min, min), v(posMin, min, max), sprite, tint); // W;
-            case Direction.EAST -> createFace(builder, poseStack, v(posMax, min, max), v(posMax, min, min), v(posMax, max, min), v(posMax, max, max), sprite, tint); // E;
+            case DOWN -> createFace(builder, poseStack, v(min, posMin, max), v(min, posMin, min), v(max, posMin, min), v(max, posMin, max), sprite, tint); // D;
+            case UP -> createFace(builder, poseStack, v(max, posMax, max), v(max, posMax, min), v(min, posMax, min), v(min, posMax, max), sprite, tint); // U;
+            case NORTH -> createFace(builder, poseStack, v(max, min, posMin), v(min, min, posMin), v(min, max, posMin), v(max, max, posMin), sprite, tint); // N;
+            case SOUTH -> createFace(builder, poseStack, v(max, max, posMax), v(min, max, posMax), v(min, min, posMax), v(max, min, posMax), sprite, tint); // S;
+            case WEST -> createFace(builder, poseStack, v(posMin, max, max), v(posMin, max, min), v(posMin, min, min), v(posMin, min, max), sprite, tint); // W;
+            case EAST -> createFace(builder, poseStack, v(posMax, min, max), v(posMax, min, min), v(posMax, max, min), v(posMax, max, max), sprite, tint); // E;
         }
     }
 
     private static void createRectangularFace(VertexConsumer builder, PoseStack poseStack, float minA, float maxA, float minB, float maxB, float minC, float maxC, TextureAtlasSprite sprite, int tint, Direction rotation) {
         switch (rotation) {
-            case Direction.DOWN -> createFace(builder, poseStack, v(minA, minC, maxB), v(minA, minC, minB), v(maxA, minC, minB), v(maxA, minC, maxB), sprite, tint); // D;
-            case Direction.UP -> createFace(builder, poseStack, v(maxA, maxC, maxB), v(maxA, maxC, minB), v(minA, maxC, minB), v(minA, maxC, maxB), sprite, tint); // U;
-            case Direction.NORTH -> createFace(builder, poseStack, v(maxA, minB, minC), v(minA, minB, minC), v(minA, maxB, minC), v(maxA, maxB, minC), sprite, tint); // N;
-            case Direction.SOUTH -> createFace(builder, poseStack, v(maxA, maxB, maxC), v(minA, maxB, maxC), v(minA, minB, maxC), v(maxA, minB, maxC), sprite, tint); // S;
-            case Direction.WEST -> createFace(builder, poseStack, v(minC, maxA, maxB), v(minC, maxA, minB), v(minC, minA, minB), v(minC, minA, maxB), sprite, tint); // W;
-            case Direction.EAST -> createFace(builder, poseStack, v(maxC, minA, maxB), v(maxC, minA, minB), v(maxC, maxA, minB), v(maxC, maxA, maxB), sprite, tint); // E;
+            case DOWN -> createFace(builder, poseStack, v(minA, minC, maxB), v(minA, minC, minB), v(maxA, minC, minB), v(maxA, minC, maxB), sprite, tint); // D;
+            case UP -> createFace(builder, poseStack, v(maxA, maxC, maxB), v(maxA, maxC, minB), v(minA, maxC, minB), v(minA, maxC, maxB), sprite, tint); // U;
+            case NORTH -> createFace(builder, poseStack, v(maxA, minB, minC), v(minA, minB, minC), v(minA, maxB, minC), v(maxA, maxB, minC), sprite, tint); // N;
+            case SOUTH -> createFace(builder, poseStack, v(maxA, maxB, maxC), v(minA, maxB, maxC), v(minA, minB, maxC), v(maxA, minB, maxC), sprite, tint); // S;
+            case WEST -> createFace(builder, poseStack, v(minC, maxA, maxB), v(minC, maxA, minB), v(minC, minA, minB), v(minC, minA, maxB), sprite, tint); // W;
+            case EAST -> createFace(builder, poseStack, v(maxC, minA, maxB), v(maxC, minA, minB), v(maxC, maxA, minB), v(maxC, maxA, maxB), sprite, tint); // E;
         }
     }
 
@@ -133,9 +133,9 @@ public class RenderUtil {
 
     private static Direction[] getFaceRotation(Direction direction) {
         return switch (direction.getAxis()) {
-            case Direction.Axis.X -> new Direction[] {Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH};
-            case Direction.Axis.Y -> new Direction[] {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
-            case Direction.Axis.Z -> new Direction[] {Direction.DOWN, Direction.UP, Direction.WEST, Direction.EAST};
+            case X -> new Direction[] {Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH};
+            case Y -> new Direction[] {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
+            case Z -> new Direction[] {Direction.DOWN, Direction.UP, Direction.WEST, Direction.EAST};
         };
     }
 

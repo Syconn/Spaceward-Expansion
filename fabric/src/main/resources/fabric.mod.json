@@ -17,13 +17,13 @@
   "accessWidener": "swe.accesswidener",
   "entrypoints": {
     "main": [
-      "mod.syconn.swe.fabric.SpaceModFabric"
+      "mod.syconn.swe.SpaceModFabric"
     ],
     "client": [
-      "mod.syconn.swe.fabric.client.SpaceModFabricClient"
+      "mod.syconn.swe.client.SpaceModFabricClient"
     ],
     "fabric-datagen": [
-      "mod.syconn.swe.fabric.datagen.HeroDataGenerator"
+      "mod.syconn.swe.datagen.HeroDataGenerator"
     ]
   },
   "mixins": [

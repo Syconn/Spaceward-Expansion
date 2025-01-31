@@ -2,7 +2,7 @@ package mod.syconn.swe.client.screen;
 
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.client.screen.widgets.SpriteButton;
-import mod.syconn.swe.util.InteractableFluidTank;
+import mod.syconn.swe.util.InteractableFluidTankBlock;
 import mod.syconn.swe.util.InteractionalFluidHandler;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -21,7 +21,7 @@ import java.util.List;
 public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
     private final ResourceLocation sideMenu = Constants.withId("textures/gui/interaction_selector.png");
-    private final InteractableFluidTank tank;
+    private final InteractableFluidTankBlock tank;
     private final Point[] buttonPoints = {new Point(30, 80), new Point(30, 30), new Point(30, 55),
             new Point(30, 5), new Point(5, 55), new Point(55, 55)};
     private final Interactables[] interactables = new Interactables[7];
@@ -31,7 +31,7 @@ public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu>
     private final Level level;
     private final BlockPos pos;
 
-    public InteractionSelectorScreen(T pMenu, Inventory pPlayerInventory, Component pTitle, InteractableFluidTank tank, BlockPos pos) {
+    public InteractionSelectorScreen(T pMenu, Inventory pPlayerInventory, Component pTitle, InteractableFluidTankBlock tank, BlockPos pos) {
         super(pMenu, pPlayerInventory, pTitle);
         this.tank = tank;
         this.level = pPlayerInventory.player.level();

@@ -1,0 +1,39 @@
+package mod.syconn.swe.datagen;
+
+public class DataGenHelper {
+
+    // TODO
+
+//    public static void registerItemCables(BlockStateProvider gen, Block block) {
+//        String name = BuiltInRegistries.BLOCK.getKey(block).getPath();
+//        BlockModelBuilder model = gen.models().getBuilder(name)
+//                .parent(gen.models().getExistingFile(ResourceLocation.parse("cube"))).renderType("cutout")
+//                .customLoader((builder, helper) -> new PipeLoaderBuilder(PipeModelLoader.GENERATOR_LOADER, builder, helper, false, .3, new String[]{"block/loader/" + name + "/connector",
+//                        "block/loader/" + name + "/normal", "block/loader/" + name + "/none", "block/loader/" + name + "/end", "block/loader/" + name + "/corner", "block/loader/" + name + "/three", "block/loader/" + name + "/cross",
+//                        "block/loader/" + name + "/side_block", "block/loader/" + name + "/side_import", "block/loader/" + name + "/side_export", "block/loader/" + name + "/side_both"}))
+//                .end();
+//        gen.simpleBlockWithItem(block, model);
+//    }
+//
+//    private static class PipeLoaderBuilder extends CustomLoaderBuilder<BlockModelBuilder> {
+//
+//        private final boolean facade;
+//        private final double size;
+//        private final String[] textures;
+//
+//        public PipeLoaderBuilder(ResourceLocation loader, BlockModelBuilder parent, ExistingFileHelper existingFileHelper, boolean facade, double size, String[] textures) {
+//            super(loader, parent, existingFileHelper, false);
+//            this.facade = facade;
+//            this.size = size;
+//            this.textures = textures;
+//        }
+//
+//        public JsonObject toJson(JsonObject json) {
+//            JsonObject obj = super.toJson(json);
+//            obj.addProperty("facade", facade);
+//            obj.addProperty("size", size);
+//            obj.add("locations", new Gson().toJsonTree(textures));
+//            return obj;
+//        }
+//    }
+}

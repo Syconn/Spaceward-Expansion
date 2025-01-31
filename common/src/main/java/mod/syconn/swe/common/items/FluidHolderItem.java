@@ -1,81 +1,43 @@
 package mod.syconn.swe.common.items;
 
 import dev.architectury.fluid.FluidStack;
-import mod.syconn.swe.Constants;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.Item;
+import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.Nullable;
 
-public interface FluidHolderItem {
-    String FLUID = "fluidstack";
-    String MAX = "max";
-    String ELEMENT = Constants.MOD + ":properties";
-    FluidStack EMPTY = FluidStack.empty();
+public abstract class FluidHolderItem {
 
-    long defaultMax();
+    public abstract FluidStack getFluidStack();
+    public abstract boolean isEmpty();
+    public abstract void setFluidStack(FluidStack fluidStack);
 
-    default boolean isEmpty(ItemStack stack) {
-        CompoundTag compoundTag = stack.getTagElement(ELEMENT);
-        return compoundTag != null && getFluidStack(stack).getFluid().isSame(Fluids.EMPTY);
+    /// Returns the remaining amount of fluid from the amount added
+    public abstract long push(FluidStack fluidStack, boolean simulate);
+
+    /// This method returns a pair containing the type of fluid and the amount that was removed.
+    public abstract FluidStack pull(long amount, boolean simulate);
+
+    @ExpectPlatform
+    public static FluidHolderItem getFluidHolder(Player player, InteractionHand hand) {
+        throw new AssertionError();
     }
 
-    default FluidStack getFluidStack(ItemStack stack) {
-        CompoundTag compoundTag = stack.getTagElement(ELEMENT);
-        return compoundTag != null && compoundTag.contains(FLUID) ? FluidStack.read(compoundTag.getCompound(FLUID)) : EMPTY;
+    @ExpectPlatform
+    public static FluidHolderItem getFluidHolder(Player player, @Nullable AbstractContainerMenu inventory, ItemStack stack) {
+        throw new AssertionError();
     }
 
-    default long getMax(ItemStack stack) {
-        CompoundTag compoundTag = stack.getTagElement(ELEMENT);
-        return compoundTag != null && compoundTag.contains(MAX) ? compoundTag.getLong(MAX) : defaultMax();
-    }
-
-    default void setFluidStack(ItemStack stack, FluidStack fluidStack) {
-        stack.getOrCreateTagElement(ELEMENT).put(FLUID, fluidStack.getOrCreateTag());
-        if (!stack.getOrCreateTagElement(ELEMENT).contains(MAX)) stack.getOrCreateTagElement(ELEMENT).putLong(MAX, defaultMax());
-    }
-
-    default void emptyHolder(ItemStack stack) {
-        setFluidStack(stack, EMPTY);
-    }
-
-    default boolean fill(ItemStack stack, FluidStack fill, boolean simulate) {
-        if (simulate) return (fill.isFluidEqual(getFluidStack(stack)) || getFluidStack(stack).getFluid().isSame(Fluids.EMPTY)) && fill.getAmount() <= getFluidStack(stack).getAmount();
-        return fill(stack, fill.getAmount(), false);
-    }
-
-    default boolean fill(ItemStack stack, long fill, boolean simulate) {
-        if (simulate) return fill <= getFluidStack(stack).getAmount();
-        if (fill <= getFluidStack(stack).getAmount()) {
-            setFluidStack(stack, getFluidStack(stack).copyWithAmount(fill + getFluidStack(stack).getAmount()));
-            return true;
+    public interface IFluidHolderItem {
+        long getCapacity();
+        default FluidHolderItem getFluidHolder(Player player, InteractionHand hand){
+            return FluidHolderItem.getFluidHolder(player, hand);
         }
-        return false;
-    }
 
-    default boolean drain(ItemStack stack, FluidStack drain, boolean simulate) {
-        if (simulate) return drain.isFluidEqual(getFluidStack(stack)) && drain.getAmount() <= getFluidStack(stack).getAmount();
-        return drain(stack, drain.getAmount(), false);
-    }
-
-    default boolean drain(ItemStack stack, long drain, boolean simulate) {
-        if (simulate) return drain <= getFluidStack(stack).getAmount();
-        if (drain <= getFluidStack(stack).getAmount()) {
-            setFluidStack(stack, getFluidStack(stack).copyWithAmount(getFluidStack(stack).getAmount() - drain));
-            return true;
+        default FluidHolderItem getFluidHolder(Player player, AbstractContainerMenu inventory, ItemStack stack){
+            return FluidHolderItem.getFluidHolder(player, inventory, stack);
         }
-        return false;
-    }
-
-    static ItemStack create(FluidStack fluidStack, Item item) {
-        ItemStack itemStack = new ItemStack(item);
-        if (item instanceof FluidHolderItem holder) holder.setFluidStack(itemStack, fluidStack);
-        return itemStack;
-    }
-
-    static ItemStack createEmpty(Item item) {
-        ItemStack itemStack = new ItemStack(item);
-        if (item instanceof FluidHolderItem holder) holder.emptyHolder(itemStack);
-        return itemStack;
     }
 }

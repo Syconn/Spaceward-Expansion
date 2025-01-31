@@ -60,7 +60,7 @@ public class Canister extends Item implements EquipmentItem, FluidHolderItem {
         if (!player.level().isClientSide){
             if (getFluidStack(stack).getFluid().isSame(Fluids.LAVA)) {
                 if (!player.fireImmune()) player.setSecondsOnFire(3);
-                player.hurt(player.level().damageSources().inFire(), 2f);
+                player.hurt(player.level().damageSources().inFire(), 2f); // TODO CUSTOM DAMAGE TYPE
             } else if (getFluidStack(stack).getFluid().isSame(ModFluids.O2.get()) && !PlanetManager.getSettings(player).breathable() && !player.isCreative()) {
                 drain(stack, 1, false);
             }

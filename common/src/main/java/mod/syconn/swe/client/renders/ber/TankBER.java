@@ -1,9 +1,8 @@
 package mod.syconn.swe.client.renders.ber;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mod.syconn.swe.blockentities.TankBE;
-import mod.syconn.swe.extra.core.FluidHolder;
-import mod.syconn.swe.extra.util.RenderUtil;
+import mod.syconn.swe.common.blockentities.TankBE;
+import mod.syconn.swe.util.RenderUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;

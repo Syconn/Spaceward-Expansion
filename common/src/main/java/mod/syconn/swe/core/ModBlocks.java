@@ -21,11 +21,11 @@ public class ModBlocks {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(MOD, Registries.BLOCK);
 
-    public static final RegistrySupplier<Block> OXYGEN_COLLECTOR = registerBlockAndItem("oxygen_collector", () -> new OxygenCollector(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final RegistrySupplier<Block> CANISTER_FILLER = registerBlockAndItem("canister_filler", () -> new CanisterFiller(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final RegistrySupplier<Block> OXYGEN_DISPERSER = registerBlockAndItem("oxygen_disperser", () -> new OxygenDisperser(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
-    public static final RegistrySupplier<Block> FLUID_TANK = registerBlockAndItem("fluid_tank", () -> new FluidTank(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
-    public static final RegistrySupplier<Block> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new FluidPipe(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE)));
+    public static final RegistrySupplier<Block> OXYGEN_COLLECTOR = registerBlockAndItem("oxygen_collector", () -> new OxygenCollectorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistrySupplier<Block> CANISTER_FILLER = registerBlockAndItem("canister_filler", () -> new CanisterFillerBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistrySupplier<Block> OXYGEN_DISPERSER = registerBlockAndItem("oxygen_disperser", () -> new OxygenDisperserBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
+    public static final RegistrySupplier<Block> FLUID_TANK = registerBlockAndItem("fluid_tank", () -> new FluidTankBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
+    public static final RegistrySupplier<Block> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new FluidPipeBlock(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE)));
     public static final RegistrySupplier<Block> DISPERSED_OXYGEN = BLOCKS.register("dispersed_oxygen", () -> new DispersedAirBlock(BlockBehaviour.Properties.copy(Blocks.AIR).noCollission().noLootTable().air().isViewBlocking((state, level, pos) -> false)));
     public static final RegistrySupplier<LiquidBlock> O2_FLUID_BLOCK = BLOCKS.register("oxygen", () -> new ArchitecturyLiquidBlock(ModFluids.O2, BlockBehaviour.Properties.copy(Blocks.LAVA).lightLevel(blockstate -> 0)));
 
