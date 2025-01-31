@@ -11,12 +11,12 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.nbt.CompoundTag;
 
 @SuppressWarnings("UnstableApiUsage")
-public class FluidHolderBlockWrapper extends FluidHolderBlock {
+public class FluidHolderWrapper extends FluidHolderBlock {
 
     private final Storage<FluidVariant> storage;
     private final StorageView<FluidVariant> storageView;
 
-    public FluidHolderBlockWrapper(Storage<FluidVariant> storage) {
+    public FluidHolderWrapper(Storage<FluidVariant> storage) {
         this.storage = storage;
         this.storageView = storage.iterator().next();
     }

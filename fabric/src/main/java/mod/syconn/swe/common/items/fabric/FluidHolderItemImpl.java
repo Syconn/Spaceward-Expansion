@@ -4,20 +4,27 @@ import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.fabric.FluidStackHooksFabric;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.common.items.FluidHolderItem;
+import mod.syconn.swe.util.FluidHolderWrapper;
 import mod.syconn.swe.util.ISnapshotParticipant;
 import net.fabricmc.fabric.api.transfer.v1.context.ContainerItemContext;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
+import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorageUtil;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
+import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
 import net.fabricmc.fabric.api.transfer.v1.storage.StoragePreconditions;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -27,11 +34,24 @@ import java.util.List;
 public class FluidHolderItemImpl {
 
     public static FluidHolderItem getFluidHolder(Player player, InteractionHand hand) {
-        return (FabricFluidHolderItem) ContainerItemContext.ofPlayerHand(player, hand).find(FluidStorage.ITEM);
+        return getFromContext(ContainerItemContext.ofPlayerHand(player, hand));
     }
 
     public static FluidHolderItem getFluidHolder(Player player, @Nullable AbstractContainerMenu inventory, ItemStack stack) {
-        return (FabricFluidHolderItem) ContainerItemContext.ofPlayerCursor(player, inventory).find(FluidStorage.ITEM);
+        return getFromContext(ContainerItemContext.ofPlayerCursor(player, inventory));
+    }
+
+    public static FluidHolderItem getFluidHolder(Container container, int slot, ItemStack stack) {
+        return getFromContext(ContainerItemContext.ofSingleSlot(InventoryStorage.of(container, null).getSlot(slot)));
+    }
+
+    private static FluidHolderItem getFromContext(ContainerItemContext context) {
+        Storage<FluidVariant> storage = context.find(FluidStorage.ITEM);
+        if (storage != null) {
+            if (context.getItemVariant().getItem() instanceof FluidHolderItem.IFluidHolderItem) return (FluidHolderItem) storage;
+            return new FluidHolderWrapper(storage);
+        }
+        return null;
     }
 
     public static class FabricFluidHolderItem extends FluidHolderItem implements SingleSlotStorage<FluidVariant>, ISnapshotParticipant<ResourceAmount<FluidVariant>> {

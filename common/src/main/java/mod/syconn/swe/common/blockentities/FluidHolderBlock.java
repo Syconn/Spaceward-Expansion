@@ -25,7 +25,6 @@ import java.util.function.Consumer;
 public abstract class FluidHolderBlock extends FluidHolderItem {
 
     public abstract void load(CompoundTag tag);
-
     public abstract void save(CompoundTag tag);
 
     @Environment(EnvType.SERVER)
@@ -62,7 +61,7 @@ public abstract class FluidHolderBlock extends FluidHolderItem {
 
     @Nullable
     @ExpectPlatform
-    public static FluidHolderBlock wrapFluidHolderBlock(Level level, BlockPos pos, @Nullable Direction face) {
+    public static FluidHolderBlock getOrWrapFluidHolder(Level level, BlockPos pos, @Nullable Direction face) {
         throw new AssertionError();
     }
 

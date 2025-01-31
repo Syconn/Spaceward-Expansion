@@ -3,6 +3,7 @@ package mod.syconn.swe.common.items.forge;
 import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.common.items.FluidHolderItem;
+import mod.syconn.swe.util.FluidHolderWrapper;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -19,16 +20,25 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 public class FluidHolderItemImpl {
 
     public static FluidHolderItem getFluidHolder(Player player, InteractionHand hand) {
-        return (FluidHolderItem) player.getItemInHand(hand).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElseThrow(RuntimeException::new);
+        return getFromFluidHandlerItem(player.getItemInHand(hand).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve());
     }
 
     public static FluidHolderItem getFluidHolder(Player player, @Nullable AbstractContainerMenu inventory, ItemStack stack) {
-        return (FluidHolderItem) stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).orElseThrow(RuntimeException::new);
+        return getFromFluidHandlerItem(stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve());
+    }
+
+    private static FluidHolderItem getFromFluidHandlerItem(Optional<IFluidHandlerItem> handler) {
+        if (handler.isPresent()) {
+            if (handler.get() instanceof FluidHolderItem) return (FluidHolderItem) handler.get();
+            return new FluidHolderWrapper(handler.get(), 0);
+        }
+        return null;
     }
 
     ///  Clone of {@link FluidHandlerItemStack} for FluidHolders

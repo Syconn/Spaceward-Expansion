@@ -4,7 +4,7 @@ import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.fabric.FluidStackHooksFabric;
 import mod.syconn.swe.common.blockentities.FluidHolderBlock;
 import mod.syconn.swe.common.blockentities.InteractableFluidHolderBlock;
-import mod.syconn.swe.util.FluidHolderBlockWrapper;
+import mod.syconn.swe.util.FluidHolderWrapper;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidStorage;
 import net.fabricmc.fabric.api.transfer.v1.fluid.FluidVariant;
 import net.fabricmc.fabric.api.transfer.v1.fluid.base.SingleFluidStorage;
@@ -33,12 +33,12 @@ public class FluidHolderBlockImpl {
     }
 
     @Nullable
-    public static FluidHolderBlock wrapFluidHolderBlock(Level level, BlockPos pos, @Nullable Direction face) {
+    public static FluidHolderBlock getOrWrapFluidHolder(Level level, BlockPos pos, @Nullable Direction face) {
         Storage<FluidVariant> storage = FluidStorage.SIDED.find(level, pos, face);
         if (storage != null) {
             if (level.getBlockEntity(pos) instanceof FluidHolderBlock.IFluidHolderBlock block) return block.getFluidHolder();
             if (level.getBlockEntity(pos) instanceof InteractableFluidHolderBlock.IInteractableFluidHolderBlock block) return block.getFluidHolder();
-            return new FluidHolderBlockWrapper(storage);
+            return new FluidHolderWrapper(storage);
         }
         return null;
     }

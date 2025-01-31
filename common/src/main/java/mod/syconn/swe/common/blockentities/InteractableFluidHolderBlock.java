@@ -36,7 +36,7 @@ public abstract class InteractableFluidHolderBlock extends FluidHolderBlock {
 
     public void handlePush(Level level, BlockPos blockPos) {
         for (Direction direction : Direction.values()) {
-            FluidHolderBlock fluidHolder = FluidHolderBlock.wrapFluidHolderBlock(level, blockPos.relative(direction), direction.getOpposite());
+            FluidHolderBlock fluidHolder = FluidHolderBlock.getOrWrapFluidHolder(level, blockPos.relative(direction), direction.getOpposite());
             if (getSideInteraction(direction).isPush() && fluidHolder != null) {
                 long push = fluidHolder.push(getFluidStack().copyWithAmount(speed), true);
                 fluidHolder.push(pull(Math.min(speed, push), false), false);
@@ -46,7 +46,7 @@ public abstract class InteractableFluidHolderBlock extends FluidHolderBlock {
 
     public void handlePull(Level level, BlockPos blockPos) {
         for (Direction direction : Direction.values()) {
-            FluidHolderBlock fluidHolder = FluidHolderBlock.wrapFluidHolderBlock(level, blockPos.relative(direction), direction.getOpposite());
+            FluidHolderBlock fluidHolder = FluidHolderBlock.getOrWrapFluidHolder(level, blockPos.relative(direction), direction.getOpposite());
             if (getSideInteraction(direction).isPull() && fluidHolder != null) {
                 long push = push(getFluidStack().copyWithAmount(speed), true);
                 push(fluidHolder.pull(Math.min(speed, push), false), false);

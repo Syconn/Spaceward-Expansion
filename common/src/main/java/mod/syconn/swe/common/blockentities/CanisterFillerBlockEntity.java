@@ -1,26 +1,22 @@
 package mod.syconn.swe.common.blockentities;
 
 import mod.syconn.swe.common.items.Canister;
+import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.core.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 
-public class CanisterFillerBlockEntity extends BlockEntity {
+public class CanisterFillerBlockEntity extends SyncedBE {
 
     private final int fillSpeed = 10;
-    private NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
+    private final NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
 
     public CanisterFillerBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
         super(ModBlockEntities.FILLER.get(), p_155229_, p_155230_);
@@ -30,8 +26,8 @@ public class CanisterFillerBlockEntity extends BlockEntity {
         for (int i = 0; i < 4; i++) {
             if (!e.items.get(i).isEmpty()) {
                 ItemStack itemStack = e.items.get(i);
-                FluidHandlerItem itemHandler = Services.FLUID_HANDLER.get(itemStack);
-                FluidHandler handler = Services.FLUID_HANDLER.get(level, pos.below(), Direction.UP);
+                FluidHolderItem itemHandler = FluidHolderItem;
+                FluidHolderBlock handler = Services.FLUID_HANDLER.get(level, pos.below(), Direction.UP);
                 if (itemHandler != null) {
                     FluidHolder fluidHolder = itemHandler.getFluidHolder();
                     if (itemHandler.getTankCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(handler.getFluidHolder())) {
@@ -51,7 +47,7 @@ public class CanisterFillerBlockEntity extends BlockEntity {
             for (int i = 0; i < 4; i++) {
                 if (items.get(i).isEmpty()) {
                     items.set(i, stack.copy());
-                    update();
+                    markDirty();
                     return true;
                 }
             }
@@ -63,11 +59,11 @@ public class CanisterFillerBlockEntity extends BlockEntity {
         for (int i = 0; i < 4; i++) {
             if (!items.get(i).isEmpty()) {
                 ItemStack stack = items.set(i, ItemStack.EMPTY);
-                update();
+                markDirty();
                 return stack;
             }
         }
-        update();
+        markDirty();
         return ItemStack.EMPTY;
     }
 
@@ -75,29 +71,14 @@ public class CanisterFillerBlockEntity extends BlockEntity {
         return items.get(i);
     }
 
-//    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) { TODO PROBABLY UNESSACARY
-//        super.saveAdditional(pTag, pRegistries);
-//        ContainerHelper.saveAllItems(pTag, this.items, pRegistries);
-//    }
-//
-//    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-//        super.loadAdditional(pTag, pRegistries);
-//        this.items = NonNullList.withSize(4, ItemStack.EMPTY);
-//        ContainerHelper.loadAllItems(pTag, this.items, pRegistries);
-//    }
-//
-//    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-//        CompoundTag tag = super.getUpdateTag(pRegistries);
-//        ContainerHelper.saveAllItems(tag, this.items, pRegistries);
-//        return tag;
-//    }
-
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
+        ContainerHelper.saveAllItems(pTag, this.items);
     }
 
-    protected void update(){
-        setChanged();
-        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+    protected void load(CompoundTag pTag) {
+        super.loadAdditional(pTag);
+        this.items = NonNullList.withSize(4, ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(pTag, this.items);
     }
 }

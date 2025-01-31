@@ -4,7 +4,7 @@ import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
 import mod.syconn.swe.common.blockentities.FluidHolderBlock;
 import mod.syconn.swe.common.blockentities.InteractableFluidHolderBlock;
-import mod.syconn.swe.util.FluidHolderBlockWrapper;
+import mod.syconn.swe.util.FluidHolderWrapper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -33,12 +33,12 @@ public class FluidHolderBlockImpl {
     }
 
     @Nullable
-    public static FluidHolderBlock wrapFluidHolderBlock(Level level, BlockPos pos, @Nullable Direction face) {
+    public static FluidHolderBlock getOrWrapFluidHolder(Level level, BlockPos pos, @Nullable Direction face) {
         Optional<IFluidHandler> fluidHandler = level.getBlockEntity(pos).getCapability(ForgeCapabilities.FLUID_HANDLER, face).resolve();
         if (fluidHandler.isPresent()) {
             if (level.getBlockEntity(pos) instanceof FluidHolderBlock.IFluidHolderBlock block) return block.getFluidHolder();
             if (level.getBlockEntity(pos) instanceof InteractableFluidHolderBlock.IInteractableFluidHolderBlock block) return block.getFluidHolder();
-            return new FluidHolderBlockWrapper(fluidHandler.get(), 0);
+            return new FluidHolderWrapper(fluidHandler.get(), 0);
         }
         return null;
     }

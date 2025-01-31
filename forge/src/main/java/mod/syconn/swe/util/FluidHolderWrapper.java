@@ -7,11 +7,11 @@ import mod.syconn.swe.common.blockentities.FluidHolderBlock;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
-public class FluidHolderBlockWrapper extends FluidHolderBlock {
+public class FluidHolderWrapper extends FluidHolderBlock {
     private final IFluidHandler fluidHandler;
     private final int tank;
 
-    public FluidHolderBlockWrapper(IFluidHandler fluidHandler, int tank) {
+    public FluidHolderWrapper(IFluidHandler fluidHandler, int tank) {
         this.fluidHandler = fluidHandler;
         this.tank = tank;
     }

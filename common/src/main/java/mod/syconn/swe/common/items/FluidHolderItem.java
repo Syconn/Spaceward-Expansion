@@ -7,6 +7,7 @@ import dev.architectury.utils.EnvExecutor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -32,6 +33,11 @@ public abstract class FluidHolderItem {
 
     @ExpectPlatform
     public static FluidHolderItem getFluidHolder(Player player, @Nullable AbstractContainerMenu inventory, ItemStack stack) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static FluidHolderItem getFluidHolder(Container container, int slot, ItemStack stack) {
         throw new AssertionError();
     }
 

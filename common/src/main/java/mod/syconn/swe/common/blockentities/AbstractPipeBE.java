@@ -5,12 +5,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.UUID;
 
-public abstract class AbstractPipeBE extends SyncedBE {
+public abstract class AbstractPipeBE extends BlockEntity {
 
     private UUID networkID = null;
 
@@ -20,7 +21,7 @@ public abstract class AbstractPipeBE extends SyncedBE {
 
     public void setNetworkID(UUID uuid) {
         this.networkID = uuid;
-        markDirty();
+        setChanged();
     }
 
     public UUID getNetworkID() {
