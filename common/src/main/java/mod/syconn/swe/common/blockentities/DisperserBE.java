@@ -1,25 +1,16 @@
 package mod.syconn.swe.common.blockentities;
 
-import mod.syconn.swe.blockentities.base.AbstractTankBE;
-import mod.syconn.swe.blocks.DispersedAirBlock;
-import mod.syconn.swe.server.container.DisperserMenu;
-import mod.syconn.swe.extra.BlockInfo;
-import mod.syconn.swe.extra.core.FluidAction;
-import mod.syconn.swe.extra.data.menu.PositionMenuData;
-import mod.syconn.swe.extra.data.savedData.AirBubblesSavedData;
-import mod.syconn.swe.extra.helpers.NbtHelper;
+import mod.syconn.swe.common.blocks.DispersedAirBlock;
+import mod.syconn.swe.common.blocks.OxygenDisperserBlock;
 import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
+import mod.syconn.swe.server.savedData.AirBubblesSavedData;
+import mod.syconn.swe.util.TagUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.ticks.TickPriority;
@@ -28,9 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static mod.syconn.swe.blocks.OxygenDisperser.addBlock;
-
-public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockInfo {
+public class DisperserBE extends AbstractTankBE {
 
     public List<BlockPos> list = new ArrayList<>();
     public int maxFill = 20; // TODO CONFIG THIS SHIT ALSO REDO
@@ -43,33 +32,29 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     private boolean enabled = true;
 
     public DisperserBE(BlockPos p_155229_, BlockState p_155230_) {
-        super(ModBlockEntities.DISPERSER.get(), p_155229_, p_155230_, 1000, 15);
-//        this.tank = new C(1000, ){
-//            public void onContentsChanged() { markDirty(); }
-//            public boolean isFluidValid(FluidStack stack) { return validator.test(stack) && stack.getFluid() == Registration.O2.get(); }
-//        };
+        super(ModBlockEntities.DISPERSER.get(), p_155229_, p_155230_, 15, 1000);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, DisperserBE e) {
         if (e.enabled) {
-            if (e.tank.getFluidHolder().getAmount() > 0) {
+            if (e.tank.getFluidStack().getAmount() > 0) {
                 e.testRate--;
                 if (e.testRate <= 0) {
                     e.testRate = 100;
-                    addBlock(level, pos.relative(Direction.UP), pos, 1);
+                    OxygenDisperserBlock.addBlock(level, pos.relative(Direction.UP), pos, 1);
                     level.scheduleTick(pos, ModBlocks.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
                 }
             } else AirBubblesSavedData.get((ServerLevel) level).remove(level.dimension(), e.uuid);
 
             if (e.active) {
-                if (e.list.size() / e.rate > e.tank.getTankCapacity()) {
+                if (e.list.size() / e.rate > e.tank.getCapacity()) {
                     e.active = false;
                     e.list.clear();
                     AirBubblesSavedData.get((ServerLevel) level).remove(level.dimension(), e.uuid);
                 } else {
                     if (e.lowerRate <= 0) {
                         e.lowerRate = 10;
-                        e.tank.drain(e.list.size() / e.rate, FluidAction.EXECUTE);
+                        e.tank.pull(e.list.size() / e.rate, true);
                         e.o2Usage = e.list.size() / e.rate;
                     } else e.lowerRate--;
                 }
@@ -93,13 +78,13 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
                 list.clear();
                 AirBubblesSavedData.get((ServerLevel) level).remove(level.dimension(), uuid);
             } else {
-                if (list.size() / rate > tank.getFluidHolder().getAmount()) {
+                if (list.size() / rate > tank.getFluidStack().getAmount()) {
                     active = false;
                     list.clear();
                     AirBubblesSavedData.get((ServerLevel) level).remove(level.dimension(), uuid);
                 } else {
                     active = true;
-                    tank.drain(list.size() / rate, FluidAction.EXECUTE);
+                    tank.pull(list.size() / rate, true);
                     AirBubblesSavedData.get((ServerLevel) level).set(level.dimension(), uuid, list);
                 }
             }
@@ -108,13 +93,15 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
     }
 
     public void toggleEnabled() {
-        this.enabled = !this.enabled;
-        if (this.enabled && tank.getFluidHolder().getAmount() > 0) {
-            testRate = 100;
-            addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
-            level.scheduleTick(worldPosition, ModBlocks.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
+        if (level != null) {
+            this.enabled = !this.enabled;
+            if (this.enabled && tank.getFluidStack().getAmount() > 0) {
+                testRate = 100;
+                OxygenDisperserBlock.addBlock(level, worldPosition.relative(Direction.UP), worldPosition, 1);
+                level.scheduleTick(worldPosition, ModBlocks.OXYGEN_DISPERSER.get(), 25, TickPriority.NORMAL);
+            }
+            markDirty();
         }
-        markDirty();
     }
 
     public boolean isEnabled() {
@@ -132,9 +119,9 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
         markDirty();
     }
 
-    protected void saveAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.saveAdditional(pTag, pRegistries);
-        pTag.put("list", NbtHelper.writePositionList(list));
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
+        pTag.put("list", TagUtil.writeBlockPositions(list));
         pTag.putInt("fill", maxFill);
         pTag.putBoolean("active", active);
         pTag.putBoolean("enabled", enabled);
@@ -142,44 +129,13 @@ public class DisperserBE extends AbstractTankBE implements MenuProvider, BlockIn
         if (this.uuid != null) pTag.putUUID("DisperserUUID", this.uuid);
     }
 
-    protected void loadAdditional(CompoundTag pTag, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(pTag, pRegistries);
-        list = NbtHelper.readPositionList(pTag.getCompound("list"));
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
+        list = TagUtil.readBlockPositions(pTag.getCompound("list"));
         maxFill = pTag.getInt("fill");
         active = pTag.getBoolean("active");
         enabled = pTag.getBoolean("enabled");
         o2Usage = pTag.getInt("usage");
         if(pTag.hasUUID("DisperserUUID")) this.uuid = pTag.getUUID("DisperserUUID");
-    }
-
-    public CompoundTag getUpdateTag(HolderLookup.Provider pRegistries) {
-        CompoundTag tag = super.getUpdateTag(pRegistries);
-        tag.put("list", NbtHelper.writePositionList(list));
-        tag.putInt("fill", maxFill);
-        tag.putBoolean("active", active);
-        tag.putBoolean("enabled", enabled);
-        tag.putInt("usage", o2Usage);
-        if (this.uuid != null) tag.putUUID("DisperserUUID", this.uuid);
-        return tag;
-    }
-
-    public Component getDisplayName() {
-        return Component.literal("Oxygen Disperser");
-    }
-
-    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new DisperserMenu(pContainerId, pPlayerInventory, new PositionMenuData(worldPosition));
-    }
-
-    public int getFluidRate() {
-        return o2Usage;
-    }
-
-    public int getPowerRate() {
-        return 0;
-    }
-
-    public List<Component> getExtraInfo() {
-        return List.of(Component.literal(""), Component.literal("Actively"));
     }
 }

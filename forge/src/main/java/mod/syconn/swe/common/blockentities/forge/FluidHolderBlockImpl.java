@@ -67,6 +67,10 @@ public class FluidHolderBlockImpl {
             return FluidStackHooksForge.fromForge(tank.getFluid());
         }
 
+        public long getCapacity() {
+            return tank.getCapacity();
+        }
+
         public boolean isEmpty() {
             return tank.isEmpty();
         }

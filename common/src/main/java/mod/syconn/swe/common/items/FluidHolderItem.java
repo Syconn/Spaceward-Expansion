@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class FluidHolderItem {
 
     public abstract FluidStack getFluidStack();
+    public abstract long getCapacity();
     public abstract boolean isEmpty();
     public abstract void setFluidStack(FluidStack fluidStack);
 
@@ -37,7 +38,7 @@ public abstract class FluidHolderItem {
     }
 
     @ExpectPlatform
-    public static FluidHolderItem getFluidHolder(Container container, int slot, ItemStack stack) {
+    public static FluidHolderItem getFluidHolder(Container container, int slot) {
         throw new AssertionError();
     }
 

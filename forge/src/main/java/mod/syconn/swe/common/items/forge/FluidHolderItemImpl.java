@@ -6,6 +6,7 @@ import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.util.FluidHolderWrapper;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -31,6 +32,10 @@ public class FluidHolderItemImpl {
 
     public static FluidHolderItem getFluidHolder(Player player, @Nullable AbstractContainerMenu inventory, ItemStack stack) {
         return getFromFluidHandlerItem(stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve());
+    }
+
+    public static FluidHolderItem getFluidHolder(Container container, int slot) {
+        return getFromFluidHandlerItem(container.getItem(slot).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve());
     }
 
     private static FluidHolderItem getFromFluidHandlerItem(Optional<IFluidHandlerItem> handler) {
@@ -139,6 +144,10 @@ public class FluidHolderItemImpl {
 
         public dev.architectury.fluid.FluidStack getFluidStack() {
             return FluidStackHooksForge.fromForge(getFluid());
+        }
+
+        public long getCapacity() {
+            return capacity;
         }
 
         public boolean isEmpty() {

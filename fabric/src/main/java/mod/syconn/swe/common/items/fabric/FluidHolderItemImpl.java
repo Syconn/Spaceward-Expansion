@@ -41,7 +41,7 @@ public class FluidHolderItemImpl {
         return getFromContext(ContainerItemContext.ofPlayerCursor(player, inventory));
     }
 
-    public static FluidHolderItem getFluidHolder(Container container, int slot, ItemStack stack) {
+    public static FluidHolderItem getFluidHolder(Container container, int slot) {
         return getFromContext(ContainerItemContext.ofSingleSlot(InventoryStorage.of(container, null).getSlot(slot)));
     }
 

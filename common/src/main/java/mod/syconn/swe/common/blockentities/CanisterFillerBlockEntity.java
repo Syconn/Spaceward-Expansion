@@ -1,5 +1,6 @@
 package mod.syconn.swe.common.blockentities;
 
+import dev.architectury.fluid.FluidStack;
 import mod.syconn.swe.common.items.Canister;
 import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.core.ModBlockEntities;
@@ -8,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,7 +18,7 @@ import net.minecraft.world.level.material.Fluids;
 public class CanisterFillerBlockEntity extends SyncedBE {
 
     private final int fillSpeed = 10;
-    private final NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
+    private final SimpleContainer container = new SimpleContainer(4);
 
     public CanisterFillerBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
         super(ModBlockEntities.FILLER.get(), p_155229_, p_155230_);
@@ -24,12 +26,12 @@ public class CanisterFillerBlockEntity extends SyncedBE {
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, CanisterFillerBlockEntity e) {
         for (int i = 0; i < 4; i++) {
-            if (!e.items.get(i).isEmpty()) {
-                ItemStack itemStack = e.items.get(i);
-                FluidHolderItem itemHandler = FluidHolderItem;
-                FluidHolderBlock handler = Services.FLUID_HANDLER.get(level, pos.below(), Direction.UP);
-                if (itemHandler != null) {
-                    FluidHolder fluidHolder = itemHandler.getFluidHolder();
+            if (!e.container.getItem(i).isEmpty()) {
+                ItemStack itemStack = e.container.getItem(i);
+                FluidHolderItem itemHandler = FluidHolderItem.getFluidHolder(e.container, i);
+                FluidHolderBlock blockHandler = FluidHolderBlock.getOrWrapFluidHolder(level, pos.below(), Direction.UP);
+                if (itemHandler != null && blockHandler != null) {
+                    FluidStack fluidStack = itemHandler.getFluidHolder();
                     if (itemHandler.getTankCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(handler.getFluidHolder())) {
                         FluidHolder resource = handler.drain(e.fillSpeed, FluidAction.EXECUTE);
                         handler.fill(resource.copyWith(resource.getAmount() - itemHandler.fill(resource, FluidAction.EXECUTE)), FluidAction.EXECUTE);
@@ -45,8 +47,8 @@ public class CanisterFillerBlockEntity extends SyncedBE {
         FluidHandler handler = Services.FLUID_HANDLER.get(level, worldPosition.below(), Direction.UP);
         if (Services.FLUID_HANDLER.has(stack) && stack.getItem() instanceof Canister && itemHandler.getFluidHolder().is(Fluids.EMPTY) || itemHandler.getFluidHolder().is(handler.getFluidHolder())) {
             for (int i = 0; i < 4; i++) {
-                if (items.get(i).isEmpty()) {
-                    items.set(i, stack.copy());
+                if (container.getItem(i).isEmpty()) {
+                    container.setItem(i, stack.copy());
                     markDirty();
                     return true;
                 }
@@ -57,8 +59,8 @@ public class CanisterFillerBlockEntity extends SyncedBE {
 
     public ItemStack removeCanister() {
         for (int i = 0; i < 4; i++) {
-            if (!items.get(i).isEmpty()) {
-                ItemStack stack = items.set(i, ItemStack.EMPTY);
+            if (!container.getItem(i).isEmpty()) {
+                ItemStack stack = container.removeItemNoUpdate(i);
                 markDirty();
                 return stack;
             }
@@ -68,17 +70,16 @@ public class CanisterFillerBlockEntity extends SyncedBE {
     }
 
     public ItemStack getCanister(int i) {
-        return items.get(i);
+        return container.getItem(i);
     }
 
-    protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
-        ContainerHelper.saveAllItems(pTag, this.items);
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("Inventory", this.container.createTag());
     }
 
-    protected void load(CompoundTag pTag) {
-        super.loadAdditional(pTag);
-        this.items = NonNullList.withSize(4, ItemStack.EMPTY);
-        ContainerHelper.loadAllItems(pTag, this.items);
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        if (tag.contains("Inventory", 9)) this.container.fromTag(tag.getList("Inventory", 10));
     }
 }

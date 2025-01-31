@@ -58,6 +58,10 @@ public class FluidHolderBlockImpl {
             return FluidStackHooksFabric.fromFabric(tank);
         }
 
+        public long getCapacity() {
+            return tank.getCapacity();
+        }
+
         public boolean isEmpty() {
             return tank.isResourceBlank();
         }
