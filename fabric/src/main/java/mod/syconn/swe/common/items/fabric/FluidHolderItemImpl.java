@@ -62,14 +62,6 @@ public class FluidHolderItemImpl {
         return null;
     }
 
-    public static InteractionResult performContainerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
-        Storage<FluidVariant> storage = FluidStorage.SIDED.find(level, pos, face);
-        return storage != null && FluidStorageUtil.interactWithFluidStorage(storage, player, hand) ? InteractionResult.SUCCESS : InteractionResult.PASS;
-    }
-
-    public static InteractionResult performPlayerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
-    }
-
     public static class FabricFluidHolderItem extends FluidHolderItem implements SingleSlotStorage<FluidVariant>, ISnapshotParticipant<ResourceAmount<FluidVariant>> {
         private final String FLUID_NBT_KEY = Constants.MOD + ":Fluid";
         private final List<ResourceAmount<FluidVariant>> snapshots = new ArrayList<>();

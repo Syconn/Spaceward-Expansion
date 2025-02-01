@@ -7,15 +7,11 @@ import dev.architectury.utils.EnvExecutor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class FluidHolderItem {
@@ -23,6 +19,7 @@ public abstract class FluidHolderItem {
     public abstract FluidStack getFluidStack();
     public abstract long getCapacity();
     public abstract boolean isEmpty();
+    public abstract ItemStack getContainer();
     public abstract void setFluidStack(FluidStack fluidStack);
 
     /// Returns the remaining amount of fluid from the amount added
@@ -30,6 +27,10 @@ public abstract class FluidHolderItem {
 
     /// This method returns a pair containing the type of fluid and the amount that was removed.
     public abstract FluidStack pull(long amount, boolean simulate);
+
+    public boolean isFull() {
+        return getCapacity() <= getFluidStack().getAmount();
+    }
 
     @ExpectPlatform
     public static boolean hasFluidHolder(ItemStack stack) {
@@ -48,16 +49,6 @@ public abstract class FluidHolderItem {
 
     @ExpectPlatform
     public static FluidHolderItem getFluidHolder(Container container, int slot) {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static InteractionResult performPlayerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static InteractionResult performContainerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
         throw new AssertionError();
     }
 

@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -26,6 +27,10 @@ public abstract class FluidHolderBlock extends FluidHolderItem {
 
     public abstract void load(CompoundTag tag);
     public abstract void save(CompoundTag tag);
+
+    public ItemStack getContainer() {
+        return ItemStack.EMPTY;
+    }
 
     @Environment(EnvType.SERVER)
     public void sync(BlockEntity owner) {

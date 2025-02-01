@@ -54,10 +54,6 @@ public class FluidHolderItemImpl {
         return null;
     }
 
-    public static InteractionResult performPlayerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
-        return FluidUtil.interactWithFluidHandler(player, hand, level, pos, face) ? InteractionResult.SUCCESS : InteractionResult.PASS;
-    }
-
     ///  Clone of {@link FluidHandlerItemStack} for FluidHolders
     public static class ForgeFluidHolderItem extends FluidHolderItem implements IFluidHandlerItem, ICapabilityProvider {
 

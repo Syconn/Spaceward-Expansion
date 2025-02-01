@@ -3,10 +3,10 @@ package mod.syconn.swe.common.blockentities;
 import dev.architectury.fluid.FluidStack;
 import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.core.ModBlockEntities;
+import mod.syconn.swe.util.FluidUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -20,12 +20,9 @@ public class TankBE extends AbstractTankBE {
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, TankBE e) {
         if (!level.isClientSide) {
-            ItemStack itemStack = e.container.getItem(0);
-            if (FluidHolderItem.hasFluidHolder(itemStack)) FluidHolderItem.performFluidTransfer(e.tank, itemStack, e.container, 0, 1, e);
-
-            itemStack = e.getItem(2);
-            if (Services.FLUID_HANDLER.has(itemStack)) Services.FLUID_HELPER.fillItemStackFromBlock(e, e.tank, itemStack, e.fillSpeed, 2);
-
+            if (FluidHolderItem.hasFluidHolder(e.container.getItem(0))) FluidUtil.performInventoryTransfer(e.tank, e.container, 0, 1);
+            FluidHolderItem fluidHolder = FluidHolderItem.getFluidHolder(e.container, 2);
+            if (fluidHolder != null) FluidUtil.transferFluid(fluidHolder, e.tank, FluidStack.bucketAmount() / 10);
             e.tank.handlePush(level, pos);
             e.tank.handlePull(level, pos);
             e.markDirty();
