@@ -27,15 +27,14 @@ public class CanisterFillerBlockEntity extends SyncedBE {
     public static void serverTick(Level level, BlockPos pos, BlockState state, CanisterFillerBlockEntity e) {
         for (int i = 0; i < 4; i++) {
             if (!e.container.getItem(i).isEmpty()) {
-                ItemStack itemStack = e.container.getItem(i);
                 FluidHolderItem itemHandler = FluidHolderItem.getFluidHolder(e.container, i);
                 FluidHolderBlock blockHandler = FluidHolderBlock.getOrWrapFluidHolder(level, pos.below(), Direction.UP);
                 if (itemHandler != null && blockHandler != null) {
-                    FluidStack fluidStack = itemHandler.getFluidHolder();
-                    if (itemHandler.getTankCapacity() >= fluidHolder.getAmount() + e.fillSpeed && fluidHolder.is(Fluids.EMPTY) || fluidHolder.is(handler.getFluidHolder())) {
-                        FluidHolder resource = handler.drain(e.fillSpeed, FluidAction.EXECUTE);
-                        handler.fill(resource.copyWith(resource.getAmount() - itemHandler.fill(resource, FluidAction.EXECUTE)), FluidAction.EXECUTE);
-                        e.update();
+                    FluidStack fluidStack = itemHandler.getFluidStack();
+                    if (fluidStack.getFluid().isSame(Fluids.EMPTY) || fluidStack.isFluidEqual(blockHandler.getFluidStack())) {
+                        FluidStack pull = blockHandler.pull(e.fillSpeed, true);
+                        itemHandler.push(blockHandler.pull(pull.getAmount(), false), false);
+                        e.markDirty();
                     }
                 }
             }
@@ -43,9 +42,7 @@ public class CanisterFillerBlockEntity extends SyncedBE {
     }
 
     public boolean addCanister(ItemStack stack) {
-        FluidHandlerItem itemHandler = Services.FLUID_HANDLER.get(stack);
-        FluidHandler handler = Services.FLUID_HANDLER.get(level, worldPosition.below(), Direction.UP);
-        if (Services.FLUID_HANDLER.has(stack) && stack.getItem() instanceof Canister && itemHandler.getFluidHolder().is(Fluids.EMPTY) || itemHandler.getFluidHolder().is(handler.getFluidHolder())) {
+        if (FluidHolderItem.hasFluidHolder(stack)) {
             for (int i = 0; i < 4; i++) {
                 if (container.getItem(i).isEmpty()) {
                     container.setItem(i, stack.copy());

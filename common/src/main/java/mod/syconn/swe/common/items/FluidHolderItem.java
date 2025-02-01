@@ -7,11 +7,15 @@ import dev.architectury.utils.EnvExecutor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class FluidHolderItem {
@@ -28,6 +32,11 @@ public abstract class FluidHolderItem {
     public abstract FluidStack pull(long amount, boolean simulate);
 
     @ExpectPlatform
+    public static boolean hasFluidHolder(ItemStack stack) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static FluidHolderItem getFluidHolder(Player player, InteractionHand hand) {
         throw new AssertionError();
     }
@@ -39,6 +48,16 @@ public abstract class FluidHolderItem {
 
     @ExpectPlatform
     public static FluidHolderItem getFluidHolder(Container container, int slot) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static InteractionResult performPlayerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static InteractionResult performContainerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
         throw new AssertionError();
     }
 

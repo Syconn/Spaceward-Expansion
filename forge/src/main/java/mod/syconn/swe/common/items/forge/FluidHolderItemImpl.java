@@ -4,18 +4,22 @@ import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.util.FluidHolderWrapper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +29,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public class FluidHolderItemImpl {
+
+    public static boolean hasFluidHolder(ItemStack stack) {
+        return stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent();
+    }
 
     public static FluidHolderItem getFluidHolder(Player player, InteractionHand hand) {
         return getFromFluidHandlerItem(player.getItemInHand(hand).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve());
@@ -44,6 +52,10 @@ public class FluidHolderItemImpl {
             return new FluidHolderWrapper(handler.get(), 0);
         }
         return null;
+    }
+
+    public static InteractionResult performPlayerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
+        return FluidUtil.interactWithFluidHandler(player, hand, level, pos, face) ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     ///  Clone of {@link FluidHandlerItemStack} for FluidHolders

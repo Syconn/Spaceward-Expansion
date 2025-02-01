@@ -40,13 +40,13 @@ public class FluidPipeBE extends AbstractPipeBE {
         level.setBlock(worldPosition, getBlockState().setValue(AbstractPipeBlock.fromDirection(direction), type), 2);
     }
 
-    protected void saveClientData(CompoundTag tag, HolderLookup.Provider pRegistries) {
-        super.saveClientData(tag, pRegistries);
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
         if (fluid != null) tag.putInt("fluid", BuiltInRegistries.FLUID.getId(fluid));
     }
 
-    protected void loadClientData(CompoundTag tag, HolderLookup.Provider pRegistries) {
-        super.loadClientData(tag, pRegistries);
+    public void load(CompoundTag tag) {
+        super.load(tag);
         if (tag.contains("fluid")) fluid = BuiltInRegistries.FLUID.byId(tag.getInt("fluid"));
     }
 
@@ -59,7 +59,7 @@ public class FluidPipeBE extends AbstractPipeBE {
         return fluid != null && !fluid.isSame(Fluids.EMPTY);
     }
 
-    public FluidHolder getFluid() {
-        return new FluidHolder(fluid, 1000);
+    public Fluid getFluid() {
+        return fluid;
     }
 }

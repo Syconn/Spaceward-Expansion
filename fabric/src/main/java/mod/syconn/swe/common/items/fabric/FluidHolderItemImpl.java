@@ -18,13 +18,17 @@ import net.fabricmc.fabric.api.transfer.v1.storage.base.ResourceAmount;
 import net.fabricmc.fabric.api.transfer.v1.storage.base.SingleSlotStorage;
 import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -32,6 +36,10 @@ import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 public class FluidHolderItemImpl {
+
+    public static boolean hasFluidHolder(ItemStack stack) {
+        return ContainerItemContext.withConstant(stack).find(FluidStorage.ITEM) != null;
+    }
 
     public static FluidHolderItem getFluidHolder(Player player, InteractionHand hand) {
         return getFromContext(ContainerItemContext.ofPlayerHand(player, hand));
@@ -52,6 +60,14 @@ public class FluidHolderItemImpl {
             return new FluidHolderWrapper(storage);
         }
         return null;
+    }
+
+    public static InteractionResult performContainerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
+        Storage<FluidVariant> storage = FluidStorage.SIDED.find(level, pos, face);
+        return storage != null && FluidStorageUtil.interactWithFluidStorage(storage, player, hand) ? InteractionResult.SUCCESS : InteractionResult.PASS;
+    }
+
+    public static InteractionResult performPlayerFluidTransfer(Player player, InteractionHand hand, Level level, BlockPos pos, Direction face) {
     }
 
     public static class FabricFluidHolderItem extends FluidHolderItem implements SingleSlotStorage<FluidVariant>, ISnapshotParticipant<ResourceAmount<FluidVariant>> {
