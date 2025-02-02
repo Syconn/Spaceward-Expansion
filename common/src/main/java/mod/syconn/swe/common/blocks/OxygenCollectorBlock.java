@@ -1,42 +1,61 @@
 package mod.syconn.swe.common.blocks;
 
-import com.mojang.serialization.MapCodec;
+import dev.architectury.registry.menu.ExtendedMenuProvider;
+import dev.architectury.registry.menu.MenuRegistry;
 import mod.syconn.swe.common.blockentities.CollectorBE;
+import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.core.ModBlocks;
-import mod.syconn.swe.network.Network;
+import mod.syconn.swe.core.ModMenus;
+import mod.syconn.swe.util.FluidUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
-public class OxygenCollectorBlock extends FluidBaseBlock {
+public class OxygenCollectorBlock extends BaseEntityBlock {
 
     public OxygenCollectorBlock(Properties properties) {
         super(properties);
     }
 
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide) return InteractionResult.SUCCESS;
-        if (pPlayer instanceof ServerPlayer sp && pLevel.getBlockEntity(pPos) instanceof CollectorBE collectorBE) {
-            Network.openMenuWithData(sp, collectorBE, new PositionMenuData(pPos));
-            return InteractionResult.CONSUME;
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (FluidHolderItem.hasFluidHolder(player.getItemInHand(hand)) && FluidUtil.performPlayerTransfer(level, pos, hit, player, hand)) return InteractionResult.SUCCESS;
+        if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof CollectorBE) {
+            MenuRegistry.openExtendedMenu(serverPlayer, new ExtendedMenuProvider() {
+                public void saveExtraData(FriendlyByteBuf buf) {
+                    buf.writeBlockPos(pos);
+                }
+
+                public Component getDisplayName() {
+                    return Component.literal("Oxygen Collector");
+                }
+
+                public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+                    return ModMenus.COLLECTOR_MENU.get().create(i, inventory);
+                }
+            });
+            return InteractionResult.SUCCESS;
         }
-        return InteractionResult.FAIL;
+        return InteractionResult.PASS;
     }
 
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-        if (Services.FLUID_HANDLER.has(pStack) && Services.FLUID_HELPER.interactWithBlock(pLevel, pPos, pHitResult, pPlayer, pHand)) return ItemInteractionResult.CONSUME;
-        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
@@ -45,9 +64,5 @@ public class OxygenCollectorBlock extends FluidBaseBlock {
 
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new CollectorBE(pos, state);
-    }
-
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return ModBlocks.OXYGEN_COLLECTOR_CODEC.get();
     }
 }

@@ -1,10 +1,10 @@
 package mod.syconn.swe.server.container;
 
 import mod.syconn.swe.common.blockentities.TankBE;
-import mod.syconn.swe.server.container.slot.SpecifiedSlotHandler;
 import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.core.ModTags;
 import mod.syconn.swe.core.ModMenus;
+import mod.syconn.swe.core.ModTags;
+import mod.syconn.swe.server.container.slot.SpecifiedSlotHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -19,9 +19,10 @@ public class TankMenu extends AbstractContainerMenu {
     public TankMenu(int id, Inventory inventory, FriendlyByteBuf data) {
         super(ModMenus.TANK_MENU.get(), id);
         this.be = inventory.player.level().getBlockEntity(data.readBlockPos(), ModBlockEntities.TANK.get()).orElseThrow();
-        this.addSlot(new Slot(be, 0, 14, 9));
-        this.addSlot(new Slot(be, 1, 14, 61));
-        this.addSlot(new SpecifiedSlotHandler(be, 2, 72, 9, ModTags.CANISTERS));
+
+        this.addSlot(new Slot(be.getContainer(), 0, 14, 9));
+        this.addSlot(new Slot(be.getContainer(), 1, 14, 61));
+        this.addSlot(new SpecifiedSlotHandler(be.getContainer(), 2, 72, 9, ModTags.Items.CANISTERS));
 
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {

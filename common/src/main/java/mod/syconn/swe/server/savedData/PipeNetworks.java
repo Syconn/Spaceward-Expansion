@@ -15,6 +15,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import java.util.*;
 
 public class PipeNetworks extends SavedData {
@@ -76,7 +77,7 @@ public class PipeNetworks extends SavedData {
         List<BlockPos> unchecked = networks.get(networkID).getPipes();
         networks.remove(networkID);
         while (!unchecked.isEmpty()) {
-            createLine(networkID, findValidLine(unchecked.getFirst(), new ArrayList<>(), unchecked));
+            createLine(networkID, findValidLine(unchecked.get(0), new ArrayList<>(), unchecked));
             networkID = UUID.randomUUID();
         }
     }

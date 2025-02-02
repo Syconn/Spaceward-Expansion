@@ -1,10 +1,12 @@
 package mod.syconn.swe.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import dev.architectury.fluid.FluidStack;
+import dev.architectury.hooks.fluid.FluidStackHooks;
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.server.container.CollectorMenu;
 import mod.syconn.swe.network.Network;
-import mod.syconn.swe.network.messages.ServerBoundInteractableButtonPress;
+import mod.syconn.swe.network.messages.MessageChangeInteractionSide;
+import mod.syconn.swe.server.container.CollectorMenu;
 import mod.syconn.swe.util.RenderUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -22,12 +24,7 @@ public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
     private static final ResourceLocation BG = Constants.withId("textures/gui/disperser.png");
 
     public CollectorScreen(CollectorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank(), pMenu.getBE().getBlockPos());
-    }
-
-    protected void init() {
-        super.init();
-        addRenderableWidget(new InfoWidget(leftPos + 153, topPos + 3, menu.getBE()));
+        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidHolder(), pMenu.getBE().getBlockPos());
     }
 
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) { }
@@ -38,29 +35,28 @@ public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
     }
 
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        FluidTank tank = menu.getBE().getFluidTank();
         pGuiGraphics.blit(BG, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
 
-        FluidHolder fluidHolder = tank.getFluidHolder();
-        int u = (int) ((double) (fluidHolder.getAmount()) / tank.getTankCapacity() * 70);
-        if(fluidHolder.isEmpty()) return;
-        TextureAtlasSprite sprite = RenderUtil.getSprite(fluidHolder);
-        int tintColor = Services.FLUID_EXTENSIONS.getTintColor(fluidHolder);
+        FluidStack fluidStack = tank.getFluidStack();
+        int u = (int) ((double) (fluidStack.getAmount()) / tank.getCapacity() * 70);
+        if (tank.isEmpty()) return;
+        TextureAtlasSprite sprite = RenderUtil.getSprite(fluidStack);
+        int tintColor = FluidStackHooks.getColor(fluidStack);
         float alpha = ((tintColor >> 24) & 0xFF) / 255f;
         float red = ((tintColor >> 16) & 0xFF) / 255f;
         float green = ((tintColor >> 8) & 0xFF) / 255f;
         float blue = (tintColor & 0xFF) / 255f;
+        
         pGuiGraphics.setColor(red, green, blue, alpha);
         pGuiGraphics.blit(this.leftPos + 10, topPos + 8 + (70 - u), 0, 34, u, sprite);
-
         pGuiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F); // TODO DO I NEED
         pGuiGraphics.blit(BG, leftPos + 10, topPos + 8, 176, 0, 6, 70);
-        Component infoComponent = Component.literal(tank.getFluidHolder().getAmount() + "mb/" + tank.getTankCapacity() + "mb").withStyle(ChatFormatting.GRAY);
-        if (leftPos + 10 <= pMouseX && pMouseX <= leftPos + 43 && topPos + 8 <= pMouseY && pMouseY <= topPos + 77 && !fluidHolder.is(Fluids.EMPTY))
-            pGuiGraphics.renderComponentTooltip(font, List.of(Services.FLUID_EXTENSIONS.getTooltip(fluidHolder).getFirst(), infoComponent), pMouseX, pMouseY);
+        Component infoComponent = Component.literal(fluidStack.getAmount() + "mb/" + tank.getCapacity() + "mb").withStyle(ChatFormatting.GRAY);
+        if (leftPos + 10 <= pMouseX && pMouseX <= leftPos + 43 && topPos + 8 <= pMouseY && pMouseY <= topPos + 77 && !fluidStack.getFluid().isSame(Fluids.EMPTY))
+            pGuiGraphics.renderComponentTooltip(font, List.of(fluidStack.getName(), infoComponent), pMouseX, pMouseY);
     }
 
     protected int getMenuX() {
@@ -80,6 +76,6 @@ public class CollectorScreen extends InteractionSelectorScreen<CollectorMenu> {
     }
 
     protected void sendPacket(Interactables interactable, Direction direction) {
-        Network.CHANNEL.sendToServer(new ServerBoundInteractableButtonPress(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
+        Network.CHANNEL.sendToServer(new MessageChangeInteractionSide(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
     }
 }

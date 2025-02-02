@@ -20,7 +20,7 @@ public class ModFluids {
 
     public static final ArchitecturyFluidAttributes OXYGEN_ATTRIBUTES = SimpleArchitecturyFluidAttributes.ofSupplier(() -> ModFluids.O2, () -> ModFluids.O2_FLOWING).block(ModBlocks.O2_FLUID_BLOCK)
             .color(-1).overlayTexture(Constants.withId("block/o2_overlay.png")).sourceTexture(Constants.withId("block/o2_still")).flowingTexture(Constants.withId("block/o2_flowing"))
-            .fillSound(Sounds.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY).sound(SoundActions.FLUID_VAPORIZE, SoundEvents.FIRE_EXTINGUISH).lightLevel(1).density(15).viscosity(5);
+            .fillSound(SoundEvents.BUCKET_FILL).emptySound(SoundEvents.BUCKET_EMPTY).density(15).viscosity(5);
 
     public static final Supplier<FlowingFluid> O2 = FLUIDS.register("oxygen", () -> new ArchitecturyFlowingFluid.Source(OXYGEN_ATTRIBUTES));
     public static final Supplier<FlowingFluid> O2_FLOWING = FLUIDS.register("oxygen_flowing", () -> new ArchitecturyFlowingFluid.Flowing(OXYGEN_ATTRIBUTES));

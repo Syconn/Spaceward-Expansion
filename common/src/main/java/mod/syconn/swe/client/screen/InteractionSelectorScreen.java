@@ -2,6 +2,7 @@ package mod.syconn.swe.client.screen;
 
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.client.screen.widgets.SpriteButton;
+import mod.syconn.swe.common.blockentities.InteractableFluidHolderBlock;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -19,17 +20,17 @@ import java.util.List;
 public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
     private final ResourceLocation sideMenu = Constants.withId("textures/gui/interaction_selector.png");
-    private final InteractableFluidTankBlock tank;
     private final Point[] buttonPoints = {new Point(30, 80), new Point(30, 30), new Point(30, 55),
             new Point(30, 5), new Point(5, 55), new Point(55, 55)};
     private final Interactables[] interactables = new Interactables[7];
     private final SpriteButton[] interactionButtons = new SpriteButton[6];
-    private SpriteButton openMenuButton;
     private boolean sideMenuActive = false;
-    private final Level level;
-    private final BlockPos pos;
+    private SpriteButton openMenuButton;
+    protected final Level level;
+    protected final BlockPos pos;
+    protected final InteractableFluidHolderBlock tank;
 
-    public InteractionSelectorScreen(T pMenu, Inventory pPlayerInventory, Component pTitle, InteractableFluidTankBlock tank, BlockPos pos) {
+    public InteractionSelectorScreen(T pMenu, Inventory pPlayerInventory, Component pTitle, InteractableFluidHolderBlock tank, BlockPos pos) {
         super(pMenu, pPlayerInventory, pTitle);
         this.tank = tank;
         this.level = pPlayerInventory.player.level();
@@ -84,18 +85,18 @@ public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu>
     protected abstract void sendPacket(Interactables interactable, Direction direction);
 
     protected enum Interactables {
-        PUSH(232, 26, "Push Fluids", InteractionalFluidHandler.Interaction.PUSH),
-        PULL(206, 26, "Pull Fluids", InteractionalFluidHandler.Interaction.PULL),
-        BOTH(180, 26, "Push & Pull Fluids", InteractionalFluidHandler.Interaction.BOTH),
-        NONE(180, 0, "None", InteractionalFluidHandler.Interaction.NONE),
+        PUSH(232, 26, "Push Fluids", InteractableFluidHolderBlock.Interaction.PUSH),
+        PULL(206, 26, "Pull Fluids", InteractableFluidHolderBlock.Interaction.PULL),
+        BOTH(180, 26, "Push & Pull Fluids", InteractableFluidHolderBlock.Interaction.BOTH),
+        NONE(180, 0, "None", InteractableFluidHolderBlock.Interaction.NONE),
         ACTIVE(206, 0, "", null),
         INACTIVE(232, 0, "", null);
 
         final int xLoc, yLoc;
         final String msg;
-        final InteractionalFluidHandler.Interaction interaction;
+        final InteractableFluidHolderBlock.Interaction interaction;
 
-        Interactables(int xLoc, int yLoc, String msg, InteractionalFluidHandler.Interaction interaction) {
+        Interactables(int xLoc, int yLoc, String msg, InteractableFluidHolderBlock.Interaction interaction) {
             this.xLoc = xLoc;
             this.yLoc = yLoc;
             this.msg = msg;
@@ -113,11 +114,11 @@ public abstract class InteractionSelectorScreen<T extends AbstractContainerMenu>
             };
         }
 
-        public InteractionalFluidHandler.Interaction getInteraction() {
+        public InteractableFluidHolderBlock.Interaction getInteraction() {
             return interaction;
         }
 
-        static Interactables fromInteraction(InteractionalFluidHandler.Interaction interaction) {
+        static Interactables fromInteraction(InteractableFluidHolderBlock.Interaction interaction) {
             for (Interactables interactable : Interactables.values()) {
                 if (interactable.interaction == interaction) return interactable;
             }

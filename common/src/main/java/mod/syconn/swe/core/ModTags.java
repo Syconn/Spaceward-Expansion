@@ -22,7 +22,7 @@ public class ModTags {
         public static final TagKey<Block> PERMABURN_MOON = TagKey.create(Registries.BLOCK, Constants.withId("infinburn_moon"));
     }
 
-    public static class FLUIDS {
+    public static class Fluids {
         public static final TagKey<Fluid> OXYGEN = TagKey.create(Registries.FLUID, Constants.withId("oxygen"));
     }
 

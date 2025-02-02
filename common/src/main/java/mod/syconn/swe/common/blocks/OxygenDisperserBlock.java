@@ -1,19 +1,26 @@
 package mod.syconn.swe.common.blocks;
 
-import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blockentities.DisperserBE;
-import mod.syconn.swe.extra.data.savedData.AirBubblesSavedData;
-import mod.syconn.swe.extra.platform.Services;
+import dev.architectury.registry.menu.ExtendedMenuProvider;
+import dev.architectury.registry.menu.MenuRegistry;
+import mod.syconn.swe.common.blockentities.DisperserBE;
+import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
+import mod.syconn.swe.core.ModMenus;
+import mod.syconn.swe.server.savedData.AirBubblesSavedData;
+import mod.syconn.swe.util.FluidUtil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -27,10 +34,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class OxygenDisperserBlock extends FluidBaseBlock {
+public class OxygenDisperserBlock extends BaseEntityBlock {
     
     public OxygenDisperserBlock(Properties properties) {
         super(properties);
@@ -40,19 +48,26 @@ public class OxygenDisperserBlock extends FluidBaseBlock {
         return RenderShape.MODEL;
     }
 
-    protected ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHitResult) {
-//        if (Services.FLUID_HANDLER.has(pStack) && Services.FLUID_HELPER.maxTransferStackToBlock(pLevel, pPos, null, pStack)) return ItemInteractionResult.CONSUME;
-        return super.useItemOn(pStack, pState, pLevel, pPos, pPlayer, pHand, pHitResult);
-    }
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+        if (FluidHolderItem.hasFluidHolder(player.getItemInHand(hand)) && FluidUtil.performPlayerTransfer(level, pos, hit, player, hand)) return InteractionResult.SUCCESS;
+        if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof DisperserBE) {
+            MenuRegistry.openExtendedMenu(serverPlayer, new ExtendedMenuProvider() {
+                public void saveExtraData(FriendlyByteBuf buf) {
+                    buf.writeBlockPos(pos);
+                }
 
-    protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
-        if (pLevel.isClientSide) return InteractionResult.SUCCESS;
-        BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-        if (blockentity instanceof DisperserBE be) {
-            pPlayer.openMenu(be);
+                public Component getDisplayName() {
+                    return Component.literal("Oxygen Disperser");
+                }
+
+                public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+                    return ModMenus.DISPERSER_MENU.get().create(i, inventory);
+                }
+            });
             return InteractionResult.SUCCESS;
         }
-        return InteractionResult.FAIL;
+        return InteractionResult.PASS;
     }
 
     public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
@@ -71,7 +86,7 @@ public class OxygenDisperserBlock extends FluidBaseBlock {
         if (!level.isClientSide && level.getBlockEntity(pos) instanceof DisperserBE be) be.setUUID(UUID.randomUUID());
     }
 
-    public void tick(BlockState p_222945_, ServerLevel p_222946_, BlockPos p_222947_, RandomSource p_222948_) {
+    public void tick(BlockState state, ServerLevel p_222946_, BlockPos p_222947_, RandomSource p_222948_) {
         if (p_222946_.getBlockEntity(p_222947_) instanceof DisperserBE de) de.failed(false);
     }
 
@@ -81,10 +96,6 @@ public class OxygenDisperserBlock extends FluidBaseBlock {
 
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
         return new DisperserBE(p_153215_, p_153216_);
-    }
-
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return ModBlocks.OXYGEN_DISPERSER_CODEC.get();
     }
 
     public static void addBlock(Level l, BlockPos target, BlockPos source, int distance){

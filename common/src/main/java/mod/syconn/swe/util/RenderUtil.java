@@ -58,14 +58,14 @@ public class RenderUtil {
         return FastColor.ARGB32.color(FastColor.ARGB32.alpha(color), r, g, b);
     }
 
+    public static TextureAtlasSprite getSprite(FluidStack fluidStack) {
+        return getSprite(fluidStack.getFluid());
+    }
+
     private static TextureAtlasSprite getSprite(Fluid fluid) {
         if (fluid.isSame(Fluids.EMPTY))
             return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
         return FluidStackHooks.getStillTexture(fluid);
-    }
-
-    private static TextureAtlasSprite getSprite(FluidStack fluidStack) {
-        return getSprite(fluidStack.getFluid());
     }
 
     public static void renderLiquid(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, Direction... directions) {

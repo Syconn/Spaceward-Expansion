@@ -1,6 +1,5 @@
 package mod.syconn.swe.util;
 
-import com.google.common.base.Preconditions;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexConsumer;

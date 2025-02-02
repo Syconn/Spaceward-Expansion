@@ -1,8 +1,10 @@
 package mod.syconn.swe.server.recipes;
 
-import mod.syconn.swe.common.items.Canister;
+import dev.architectury.fluid.FluidStack;
+import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.core.ModItems;
 import mod.syconn.swe.core.ModRecipes;
+import mod.syconn.swe.util.FluidUtil;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -37,16 +39,14 @@ public class RefillingCanisterRecipe extends CustomRecipe {
                 if (i % 2 != 0 && !container.getItem(i).is(Items.GOLD_INGOT)) return ItemStack.EMPTY;
             }
             if (container.getItem(4).is(ModItems.CANISTER.get())) {
-                ItemStack result = new ItemStack(ModItems.AUTO_REFILL_CANISTER.get());
-                result.set(ComponentRegister.FLUID_HOLDER_COMPONENT.get(), pInput.getItem(4).get(ComponentRegister.FLUID_HOLDER_COMPONENT.get())); // TODO
-                return result;
+                return FluidUtil.createFluidItem(ModItems.AUTO_REFILL_CANISTER.get(), FluidHolderItem.getViewOnly(container.getItem(4)).getFluidStack());
             }
         }
         return ItemStack.EMPTY;
     }
 
     public ItemStack getResultItem(RegistryAccess registryAccess) {
-        return Canister.createEmpty(ModItems.CANISTER.get());
+        return FluidUtil.createFluidItem(ModItems.AUTO_REFILL_CANISTER.get(), FluidStack.empty());
     }
 
     public boolean canCraftInDimensions(int width, int height) {

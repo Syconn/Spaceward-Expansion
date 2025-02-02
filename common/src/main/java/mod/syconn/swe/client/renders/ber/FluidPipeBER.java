@@ -14,9 +14,8 @@ public class FluidPipeBER implements BlockEntityRenderer<FluidPipeBE> {
 
     public void render(FluidPipeBE pBlockEntity, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay) {
         if (pBlockEntity.hasFluid()) {
-            FluidHolder fluidHolder = pBlockEntity.getFluid();
             for (Direction direction : Direction.values()) {
-                RenderUtil.renderFluidInPipe(pPoseStack, pBufferSource, fluidHolder.getFluid(), pBlockEntity.getConnectionType(direction), direction);
+                RenderUtil.renderFluidInPipe(pPoseStack, pBufferSource, pBlockEntity.getFluid(), pBlockEntity.getConnectionType(direction), direction);
             }
         }
     }

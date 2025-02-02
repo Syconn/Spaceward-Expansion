@@ -38,4 +38,8 @@ public class TankBE extends AbstractTankBE {
         super.load(tag);
         if (tag.contains("Inventory", 9)) this.container.fromTag(tag.getList("Inventory", 10));
     }
+
+    public SimpleContainer getContainer() {
+        return container;
+    }
 }

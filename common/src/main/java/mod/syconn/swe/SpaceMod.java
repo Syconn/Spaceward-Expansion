@@ -4,8 +4,6 @@ import dev.architectury.event.events.client.ClientGuiEvent;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.event.events.common.TickEvent;
-import dev.architectury.fluid.FluidStack;
-import dev.architectury.hooks.fluid.FluidStackHooks;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.ReloadListenerRegistry;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
@@ -24,7 +22,6 @@ import mod.syconn.swe.client.screen.overlay.SpaceSuitOverlay;
 import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.common.items.Canister;
 import mod.syconn.swe.common.items.FluidHolderItem;
-import mod.syconn.swe.common.items.Parachute;
 import mod.syconn.swe.core.*;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.server.reloaders.OxygenProductionManager;
@@ -37,8 +34,6 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.DyeableLeatherItem;
-
-import java.util.List;
 
 public class SpaceMod {
 

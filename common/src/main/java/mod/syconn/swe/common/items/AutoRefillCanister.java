@@ -1,14 +1,12 @@
 package mod.syconn.swe.common.items;
 
 import dev.architectury.fluid.FluidStack;
-import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.core.ModFluids;
+import mod.syconn.swe.server.reloaders.PlanetManager;
 import net.minecraft.util.FastColor;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluids;
 
 public class AutoRefillCanister extends Canister {

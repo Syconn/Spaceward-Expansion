@@ -1,9 +1,11 @@
 package mod.syconn.swe.client.screen;
 
+import dev.architectury.fluid.FluidStack;
+import dev.architectury.hooks.fluid.FluidStackHooks;
 import mod.syconn.swe.Constants;
-import mod.syconn.swe.server.container.TankMenu;
 import mod.syconn.swe.network.Network;
-import mod.syconn.swe.network.messages.ServerBoundInteractableButtonPress;
+import mod.syconn.swe.network.messages.MessageChangeInteractionSide;
+import mod.syconn.swe.server.container.TankMenu;
 import mod.syconn.swe.util.RenderUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+
 import java.util.List;
 
 public class TankScreen extends InteractionSelectorScreen<TankMenu> {
@@ -19,7 +22,7 @@ public class TankScreen extends InteractionSelectorScreen<TankMenu> {
     private static final ResourceLocation BG = Constants.withId("textures/gui/tank.png");
 
     public TankScreen(TankMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
-        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidTank(), pMenu.getBE().getBlockPos());
+        super(pMenu, pPlayerInventory, pTitle, pMenu.getBE().getFluidHolder(), pMenu.getBE().getBlockPos());
     }
 
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) { }
@@ -30,15 +33,14 @@ public class TankScreen extends InteractionSelectorScreen<TankMenu> {
     }
 
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        FluidTank tank = menu.getBE().getFluidTank();
         pGuiGraphics.blit(BG, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
 
-        FluidHolder fluidHolder = tank.getFluidHolder();
-        int u = (int) ((double) (fluidHolder.getAmount()) / tank.getTankCapacity() * 70);
-        if(fluidHolder.isEmpty()) return;
-        TextureAtlasSprite sprite = RenderUtil.getSprite(fluidHolder);
-        int tintColor = Services.FLUID_EXTENSIONS.getTintColor(fluidHolder);
+        FluidStack fluidStack = tank.getFluidStack();
+        int u = (int) ((double) (fluidStack.getAmount()) / tank.getCapacity() * 70);
+        if(fluidStack.isEmpty()) return;
+        TextureAtlasSprite sprite = RenderUtil.getSprite(fluidStack);
+        int tintColor = FluidStackHooks.getColor(fluidStack);
         float alpha = ((tintColor >> 24) & 0xFF) / 255f;
         float red = ((tintColor >> 16) & 0xFF) / 255f;
         float green = ((tintColor >> 8) & 0xFF) / 255f;
@@ -47,9 +49,9 @@ public class TankScreen extends InteractionSelectorScreen<TankMenu> {
         pGuiGraphics.blit(this.leftPos + 34, topPos + 8 + (70 - u), 0, 34, u, sprite);
         pGuiGraphics.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-        Component infoComponent = Component.literal(fluidHolder.getAmount() + "mb/" + tank.getTankCapacity() + "mb").withStyle(ChatFormatting.GRAY);
+        Component infoComponent = Component.literal(fluidStack.getAmount() + "mb/" + tank.getCapacity() + "mb").withStyle(ChatFormatting.GRAY);
         if (leftPos + 34 <= pMouseX && pMouseX <= leftPos + 67 && topPos + 8 <= pMouseY && pMouseY <= topPos + 77)
-            pGuiGraphics.renderComponentTooltip(font, List.of(Services.FLUID_EXTENSIONS.getTooltip(fluidHolder).getFirst(), infoComponent), pMouseX, pMouseY);
+            pGuiGraphics.renderComponentTooltip(font, List.of(fluidStack.getName(), infoComponent), pMouseX, pMouseY);
     }
 
     protected int getMenuX() {
@@ -69,6 +71,6 @@ public class TankScreen extends InteractionSelectorScreen<TankMenu> {
     }
 
     protected void sendPacket(Interactables interactable, Direction direction) {
-        Network.sendToServer(new ServerBoundInteractableButtonPress(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
+        Network.CHANNEL.sendToServer(new MessageChangeInteractionSide(menu.getBE().getBlockPos(), direction, interactable.getInteraction()));
     }
 }

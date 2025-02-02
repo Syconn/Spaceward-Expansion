@@ -1,14 +1,11 @@
 package mod.syconn.swe.common.blockentities;
 
 import dev.architectury.fluid.FluidStack;
-import mod.syconn.swe.common.items.Canister;
 import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.core.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;

@@ -8,10 +8,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +31,7 @@ public class FluidUtil {
         if (!stack.isEmpty() && container.getItem(depositSlot).isEmpty() && FluidHolderItem.hasFluidHolder(stack)) {
             FluidHolderItem itemHolder = FluidHolderItem.getFluidHolder(container, initialSlot);
             long fill = blockHolder.isEmpty() || itemHolder.isFull() ? transferFluid(itemHolder, blockHolder, Integer.MAX_VALUE) : transferFluid(blockHolder, itemHolder, Integer.MAX_VALUE);
-            boolean isBucket = stack.getItem() instanceof BucketItem; // TODO BUCKET MAY NOT NEED HANDLING
+//            boolean isBucket = stack.getItem() instanceof BucketItem; TODO BUCKET MAY NOT NEED HANDLING
 //            if () {
 //                fill = ;
 //                movedStack = new ItemStack(Items.BUCKET);
@@ -50,15 +50,16 @@ public class FluidUtil {
     }
 
     public static boolean performPlayerTransfer(Level level, BlockPos pos, BlockHitResult hitResult, Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        FluidHolder holder = Services.FLUID_HANDLER.get(level, pos, hitResult.getDirection().getOpposite()).getFluidHolder();
-        boolean fillBlock = FluidHelper.maxTransferStackToBlockFillBlock(level, pos, hitResult.getDirection().getOpposite(), stack);
-        boolean success = FluidHelper.maxTransferStackToBlock(level, pos, hitResult.getDirection().getOpposite(), stack);
-        if (success && stack.getItem() instanceof BucketItem) {
-            if (fillBlock) player.setItemInHand(hand, new ItemStack(Items.BUCKET));
-            else player.setItemInHand(hand, Services.FLUID_HANDLER.getBucket(holder));
-        }
-        return success;
+        FluidHolderBlock blockHolder = FluidHolderBlock.getOrWrapFluidHolder(level, pos, hitResult.getDirection().getOpposite());
+        FluidHolderItem itemHolder = FluidHolderItem.getFluidHolder(player, hand);
+        long fill = transferFluid(itemHolder, blockHolder, Integer.MAX_VALUE);
+        if (fill == 0) transferFluid(blockHolder, itemHolder, Integer.MAX_VALUE);
+        return fill > 0;
+//        boolean success = FluidHelper.maxTransferStackToBlock(level, pos, hitResult.getDirection().getOpposite(), stack);
+//        if (success && stack.getItem() instanceof BucketItem) {
+//            if (fillBlock) player.setItemInHand(hand, new ItemStack(Items.BUCKET));
+//            else player.setItemInHand(hand, Services.FLUID_HANDLER.getBucket(holder));
+//        }
     }
 
 //    private static boolean maxTransferStackToBlockFillBlock(Level level, BlockPos pos, Direction dir, ItemStack stack) { TODO WTF ARE THESE FOR

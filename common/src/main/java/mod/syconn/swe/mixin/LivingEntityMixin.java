@@ -2,6 +2,7 @@ package mod.syconn.swe.mixin;
 
 import mod.syconn.swe.common.data.SpaceGearData;
 import mod.syconn.swe.core.ModAttributes;
+import mod.syconn.swe.core.ModTags;
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;
@@ -38,7 +39,7 @@ public abstract class LivingEntityMixin {
     protected void swe_modifyFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Integer> cir) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         if (livingEntity.getType().is(EntityTypeTags.FALL_DAMAGE_IMMUNE) || SpaceGearData.get(livingEntity).parachute() ||
-                DimensionHelper.onMoon(livingEntity) && fallDistance < 6.5D) cir.setReturnValue(0);
+                livingEntity.level().dimension().location().equals(ModTags.Planets.MOON) && fallDistance < 6.5D) cir.setReturnValue(0);
         else {
             MobEffectInstance mobEffectInstance = livingEntity.getEffect(MobEffects.JUMP);
             float f = mobEffectInstance == null ? 0.0F : (float)(mobEffectInstance.getAmplifier() + 1);

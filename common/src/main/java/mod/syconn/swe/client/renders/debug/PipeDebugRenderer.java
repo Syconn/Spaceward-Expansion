@@ -27,7 +27,6 @@ public class PipeDebugRenderer {
     private static VertexBuffer vertexBuffer;
 
     @Environment(EnvType.SERVER)
-
     public static MessageUpdateClientPipeCache playerJoined(ServerPlayer player) {
         return new MessageUpdateClientPipeCache(PipeNetworks.get(player.serverLevel()).getDataMap());
     }

@@ -6,6 +6,7 @@ import mod.syconn.swe.util.PipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
+
 import java.util.function.Supplier;
 
 public class MessageUpdatePipeState {

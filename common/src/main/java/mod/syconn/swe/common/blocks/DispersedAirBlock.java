@@ -1,9 +1,7 @@
 package mod.syconn.swe.common.blocks;
 
-import com.mojang.serialization.MapCodec;
 import mod.syconn.swe.common.blockentities.AirBlockEntity;
 import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.core.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;

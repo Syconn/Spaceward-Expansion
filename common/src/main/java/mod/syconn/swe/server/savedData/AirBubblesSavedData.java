@@ -3,7 +3,6 @@ package mod.syconn.swe.server.savedData;
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.util.TagUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

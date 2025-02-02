@@ -1,12 +1,11 @@
 package mod.syconn.swe.common.blockentities;
 
-import mod.syconn.swe.common.blocks.FluidPipeBlock;
 import mod.syconn.swe.common.blocks.AbstractPipeBlock;
+import mod.syconn.swe.common.blocks.FluidPipeBlock;
 import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.util.PipeUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;

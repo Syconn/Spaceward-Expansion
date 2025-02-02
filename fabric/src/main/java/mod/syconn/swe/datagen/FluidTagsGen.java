@@ -15,6 +15,6 @@ public class FluidTagsGen extends FabricTagProvider.FluidTagProvider {
     }
 
     protected void addTags(HolderLookup.Provider pProvider) {
-        this.tag(ModTags.FLUIDS.OXYGEN).add(reverseLookup(ModFluids.O2_FLOWING.get())).add(reverseLookup(ModFluids.O2.get()));
+        this.tag(ModTags.Fluids.OXYGEN).add(reverseLookup(ModFluids.O2_FLOWING.get())).add(reverseLookup(ModFluids.O2.get()));
     }
 }

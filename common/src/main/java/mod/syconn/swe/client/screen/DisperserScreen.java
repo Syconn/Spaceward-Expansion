@@ -21,7 +21,6 @@ public class DisperserScreen extends AbstractContainerScreen<DisperserMenu> {
     protected void init() {
         super.init();
         addRenderableWidget(new ExtendedButton(leftPos + 91, topPos + 25, 60, 20, Component.literal(menu.getBE().isEnabled() ? "Enabled" : "Disabled"), this::onclick));
-        addRenderableWidget(new InfoWidget(leftPos + 153, topPos + 3, menu.getBE()));
     }
 
     private void onclick(Button button) {
@@ -38,7 +37,6 @@ public class DisperserScreen extends AbstractContainerScreen<DisperserMenu> {
 
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         pGuiGraphics.blit(BG, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
-        FluidTank tank = menu.getBE().getFluidTank();
 //        if (!tank.isEmpty()) {
 //            FluidHolder fluidHolder = menu.getBE().getFluidTank().getFluid();
 //            int i = Services.FLUID_EXTENSIONS.getTintColor(fluidHolder);

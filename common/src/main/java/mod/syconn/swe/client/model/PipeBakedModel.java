@@ -22,7 +22,8 @@ import java.util.function.Function;
 
 import static mod.syconn.swe.util.PipeUtil.PipeConnectionTypes.*;
 import static mod.syconn.swe.util.PipeUtil.SpriteIdx.*;
-import static mod.syconn.swe.util.QuadUtil.*;
+import static mod.syconn.swe.util.QuadUtil.quad;
+import static mod.syconn.swe.util.QuadUtil.v;
 
 public class PipeBakedModel implements BakedModel {
 
