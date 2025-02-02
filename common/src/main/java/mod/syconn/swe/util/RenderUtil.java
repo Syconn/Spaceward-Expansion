@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.FluidStackHooks;
+import mod.syconn.swe.common.items.FluidHolderItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -21,10 +22,10 @@ import net.minecraft.world.phys.Vec3;
 @Environment(EnvType.CLIENT)
 public class RenderUtil {
 
-    public static int getFluidColor(FluidStack fluidStack) {
-        if (fluidStack.getFluid().isSame(Fluids.EMPTY)) return -1;
-        int i = FluidStackHooks.getColor(fluidStack);
-        TextureAtlasSprite sprite = getSprite(fluidStack.getFluid());
+    public static int getFluidColor(FluidHolderItem fluidHolder) {
+        if (fluidHolder.getFluidStack().getFluid().isSame(Fluids.EMPTY)) return -1;
+        int i = FluidStackHooks.getColor(fluidHolder.getFluidStack());
+        TextureAtlasSprite sprite = getSprite(fluidHolder.getFluidStack());
         int b = getAtlasSpriteRGBA(sprite, 8, 8);
         int c = FastColor.ARGB32.color(-1, FastColor.ARGB32.blue(b), FastColor.ARGB32.green(b), FastColor.ARGB32.red(b)); // TODO NOT ALPHA? - ALSO BACKWARDS?
         if (i == -1) return c;
@@ -40,7 +41,7 @@ public class RenderUtil {
                 new float[] {FastColor.ARGB32.blue(color1), FastColor.ARGB32.blue(color2)}, new float[] {FastColor.ARGB32.alpha(color1), FastColor.ARGB32.alpha(color2)}};
     }
 
-    public static int getAtlasSpriteRGBA(TextureAtlasSprite sprite, int x, int y) {
+    private static int getAtlasSpriteRGBA(TextureAtlasSprite sprite, int x, int y) {
         return sprite.contents().originalImage.getPixelRGBA(x, y);
     }
 
@@ -57,9 +58,14 @@ public class RenderUtil {
         return FastColor.ARGB32.color(FastColor.ARGB32.alpha(color), r, g, b);
     }
 
-    public static TextureAtlasSprite getSprite(Fluid fluid) {
-        if (fluid.isSame(Fluids.EMPTY)) return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
+    private static TextureAtlasSprite getSprite(Fluid fluid) {
+        if (fluid.isSame(Fluids.EMPTY))
+            return Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(MissingTextureAtlasSprite.getLocation());
         return FluidStackHooks.getStillTexture(fluid);
+    }
+
+    private static TextureAtlasSprite getSprite(FluidStack fluidStack) {
+        return getSprite(fluidStack.getFluid());
     }
 
     public static void renderLiquid(PoseStack pPoseStack, MultiBufferSource pBufferSource, Fluid fluid, Direction... directions) {

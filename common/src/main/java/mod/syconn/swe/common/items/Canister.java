@@ -20,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import static mod.syconn.swe.common.items.FluidHolderItem.IFluidHolderItem;
+import static mod.syconn.swe.common.items.FluidHolderItem.getViewOnly;
 
 public class Canister extends Item implements EquipmentItem, IFluidHolderItem {
 
@@ -28,14 +29,14 @@ public class Canister extends Item implements EquipmentItem, IFluidHolderItem {
     }
 
     public boolean isBarVisible(ItemStack stack) {
-        FluidHolderItem fluidHolder = getOnClient(stack);
+        FluidHolderItem fluidHolder = getViewOnly(stack);
         if (fluidHolder != null && fluidHolder.isEmpty()) return false;
         return getDisplayValue(stack) != 0.6F;
     }
 
     public int getBarColor(ItemStack stack) {
-        FluidHolderItem fluidHolder = getOnClient(stack);
-        if (fluidHolder != null) return RenderUtil.getFluidColor(fluidHolder.getFluidStack());
+        FluidHolderItem fluidHolder = getViewOnly(stack);
+        if (fluidHolder != null) return RenderUtil.getFluidColor(fluidHolder);
         return super.getBarColor(stack);
     }
 
@@ -87,7 +88,7 @@ public class Canister extends Item implements EquipmentItem, IFluidHolderItem {
     @Environment(EnvType.CLIENT)
     public static float getDisplayValue(ItemStack stack) {
         if (stack.getItem() instanceof IFluidHolderItem holder) {
-            FluidHolderItem fluidHolder = holder.getOnClient(stack);
+            FluidHolderItem fluidHolder = getViewOnly(stack);
             if (fluidHolder != null && fluidHolder.isEmpty()) return (float) (fluidHolder.getFluidStack().getAmount()) / holder.getCapacity() * 6.0f / 10f;
         }
         return 0;

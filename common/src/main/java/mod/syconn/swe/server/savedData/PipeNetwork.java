@@ -1,7 +1,9 @@
 package mod.syconn.swe.server.savedData;
 
+import mod.syconn.swe.common.blockentities.FluidHolderBlock;
 import mod.syconn.swe.common.blockentities.FluidPipeBE;
 import mod.syconn.swe.common.blocks.AbstractPipeBlock;
+import mod.syconn.swe.util.FluidUtil;
 import mod.syconn.swe.util.PipeUtil;
 import mod.syconn.swe.util.TagUtil;
 import net.minecraft.core.BlockPos;
@@ -264,25 +266,23 @@ public class PipeNetwork {
             if (tag.contains("result")) this.result = TaskResult.fromNumber(tag.getInt("result"));
         }
 
-        private TaskResult setResultT(TaskResult result) {
+        private TaskResult setTaskResult(TaskResult result) {
             this.result = result;
             return result;
         }
 
         public TaskResult run(Level level, int transferRate) {
-            FluidHandler startHandler = Services.FLUID_HANDLER.get(level, startPos.relative(startDirection), startDirection.getOpposite());
-            FluidHandler endHandler = Services.FLUID_HANDLER.get(level, endPos.relative(endDirection), endDirection.getOpposite());
-            if (startHandler == null || endHandler == null) return setResultT(TaskResult.FAILED);
-            if (!endHandler.isFluidValid(startHandler.getFluidHolder()) || startHandler.getFluidHolder().isEmpty() || endHandler.getFluidHolder().getAmount() >= endHandler.getTankCapacity()) return setResultT(TaskResult.SKIP);
-            if (level.getBlockEntity(startPos) instanceof FluidPipeBE pipeBE && !pipeBE.getFluid().is(startHandler.getFluidHolder().getFluid())) {
+            FluidHolderBlock startHandler = FluidHolderBlock.getOrWrapFluidHolder(level, startPos.relative(startDirection), startDirection.getOpposite());
+            FluidHolderBlock endHandler = FluidHolderBlock.getOrWrapFluidHolder(level, endPos.relative(endDirection), endDirection.getOpposite());
+            if (startHandler == null || endHandler == null) return setTaskResult(TaskResult.FAILED);
+            if (!endHandler.getFluidStack().isFluidEqual(startHandler.getFluidStack()) || startHandler.isEmpty() || endHandler.isFull()) return setTaskResult(TaskResult.SKIP);
+            if (level.getBlockEntity(startPos) instanceof FluidPipeBE pipeBE && !pipeBE.getFluid().isSame(startHandler.getFluidStack().getFluid())) {
                 for (BlockPos pos : directions) {
-                    if (level.getBlockEntity(pos) instanceof FluidPipeBE pipeBE2) pipeBE2.setFluid(startHandler.getFluidHolder().getFluid());
-                    else return setResultT(TaskResult.FAILED_LINE);
+                    if (level.getBlockEntity(pos) instanceof FluidPipeBE pipeBE2) pipeBE2.setFluid(startHandler.getFluidStack().getFluid());
+                    else return setTaskResult(TaskResult.FAILED_LINE);
                 }
             }
-            int fill = endHandler.fill(startHandler.getFluidHolder().copyWith(Math.min(transferRate, startHandler.getFluidHolder().getAmount())), FluidAction.SIMULATE);
-            startHandler.drain(endHandler.fill(startHandler.getFluidHolder().copyWith(fill), FluidAction.EXECUTE), FluidAction.EXECUTE);
-            return fill > 0 ? setResultT(TaskResult.SUCCESS) : setResultT(TaskResult.SKIP);
+            return FluidUtil.transferFluid(startHandler, endHandler, transferRate) > 0 ? setTaskResult(TaskResult.SUCCESS) : setTaskResult(TaskResult.SKIP);
         }
 
         public boolean hasPoint(BlockPos pos, PipeUtil.PipeConnectionTypes type) {

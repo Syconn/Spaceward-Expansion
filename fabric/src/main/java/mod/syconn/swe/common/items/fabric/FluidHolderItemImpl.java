@@ -34,6 +34,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static mod.syconn.swe.util.FluidUtil.FLUID_NBT_KEY;
+
 @SuppressWarnings("UnstableApiUsage")
 public class FluidHolderItemImpl {
 
@@ -53,6 +55,10 @@ public class FluidHolderItemImpl {
         return getFromContext(ContainerItemContext.ofSingleSlot(InventoryStorage.of(container, null).getSlot(slot)));
     }
 
+    public static FluidHolderItem getViewOnly(ItemStack stack) {
+        return getFromContext(ContainerItemContext.withConstant(stack));
+    }
+
     private static FluidHolderItem getFromContext(ContainerItemContext context) {
         Storage<FluidVariant> storage = context.find(FluidStorage.ITEM);
         if (storage != null) {
@@ -63,7 +69,6 @@ public class FluidHolderItemImpl {
     }
 
     public static class FabricFluidHolderItem extends FluidHolderItem implements SingleSlotStorage<FluidVariant>, ISnapshotParticipant<ResourceAmount<FluidVariant>> {
-        private final String FLUID_NBT_KEY = Constants.MOD + ":Fluid";
         private final List<ResourceAmount<FluidVariant>> snapshots = new ArrayList<>();
         private final ItemStack container;
         private final long capacity;
@@ -87,6 +92,10 @@ public class FluidHolderItemImpl {
 
         public long getCapacity() {
             return this.capacity;
+        }
+
+        public ItemStack getContainer() {
+            return container;
         }
 
         public long insert(FluidVariant resource, long maxAmount, TransactionContext transaction) {
@@ -146,8 +155,7 @@ public class FluidHolderItemImpl {
         }
 
         public void setFluidStack(FluidStack fluidStack) {
-            if (!container.hasTag()) container.setTag(new CompoundTag());
-            container.getTag().put(FLUID_NBT_KEY, fluidStack.write(new CompoundTag()));
+            container.getOrCreateTag().put(FLUID_NBT_KEY, fluidStack.write(new CompoundTag()));
         }
 
         public boolean isEmpty() {

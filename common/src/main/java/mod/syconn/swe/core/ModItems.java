@@ -1,15 +1,18 @@
 package mod.syconn.swe.core;
 
+import dev.architectury.fluid.FluidStack;
 import dev.architectury.registry.CreativeTabOutput;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import mod.syconn.swe.Constants;
 import mod.syconn.swe.common.items.*;
+import mod.syconn.swe.util.FluidUtil;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 
 import java.util.List;
@@ -48,14 +51,14 @@ public class ModItems {
         output.accept(DIAMOND_UPGRADE.get());
         output.accept(EMERALD_UPGRADE.get());
         output.accept(NETHERITE_UPGRADE.get());
-        output.accept(Canister.create(0, 8000, Fluids.EMPTY, CANISTER.get()));
-        output.accept(Canister.create(8000, 8000, Fluids.LAVA, CANISTER.get()));
-        output.accept(Canister.create(8000, 8000, Fluids.WATER, CANISTER.get()));
-        output.accept(Canister.create(8000, 8000, ModFluids.O2.get(), CANISTER.get()));
-        output.accept(Canister.create(0, 8000, Fluids.EMPTY, AUTO_REFILL_CANISTER.get()));
-        output.accept(Canister.create(8000, 8000, Fluids.LAVA, AUTO_REFILL_CANISTER.get()));
-        output.accept(Canister.create(8000, 8000, Fluids.WATER, AUTO_REFILL_CANISTER.get()));
-        output.accept(Canister.create(8000, 8000, ModFluids.O2.get(), AUTO_REFILL_CANISTER.get()));
+        output.accept(FluidUtil.createFluidItem(CANISTER.get(), FluidStack.empty()));
+        output.accept(FluidUtil.createFluidItem(CANISTER.get(), FluidStack.create(Fluids.LAVA, 8000)));
+        output.accept(FluidUtil.createFluidItem(CANISTER.get(), FluidStack.create(Fluids.WATER, 8000)));
+        output.accept(FluidUtil.createFluidItem(CANISTER.get(), FluidStack.create(ModFluids.O2.get(), 8000)));
+        output.accept(FluidUtil.createFluidItem(AUTO_REFILL_CANISTER.get(), FluidStack.empty()));
+        output.accept(FluidUtil.createFluidItem(AUTO_REFILL_CANISTER.get(), FluidStack.create(Fluids.LAVA, 8000)));
+        output.accept(FluidUtil.createFluidItem(AUTO_REFILL_CANISTER.get(), FluidStack.create(Fluids.WATER, 8000)));
+        output.accept(FluidUtil.createFluidItem(AUTO_REFILL_CANISTER.get(), FluidStack.create(ModFluids.O2.get(), 8000)));
         output.accept(OXYGEN_COLLECTOR.get());
         output.accept(FLUID_TANK.get());
         output.accept(CANISTER_FILLER.get());

@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mod.syconn.swe.blockentities.AirBlockEntity;
+import mod.syconn.swe.common.blockentities.AirBlockEntity;
 import mod.syconn.swe.core.ModBlockEntities;
 import mod.syconn.swe.core.ModBlocks;
 import net.minecraft.core.BlockPos;
@@ -61,9 +61,5 @@ public class DispersedAirBlock extends BaseEntityBlock {
 
     public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
         return new AirBlockEntity(p_153215_, p_153216_);
-    }
-
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return ModBlocks.OXYGEN_CODEC.get();
     }
 }

@@ -28,6 +28,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import static mod.syconn.swe.util.FluidUtil.FLUID_NBT_KEY;
+
 public class FluidHolderItemImpl {
 
     public static boolean hasFluidHolder(ItemStack stack) {
@@ -46,6 +48,10 @@ public class FluidHolderItemImpl {
         return getFromFluidHandlerItem(container.getItem(slot).getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve());
     }
 
+    public static FluidHolderItem getViewOnly(ItemStack stack) {
+        return getFromFluidHandlerItem(stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).resolve());
+    }
+
     private static FluidHolderItem getFromFluidHandlerItem(Optional<IFluidHandlerItem> handler) {
         if (handler.isPresent()) {
             if (handler.get() instanceof FluidHolderItem) return (FluidHolderItem) handler.get();
@@ -56,8 +62,6 @@ public class FluidHolderItemImpl {
 
     ///  Clone of {@link FluidHandlerItemStack} for FluidHolders
     public static class ForgeFluidHolderItem extends FluidHolderItem implements IFluidHandlerItem, ICapabilityProvider {
-
-        private final String FLUID_NBT_KEY = Constants.MOD + ":Fluid";
         private final LazyOptional<IFluidHandlerItem> holder = LazyOptional.of(() -> this);
         private final ItemStack container;
         private final int capacity;
@@ -86,10 +90,7 @@ public class FluidHolderItemImpl {
         }
 
         protected void setFluid(FluidStack fluid) {
-            if (!container.hasTag()) container.setTag(new CompoundTag());
-            CompoundTag fluidTag = new CompoundTag();
-            fluid.writeToNBT(fluidTag);
-            container.getTag().put(FLUID_NBT_KEY, fluidTag);
+            container.getOrCreateTag().put(FLUID_NBT_KEY, fluid.writeToNBT(new CompoundTag()));
         }
 
         public int getTanks() {

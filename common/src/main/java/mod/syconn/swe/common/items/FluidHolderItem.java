@@ -52,6 +52,11 @@ public abstract class FluidHolderItem {
         throw new AssertionError();
     }
 
+    @ExpectPlatform
+    public static FluidHolderItem getViewOnly(ItemStack stack) {
+        throw new AssertionError();
+    }
+
     public interface IFluidHolderItem {
         long getCapacity();
         default FluidHolderItem getFluidHolder(Player player, InteractionHand hand){

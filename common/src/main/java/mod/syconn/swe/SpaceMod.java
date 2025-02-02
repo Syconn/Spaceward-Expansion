@@ -23,12 +23,14 @@ import mod.syconn.swe.client.model.TankModel;
 import mod.syconn.swe.client.screen.overlay.SpaceSuitOverlay;
 import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.common.items.Canister;
+import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.common.items.Parachute;
 import mod.syconn.swe.core.*;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.server.reloaders.OxygenProductionManager;
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.server.savedData.PipeNetworks;
+import mod.syconn.swe.util.RenderUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -64,11 +66,13 @@ public class SpaceMod {
 
         EnvExecutor.runInEnv(Env.CLIENT, () -> Client::init);
         EnvExecutor.runInEnv(Env.SERVER, () -> Server::init);
+        Network.init();
     }
 
     @Environment(EnvType.CLIENT)
     public static class Client {
 
+        @SuppressWarnings("ConstantConditions")
         @Environment(EnvType.CLIENT)
         public static void init() {
             ClientLifecycleEvent.CLIENT_SETUP.register(ModMenus::registerScreens);
@@ -79,9 +83,7 @@ public class SpaceMod {
             ItemPropertiesRegistry.register(ModItems.AUTO_REFILL_CANISTER.get(), Constants.withId("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
             RenderTypeRegistry.register(RenderType.translucent(), ModFluids.O2.get(), ModFluids.O2_FLOWING.get());
             ColorHandlerRegistry.registerItemColors((s, layer) -> layer == 0 ? ((DyeableLeatherItem) s.getItem()).getColor(s) : -1, ModItems.PARACHUTE.get());
-//  TODO          ColorHandlerRegistry.registerItemColors((s, layer) -> layer == 1  && s.getCapability(Capabilities.FluidHandler.ITEM) != null ? RenderUtil.getFluidColor(s.getCapability(Capabilities.FluidHandler.ITEM).getFluidInTank(0)) : -1, Registration.CANISTER.get(), Registration.AUTO_REFILL_CANISTER.get());
-
-            Network.initC2S();
+            ColorHandlerRegistry.registerItemColors((s, layer) -> layer == 1 && FluidHolderItem.hasFluidHolder(s) ? RenderUtil.getFluidColor(FluidHolderItem.getViewOnly(s)) : -1, ModItems.CANISTER.get(), ModItems.AUTO_REFILL_CANISTER.get());
         }
 
         private static IAnimation registerPlayerAnimation(AbstractClientPlayer player) {
@@ -101,8 +103,6 @@ public class SpaceMod {
             EntityModelLayerRegistry.register(TankModel.LAYER_LOCATION, TankModel::createBodyLayer);
 
             PlayerEvent.CHANGE_DIMENSION.register(CommonHandler::playerChangedDimension);
-
-            Network.initS2C();
         }
     }
 }

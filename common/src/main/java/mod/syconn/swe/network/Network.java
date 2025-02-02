@@ -10,12 +10,9 @@ import mod.syconn.swe.network.messages.MessageUpdatePipeState;
 public class Network {
     public static NetworkChannel CHANNEL = NetworkChannel.create(Constants.withId("network"));
 
-    public static void initC2S() {
+    public static void init() {
         CHANNEL.register(MessageSyncPersistentData.class, MessageSyncPersistentData::encode, MessageSyncPersistentData::new, MessageSyncPersistentData::apply);
         CHANNEL.register(MessageUpdatePipeState.class, MessageUpdatePipeState::encode, MessageUpdatePipeState::new, MessageUpdatePipeState::apply);
-    }
-
-    public static void initS2C() {
         CHANNEL.register(MessageSyncPersistentData.class, MessageSyncPersistentData::encode, MessageSyncPersistentData::new, MessageSyncPersistentData::apply);
         CHANNEL.register(MessageUpdateClientPipeCache.class, MessageUpdateClientPipeCache::encode, MessageUpdateClientPipeCache::new, MessageUpdateClientPipeCache::apply);
         CHANNEL.register(MessageSyncFluidBlock.class, MessageSyncFluidBlock::encode, MessageSyncFluidBlock::new, MessageSyncFluidBlock::apply);
