@@ -20,6 +20,10 @@ public class FluidHolderWrapper extends FluidHolderBlock {
         return FluidStackHooksForge.fromForge(fluidHandler.getFluidInTank(tank));
     }
 
+    public long getCapacity() {
+        return fluidHandler.getTankCapacity(tank);
+    }
+
     public boolean isEmpty() {
         return fluidHandler.getFluidInTank(tank).isEmpty();
     }

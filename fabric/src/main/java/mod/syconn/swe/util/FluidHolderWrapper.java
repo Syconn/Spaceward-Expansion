@@ -29,6 +29,10 @@ public class FluidHolderWrapper extends FluidHolderBlock {
         return this.storageView.isResourceBlank();
     }
 
+    public long getCapacity() {
+        return storageView.getCapacity();
+    }
+
     public long push(FluidStack fluidStack, boolean simulate) {
         try(Transaction transaction = Transaction.openOuter()) {
             long filled = this.storage.insert(FluidVariant.of(fluidStack.getFluid()), fluidStack.getAmount(), transaction);

@@ -36,7 +36,7 @@ public class FluidPipeBE extends AbstractPipeBE {
     }
 
     public void setConnectionType(Direction direction, PipeUtil.PipeConnectionTypes type) {
-        level.setBlock(worldPosition, getBlockState().setValue(AbstractPipeBlock.fromDirection(direction), type), 2);
+        if (level != null) level.setBlock(worldPosition, getBlockState().setValue(AbstractPipeBlock.fromDirection(direction), type), 2);
     }
 
     protected void saveAdditional(CompoundTag tag) {
