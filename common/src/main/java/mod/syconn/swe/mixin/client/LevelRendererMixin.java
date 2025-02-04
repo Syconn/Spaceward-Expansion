@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexBuffer;
 import mod.syconn.swe.client.renders.debug.PipeDebugRenderer;
 import mod.syconn.swe.client.renders.effects.SpaceEffect;
-import mod.syconn.swe.core.ModTags;
+import mod.syconn.swe.registry.ModTags;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.GameRenderer;

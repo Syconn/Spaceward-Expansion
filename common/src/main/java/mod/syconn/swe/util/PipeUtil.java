@@ -56,7 +56,7 @@ public class PipeUtil {
 
 
         public String getSerializedName() {
-            return name();
+            return name().toLowerCase();
         }
     }
 }

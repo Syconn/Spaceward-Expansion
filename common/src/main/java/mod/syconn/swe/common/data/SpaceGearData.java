@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.data;
 
 import mod.syconn.swe.common.items.EquipmentItem;
-import mod.syconn.swe.core.ModItems;
+import mod.syconn.swe.registry.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.EquipmentSlot;

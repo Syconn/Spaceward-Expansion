@@ -1,7 +1,7 @@
 package mod.syconn.swe.datagen;
 
-import mod.syconn.swe.core.ModItems;
-import mod.syconn.swe.core.ModTags;
+import mod.syconn.swe.registry.ModItems;
+import mod.syconn.swe.registry.ModTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;

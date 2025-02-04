@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.items;
 
 import dev.architectury.fluid.FluidStack;
-import mod.syconn.swe.core.ModFluids;
+import mod.syconn.swe.registry.ModFluids;
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import mod.syconn.swe.util.RenderUtil;
 import net.fabricmc.api.EnvType;

@@ -22,7 +22,7 @@ import mod.syconn.swe.client.screen.overlay.SpaceSuitOverlay;
 import mod.syconn.swe.common.CommonHandler;
 import mod.syconn.swe.common.items.Canister;
 import mod.syconn.swe.common.items.FluidHolderItem;
-import mod.syconn.swe.core.*;
+import mod.syconn.swe.registry.*;
 import mod.syconn.swe.network.Network;
 import mod.syconn.swe.server.reloaders.OxygenProductionManager;
 import mod.syconn.swe.server.reloaders.PlanetManager;
@@ -44,8 +44,8 @@ public class SpaceMod {
 
     public static void init() {
         ModFluids.FLUIDS.register();
-        ModItems.ITEMS.register();
         ModBlocks.BLOCKS.register();
+        ModItems.ITEMS.register();
         ModBlockEntities.BLOCK_ENTITIES.register();
         ModItems.TABS.register();
         ModMenus.MENUS.register();

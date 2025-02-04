@@ -1,4 +1,4 @@
-package mod.syconn.swe.core;
+package mod.syconn.swe.registry;
 
 import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvent;

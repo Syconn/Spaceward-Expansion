@@ -1,4 +1,4 @@
-package mod.syconn.swe.core;
+package mod.syconn.swe.registry;
 
 import dev.architectury.registry.menu.MenuRegistry;
 import dev.architectury.registry.registries.DeferredRegister;

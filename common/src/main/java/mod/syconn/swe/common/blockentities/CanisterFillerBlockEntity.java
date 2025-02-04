@@ -2,7 +2,7 @@ package mod.syconn.swe.common.blockentities;
 
 import dev.architectury.fluid.FluidStack;
 import mod.syconn.swe.common.items.FluidHolderItem;
-import mod.syconn.swe.core.ModBlockEntities;
+import mod.syconn.swe.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

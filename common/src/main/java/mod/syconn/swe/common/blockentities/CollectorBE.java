@@ -1,9 +1,9 @@
 package mod.syconn.swe.common.blockentities;
 
 import dev.architectury.fluid.FluidStack;
-import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.core.ModFluids;
-import mod.syconn.swe.core.ModTags;
+import mod.syconn.swe.registry.ModBlockEntities;
+import mod.syconn.swe.registry.ModFluids;
+import mod.syconn.swe.registry.ModTags;
 import mod.syconn.swe.server.reloaders.OxygenProductionManager;
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import net.minecraft.core.BlockPos;

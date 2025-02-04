@@ -12,7 +12,7 @@ import mod.syconn.swe.common.items.Canister;
 import mod.syconn.swe.common.items.FluidHolderItem;
 import mod.syconn.swe.common.items.Parachute;
 import mod.syconn.swe.common.items.SpaceArmor;
-import mod.syconn.swe.core.ModItems;
+import mod.syconn.swe.registry.ModItems;
 import mod.syconn.swe.util.RenderUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;

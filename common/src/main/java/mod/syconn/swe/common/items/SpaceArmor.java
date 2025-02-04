@@ -1,6 +1,6 @@
 package mod.syconn.swe.common.items;
 
-import mod.syconn.swe.core.ModArmor;
+import mod.syconn.swe.registry.ModArmor;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;

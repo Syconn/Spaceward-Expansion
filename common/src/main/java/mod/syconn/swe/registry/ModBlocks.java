@@ -1,4 +1,4 @@
-package mod.syconn.swe.core;
+package mod.syconn.swe.registry;
 
 import dev.architectury.core.block.ArchitecturyLiquidBlock;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -27,7 +27,7 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> FLUID_TANK = registerBlockAndItem("fluid_tank", () -> new FluidTankBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
     public static final RegistrySupplier<Block> FLUID_PIPE = registerBlockAndItem("fluid_pipe", () -> new FluidPipeBlock(BlockBehaviour.Properties.copy(Blocks.GLASS_PANE)));
     public static final RegistrySupplier<Block> DISPERSED_OXYGEN = BLOCKS.register("dispersed_oxygen", () -> new DispersedAirBlock(BlockBehaviour.Properties.copy(Blocks.AIR).noCollission().noLootTable().air().isViewBlocking((state, level, pos) -> false)));
-    public static final RegistrySupplier<LiquidBlock> O2_FLUID_BLOCK = BLOCKS.register("oxygen", () -> new ArchitecturyLiquidBlock(ModFluids.O2, BlockBehaviour.Properties.copy(Blocks.LAVA).lightLevel(blockstate -> 0)));
+    public static final RegistrySupplier<LiquidBlock> O2_FLUID_BLOCK = BLOCKS.register("oxygen", () -> new ArchitecturyLiquidBlock(ModFluids.O2, BlockBehaviour.Properties.copy(Blocks.WATER)));
 
     private static <T extends Block> RegistrySupplier<T> registerBlockAndItem(String id, Supplier<T> block) {
         RegistrySupplier<T> registeredBlock = BLOCKS.register(id, block);

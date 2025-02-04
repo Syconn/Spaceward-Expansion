@@ -1,4 +1,4 @@
-package mod.syconn.swe.core;
+package mod.syconn.swe.registry;
 
 import dev.architectury.core.fluid.ArchitecturyFlowingFluid;
 import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
@@ -18,7 +18,7 @@ public class ModFluids {
 
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(MOD, Registries.FLUID);
 
-    public static final ArchitecturyFluidAttributes OXYGEN_ATTRIBUTES = SimpleArchitecturyFluidAttributes.ofSupplier(() -> ModFluids.O2, () -> ModFluids.O2_FLOWING).block(ModBlocks.O2_FLUID_BLOCK)
+    public static final ArchitecturyFluidAttributes OXYGEN_ATTRIBUTES = SimpleArchitecturyFluidAttributes.ofSupplier(() -> ModFluids.O2_FLOWING, () -> ModFluids.O2).block(ModBlocks.O2_FLUID_BLOCK)
             .color(-1).overlayTexture(Constants.withId("block/o2_overlay.png")).sourceTexture(Constants.withId("block/o2_still")).flowingTexture(Constants.withId("block/o2_flowing"))
             .fillSound(SoundEvents.BUCKET_FILL).emptySound(SoundEvents.BUCKET_EMPTY).density(15).viscosity(5);
 

@@ -2,8 +2,8 @@ package mod.syconn.swe.server.recipes;
 
 import dev.architectury.fluid.FluidStack;
 import mod.syconn.swe.common.items.FluidHolderItem;
-import mod.syconn.swe.core.ModItems;
-import mod.syconn.swe.core.ModRecipes;
+import mod.syconn.swe.registry.ModItems;
+import mod.syconn.swe.registry.ModRecipes;
 import mod.syconn.swe.util.FluidUtil;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;

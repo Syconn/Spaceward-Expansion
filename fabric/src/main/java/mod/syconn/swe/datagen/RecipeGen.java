@@ -1,9 +1,9 @@
 package mod.syconn.swe.datagen;
 
-import mod.syconn.swe.core.ModBlocks;
-import mod.syconn.swe.core.ModItems;
-import mod.syconn.swe.core.ModRecipes;
-import mod.syconn.swe.core.ModTags;
+import mod.syconn.swe.registry.ModBlocks;
+import mod.syconn.swe.registry.ModItems;
+import mod.syconn.swe.registry.ModRecipes;
+import mod.syconn.swe.registry.ModTags;
 import mod.syconn.swe.server.recipes.CustomRecipeBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;

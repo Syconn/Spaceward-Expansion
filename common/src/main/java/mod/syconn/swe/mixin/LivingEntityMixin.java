@@ -1,8 +1,8 @@
 package mod.syconn.swe.mixin;
 
 import mod.syconn.swe.common.data.SpaceGearData;
-import mod.syconn.swe.core.ModAttributes;
-import mod.syconn.swe.core.ModTags;
+import mod.syconn.swe.registry.ModAttributes;
+import mod.syconn.swe.registry.ModTags;
 import mod.syconn.swe.server.reloaders.PlanetManager;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.Mth;

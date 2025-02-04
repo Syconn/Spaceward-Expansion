@@ -1,7 +1,7 @@
 package mod.syconn.swe.common.blockentities;
 
 import mod.syconn.swe.common.blocks.OxygenDisperserBlock;
-import mod.syconn.swe.core.ModBlockEntities;
+import mod.syconn.swe.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

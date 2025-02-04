@@ -1,4 +1,4 @@
-package mod.syconn.swe.core;
+package mod.syconn.swe.registry;
 
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.registry.CreativeTabOutput;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static mod.syconn.swe.Constants.MOD;
-import static mod.syconn.swe.core.ModBlocks.*;
+import static mod.syconn.swe.registry.ModBlocks.*;
 
 public class ModItems {
 

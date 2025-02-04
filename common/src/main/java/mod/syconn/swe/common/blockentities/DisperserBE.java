@@ -2,8 +2,8 @@ package mod.syconn.swe.common.blockentities;
 
 import mod.syconn.swe.common.blocks.DispersedAirBlock;
 import mod.syconn.swe.common.blocks.OxygenDisperserBlock;
-import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.core.ModBlocks;
+import mod.syconn.swe.registry.ModBlockEntities;
+import mod.syconn.swe.registry.ModBlocks;
 import mod.syconn.swe.server.savedData.AirBubblesSavedData;
 import mod.syconn.swe.util.TagUtil;
 import net.minecraft.core.BlockPos;

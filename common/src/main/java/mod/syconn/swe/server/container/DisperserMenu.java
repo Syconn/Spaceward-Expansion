@@ -1,8 +1,8 @@
 package mod.syconn.swe.server.container;
 
 import mod.syconn.swe.common.blockentities.DisperserBE;
-import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.core.ModMenus;
+import mod.syconn.swe.registry.ModBlockEntities;
+import mod.syconn.swe.registry.ModMenus;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

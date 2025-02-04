@@ -1,8 +1,8 @@
 package mod.syconn.swe.server.recipes;
 
 import com.google.common.collect.Maps;
-import mod.syconn.swe.core.ModItems;
-import mod.syconn.swe.core.ModRecipes;
+import mod.syconn.swe.registry.ModItems;
+import mod.syconn.swe.registry.ModRecipes;
 import net.minecraft.Util;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;

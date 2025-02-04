@@ -1,9 +1,9 @@
 package mod.syconn.swe.server.container;
 
 import mod.syconn.swe.common.blockentities.TankBE;
-import mod.syconn.swe.core.ModBlockEntities;
-import mod.syconn.swe.core.ModMenus;
-import mod.syconn.swe.core.ModTags;
+import mod.syconn.swe.registry.ModBlockEntities;
+import mod.syconn.swe.registry.ModMenus;
+import mod.syconn.swe.registry.ModTags;
 import mod.syconn.swe.server.container.slot.SpecifiedSlotHandler;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
