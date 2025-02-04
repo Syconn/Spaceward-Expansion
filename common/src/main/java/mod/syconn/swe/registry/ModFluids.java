@@ -24,5 +24,4 @@ public class ModFluids {
 
     public static final Supplier<FlowingFluid> O2 = FLUIDS.register("oxygen", () -> new ArchitecturyFlowingFluid.Source(OXYGEN_ATTRIBUTES));
     public static final Supplier<FlowingFluid> O2_FLOWING = FLUIDS.register("oxygen_flowing", () -> new ArchitecturyFlowingFluid.Flowing(OXYGEN_ATTRIBUTES));
-
 }

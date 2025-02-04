@@ -79,6 +79,9 @@ public class SpaceMod {
             RenderTypeRegistry.register(RenderType.translucent(), ModFluids.O2.get(), ModFluids.O2_FLOWING.get());
             ColorHandlerRegistry.registerItemColors((s, layer) -> layer == 0 ? ((DyeableLeatherItem) s.getItem()).getColor(s) : -1, ModItems.PARACHUTE.get());
             ColorHandlerRegistry.registerItemColors((s, layer) -> layer == 1 && FluidHolderItem.hasFluidHolder(s) ? RenderUtil.getFluidColor(FluidHolderItem.getViewOnly(s)) : -1, ModItems.CANISTER.get(), ModItems.AUTO_REFILL_CANISTER.get());
+            EntityModelLayerRegistry.register(ChuteModel.LAYER_LOCATION, ChuteModel::createBodyLayer);
+            EntityModelLayerRegistry.register(ParachuteModel.LAYER_LOCATION, ParachuteModel::createBodyLayer);
+            EntityModelLayerRegistry.register(TankModel.LAYER_LOCATION, TankModel::createBodyLayer);
         }
 
         private static IAnimation registerPlayerAnimation(AbstractClientPlayer player) {
@@ -93,9 +96,6 @@ public class SpaceMod {
         public static void init() {
             ReloadListenerRegistry.register(PackType.SERVER_DATA, new OxygenProductionManager());
             ReloadListenerRegistry.register(PackType.SERVER_DATA, new PlanetManager());
-            EntityModelLayerRegistry.register(ChuteModel.LAYER_LOCATION, ChuteModel::createBodyLayer);
-            EntityModelLayerRegistry.register(ParachuteModel.LAYER_LOCATION, ParachuteModel::createBodyLayer);
-            EntityModelLayerRegistry.register(TankModel.LAYER_LOCATION, TankModel::createBodyLayer);
 
             PlayerEvent.CHANGE_DIMENSION.register(CommonHandler::playerChangedDimension);
         }
