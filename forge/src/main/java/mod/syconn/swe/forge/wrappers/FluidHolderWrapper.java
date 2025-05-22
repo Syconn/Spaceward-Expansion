@@ -1,4 +1,4 @@
-package mod.syconn.swe.util;
+package mod.syconn.swe.forge.wrappers;
 
 import dev.architectury.fluid.FluidStack;
 import dev.architectury.hooks.fluid.forge.FluidStackHooksForge;

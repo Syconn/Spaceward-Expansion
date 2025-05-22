@@ -30,13 +30,13 @@ public abstract class LivingEntityMixin {
         return getAttributeValue(ModAttributes.GRAVITY.get());
     }
 
-    @ModifyConstant(method = "travel", constant = @Constant(doubleValue = 0.01))
-    private double swe_modifySlowFallingGravity(double d) {
-        return getAttributeValue(ModAttributes.GRAVITY.get()) * 0.01;
-    }
+//    @ModifyConstant(method = "travel", constant = @Constant(doubleValue = 0.01)) TODO NO WORK WHY
+//    private double swe_modifySlowFallingGravity(double d) {
+//        return getAttributeValue(ModAttributes.GRAVITY.get()) * 0.01;
+//    }
 
     @Inject(method = "calculateFallDamage", at = @At("HEAD"), cancellable = true)
-    protected void swe_modifyFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Integer> cir) {
+    private void swe_modifyFallDamage(float fallDistance, float damageMultiplier, CallbackInfoReturnable<Integer> cir) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         if (livingEntity.getType().is(EntityTypeTags.FALL_DAMAGE_IMMUNE) || SpaceGearData.get(livingEntity).parachute() ||
                 livingEntity.level().dimension().location().equals(ModTags.Planets.MOON) && fallDistance < 6.5D) cir.setReturnValue(0);

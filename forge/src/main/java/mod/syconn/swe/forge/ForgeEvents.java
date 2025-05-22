@@ -1,5 +1,6 @@
-package mod.syconn.swe;
+package mod.syconn.swe.forge;
 
+import mod.syconn.swe.Constants;
 import mod.syconn.swe.common.blockentities.FluidHolderBlock;
 import mod.syconn.swe.common.blockentities.InteractableFluidHolderBlock;
 import mod.syconn.swe.common.blockentities.forge.FluidHolderBlockImpl;
@@ -17,11 +18,8 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fluids.capability.templates.EmptyFluidHandler;
-import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-@Mod.EventBusSubscriber(modid = Constants.MOD)
 public class ForgeEvents {
 
     static void onAttachBlockCapability(AttachCapabilitiesEvent<BlockEntity> event) {

@@ -59,6 +59,9 @@ public class SpaceMod {
         PlayerEvent.PLAYER_JOIN.register(CommonHandler::playerJoined);
         PlayerEvent.PLAYER_QUIT.register(CommonHandler::playerQuit);
 
+//        ItemPropertiesRegistry.register(ModItems.CANISTER.get(), Constants.withId("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
+//        ItemPropertiesRegistry.register(ModItems.AUTO_REFILL_CANISTER.get(), Constants.withId("stage"), (pStack, pLevel, pEntity, pSeed) -> Canister.getDisplayValue(pStack));
+
         EnvExecutor.runInEnv(Env.CLIENT, () -> Client::init);
         EnvExecutor.runInEnv(Env.SERVER, () -> Server::init);
         Network.init();

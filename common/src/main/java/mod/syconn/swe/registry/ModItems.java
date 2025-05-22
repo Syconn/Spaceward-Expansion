@@ -65,6 +65,6 @@ public class ModItems {
     }
 
     private static <T extends Item> RegistrySupplier<T> register(String id, Supplier<T> itemSupplier) {
-        return ITEMS.register(Constants.withId(id), itemSupplier);
+        return ITEMS.register(id, itemSupplier);
     }
 }

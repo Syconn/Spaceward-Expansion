@@ -1,4 +1,4 @@
-package mod.syconn.swe.client;
+package mod.syconn.swe.forge.client;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;

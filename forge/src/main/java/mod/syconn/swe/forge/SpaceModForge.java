@@ -1,7 +1,9 @@
-package mod.syconn.swe;
+package mod.syconn.swe.forge;
 
 import dev.architectury.platform.forge.EventBuses;
-import mod.syconn.swe.client.PipeModelLoader;
+import mod.syconn.swe.Constants;
+import mod.syconn.swe.SpaceMod;
+import mod.syconn.swe.forge.client.PipeModelLoader;
 import mod.syconn.swe.client.renders.entity.layer.SpaceSuitLayer;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.entity.EntityRenderer;

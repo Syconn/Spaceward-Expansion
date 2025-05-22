@@ -133,7 +133,6 @@ public abstract class AbstractPipeBlock extends BaseEntityBlock implements Simpl
     protected abstract PipeUtil.PipeConnectionTypes getConnectorType(BlockGetter level, BlockPos thisPos, BlockPos connectionPos, Direction facing);
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        super.createBlockStateDefinition(builder);
         builder.add(BlockStateProperties.WATERLOGGED, NORTH, SOUTH, EAST, WEST, UP, DOWN);
     }
 
