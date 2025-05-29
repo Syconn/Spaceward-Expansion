@@ -19,67 +19,130 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.DimensionTransition;
 
 public class CommonHandler {
 
-    public static void entityTickEvent(Events.LivingEntityEvent event){
+    public static void entityTickEvent(Events.LivingEntityEvent event) {
         LivingEntity livingEntity = event.livingEntity();
+        if (livingEntity == null || livingEntity.level() == null) return;
+
         AttributeInstance gravity = livingEntity.getAttribute(Attributes.GRAVITY);
-        double g = PlanetManager.getSettings(livingEntity.level().dimension()).gravity();
-        if (gravity.getValue() != g) gravity.setBaseValue(g);
-        if (event.livingEntity() instanceof Player p && Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, p).parachute()) gravity.setBaseValue(g / 12.0);
+        if (gravity == null) return;
+
+        var settings = PlanetManager.getSettings(livingEntity.level().dimension());
+        if (settings == null) return;
+
+        double g = settings.gravity();
+        boolean hasParachute = false;
+
+        if (livingEntity instanceof Player player) {
+            SpaceSuit suit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, player);
+            hasParachute = suit != null && suit.parachute();
+        }
+
+        double expectedGravity = hasParachute ? g / 12.0 : g;
+        if (gravity.getBaseValue() != expectedGravity) gravity.setBaseValue(expectedGravity);
     }
 
     public static void playerTickEvent(Events.PlayerEvent event) {
         Player player = event.player();
-        if (player instanceof ServerPlayer p){
-            if (p.level() instanceof ServerLevel serverlevel && p.getY() >= 400) { // TODO Config.spaceHeight.get()
-                DimensionTransition dimensiontransition = PlanetTraveler.changePlanet(serverlevel, p); // SPAWING IN AIR
-                if (dimensiontransition != null) {
-                    ServerLevel serverlevel1 = dimensiontransition.newLevel();
-                    if (serverlevel.getServer().isLevelEnabled(serverlevel1) && (serverlevel1.dimension() == serverlevel.dimension() || p.canChangeDimensions(serverlevel, serverlevel1))) {
-                        p.changeDimension(dimensiontransition);
+        if (player == null || player.level() == null) return;
+
+        if (player instanceof ServerPlayer serverPlayer) {
+            ServerLevel serverLevel = serverPlayer.serverLevel();
+            if (serverLevel != null && serverPlayer.getY() >= 400) {
+                DimensionTransition transition = PlanetTraveler.changePlanet(serverLevel, serverPlayer);
+                if (transition != null) {
+                    ServerLevel newLevel = transition.newLevel();
+                    if (serverLevel.getServer().isLevelEnabled(newLevel)
+                            && (newLevel.dimension().equals(serverLevel.dimension())
+                            || serverPlayer.canChangeDimensions(serverLevel, newLevel))) {
+                        serverPlayer.changeDimension(transition);
                     }
                 }
             }
 
-            SpaceSuit suit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, p);
-            if (p.getInventory().armor.get(2).getItem() instanceof Parachute || SpaceArmor.hasParachute(p)){
-                if (p.fallDistance > 2 && !suit.parachute()) suit.parachute(true, p);
-                else if (p.fallDistance == 0) suit.parachute(false, p);
-            } else suit.parachute(false, p);
-            if (!PlanetManager.getSettings(p.level().dimension()).breathable() && !p.isCreative()) {
-                suit.decreaseO2(p);
-                if (suit.O2() <= -30) {
-                    suit.setO2(0, p);
-                    p.hurt(p.level().damageSources().campfire(), 4.0F);
+            SpaceSuit suit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, serverPlayer);
+            if (suit != null) {
+                boolean hasParachute = false;
+                ItemStack chest = serverPlayer.getInventory().armor.get(2);
+                if (!chest.isEmpty() && chest.getItem() instanceof Parachute) {
+                    hasParachute = true;
+                } else if (SpaceArmor.hasParachute(serverPlayer)) {
+                    hasParachute = true;
                 }
+
+                if (hasParachute) {
+                    if (serverPlayer.fallDistance > 2 && !suit.parachute()) {
+                        suit.parachute(true, serverPlayer);
+                    } else if (serverPlayer.fallDistance == 0) {
+                        suit.parachute(false, serverPlayer);
+                    }
+                } else {
+                    suit.parachute(false, serverPlayer);
+                }
+
+                var settings = PlanetManager.getSettings(serverPlayer.level().dimension());
+                if (settings != null && !settings.breathable() && !serverPlayer.isCreative()) {
+                    suit.decreaseO2(serverPlayer);
+                    if (suit.O2() <= -30) {
+                        suit.setO2(0, serverPlayer);
+                        serverPlayer.hurt(serverPlayer.level().damageSources().campfire(), 4.0F);
+                    }
+                }
+
+                Services.ATTACHED_DATA.set(DataAttachments.SPACE_SUIT, suit, serverPlayer);
             }
-            Services.ATTACHED_DATA.set(DataAttachments.SPACE_SUIT, suit, p);
         }
 
-        if (player.getInventory() instanceof ExtendedPlayerInventory i && SpaceArmor.hasFullKit(player)) i.getSpaceUtil().forEach(stack -> { if (stack.getItem() instanceof EquipmentItem eq) eq.onEquipmentTick(stack, player.level(), player); });
+        if (player.getInventory() instanceof ExtendedPlayerInventory inventory && SpaceArmor.hasFullKit(player)) {
+            inventory.getSpaceUtil().forEach(stack -> {
+                if (stack != null && !stack.isEmpty() && stack.getItem() instanceof EquipmentItem eq) {
+                    eq.onEquipmentTick(stack, player.level(), player);
+                }
+            });
+        }
     }
 
     public static Events.LivingFallEvent livingFallEvent(Events.LivingFallEvent event) {
-        if (event.entity() instanceof Player p && Services.ATTACHED_DATA.has(DataAttachments.SPACE_SUIT, p) && Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, p).parachute()) return new Events.LivingFallEvent(event.entity(), 0, 0, true);
-        if (DimensionHelper.onMoon(event.entity())) {
-            if (event.distance() < 6.5D) return new Events.LivingFallEvent(event.entity(), 0, 0, true);;
-            return new Events.LivingFallEvent(event.entity(), event.distance() - 4.0f, 0.16f, true);
+        LivingEntity entity = event.entity();
+        if (!(entity instanceof Player player)) return event;
+
+        SpaceSuit suit = Services.ATTACHED_DATA.get(DataAttachments.SPACE_SUIT, player);
+        if (suit != null && suit.parachute()) {
+            return new Events.LivingFallEvent(player, 0, 0, true);
         }
+
+        if (DimensionHelper.onMoon(player)) {
+            float distance = event.distance();
+            if (distance < 6.5F) {
+                return new Events.LivingFallEvent(player, 0, 0, true);
+            } else {
+                return new Events.LivingFallEvent(player, distance - 4.0F, 0.16F, true);
+            }
+        }
+
         return event;
     }
 
     public static void playerJoined(Events.PlayerEvent event) {
-        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeDebugRenderer.playerJoined(event), sp);
+        if (event.player() instanceof ServerPlayer sp) {
+            Network.sendToPlayer(PipeDebugRenderer.playerJoined(event), sp);
+        }
     }
 
     public static void playerLeft(Events.PlayerEvent event) {
-        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeDebugRenderer.playerLeft(event), sp);
+        if (event.player() instanceof ServerPlayer sp) {
+            Network.sendToPlayer(PipeDebugRenderer.playerLeft(event), sp);
+        }
     }
 
     public static void playerChangedDimension(Events.PlayerEvent event) {
-        if (event.player() instanceof ServerPlayer sp) Network.sendToPlayer(PipeDebugRenderer.playerChangedDimension(event), sp);
+        if (event.player() instanceof ServerPlayer sp) {
+            Network.sendToPlayer(PipeDebugRenderer.playerChangedDimension(event), sp);
+        }
     }
 }
