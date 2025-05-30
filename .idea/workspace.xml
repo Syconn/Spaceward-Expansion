@@ -7,7 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Fixes">
+    <list default="true" id="fdbcef55-f7ed-4276-8b1f-570f22c7116a" name="Changes" comment="Changes">
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -155,12 +157,12 @@
       <recent name="mod.syconn.swe.helper" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.NeoForge Client (:neoforge)">
+  <component name="RunManager" selected="Gradle.Spaceward-Expansion:neoforge [build]">
     <configuration name="NeoForge Client (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
       <module name="Spaceward-Expansion.neoforge.main" />
-      <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunProgramArgs.txt" />
-      <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\clientRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
+      <option name="PROGRAM_PARAMETERS" value="&quot;@C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\moddev\\clientRunProgramArgs.txt&quot;" />
+      <option name="VM_PARAMETERS" value="&quot;@C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\moddev\\clientRunVmArgs.txt&quot; &quot;-Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\resources\\main&quot;" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -168,9 +170,9 @@
     </configuration>
     <configuration name="NeoForge Data (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
-      <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunProgramArgs.txt" />
-      <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\dataRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
+      <module name="Spaceward-Expansion.neoforge.main" />
+      <option name="PROGRAM_PARAMETERS" value="&quot;@C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\moddev\\dataRunProgramArgs.txt&quot;" />
+      <option name="VM_PARAMETERS" value="&quot;@C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\moddev\\dataRunVmArgs.txt&quot; &quot;-Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\resources\\main&quot;" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -178,9 +180,9 @@
     </configuration>
     <configuration name="NeoForge Server (:neoforge)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="net.neoforged.devlaunch.Main" />
-      <module name="mod.syconn.swe.Spaceward-Expansion.neoforge.main" />
-      <option name="PROGRAM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunProgramArgs.txt" />
-      <option name="VM_PARAMETERS" value="@C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\moddev\\serverRunVmArgs.txt -Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward-Expansion\\neoforge\\build\\resources\\main" />
+      <module name="Spaceward-Expansion.neoforge.main" />
+      <option name="PROGRAM_PARAMETERS" value="&quot;@C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\moddev\\serverRunProgramArgs.txt&quot;" />
+      <option name="VM_PARAMETERS" value="&quot;@C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\moddev\\serverRunVmArgs.txt&quot; &quot;-Dfml.modFolders=swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\classes\\java\\main;swe%%C:\\Users\\Aidan\\IdeaProjects\\Spaceward Expansion\\neoforge\\build\\resources\\main&quot;" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/neoforge/run" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -297,24 +299,29 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.Data Generation (:fabric)" />
+      <item itemvalue="Application.Minecraft Client (:fabric)" />
+      <item itemvalue="Application.Minecraft Client (:forge)" />
+      <item itemvalue="Application.Minecraft Server (:fabric)" />
+      <item itemvalue="Application.Minecraft Server (:forge)" />
       <item itemvalue="Application.NeoForge Client (:neoforge)" />
       <item itemvalue="Application.NeoForge Data (:neoforge)" />
       <item itemvalue="Application.NeoForge Server (:neoforge)" />
+      <item itemvalue="Application.Fabric Client (:fabric)" />
+      <item itemvalue="Application.Fabric Server (:fabric)" />
       <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
       <item itemvalue="Gradle.Spaceward-Expansion:fabric [configureClientLaunch]" />
       <item itemvalue="Gradle.Spaceward-Expansion:fabric [genSources]" />
       <item itemvalue="Gradle.Spaceward-Expansion:fabric [runClient]" />
       <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
-      <item itemvalue="Application.Fabric Client (:fabric)" />
-      <item itemvalue="Application.Fabric Server (:fabric)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
         <item itemvalue="Gradle.Spaceward-Expansion:fabric [build]" />
         <item itemvalue="Gradle.Spaceward-Expansion:fabric [genSources]" />
         <item itemvalue="Gradle.Spaceward-Expansion:fabric [configureClientLaunch]" />
         <item itemvalue="Gradle.Spaceward-Expansion:fabric [runClient]" />
-        <item itemvalue="Gradle.Spaceward-Expansion:neoforge [build]" />
       </list>
     </recent_temporary>
   </component>
